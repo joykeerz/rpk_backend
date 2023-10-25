@@ -9,59 +9,40 @@
 @endsection
 
 @section('content')
-<div class="table p-5 w-full">
+<div class="container mx-auto my-5 rounded">
+    <div class="flex justify-center">
+        <div class="w-8/12">
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="bg-white dark:bg-gray-800 text-white py-2 px-4 rounded">{{ __('Hai,') }} {{Auth::user()->name}}</div>
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Nama Produk
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Tipe
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Jumlah
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Harga
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
-                </th>
-                <td class="px-6 py-4">
-                    Silver
-                </td>
-                <td class="px-6 py-4">
-                    Laptop
-                </td>
-                <td class="px-6 py-4">
-                    $2999
-                </td>
-            </tr>
-            <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td class="px-6 py-4">
-                    White
-                </td>
-                <td class="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td class="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
+                <div class="p-4">
+                    @if (session('status'))
+                    <div class="bg-green-200 text-green-800 border-l-4 border-green-500 py-2 px-4 mb-4">
+                        {{ session('status') }}
+                    </div>
+                    @endif
+                    <div class="flex flex-wrap">
+                        <div class="w-1/2">
+                            <div class="bg-white border border-black rounded-lg p-4 m-3 text-center">
+                                <h4 class="text-lg font-semibold">Products</h4>
+                                <div class="button m-2">
+                                    <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200" href="{{ route('product.index') }}">Manage</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-1/2">
+                            <div class="bg-white border rounded-lg border-black p-4 m-3 text-center">
+                                <h4 class="text-lg font-semibold">Users</h4>
+                                <div class="button m-2 ">
+                                <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200" href="{{route('manage.user.index')}}">Manage</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-</div>
 @endsection

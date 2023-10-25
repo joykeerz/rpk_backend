@@ -9,41 +9,71 @@
 @endsection
 
 @section('content')
-<main>
-    <header class="text-center p-5">
-        <h1 class="font-bold">Input Barang</h1>
-    </header>
-    <form action="product.store" method="get" class="p-5">
-        @csrf
-        <div class="w-full">
-            <div class="inputGroup p-5 w-full ">
-                <label for="namaProduk">Nama Produk</label> <br>
-                <input type="text" id="namaProduk" class="namaProduk w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Nama Produk">
+<hr>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                New Product
             </div>
-            <div class="flex justify-stretch gap-2">
-                <div class="inputGroup p-5 flex-1 ">
-                    <label for="kategori">Kategori</label> <br>
-                    <select name="kategori" id="kategori" class="border w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <option selected>Pilih Kategori</option>
-                        <option value="beras">Beras</option>
-                    </select>
-                </div>
-                <div class="jumlahProduk inputGroup p-5 flex-1">
-                    <label for="jumlahProduk">Jumlah Produk</label> <br>
-                    <input type="text" id="jumlahProduk" class="jumlahProduk w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="ex: 10 karung">
-                </div>
-                <div class="hargaProduk inputGroup p-5 flex-1">
-                    <label for="hargaProduk">Harga Produk</label> <br>
-                    <input type="text" id="hargaProduk" class="hargaProduk w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="tanpa menyertakan rupiah">
+            <div class="card-body row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="" class="form-label">Nama Produk</label>
+                      <input type="text" class="form-control" name="tb_product_name" id="tb_product_name" placeholder="">
+                      <small id="helpId" class="form-text text-muted"></small>
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label">Tipe</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                        </select>
+                      <small id="helpId" class="form-text text-muted"></small>
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label">Stok</label>
+                      <input type="number" class="form-control" name="tb_product_name" id="tb_product_name" value="0" placeholder="">
+                      <small id="helpId" class="form-text text-muted">boleh dikosongkan</small>
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label">Harga</label>
+                      <input type="number" class="form-control" name="tb_product_name" id="tb_product_name" value="0" placeholder="">
+                      <small id="helpId" class="form-text text-muted"></small>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="flex justify-center">
-            <button type="submit" class="m-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Submit
-            </button>
-        </div>
+    </div>
+    <hr>
+    <div class="table-responsive small">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Tipe</th>
+                    <th scope="col">Stok</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @forelse ($productsData as $pd)
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $pd->nama_produk }}</td>
+                        <td>Dummy</td>
+                        <td>{{ $pd->stok_produk }}</td>
+                        <td>{{ $pd->harga_produk }}</td>
+                        <td>
+                            <a href="#" class="badge bg-danger">delete</a>
+                            <a href="#" class="badge bg-secondary">edit</a>
+                        </td>
+                    @empty
+                        <td colspan="6" align="center">No Data</td>
+                    @endforelse
 
-    </form>
-</main>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 @endsection
