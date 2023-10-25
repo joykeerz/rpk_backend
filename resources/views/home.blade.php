@@ -25,8 +25,8 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">Settings</h4>
-                                        <a class="btn btn-primary" href="#">Manage</a>
+                                        <h4 class="card-title">Users</h4>
+                                        <a class="btn btn-primary" href="{{route('manage.user.index')}}">Manage</a>
                                     </div>
                                 </div>
                             </div>

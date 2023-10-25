@@ -10,10 +10,45 @@
 @endsection
 
 @section('section-title')
-    Product Data
+    {{-- Product Data --}}
 @endsection
 
 @section('content')
+<hr>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                New Product
+            </div>
+            <div class="card-body row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="" class="form-label">Nama Produk</label>
+                      <input type="text" class="form-control" name="tb_product_name" id="tb_product_name" placeholder="">
+                      <small id="helpId" class="form-text text-muted"></small>
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label">Tipe</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                        </select>
+                      <small id="helpId" class="form-text text-muted"></small>
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label">Stok</label>
+                      <input type="number" class="form-control" name="tb_product_name" id="tb_product_name" value="0" placeholder="">
+                      <small id="helpId" class="form-text text-muted">boleh dikosongkan</small>
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label">Harga</label>
+                      <input type="number" class="form-control" name="tb_product_name" id="tb_product_name" value="0" placeholder="">
+                      <small id="helpId" class="form-text text-muted"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
     <div class="table-responsive small">
         <table class="table table-striped table-sm">
             <thead>

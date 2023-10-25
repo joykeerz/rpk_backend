@@ -16,5 +16,6 @@ class KategoryController extends Controller
     function index()
     {
         $categories = Kategori::all();
+        dd($categories);
     }
 }
