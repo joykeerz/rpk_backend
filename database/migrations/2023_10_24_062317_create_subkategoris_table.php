@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subkategoris', function (Blueprint $table) {
+        Schema::create('subkategori', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('kategori_id');
             $table->string('nama_sub');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subkategoris');
+        Schema::dropIfExists('subkategori');
     }
 };
