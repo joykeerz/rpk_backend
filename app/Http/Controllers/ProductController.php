@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 
@@ -30,20 +31,13 @@ class ProductController extends Controller
     function index()
     {
         $Products = Produk::all();
+        $category = Kategori::all();
         return view('product.index', ['productsData' => $Products]);
     }
 
     function store(Request $request)
     {
-        $data = $request->validate([
-            'nama_produk' => 'required',
-            'deskripsi_produk' => 'required',
-            'harga_produk' => 'required',
-            'kategori_id' => 'required',
-            'stok_produk' => 'required',
-        ]);
-
-        Produk::create($data);
+        $product = new Produk;
 
     }
 
