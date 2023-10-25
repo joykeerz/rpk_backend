@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/user/reject/{id}', [ManageUserController::class, 'reject'])->name('manage.user.reject');
         Route::get('/user/edit/{id}', [ManageUserController::class, 'edit'])->name('manage.user.edit');
         Route::post('/user/update/{id}', [ManageUserController::class, 'update'])->name('manage.user.update');
+        Route::post('/user/update/password/{id}', [ManageUserController::class, 'changePassword'])->name('manage.user.changePassword');
         Route::get('/user/delete', [ManageUserController::class, 'delete'])->name('manage.user.delete');
 
     });

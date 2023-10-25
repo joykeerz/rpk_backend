@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Biodata;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ManageUserController extends Controller
 {
@@ -40,8 +42,33 @@ class ManageUserController extends Controller
     function edit($id)
     {
         $userData = User::find($id);
-        return view('manage.user.details', ['userData' => $userData]);
+        $userProfile = Biodata::where('user_id', $id);
+        // dd($userProfile);
+        return view('manage.user.details', ['userData' => $userData, 'userProfile' => $userProfile]);
     }
 
+    function update(Request $request, $id)
+    {
+        $validateData = $request->validate([
+            'tb_nama_user' => 'required',
+            'tb_email_user' => 'required',
+            'tb_hp_user' => 'required'
+        ]);
 
+        $userData = User::find($id);
+        $userData->name = $request->tb_nama_user;
+        $userData->email = $request->tb_email_user;
+        $userData->no_hp = $request->tb_hp_user;
+        $userData->save();
+        return redirect()->route('manage.user.edit', ['id' => $id])->with('message', 'Akun berhasil diupdate');
+    }
+
+    function changePassword(Request $request, $id){
+        $userData = User::find($id);
+        if (!empty($request->tb_password_user)) {
+            $userData->password = Hash::make($request->tb_password_user);
+        }
+        $userData->save();
+        return redirect()->route('manage.user.edit', ['id' => $id])->with('message', 'Password berhasil diganti');
+    }
 }

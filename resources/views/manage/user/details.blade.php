@@ -32,26 +32,59 @@
                             <div class="col">
                                 <div class="card border-secondary">
                                     <div class="card-body">
-                                        <h4 class="card-title">Profil</h4>
+                                        <h4 class="card-title">Account</h4>
                                         <hr>
-                                        <form action="{{ route('manage.user.update', ['id' => $userData->id]) }}">
+                                        <form method="POST"
+                                            action="{{ route('manage.user.update', ['id' => $userData->id]) }}">
+                                            @csrf
                                             <div class="mb-3">
                                                 <label class="form-label">Name</label>
+                                                <input required id="tb_nama_user" value="{{ $userData->name }}" type="text"
+                                                    class="form-control" name="tb_nama_user" aria-describedby="helpId"
+                                                    placeholder="">
+
+                                                @error('tb_nama_user')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input required id="tb_email_user" value="{{ $userData->email }}" type="text"
+                                                    class="form-control" name="tb_email_user" aria-describedby="helpId"
+                                                    placeholder="">
+                                                @error('tb_email_user')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">No. Handphone</label>
+                                                <input required id="tb_hp_user" value="{{ $userData->no_hp }}" type="text"
+                                                    class="form-control" name="tb_hp_user" aria-describedby="helpId"
+                                                    placeholder="">
+                                                @error('tb_email_user')
+                                                    <div class="" role="alert">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            {{-- <hr>
+                                             <div class="mb-3">
+                                                <label class="form-label">Nama RPK</label>
                                                 <input value="{{ $userData->name }}" type="text" class="form-control"
                                                     name="tb_nama_user" aria-describedby="helpId" placeholder="">
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Email</label>
-                                                <input value="{{ $userData->email }}" type="text" class="form-control"
-                                                    name="tb_email_user" aria-describedby="helpId" placeholder="">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">No. Handphone</label>
-                                                <input value="{{ $userData->no_hp }}" type="text" class="form-control"
-                                                    name="tb_hp_user" aria-describedby="helpId" placeholder="">
-                                            </div>
+                                                <label class="form-label">No KTP</label>
+                                                <input value="{{ $userData->name }}" type="text" class="form-control"
+                                                    name="tb_nama_user" aria-describedby="helpId" placeholder="">
+                                            </div> --}}
                                             <button type="submit" class="btn btn-primary">Update</button>
                                         </form>
                                     </div>
@@ -63,11 +96,13 @@
                                     <div class="card-body">
                                         <h4 class="card-title">Reset Password</h4>
                                         <hr>
-                                        <form action="{{ route('manage.user.update', ['id' => $userData->id]) }}">
+                                        <form method="POST"
+                                            action="{{ route('manage.user.changePassword', ['id' => $userData->id]) }}">
+                                            @csrf
                                             <div class="mb-3">
                                                 <label class="form-label">New Password</label>
-                                                <input value="{{ $userData->name }}" type="text" class="form-control"
-                                                    name="tb_nama_user" aria-describedby="helpId" placeholder="">
+                                                <input type="password" class="form-control" name="tb_password_user"
+                                                    aria-describedby="helpId" placeholder="Masukan password baru...">
                                             </div>
                                             <button type="submit" class="btn btn-primary">Change</button>
                                         </form>
