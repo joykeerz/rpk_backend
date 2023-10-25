@@ -20,6 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get("/inventory", [App\Http\Controllers\InventoryController::class, 'index']);
+Route::get("/inputBarang", [App\Http\Controllers\InputBarangController::class, 'index']);
+Route::get('store', [ProductController::class, 'store']);
 
 Auth::routes();
 
