@@ -9,6 +9,15 @@
 @endsection
 
 @section('content')
+
+<header>
+    <div class="title flex m-5 justify-between">
+
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Dashboard RPK
+        </h2>
+    </div>
+</header>
 <div class="container mx-auto my-5 rounded">
     <div class="flex justify-center">
         <div class="w-8/12">
