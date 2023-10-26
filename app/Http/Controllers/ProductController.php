@@ -13,6 +13,21 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
+    public function show($id)
+    {
+        // Fetch the product with the given $id from the database
+        $product = Produk::find($id);
+        echo $product;
+
+        // Check if the product exists
+        if ($product == null) {
+            // Return a 404 response if the product doesn't exist
+            echo "Product not found";
+        }
+
+        return view('products.show', ['product' => $product]);
+    }
+
     function index()
     {
         $Products = Produk::all();
