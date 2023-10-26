@@ -27,8 +27,7 @@ class ManageUserController extends Controller
         $userData = User::find($id);
         $userData->isVerified = 1;
         $userData->save();
-        dump($userData);
-        //return redirect()->route('manage.user.index')->with('message', "Akun {$userData->name} berhasil diverifikasi");
+        return redirect()->route('manage.user.index')->with('message', "Akun {$userData->name} berhasil diverifikasi");
     }
 
 
@@ -43,10 +42,9 @@ class ManageUserController extends Controller
     function edit($id)
     {
         $userData = User::find($id);
-        dump($userData);
         $userProfile = Biodata::where('user_id', $id);
         // dd($userProfile);
-        //return view('manage.user.details', ['userData' => $userData, 'userProfile' => $userProfile]);
+        return view('manage.user.details', ['userData' => $userData, 'userProfile' => $userProfile]);
     }
 
     function update(Request $request, $id)
