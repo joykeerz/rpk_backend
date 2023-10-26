@@ -73,8 +73,13 @@
                                                     </div>
                                                 @enderror
                                             </div>
-                                            {{-- <hr>
-                                             <div class="mb-3">
+                                             <hr>
+                                             @empty(!$userProfile)
+                                             <div>
+                                                 Biodata belum terisi
+                                             </div>
+                                             @endempty
+                                             {{-- <div class="mb-3">
                                                 <label class="form-label">Nama RPK</label>
                                                 <input value="{{ $userData->name }}" type="text" class="form-control"
                                                     name="tb_nama_user" aria-describedby="helpId" placeholder="">
@@ -109,7 +114,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
