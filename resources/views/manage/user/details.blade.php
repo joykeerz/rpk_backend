@@ -38,7 +38,7 @@
                                     </div>
 
                                     <div class="mb-4">
-                                        <label for "tb_email_user"
+                                        <label for="tb_email_user"
                                             class="block text-sm font-medium text-gray-700">Email</label>
                                         <input required id="tb_email_user" value="{{ $userData->email }}" type="text"
                                             class="border rounded-md py-2 px-3 w-full" name="tb_email_user" placeholder="">
@@ -55,7 +55,11 @@
                                             <p class="text-red-500 text-sm">{{ $message }}</p>
                                         @enderror
                                     </div>
-
+                                    @empty(!$userProfile)
+                                             <div>
+                                                 Biodata belum terisi
+                                             </div>
+                                             @endempty
                                     <button type="submit"
                                         class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Update</button>
                                 </form>

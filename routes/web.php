@@ -40,12 +40,15 @@ Route::middleware(['auth'])->group(function(){
         ///user
         Route::get('/', [ManageUserController::class, 'index'])->name('manage.user.index');
         Route::post('/user/store', [ManageUserController::class, 'store'])->name('manage.user.store');
-        Route::post('/user/verify/{id}', [ManageUserController::class, 'verify'])->name('manage.user.verify');
-        Route::post('/user/reject/{id}', [ManageUserController::class, 'reject'])->name('manage.user.reject');
+        Route::get('/user/verify/{id}', [ManageUserController::class, 'verify'])->name('manage.user.verify');
+        Route::get('/user/reject/{id}', [ManageUserController::class, 'reject'])->name('manage.user.reject');
         Route::get('/user/edit/{id}', [ManageUserController::class, 'edit'])->name('manage.user.edit');
         Route::post('/user/update/{id}', [ManageUserController::class, 'update'])->name('manage.user.update');
         Route::post('/user/update/password/{id}', [ManageUserController::class, 'changePassword'])->name('manage.user.changePassword');
         Route::get('/user/delete', [ManageUserController::class, 'delete'])->name('manage.user.delete');
+        Route::post('/user/store/{id}/biodata', [ManageUserController::class, 'storeBiodata'])->name('manage.user.storeBiodata');
+        Route::post('/user/store/{id}/alamat', [ManageUserController::class, 'storeAlamat'])->name('manage.user.storeAlamat');
+        Route::post('/user/store/new', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.StoreNewAccount');
 
     });
 
@@ -65,15 +68,6 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/edit/{id}', [KategoryController::class, 'edit'])->name('category.edit');
         Route::post('/update/{id}', [KategoryController::class, 'update'])->name('category.update');
         Route::get('/delete/{id}', [KategoryController::class, 'delete'])->name('category.delete');
-    });
-
-    ///SubCategory
-    Route::prefix('subcat')->group(function(){
-        Route::get('/', [SubcatController::class, 'index'])->name('subcat.index');
-        Route::post('/store', [SubcatController::class, 'store'])->name('subcat.store');
-        Route::get('/edit/{id}', [SubcatController::class, 'edit'])->name('subcat.edit');
-        Route::post('/update/{id}', [SubcatController::class, 'update'])->name('subcat.update');
-        Route::get('/delete/{id}', [SubcatController::class, 'delete'])->name('subcat.delete');
     });
 
 });
