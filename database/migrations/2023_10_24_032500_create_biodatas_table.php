@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('user_id');
             $table->string('nama_rpk');
             $table->string('no_ktp');
-            $table->string('ktp_img');
+            $table->string('ktp_img')->nullable();
             $table->timestamps();
         });
     }

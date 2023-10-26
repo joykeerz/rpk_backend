@@ -58,6 +58,7 @@
                                     @empty(!$userProfile)
                                              <div>
                                                  Biodata belum terisi
+                                                 <p>nanti disini tambahin tombol atau form untuk input biodata + alamat</p>
                                              </div>
                                              @endempty
                                     <button type="submit"
