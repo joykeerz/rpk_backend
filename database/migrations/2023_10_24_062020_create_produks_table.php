@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('kategori_id');
+            $table->string('kode_produk');
             $table->string('nama_produk');
-            $table->decimal('stok_produk')->default(0);
-            $table->integer('harga_produk')->default(0);
+            $table->string('desk_produk');
+            $table->float('harga_produk')->default(0);
+            $table->float('diskon_produk')->default(0);
+            $table->string('satuan_unit_produk');
             $table->timestamps();
         });
     }

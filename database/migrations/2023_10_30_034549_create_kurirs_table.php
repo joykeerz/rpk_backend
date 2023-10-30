@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('biodata', function (Blueprint $table) {
+        Schema::create('kurir', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('alamat_id');
-            $table->string('nama_rpk');
-            $table->string('no_ktp');
-            $table->string('ktp_img')->nullable();
+            $table->string('nama_kurir');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('biodatas');
+        Schema::dropIfExists('kurirs');
     }
 };

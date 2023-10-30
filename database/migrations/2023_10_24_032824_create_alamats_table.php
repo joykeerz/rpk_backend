@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('alamat', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('biodata_id');
             $table->string('jalan');
             $table->string('jalan_ext')->nullable();
             $table->string('blok')->nullable();
