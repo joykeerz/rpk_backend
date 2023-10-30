@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('alamat_id');
             $table->integer('status_pembayaran');
-            $table->id();
             $table->timestamps();
         });
     }

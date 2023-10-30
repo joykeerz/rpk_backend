@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->unsignedIntegerid('pesanan_id');
-            $table->unsignedIntegerid('kurir_id');
+            $table->unsignedInteger('pesanan_id');
+            $table->unsignedInteger('kurir_id');
             $table->string('tipe_pembayaran');
             $table->string('status_pembayaran');
             $table->float('diskon');
