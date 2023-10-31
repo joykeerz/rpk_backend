@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('gudang', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('alamat_id');
+            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('user_id'); //kepala gudang
             $table->string('nama_gudang');
+            $table->string('no_telp');
             $table->timestamps();
         });
     }

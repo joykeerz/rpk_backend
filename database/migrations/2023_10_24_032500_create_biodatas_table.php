@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('biodata', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('alamat_id');
+            $table->unsignedInteger('alamat_id')->default(1);
             $table->string('nama_rpk');
             $table->string('no_ktp');
-            $table->string('ktp_img')->nullable();
+            $table->binary('ktp_img')->nullable();
             $table->timestamps();
         });
     }

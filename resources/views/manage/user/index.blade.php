@@ -17,7 +17,7 @@
 
             <div class="button">
                 <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200"
-                    href="{{ route('manage.user.index') }}">New User</a>
+                    href="{{ route('manage.user.new') }}">New User</a>
             </div>
         </div>
     </header>
@@ -44,6 +44,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">No.Hp</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Role</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -56,41 +57,29 @@
                         <td>{{ $ud->email }}</td>
                         <td>{{ $ud->no_hp }}</td>
                         <td>
-                            @if ($ud->isVerified == 0)
-                                Belum Terverifikasi
-                            @endif
-
-                            @if ($ud->isVerified == 1)
-                                Terverifikasi
-                            @else
-                                Ditolak
-                            @endif
+                            @switch($ud->isVerified)
+                                @case(0)
+                                    Belum Terverifikasi
+                                    @break
+                                @case(1)
+                                    Terverifikasi
+                                    @break
+                                @case(2)
+                                    Rejected
+                                    @break
+                            @endswitch
                         </td>
+                        <td>{{ $ud->nama_role }}</td>
                         <td class="flex justify-evenly p-2">
-                            <a href="{{ route('manage.user.verify', ['id' => $ud->id]) }}"
+                            <a href="{{ route('manage.user.verify', ['id' => $ud->uid]) }}"
                                 class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-green-500 hover:text-white duration-200">Verify
                             </a>
-                            {{-- <a href="{{ route('manage.user.verify', ['id' => $ud->id]) }}"
-                            class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-green-500 hover:text-white duration-200"
-                            onclick="event.preventDefault(); document.getElementById('verify-form').submit();">Verify
-                        </a> --}}
-                            {{-- <form id="verify-form" action="{{ route('manage.user.verify', ['id' => $ud->id]) }}"
-                            method="POST" class="hidden">
-                            @csrf
-                        </form> --}}
 
-                            <a href="{{ route('manage.user.reject', ['id' => $ud->id]) }}"
+                            <a href="{{ route('manage.user.reject', ['id' => $ud->uid]) }}"
                                 class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-red-500 hover:text-white duration-200">Reject
                             </a>
-                            {{-- <a href="{{ route('manage.user.reject', ['id' => $ud->id]) }}"
-                                class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-red-500 hover:text-white duration-200"
-                                onclick="event.preventDefault(); document.getElementById('reject-form').submit();">Reject
-                            </a> --}}
-                            {{-- <form id="reject-form" action="{{ route('manage.user.reject', ['id' => $ud->id]) }}"
-                                method="POST" class="hidden">
-                                @csrf
-                            </form> --}}
-                            <a href="{{ route('manage.user.edit', ['id' => $ud->id]) }}"
+
+                            <a href="{{ route('manage.user.edit', ['id' => $ud->uid]) }}"
                                 class="bg-blue-500 text-white py-1 px-3 rounded-lg">Manage
                             </a>
                         </td>
