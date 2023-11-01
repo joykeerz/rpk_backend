@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/show/{id}', [ProductController::class, 'show'])->name('product.show');
         Route::post('/update/{id}', [ProductController::class, 'update'])->name('product.update');
         Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+        Route::get('/manage', [ProductController::class, 'manage'])->name('product.manage');
     });
 
     ///Category

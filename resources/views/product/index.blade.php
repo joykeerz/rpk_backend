@@ -1,84 +1,51 @@
-@extends('layouts.dashboard')
-
-@section('page-title')
-    Products
+@extends('layouts.bar')
+@section('navbar')
+    @include('layouts.navbar')
 @endsection
 
-@section('button-group')
-    <button type="button" class="btn btn-sm btn-primary">New Product</button>
-    <button type="button" class="btn btn-sm btn-outline-primary">Update Stock</button>
-@endsection
-
-@section('section-title')
-    {{-- Product Data --}}
+@section('sidebar')
+    @include('layouts.sidebar')
 @endsection
 
 @section('content')
 <hr>
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">
+    <div class="container mx-auto">
+        <div class="border rounded">
+            <div class="bg-gray-200 p-4">
                 New Product
             </div>
-            <div class="card-body row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="" class="form-label">Nama Produk</label>
-                      <input type="text" class="form-control" name="tb_product_name" id="tb_product_name" placeholder="">
-                      <small id="helpId" class="form-text text-muted"></small>
+            <div class="p-4 ">
+                <div>
+                    <div id="namaProduk" class="mb-3">
+                      <label for="" class="block text-sm font-medium text-gray-700">Nama Produk</label>
+                      <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1" name="tb_product_name" id="tb_product_name" placeholder="">
+                      <small id="helpId" class="text-gray-500 text-xs"></small>
                     </div>
-                    <div class="mb-3">
-                      <label for="" class="form-label">Tipe</label>
-                        <select class="form-select" aria-label="Default select example">
+                    <div id="tipe" class="mb-3">
+                      <label for="" class="block text-sm font-medium text-gray-700">Tipe</label>
+                        <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                             <option selected>Open this select menu</option>
                         </select>
-                      <small id="helpId" class="form-text text-muted"></small>
+                      <small id="helpId" class="text-gray-500 text-xs"></small>
                     </div>
-                    <div class="mb-3">
-                      <label for="" class="form-label">Stok</label>
-                      <input type="number" class="form-control" name="tb_product_name" id="tb_product_name" value="0" placeholder="">
-                      <small id="helpId" class="form-text text-muted">boleh dikosongkan</small>
+                    <div id="stok" mb-3">
+                      <label for="" class="block text-sm font-medium text-gray-700">Stok</label>
+                      <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1" name="tb_product_name" id="tb_product_name" value="0" placeholder="">
+                      <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
                     </div>
-                    <div class="mb-3">
-                      <label for="" class="form-label">Harga</label>
-                      <input type="number" class="form-control" name="tb_product_name" id="tb_product_name" value="0" placeholder="">
-                      <small id="helpId" class="form-text text-muted"></small>
+                    <div id="gudang" class="mb-3">
+                      <label for="" class="block text-sm font-medium text-gray-700">Gudang</label>
+                      <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1" name="tb_product_name" id="tb_product_name" value="0" placeholder="">
+                    </div>
+                    <div id="harga" class="mb-3">
+                      <label for="" class="block text-sm font-medium text-gray-700">Harga</label>
+                      <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1" name="tb_product_name" id="tb_product_name" value="0" placeholder="">
+                      <small id="helpId" class="text-gray-500 text-xs"></small>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <hr>
-    <div class="table-responsive small">
-        <table class="table table-striped table-sm">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Tipe</th>
-                    <th scope="col">Stok</th>
-                    <th scope="col">Harga</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    @forelse ($productsData as $pd)
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $pd->nama_produk }}</td>
-                        <td>Dummy</td>
-                        <td>{{ $pd->stok_produk }}</td>
-                        <td>{{ $pd->harga_produk }}</td>
-                        <td>
-                            <a href="#" class="badge bg-danger">delete</a>
-                            <a href="#" class="badge bg-secondary">edit</a>
-                        </td>
-                    @empty
-                        <td colspan="6" align="center">No Data</td>
-                    @endforelse
 
-                </tr>
-            </tbody>
-        </table>
-    </div>
 @endsection
+

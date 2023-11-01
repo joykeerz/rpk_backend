@@ -63,6 +63,13 @@ class ProductController extends Controller
         // return view('product.index', ['productsData' => $products]);
     }
 
+    function manage ()
+    {
+        $Products = Produk::all();
+        $category = Kategori::all();
+        return view('product.manage', ['productsData' => $Products]);
+    }
+
     function store(Request $request)
     {
         $product = new Produk;
