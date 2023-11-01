@@ -152,6 +152,13 @@ class DatabaseSeeder extends Seeder
 
         // Kategori Seed
         DB::table('kategori')->insert([
+            'nama_kategori' => 'none',
+            'deskripsi_kategori' => 'none',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('kategori')->insert([
             'nama_kategori' => 'Beras Khusus',
             'deskripsi_kategori' => 'Beras asli',
             'created_at' => now(),
@@ -174,7 +181,7 @@ class DatabaseSeeder extends Seeder
 
         //produk
         DB::table('produk')->insert([
-            'kategori_id' => 1,
+            'kategori_id' => 2,
             'kode_produk' => 'B0001',
             'nama_produk' => 'Beras Al Hambra Biryani Kemasan',
             'desk_produk' => 'none',
@@ -187,7 +194,7 @@ class DatabaseSeeder extends Seeder
 
         //produk
         DB::table('produk')->insert([
-            'kategori_id' => 2,
+            'kategori_id' => 3,
             'kode_produk' => 'M0001',
             'nama_produk' => 'Minyak Goreng Bimoli',
             'desk_produk' => 'none',
@@ -200,7 +207,7 @@ class DatabaseSeeder extends Seeder
 
         //produk
         DB::table('produk')->insert([
-            'kategori_id' => 3,
+            'kategori_id' => 4,
             'kode_produk' => 'D0001',
             'nama_produk' => 'Daging Sapi Wagyu',
             'desk_produk' => 'none',
