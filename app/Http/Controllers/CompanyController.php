@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,7 +29,18 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $company = new Company;
+        $company->alamat_id = $request->tb_alamat_id;
+        $company->user_id = $request->tb_user_id;
+        $company->kode_company = $request->tb_kode_company;
+        $company->nama_company = $request->tb_nama_company;
+        $company->partner_company = $request->tb_partner_company;
+        $company->tagline_company = $request->tb_tagline_company;
+        $company->save();
+
+        return response()->json([
+            'data' => $company,
+        ],200);
     }
 
     /**
@@ -36,7 +48,23 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = DB::table('companies')
+            ->join('users', 'companies.user_id', '=', 'users.id')
+            ->join('alamat', 'companies.alamat_id', '=', 'alamat.id')
+            ->select('companies.*', 'alamat.*', 'users.*', 'companies.id as cid', 'alamat.id as aid' , 'users.id as uid')
+            ->where('companies.id', '=', $id)
+            ->first();
+
+        if ($company == null) {
+            return response()->json([
+                'error' => 'resource not found'
+            ], '404');
+        }
+
+        $res =  response()->json([
+            'data' => $company,
+        ], 200);
+        return $res;
     }
 
     /**
