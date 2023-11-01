@@ -6,7 +6,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\KategoryController;
 use App\Http\Controllers\ManageUserController;
-use App\Http\Controllers\SubcatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +57,7 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('product')->group(function(){
         Route::get('/', [ProductController::class, 'index'])->name('product.index');
         Route::post('/store', [ProductController::class, 'store'])->name('product.store');
-        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+        Route::get('/show/{id}', [ProductController::class, 'show'])->name('product.show');
         Route::post('/update/{id}', [ProductController::class, 'update'])->name('product.update');
         Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
     });
@@ -67,7 +66,7 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('category')->group(function(){
         Route::get('/', [KategoryController::class, 'index'])->name('category.index');
         Route::post('/store', [KategoryController::class, 'store'])->name('category.store');
-        Route::get('/edit/{id}', [KategoryController::class, 'edit'])->name('category.edit');
+        Route::get('/show/{id}', [KategoryController::class, 'show'])->name('category.show');
         Route::post('/update/{id}', [KategoryController::class, 'update'])->name('category.update');
         Route::get('/delete/{id}', [KategoryController::class, 'delete'])->name('category.delete');
     });

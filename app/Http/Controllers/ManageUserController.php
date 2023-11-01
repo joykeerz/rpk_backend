@@ -31,7 +31,6 @@ class ManageUserController extends Controller
 
     public function index()
     {
-        // $allUsers = User::all();
         $allUsers = DB::table('users')
         ->join('roles','users.role_id','=','roles.id')
         ->select('users.*','roles.*','roles.id as rid','users.id as uid')
@@ -58,10 +57,6 @@ class ManageUserController extends Controller
 
     public function edit($id)
     {
-        // $userData = User::find($id);
-        // dd($userData);
-        // $userProfile = Biodata::where('user_id', $userData->id)->first();
-        // $userAlamat = Alamat::where('id', $userProfile->alamat_id)->first();
         $userData = DB::table('users')
         ->join('biodata','users.id','=','biodata.user_id')
         ->join('alamat','alamat.id','=','biodata.alamat_id')
@@ -166,7 +161,7 @@ class ManageUserController extends Controller
         $Alamat->kode_pos = $request->tb_kodepos;
         $Alamat->save();
 
-        return redirect()->route('manage.user.edit', ['id' => $id])->with('message', 'Alamat akun berhasil diupdate');
+        return redirect()->route('manage.user.edit', ['id' => $request->tb_hidden_uid])->with('message', 'Alamat akun berhasil diupdate');
     }
 
     public function StoreNewAccount(Request $request)

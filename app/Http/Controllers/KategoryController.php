@@ -13,9 +13,27 @@ class KategoryController extends Controller
         $this->middleware('auth');
     }
 
-    function index()
+    public function index()
     {
         $categories = Kategori::all();
-        dd($categories);
+        return response()->json([
+            'data' => $categories,
+        ],'200');
+    }
+
+    public function store(){
+
+    }
+
+    public function show($id){
+
+    }
+
+public function update(Request $request ,$id){
+
+    }
+
+    public function delete($id){
+
     }
 }

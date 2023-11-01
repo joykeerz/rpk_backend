@@ -27,7 +27,7 @@
                                     <h4 class="text-lg font-semibold">Account</h4>
                                     <hr class="my-4">
                                     <form method="POST"
-                                        action="{{ route('manage.user.update', ['id' => $userData->id]) }}">
+                                        action="{{ route('manage.user.update', ['id' => $userData->uid]) }}">
                                         @csrf
                                         <div class="mb-4">
                                             <label for="tb_nama_user"
@@ -103,7 +103,7 @@
                                     <h4 class="text-lg font-semibold">Reset Password</h4>
                                     <hr class="my-4">
                                     <form method="POST"
-                                        action="{{ route('manage.user.changePassword', ['id' => $userData->id]) }}">
+                                        action="{{ route('manage.user.changePassword', ['id' => $userData->uid]) }}">
                                         @csrf
                                         <div class="mb-4">
                                             <label for="tb_password_user"
@@ -121,7 +121,7 @@
                                     <hr class="my-4">
 
                                     <form method="POST"
-                                        action="{{ route('manage.user.update.alamat', ['id' => $userData->alamat_id]) }}">
+                                        action="{{ route('manage.user.update.alamat', ['id' => $userData->aid]) }}">
                                         @csrf
                                         <div class="mb-4">
                                             <label for="tb_jalan"
@@ -165,7 +165,8 @@
                                                 {{-- <input value="zzzz" type="text"
                                                     class="border rounded-md py-2 px-3 w-full" name="tb_Provinsi"
                                                     placeholder=""> --}}
-                                                <input value="{{$userData->provinsi}}" type="text" name="tb_prov" id="tb_prov" class="border rounded-md py-2 px-3 w-full">
+                                                <input value="{{ $userData->provinsi }}" type="text" name="tb_prov"
+                                                    id="tb_prov" class="border rounded-md py-2 px-3 w-full">
                                             </div>
                                             <div class="mb-4">
                                                 <label for="tb_kota"
@@ -198,6 +199,8 @@
                                                 class="border rounded-md py-2 px-3 w-full" name="tb_kodepos"
                                                 placeholder="">
                                         </div>
+
+                                        <input type="hidden" name="tb_hidden_uid" id="tb_hidden_uid" value="{{$userData->uid}}">
                                         <button type="submit"
                                             class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Change</button>
                                     </form>

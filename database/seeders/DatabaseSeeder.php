@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+
+        // Roles Seed
         DB::table('roles')->insert([
             'nama_role' => 'Super Admin',
             'desk_role' => 'Manager of system or developer',
@@ -58,6 +60,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        // Admin User Seed
         DB::table('users')->insert([
             'name' => 'Super Admin',
             'email' => 'admin@mail.com',
@@ -78,6 +81,8 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+
+        // Alamat Seed
         DB::table('alamat')->insert([
             'jalan' => 'none',
             'jalan_ext' => 'none',
@@ -126,6 +131,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        // Biodata & RPK Seed
         DB::table('biodata')->insert([
             'user_id' => 1,
             'alamat_id' => 1,
@@ -140,6 +146,67 @@ class DatabaseSeeder extends Seeder
             'alamat_id' => 2,
             'nama_rpk' => 'RPK Mahran',
             'no_ktp' => '123456789',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Kategori Seed
+        DB::table('kategori')->insert([
+            'nama_kategori' => 'Beras Khusus',
+            'deskripsi_kategori' => 'Beras asli',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('kategori')->insert([
+            'nama_kategori' => 'Minyak Goreng',
+            'deskripsi_kategori' => 'Minyak',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('kategori')->insert([
+            'nama_kategori' => 'Daging',
+            'deskripsi_kategori' => 'Daging asli',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        //produk
+        DB::table('produk')->insert([
+            'kategori_id' => 1,
+            'kode_produk' => 'B0001',
+            'nama_produk' => 'Beras Al Hambra Biryani Kemasan',
+            'desk_produk' => 'none',
+            'harga_produk' => 40500,
+            'diskon_produk' => 0,
+            'satuan_unit_produk' => 'gr',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        //produk
+        DB::table('produk')->insert([
+            'kategori_id' => 2,
+            'kode_produk' => 'M0001',
+            'nama_produk' => 'Minyak Goreng Bimoli',
+            'desk_produk' => 'none',
+            'harga_produk' => 50200,
+            'diskon_produk' => 0,
+            'satuan_unit_produk' => 'liter',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        //produk
+        DB::table('produk')->insert([
+            'kategori_id' => 3,
+            'kode_produk' => 'D0001',
+            'nama_produk' => 'Daging Sapi Wagyu',
+            'desk_produk' => 'none',
+            'harga_produk' => 82500,
+            'diskon_produk' => 0,
+            'satuan_unit_produk' => 'kg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

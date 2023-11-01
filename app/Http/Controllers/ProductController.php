@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Models\Produk;
+use App\Models\Stok;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -15,41 +17,101 @@ class ProductController extends Controller
 
     public function show($id)
     {
+
         // Fetch the product with the given $id from the database
-        $product = Produk::find($id);
-        echo $product;
+        // $product = Produk::find($id);
+        // echo $product;
+
+        $product = DB::table('produk')
+            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+            ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid')
+            ->where('produk.id', '=', $id)
+            ->first();
 
         // Check if the product exists
         if ($product == null) {
             // Return a 404 response if the product doesn't exist
-            echo "Product not found";
+            // echo "Product not found";
+            return response()->json([
+                'error' => 'resource not found'
+            ], '404');
         }
 
-        return view('products.show', ['product' => $product]);
+        $res =  response()->json([
+            'data' => $product,
+        ], 200);
+        return $res;
+
+        // return view('products.show', ['product' => $product]);
     }
 
     function index()
     {
-        $Products = Produk::all();
-        $category = Kategori::all();
-        return view('product.index', ['productsData' => $Products]);
+        $products = DB::table('produk')
+            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+            ->select('produk.*', 'kategori.*', 'kategori.id as kid', 'produk.id as pid')
+            ->get();
+
+        $res =  response()->json([
+            'data' => $products
+        ], 200);
+        return $res;
+
+        // foreach ($products as $key => $value) {
+        //     echo "$key:$value->nama_produk, ";
+        // }
+        // return view('product.index', ['productsData' => $products]);
     }
 
     function store(Request $request)
     {
         $product = new Produk;
+        $product->kategori_id = $request->cb_kategori;
+        $product->kode_produk = $request->tb_kode_produk;
+        $product->nama_produk = $request->tb_nama_produk;
+        $product->desk_produk = $request->tb_desk_produk;
+        $product->harga_produk = $request->tb_harga_produk;
+        $product->diskon_produk = $request->tb_diskon_produk;
+        $product->satuan_unit_produk = $request->tb_satuan_unit;
+        $product->save();
 
-    }
+        $stok = new Stok;
+        $stok->produk_id = $request->cb_produk_id;
+        $stok->gudang_id = $request->cb_gudang_id;
+        $stok->jumlah_stok = $request->tb_jumlah_stok;
+        $stok->save();
 
-    function edit($id)
-    {
+        return response()->json($product, '200');
     }
 
     function update(Request $request, $id)
     {
+        $product = Produk::findOrFail($id);
+        // $product = Produk::where('id', '=', $id)->firstOrFail(); // FYI: ini adalah alternate query
+
+        $product->kategori_id = $request->cb_kategori;
+        $product->kode_produk = $request->tb_kode_produk;
+        $product->nama_produk = $request->tb_nama_produk;
+        $product->desk_produk = $request->tb_desk_produk;
+        $product->harga_produk = $request->tb_harga_produk;
+        $product->diskon_produk = $request->tb_diskon_produk;
+        $product->satuan_unit_produk = $request->tb_satuan_unit;
+        $product->save();
+
+        return response()->json([
+            'data' => $product,
+            'message' => 'produk berhasil diupdate'
+        ], '200');
     }
 
     function delete($id)
     {
+        $product = Produk::findOrFail($id);
+        $product->delete();
+        $stok = Stok::where('product_id',$id)->delete();
+
+        return response()->json([
+            'message' => 'produk berhasil diupdate'
+        ], '200');
     }
 }
