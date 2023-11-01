@@ -22,18 +22,34 @@
         </div>
     </header>
     @if (Session::has('message'))
-        <div class="bg-blue-200 border-t border-b border-blue-500 text-blue-700 px-4 py-3 relative" role="alert">
-            <p>{{ Session::get('message') }}.</p>
-            <button type="button" data-dismiss="alert" aria-label="Close" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                <svg class="fill-current h-6 w-6 text-blue-500" role="button" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20">
-                    <title>Close</title>
-                    <path
-                        d="M14.293 5.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.293a1 1 0 011.414-1.414L10 8.586l4.293-4.293z" />
-                </svg>
-            </button>
-        </div>
-    @endif
+    <div class="bg-green-200 border-t border-b border-white-500  px-4 py-3 relative" role="alert" id="alertMessage">
+        <p>{{ Session::get('message') }}.</p>
+        <button type="button" data-dismiss="alert" aria-label="Close" class="close-button absolute top-0 bottom-0 right-0 px-4 py-3 text-rose">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff3b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+        </button>
+    </div>
+    <script>
+        // After the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            var alert = document.getElementById('alertMessage');
+
+            if (alert) {
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                }, 5000); // 5000 milliseconds = 5 seconds
+            }
+
+            // Optionally, you might want to add functionality to close the alert with the close button
+            var closeButton = alert.querySelector('.close-button');
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    alert.style.display = 'none';
+                });
+            }
+        });
+    </script>
+@endif
+
 
     <div class="table-responsive mx-3">
         <table class="min-w-full divide-y divide-gray-200 text-center">
