@@ -56,9 +56,6 @@
     </div>
 </aside>
 
-<div class="openButton">
-
-</div>
 
 
 
@@ -74,7 +71,6 @@
         confirmLogout();
     });
 
-    console.log(window.innerHeight);
     function toggleSubMenu(subMenuId) {
         var subMenu = document.getElementById(subMenuId);
         subMenu.classList.toggle('hidden');
