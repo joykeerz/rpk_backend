@@ -29,7 +29,7 @@ class ProductController extends Controller
             ->first();
 
         // Check if the product exists
-        if ($product == null) {
+        if (!$product) {
             // Return a 404 response if the product doesn't exist
             // echo "Product not found";
             return response()->json([
@@ -37,10 +37,9 @@ class ProductController extends Controller
             ], '404');
         }
 
-        $res =  response()->json([
+        return response()->json([
             'data' => $product,
         ], 200);
-        return $res;
 
         // return view('products.show', ['product' => $product]);
     }
@@ -63,7 +62,7 @@ class ProductController extends Controller
         return view('product.index', ['productsData' => $products]);
     }
 
-    function manage ()
+    function manage()
     {
         $Products = Produk::all();
         $category = Kategori::all();
@@ -115,10 +114,21 @@ class ProductController extends Controller
     {
         $product = Produk::findOrFail($id);
         $product->delete();
-        $stok = Stok::where('product_id',$id)->delete();
+        $stok = Stok::where('product_id', $id)->delete();
 
         return response()->json([
             'message' => 'produk berhasil diupdate'
         ], '200');
+    }
+
+    public function searchProduct(Request $request)
+    {
+        $products = DB::table('produk')
+            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+            ->select('produk.*', 'kategori.*', 'kategori.id as kid', 'produk.id as pid')
+            ->where('title', 'LIKE', '%' . $request->search . "%")->get();
+        if ($products) {
+            return response()->json($products);
+        }
     }
 }
