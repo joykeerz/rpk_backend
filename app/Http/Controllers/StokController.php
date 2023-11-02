@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Stok;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,37 +29,6 @@ class StokController extends Controller
         // return view('product.index', ['productsData' => $products]);
     }
 
-    public function store(Request $request)
-    {
-
-        $alamat = new Alamat;
-        $alamat->jalan = $request->tb_jalan;
-        $alamat->jalan_ext = $request->tb_jalan_ext;
-        $alamat->blok = $request->tb_blok;
-        $alamat->rt = $request->tb_rt;
-        $alamat->rw = $request->tb_rw;
-        $alamat->provinsi = $request->tb_prov;
-        $alamat->kota_kabupaten = $request->tb_kota;
-        $alamat->kecamatan = $request->tb_kecamatan;
-        $alamat->kelurahan = $request->tb_kelurahan;
-        $alamat->negara = 'indonesia';
-        $alamat->kode_pos = $request->tb_kodepos;
-        $alamat->save();
-
-        $gudang = new Gudang;
-        $gudang->alamat_id = $alamat->id;
-        $gudang->company_id = $request->cb_alamat_id;
-        $gudang->user_id = $request->cb_user_id;
-        $gudang->nama_gudang = $request->tb_kode_produk;
-        $gudang->no_telp = $request->tb_nama_produk;
-        $gudang->save();
-
-        return response()->json([
-            'data' => [$alamat, $gudang],
-            'message' => 'Stok berhasil ditambahkan',
-        ], '200');
-    }
-
     public function show($id)
     {
         $gudang = DB::table('gudang')
@@ -83,31 +53,17 @@ class StokController extends Controller
 
     public function updateFromProduct(Request $request, $id)
     {
-
-        $gudang = Gudang::findOrFail($id);
-        $gudang->company_id = $request->cb_alamat_id;
-        $gudang->user_id = $request->cb_user_id;
-        $gudang->nama_gudang = $request->tb_kode_produk;
-        $gudang->no_telp = $request->tb_nama_produk;
-        $gudang->save();
-
-        $alamat = Alamat::findOrFail($gudang->alamat_id);
-        $alamat->jalan = $request->tb_jalan;
-        $alamat->jalan_ext = $request->tb_jalan_ext;
-        $alamat->blok = $request->tb_blok;
-        $alamat->rt = $request->tb_rt;
-        $alamat->rw = $request->tb_rw;
-        $alamat->provinsi = $request->tb_prov;
-        $alamat->kota_kabupaten = $request->tb_kota;
-        $alamat->kecamatan = $request->tb_kecamatan;
-        $alamat->kelurahan = $request->tb_kelurahan;
-        $alamat->negara = 'indonesia';
-        $alamat->kode_pos = $request->tb_kodepos;
-        $alamat->save();
+        $stok = Stok::where('produk_id',$id)->where('gudang_ud',$request->tb_gudang_id)->first();
+        // $gudang = Gudang::findOrFail($id);
+        // $gudang->company_id = $request->cb_alamat_id;
+        // $gudang->user_id = $request->cb_user_id;
+        // $gudang->nama_gudang = $request->tb_kode_produk;
+        // $gudang->no_telp = $request->tb_nama_produk;
+        // $gudang->save();
 
         return response()->json([
-            'data' => [$gudang, $alamat],
-            'message' => 'gudang berhasil diupdate'
+            'data' => [$stok],
+            'message' => 'stok berhasil diupdate'
         ], '200');
     }
 

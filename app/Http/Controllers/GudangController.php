@@ -26,8 +26,8 @@ class GudangController extends Controller
         // foreach ($products as $key => $value) {
         //     echo "$key:$value->nama_produk, ";
         // }
-        // return $res;
-        return view('product.index', ['productsData' => $products]);
+        return $res;
+        // return view('product.index', ['productsData' => $products]);
     }
 
     public function store(Request $request)
