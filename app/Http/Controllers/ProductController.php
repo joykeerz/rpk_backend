@@ -17,8 +17,6 @@ class ProductController extends Controller
 
     public function show($id)
     {
-
-
         $product = DB::table('produk')
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
             ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid')
@@ -34,11 +32,11 @@ class ProductController extends Controller
             ], '404');
         }
 
-        return response()->json([
-            'data' => $product,
-        ], 200);
+        // return response()->json([
+        //     'data' => $product,
+        // ], 200);
 
-        // return view('products.show', ['product' => $product]);
+        return view('products.show', ['product' => $product]);
     }
 
     function index()
@@ -62,6 +60,7 @@ class ProductController extends Controller
 
     function manage()
     {
+        //masukin query untuk nemuin gudang yang terkait dengan produk tsb
         $Products = Produk::all();
         $category = Kategori::all();
         return view('product.manage', ['productsData' => $Products]);
@@ -96,6 +95,8 @@ class ProductController extends Controller
         $product = Produk::findOrFail($id);
         // $product = Produk::where('id', '=', $id)->firstOrFail(); // FYI: ini adalah alternate query
 
+
+
         $product->kategori_id = $request->cb_kategori;
         $product->kode_produk = $request->tb_kode_produk;
         $product->nama_produk = $request->tb_nama_produk;
@@ -105,10 +106,12 @@ class ProductController extends Controller
         $product->satuan_unit_produk = $request->tb_satuan_unit;
         $product->save();
 
-        return response()->json([
-            'data' => $product,
-            'message' => 'produk berhasil diupdate'
-        ], '200');
+        // return response()->json([
+        //     'data' => $product,
+        //     'message' => 'produk berhasil diupdate'
+        // ], '200');
+
+        return redirect()->route('product.manage')->with('success', 'Produk berhasil diupdate');
     }
 
     function delete($id)
@@ -117,9 +120,13 @@ class ProductController extends Controller
         $product->delete();
         $stok = Stok::where('produk_id', $id)->delete();
 
-        return response()->json([
-            'message' => 'produk berhasil diupdate'
-        ], '200');
+        // return response()->json([
+        //     'message' => 'produk berhasil diupdate'
+        // ], '200');
+
+        return redirect()->route('product.manage')->with('success', 'Produk berhasil dihapus');
+
+
     }
 
     public function searchProduct(Request $request)

@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-<script>
+{{-- <script>
     const searchInput = document.getElementById('searchInput');
     const dataTable = document.getElementById('dataTable');
 
@@ -39,7 +39,7 @@
                 <td class="px-6 py-4 whitespace-nowrap">${product.stok_produk}</td>
                 <td class="px-6 py-4 whitespace-nowrap">${product.harga_produk}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <a href="#" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>
+                    <a href="{{ route('product.delete', ['id'=>$product.id]) }}" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>
                     <a href="#" class="bg-gray-500 text-white rounded-md px-3 py-1 ml-2">edit</a>
                 </td>
             `;
@@ -54,6 +54,11 @@
 
     // Initialize the table with the original data
     filterTable('');
+</script> --}}
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this product?");
+    }
 </script>
 
 <div class="overflow-auto m-3">
@@ -78,7 +83,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->stok_produk }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->harga_produk }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <a href="#" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>
+                        <a href="{{ route('product.delete', ['id' => $pd->id]) }}" onclick="return confirmDelete();" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>
                         <a href="#" class="bg-gray-500 text-white rounded-md px-3 py-1 ml-2">edit</a>
                     </td>
                 </tr>
