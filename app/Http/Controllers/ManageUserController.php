@@ -100,51 +100,6 @@ class ManageUserController extends Controller
         return redirect()->route('manage.user.edit', ['id' => $id])->with('message', 'Password berhasil diganti');
     }
 
-    public function storeBiodata(Request $request)
-    {
-        $validateData = $request->validate([
-            'tb_nama_rpk' => 'required',
-            'tb_no_ktp' => 'required',
-        ]);
-
-        $dataBiodata = new Biodata;
-        $dataBiodata->user_id = Auth::user()->id;
-        $dataBiodata->nama_rpk = $request->tb_nama_rpk;
-        $dataBiodata->no_ktp = $request->tb_no_ktp;
-        $dataBiodata->save();
-    }
-
-    public function storeAlamat(Request $request, $id)
-    {
-        $validateData = $request->validate([
-            'tb_alamat' => 'required',
-            'tb_jalan_ext' => 'required',
-            'tb_blok' => 'required',
-            'tb_rt' => 'required',
-            'tb_rw' => 'required',
-            'tb_provinsi' => 'required',
-            'tb_kota_kabupaten' => 'required',
-            'tb_kecamatan' => 'required',
-            'tb_kelurahan' => 'required',
-            'tb_negara' => 'required',
-            'tb_kode_pos' => 'required',
-        ]);
-
-        $dataAlamat = new Alamat;
-        $dataAlamat->biodata_id = $id;
-        $dataAlamat->jalan = $request->tb_alamat;
-        $dataAlamat->jalan_ext = $request->tb_jalan_ext;
-        $dataAlamat->blok = $request->tb_blok;
-        $dataAlamat->rt = $request->tb_rt;
-        $dataAlamat->rw = $request->tb_rw;
-        $dataAlamat->provinsi = $request->tb_provinsi;
-        $dataAlamat->kota_kabupaten = $request->tb_kota_kabupaten;
-        $dataAlamat->kecamatan = $request->tb_kecamatan;
-        $dataAlamat->kelurahan = $request->tb_kelurahan;
-        $dataAlamat->negara = $request->tb_negara;
-        $dataAlamat->kode_pos = $request->tb_kode_pos;
-    }
-
     public function changeAlamat(Request $request, $id)
     {
         $Alamat = Alamat::find($id);

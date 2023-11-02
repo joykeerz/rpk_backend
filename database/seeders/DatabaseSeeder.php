@@ -23,8 +23,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-
         // Roles Seed
+        DB::table('roles')->insert([
+            'nama_role' => 'none',
+            'desk_role' => 'none',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         DB::table('roles')->insert([
             'nama_role' => 'Super Admin',
             'desk_role' => 'Manager of system or developer',
@@ -134,7 +140,7 @@ class DatabaseSeeder extends Seeder
         // Biodata & RPK Seed
         DB::table('biodata')->insert([
             'user_id' => 1,
-            'alamat_id' => 1,
+            'alamat_id' => 2,
             'nama_rpk' => 'RPK Joy',
             'no_ktp' => '123456789',
             'created_at' => now(),
@@ -143,7 +149,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('biodata')->insert([
             'user_id' => 2,
-            'alamat_id' => 2,
+            'alamat_id' => 3,
             'nama_rpk' => 'RPK Mahran',
             'no_ktp' => '123456789',
             'created_at' => now(),
@@ -217,5 +223,29 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        // Companies Seed
+        DB::table('companies')->insert([
+            'alamat_id' => 1,
+            'user_id' => 1,
+            'kode_company' => 'none',
+            'nama_company' => 'none',
+            'partner_company' => 'none',
+            'tagline_company' => 'none',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Gudang Seed
+        DB::table('gudang')->insert([
+            'alamat_id' => 1,
+            'company_id' => 1,
+            'user_id' => 1,
+            'nama_gudang' => 'none',
+            'no_telp' => 'none',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
     }
 }
