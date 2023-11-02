@@ -198,7 +198,6 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        //produk
         DB::table('produk')->insert([
             'kategori_id' => 3,
             'kode_produk' => 'M0001',
@@ -211,7 +210,6 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        //produk
         DB::table('produk')->insert([
             'kategori_id' => 4,
             'kode_produk' => 'D0001',
@@ -220,6 +218,31 @@ class DatabaseSeeder extends Seeder
             'harga_produk' => 82500,
             'diskon_produk' => 0,
             'satuan_unit_produk' => 'kg',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        ///stok seeder
+        DB::table('stok')->insert([
+            'produk_id' => 1,
+            'gudang_id' => 1,
+            'jumlah_stok' => 5,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('stok')->insert([
+            'produk_id' => 2,
+            'gudang_id' => 1,
+            'jumlah_stok' => 5,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('stok')->insert([
+            'produk_id' => 3,
+            'gudang_id' => 1,
+            'jumlah_stok' => 5,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

@@ -53,36 +53,31 @@ class StokController extends Controller
 
     public function updateFromProduct(Request $request, $id)
     {
-        $stok = Stok::where('produk_id',$id)->where('gudang_ud',$request->tb_gudang_id)->first();
-        // $gudang = Gudang::findOrFail($id);
-        // $gudang->company_id = $request->cb_alamat_id;
-        // $gudang->user_id = $request->cb_user_id;
-        // $gudang->nama_gudang = $request->tb_kode_produk;
-        // $gudang->no_telp = $request->tb_nama_produk;
-        // $gudang->save();
-
+        $stok = Stok::select('stok.*')
+            ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
+            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+            ->where('stok.id', '=', $id)
+            ->first();
+        // $stok = Stok::where('produk_id',$id)->where('gudang_ud',$request->tb_gudang_id)->first();
+        $stok->jumlah_stok = $request->tb_jumlah_stok;
+        $stok->save();
         return response()->json([
             'data' => [$stok],
             'message' => 'stok berhasil diupdate'
         ], '200');
     }
 
-    public function updateFromGudang(Request $request, $id) {
-
+    public function updateFromGudang(Request $request, $id)
+    {
     }
 
     public function delete($id)
     {
-        $gudang = Gudang::findOrFail($id);
-        $gudang->delete();
-        $alamat = Alamat::where('id', $gudang->alamat_id)->delete();
-        $alamat->delete();
-        $stok = Stok::where('gudang_id', $id);
+        $stok = Stok::findOrFail($id);
         $stok->delete();
-        // $alamat = Alamat::where('id', $gudang->alamat_id)->delete();
 
         return response()->json([
-            'message' => 'gudang serta alamat dan stok berhasil dihapus'
+            'message' => 'stok berhasil dihapus'
         ], '200');
     }
 }
