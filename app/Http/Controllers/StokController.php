@@ -81,7 +81,7 @@ class StokController extends Controller
         // return view('products.show', ['product' => $product]);
     }
 
-    public function update(Request $request, $id)
+    public function updateFromProduct(Request $request, $id)
     {
 
         $gudang = Gudang::findOrFail($id);
@@ -111,6 +111,10 @@ class StokController extends Controller
         ], '200');
     }
 
+    public function updateFromGudang(Request $request, $id) {
+
+    }
+
     public function delete($id)
     {
         $gudang = Gudang::findOrFail($id);
@@ -124,17 +128,5 @@ class StokController extends Controller
         return response()->json([
             'message' => 'gudang serta alamat dan stok berhasil dihapus'
         ], '200');
-    }
-
-    public function searchGudang(Request $request)
-    {
-        $gudang = DB::table('gudang')
-            ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
-            ->join('companies', 'gudang.company_id', '=', 'companies.id')
-            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'company.id as cid')
-            ->where('title', 'LIKE', '%' . $request->search . "%")->get();
-        if ($gudang) {
-            return response()->json($gudang);
-        }
     }
 }

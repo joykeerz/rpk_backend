@@ -19,7 +19,6 @@ class GudangController extends Controller
             ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'company.id as cid')
             ->get();
 
-
         $res =  response()->json([
             'data' => $gudang
         ], 200);
