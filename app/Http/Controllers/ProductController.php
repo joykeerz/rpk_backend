@@ -83,7 +83,7 @@ class ProductController extends Controller
         $product->save();
 
         $stok = new Stok;
-        $stok->produk_id = $product->kategori_id;
+        $stok->produk_id = $product->id;
         $stok->gudang_id = $request->cb_gudang_id;
         $stok->jumlah_stok = $request->tb_jumlah_stok;
         $stok->save();

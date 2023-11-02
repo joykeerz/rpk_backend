@@ -75,12 +75,12 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($productsData as $pd)
+                @forelse ($stokData as $pd)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->nama_produk }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">Dummy</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $pd->stok_produk }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ $pd->jumlah_stok }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->harga_produk }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <a href="{{ route('product.delete', ['id' => $pd->id]) }}" onclick="return confirmDelete();" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>

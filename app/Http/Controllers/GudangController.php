@@ -16,18 +16,21 @@ class GudangController extends Controller
         $gudang = DB::table('gudang')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->join('companies', 'gudang.company_id', '=', 'companies.id')
-            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'company.id as cid')
+            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'companies.id as cid')
             ->get();
 
         $res =  response()->json([
             'data' => $gudang
         ], 200);
 
+
+
         // foreach ($products as $key => $value) {
         //     echo "$key:$value->nama_produk, ";
         // }
-        return $res;
-        // return view('product.index', ['productsData' => $products]);
+        //return $res;
+        return view('gudang.index', ['gudangData' => $gudang]);
+
     }
 
     public function store(Request $request)

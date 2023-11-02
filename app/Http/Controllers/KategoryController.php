@@ -17,9 +17,10 @@ class KategoryController extends Controller
     public function index()
     {
         $categories = Kategori::all();
-        return response()->json([
-            'data' => $categories,
-        ], '200');
+        // return response()->json([
+        //     'data' => $categories,
+        // ], '200');
+        return view('kategori.index', ['kategoriData' => $categories]);
     }
 
     public function store(Request $request)
@@ -28,9 +29,11 @@ class KategoryController extends Controller
         $category->nama_kategori = $request->tb_nama_kategori;
         $category->deskripsi_kategori = $request->tb_desk_kategori;
         $category->save();
-        return response()->json([
-            'data' => $category,
-        ], '200');
+        // return response()->json([
+        //     'data' => $category,
+        // ], '200');
+        return redirect()->route('category.index')->with('message', 'Data Kategori Berhasil Ditambahkan!');
+
     }
 
     public function show($id)
