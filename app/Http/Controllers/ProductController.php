@@ -55,12 +55,12 @@ class ProductController extends Controller
         $res =  response()->json([
             'data' => $products
         ], 200);
-        return $res;
+
 
         // foreach ($products as $key => $value) {
         //     echo "$key:$value->nama_produk, ";
         // }
-        // return view('product.index', ['productsData' => $products]);
+        return view('product.index', ['productsData' => $products]);
     }
 
     function manage ()
