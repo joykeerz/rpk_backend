@@ -18,9 +18,6 @@ class ProductController extends Controller
     public function show($id)
     {
 
-        // Fetch the product with the given $id from the database
-        // $product = Produk::find($id);
-        // echo $product;
 
         $product = DB::table('produk')
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
@@ -55,11 +52,12 @@ class ProductController extends Controller
             'data' => $products
         ], 200);
 
-        // foreach ($products as $key => $value) {
-        //     echo "$key:$value->nama_produk, ";
-        // }
-        // return $res;
-        return view('product.index', ['productsData' => $products]);
+        $kategori = DB::table('kategori')
+            ->select('nama_kategori','id')
+            ->get();
+        //dd($kategori);
+
+        return view('product.index', ['productsData' => $products, 'kategoriData' => $kategori]);
     }
 
     function manage()
@@ -78,16 +76,19 @@ class ProductController extends Controller
         $product->desk_produk = $request->tb_desk_produk;
         $product->harga_produk = $request->tb_harga_produk;
         $product->diskon_produk = $request->tb_diskon_produk;
-        $product->satuan_unit_produk = $request->tb_satuan_unit;
+        $product->satuan_unit_produk = $request->tb_satuan;
+        //dd($product);
+        // dd($request->tb_satuan);
         $product->save();
 
         $stok = new Stok;
-        $stok->produk_id = $request->cb_produk_id;
+        $stok->produk_id = $product->kategori_id;
         $stok->gudang_id = $request->cb_gudang_id;
         $stok->jumlah_stok = $request->tb_jumlah_stok;
         $stok->save();
 
-        return response()->json($product, '200');
+        //return response()->json($product, '200');
+        return redirect()->route('product.manage')->with('success', 'Produk berhasil ditambahkan');
     }
 
     function update(Request $request, $id)
