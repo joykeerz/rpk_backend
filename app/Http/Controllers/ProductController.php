@@ -136,7 +136,8 @@ class ProductController extends Controller
     {
         $product = Produk::findOrFail($id);
         $product->delete();
-        $stok = Stok::where('produk_id', $id)->delete();
+        $stok = Stok::where('produk_id', $id)->first();
+        $stok->delete();
 
         // return response()->json([
         //     'message' => 'produk berhasil diupdate'

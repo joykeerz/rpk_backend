@@ -270,5 +270,15 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        // Branch Seed
+        DB::table('branches')->insert([
+            'company_id' => 1,
+            'nama_branch' => 'none',
+            'no_telp_branch' => 'none',
+            'alamat_branch' => 'none',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
     }
 }
