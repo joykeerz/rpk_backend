@@ -52,7 +52,7 @@ class ProductController extends Controller
             'data' => $stok,
         ], 200);
 
-        return view('products.show', ['product' => $product]);
+        return view('products.show', ['product' => $stok]);
     }
 
     function index()

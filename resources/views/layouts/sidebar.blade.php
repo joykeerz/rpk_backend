@@ -92,10 +92,10 @@
                 </a>
                 <ul    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 " id="gudangSubMenu"> <!-- Nested submenu -->
                     <li  class="hover:bg-gray-100">
-                        <a href="{{ route('gudang.index') }}" class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input Gudang</a>
+                        <a href="{{ route('gudang.create') }}" class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input Gudang</a>
                     </li>
                     <li  class="hover:bg-gray-100">
-                        <a href="#" class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage Gudang</a>
+                        <a href="{{ route('gudang.index') }}" class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage Gudang</a>
                     </li>
                 </ul>
             </li>

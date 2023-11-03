@@ -36,9 +36,11 @@ class GudangController extends Controller
 
     public function create(){
         $usersData = User::all();
-        $res =  response()->json([
-            'data' => $usersData
-        ], 200);
+        // $res =  response()->json([
+        //     'data' => $usersData
+        // ], 200);
+
+        return view('gudang.create', ['usersData' => $usersData]);
 
         ///user data untuk dropdown pilih user(penanggung jawab gudang)
     }
@@ -64,8 +66,8 @@ class GudangController extends Controller
         $gudang->alamat_id = $alamat->id;
         $gudang->company_id = $request->cb_alamat_id;
         $gudang->user_id = $request->cb_user_id;
-        $gudang->nama_gudang = $request->tb_kode_produk;
-        $gudang->no_telp = $request->tb_nama_produk;
+        $gudang->nama_gudang = $request->tb_nama_gudang;
+        $gudang->no_telp = $request->tb_no_telp;
         $gudang->save();
 
         return response()->json([
