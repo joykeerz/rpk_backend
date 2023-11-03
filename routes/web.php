@@ -82,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/show/{id}', [GudangController::class, 'show'])->name('gudang.show');
         Route::post('/update/{id}', [GudangController::class, 'update'])->name('gudang.update');
         Route::get('/delete/{id}', [GudangController::class, 'delete'])->name('gudang.delete');
+        Route::get('/create', [GudangController::class, 'create'])->name('gudang.create');
     });
 
     ///company

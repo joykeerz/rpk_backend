@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alamat;
+use App\Models\Company;
 use App\Models\Gudang;
 use App\Models\Produk;
 use App\Models\Stok;
@@ -17,25 +18,32 @@ class GudangController extends Controller
         $gudang = DB::table('gudang')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->join('companies', 'gudang.company_id', '=', 'companies.id')
-            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'company.id as cid')
+            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'companies.id as cid')
             ->get();
 
         $res =  response()->json([
             'data' => $gudang
         ], 200);
 
+
+
         // foreach ($products as $key => $value) {
         //     echo "$key:$value->nama_produk, ";
         // }
-        return $res;
-        // return view('product.index', ['productsData' => $products]);
+        //return $res;
+        return view('gudang.index', ['gudangData' => $gudang]);
+
     }
 
     public function create(){
         $usersData = User::all();
-        $res =  response()->json([
-            'data' => $usersData
-        ], 200);
+        $companyData = Company::all();
+        // $res =  response()->json([
+        //     'data' => $usersData
+        // ], 200);
+
+
+        return view('gudang.create', ['usersData' => $usersData , 'companyData' => $companyData]);
 
         ///user data untuk dropdown pilih user(penanggung jawab gudang)
     }
@@ -59,16 +67,17 @@ class GudangController extends Controller
 
         $gudang = new Gudang;
         $gudang->alamat_id = $alamat->id;
-        $gudang->company_id = $request->cb_alamat_id;
+        $gudang->company_id = $request->cb_company_id;
         $gudang->user_id = $request->cb_user_id;
-        $gudang->nama_gudang = $request->tb_kode_produk;
-        $gudang->no_telp = $request->tb_nama_produk;
+        $gudang->nama_gudang = $request->tb_nama_gudang;
+        $gudang->no_telp = $request->tb_no_telp;
         $gudang->save();
 
-        return response()->json([
-            'data' => [$alamat, $gudang],
-            'message' => 'gudang berhasil didaftarkan',
-        ], '200');
+        // return response()->json([
+        //     'data' => [$alamat, $gudang],
+        //     'message' => 'gudang berhasil didaftarkan',
+        // ], '200');
+        return redirect()->route('gudang.index')->with('message', 'Data Gudang Berhasil Ditambahkan!');
     }
 
     public function show($id)
@@ -133,9 +142,11 @@ class GudangController extends Controller
         $stok->delete();
         // $alamat = Alamat::where('id', $gudang->alamat_id)->delete();
 
-        return response()->json([
-            'message' => 'gudang serta alamat dan stok berhasil dihapus'
-        ], '200');
+        // return response()->json([
+        //     'message' => 'gudang serta alamat dan stok berhasil dihapus'
+        // ], '200');
+
+        return redirect()->route('gudang.index')->with('message', 'Data Gudang Berhasil Dihapus!');
     }
 
     public function searchGudang(Request $request)
