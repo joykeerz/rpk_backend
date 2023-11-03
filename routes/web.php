@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GudangController;
 use Illuminate\Support\Facades\Route;
@@ -95,5 +96,15 @@ Route::middleware(['auth'])->group(function () {
     ///stok
     Route::prefix('stok')->group(function(){
         Route::post('/update/product/stok/{id}', [StokController::class, 'updateFromProduct'])->name('stok.updateFromProduct');
+    });
+
+    ///branch
+    Route::prefix('branch')->group(function(){
+        Route::get('/', [BranchController::class, 'index'])->name('branch.index');
+        Route::get('/manage', [BranchController::class, 'manage'])->name('branch.manage');
+        Route::post('/store', [BranchController::class, 'store'])->name('branch.store');
+        Route::get('/show/{id}', [BranchController::class, 'show'])->name('branch.show');
+        Route::post('/update/{id}', [BranchController::class, 'update'])->name('branch.update');
+        Route::get('/delete/{id}', [BranchController::class, 'delete'])->name('branch.delete');
     });
 });
