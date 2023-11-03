@@ -79,8 +79,9 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('gudang.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    onclick="toggleSubMenu('gudangSubMenu')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -89,6 +90,14 @@
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Gudang</span>
                 </a>
+                <ul    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 " id="gudangSubMenu"> <!-- Nested submenu -->
+                    <li  class="hover:bg-gray-100">
+                        <a href="{{ route('gudang.index') }}" class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input Gudang</a>
+                    </li>
+                    <li  class="hover:bg-gray-100">
+                        <a href="#" class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage Gudang</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="#"

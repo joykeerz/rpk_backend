@@ -126,9 +126,11 @@ class GudangController extends Controller
         $stok->delete();
         // $alamat = Alamat::where('id', $gudang->alamat_id)->delete();
 
-        return response()->json([
-            'message' => 'gudang serta alamat dan stok berhasil dihapus'
-        ], '200');
+        // return response()->json([
+        //     'message' => 'gudang serta alamat dan stok berhasil dihapus'
+        // ], '200');
+
+        return redirect()->route('gudang.index')->with('message', 'Data Gudang Berhasil Dihapus!');
     }
 
     public function searchGudang(Request $request)

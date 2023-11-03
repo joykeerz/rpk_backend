@@ -61,8 +61,10 @@ class KategoryController extends Controller
             ->update(['kategori_id' => 1]);
         $category = Kategori::findOrFail($id);
         $category->delete();
-        return response()->json([
-            'message' => "{$category} berhasil dihapus",
-        ], '200');
+        // return response()->json([
+        //     'message' => "{$category} berhasil dihapus",
+        // ], '200');
+
+        return redirect()->route('category.index')->with('message', 'Data Kategori Berhasil Dihapus!');
     }
 }
