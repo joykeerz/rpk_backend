@@ -43,73 +43,24 @@
             });
         </script>
     @endif
-
-    <div class="title bg-gray-200 p-4">
-        <h3 class="text-xl">Kategori</h3>
-    </div>
-
-    <div class="inputKategoriContainer flex flex-col">
-        <form action="{{ route('category.store') }}" method="POST">
-            @csrf
-            <div class="inputKategori p-4">
-                <label class="block text-sm font-medium text-gray-700" for="kategori">Nama Kategori:</label>
-                <input
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                    type="text" name="tb_nama_kategori" id="tb_nama_kategori">
-                <label class="block text-sm font-medium text-gray-700" for="deskripsiKategori">Deskripsi Kategori:</label>
-                <textarea
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                    name="tb_desk_kategori" id="tb_desk_kategori" cols="100" rows="3"></textarea>
-            </div>
-            <button type="submit"
-            class="bg-blue-500 text-white py-1 px-4 rounded-md hover:bg-blue-600 m-auto my-2">Submit</button>
-        </form>
-
-    </div>
-
-    <hr>
-
-    <div class="table-container w-full p-3">
-        <table class="table w-full">
-            <thead class="border-b">
-                <tr>
-                    <th>Nama Kategori</th>
-                    <th>Deskripsi Kategori</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($kategoriData as $item)
-                    <tr class="text-center">
-                        <td class="w-1/3">{{ $item->nama_kategori }}</td>
-                        <td>{{ $item->deskripsi_kategori }}</td>
-                        <td>
-                            <button onclick="updateData({{ $item->id }})">edit</button>
-                            <a href="{{ route('category.delete', ['id' => $item->id]) }}">delete</a>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="2">No categories found.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         // Function to trigger SweetAlert for data update
         function updateData(itemId) {
+            const initialNamaKategori = document.querySelector(`tr[data-id="${itemId}"] .nama_kategori`).innerText;
+    const initialDeskripsiKategori = document.querySelector(`tr[data-id="${itemId}"] .deskripsi_kategori`).innerText;
+
             Swal.fire({
                 title: 'Update Data',
-                html: `<form id="updateForm" method="post" action="/category/update/+${itemId}">`+
-                    '@csrf' +
-                    '<label for="tb_nama_kategori">Nama Kategori:</label>' +
-                    '<input id="tb_nama_kategori" class="swal2-input" placeholder="Nama Kategori" name="tb_nama_kategori">' + '<br>' +
-                    '<label for="tb_desk_kategori">Deskripsi Kategori:</label>' +
-                    '<textarea id="tb_desk_kategori" class="swal2-textarea" placeholder="Deskripsi Kategori" name="tb_desk_kategori"></textarea>' +
-                    '</form>',
+                html: `<form id="updateForm" method="post" action="/category/update/+${itemId}">` +
+            '@csrf' +
+            `<label for="tb_nama_kategori">Nama Kategori:</label>` +
+            `<input id="tb_nama_kategori" class="swal2-input" placeholder="Nama Kategori" name="tb_nama_kategori" value="${initialNamaKategori}">` +
+            `<br>` +
+            `<label for="tb_desk_kategori">Deskripsi Kategori:</label>` +
+            `<textarea id="tb_desk_kategori" class="swal2-textarea w-3/4" placeholder="Deskripsi Kategori" name="tb_desk_kategori">${initialDeskripsiKategori}</textarea>` +
+            `</form>`,
                 focusConfirm: false,
                 preConfirm: () => {
                     const namaKategori = Swal.getPopup().querySelector('#tb_nama_kategori').value;
@@ -144,7 +95,7 @@
                                 title: 'Success!',
                                 text: 'Data berhasil diupdate!',
                                 icon: 'success',
-                                confirmButtonText: 'Cool'
+                                confirmButtonText: 'Submit'
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     location.reload();
@@ -158,15 +109,72 @@
                                 text: 'Data gagal diupdate!',
                                 icon: 'error',
                                 confirmButtonText: 'Ok'
-                                setTimeout(function() {
-                                    location.reload();
-                                }, 3000);
                             })
                         }
                     })
                 }
             })
         }
-
     </script>
+
+    <div class="title bg-gray-200 p-4">
+        <h3 class="text-xl">Kategori</h3>
+    </div>
+
+    <div class="inputKategoriContainer">
+        <form action="{{ route('category.store') }}" method="POST">
+            @csrf
+            <div class="inputKategori p-4">
+                <label class="block text-sm font-medium text-gray-700" for="kategori">Nama Kategori:</label>
+                <input
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
+                    type="text" name="tb_nama_kategori" id="tb_nama_kategori">
+                <label class="block text-sm font-medium text-gray-700" for="deskripsiKategori">Deskripsi Kategori:</label>
+                <textarea
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
+                    name="tb_desk_kategori" id="tb_desk_kategori" cols="100" rows="3"></textarea>
+            </div>
+            <div class="flex justify-center">
+                <button type="submit" class="bg-blue-500 text-white py-1 px-4 rounded-md hover:bg-blue-600 m-auto my-2">
+                    Submit
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+    <hr>
+
+    <div class="table-container w-full p-3">
+        <table class="table w-full  border-spacing-3">
+            <thead class="border-b ">
+                <tr>
+                    <th>Nama Kategori</th>
+                    <th>Deskripsi Kategori</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($kategoriData as $item)
+                <tr class="text-center " data-id="{{ $item->id }}">
+                    <td class="w-1/3 nama_kategori">{{ $item->nama_kategori }}</td>
+                    <td class="deskripsi_kategori">{{ $item->deskripsi_kategori }}</td>
+                        <td>
+                            <button onclick="updateData({{ $item->id }})"
+                                class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+                                edit
+                            </button>
+                            <a href="{{ route('category.delete', ['id' => $item->id]) }}"
+                                class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600">
+                                delete
+                            </a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="2">No categories found.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 @endsection

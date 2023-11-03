@@ -18,7 +18,6 @@
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('Gudang') }}
     </h2>
-
 </header>
 
 <table class="min-w-full">

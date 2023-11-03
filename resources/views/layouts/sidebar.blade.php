@@ -89,6 +89,12 @@
                         <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Gudang</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                        <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
                 </a>
                 <ul    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 " id="gudangSubMenu"> <!-- Nested submenu -->
                     <li  class="hover:bg-gray-100">
