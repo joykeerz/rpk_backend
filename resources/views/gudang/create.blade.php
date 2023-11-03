@@ -15,12 +15,28 @@
     </header>
 
     <div class="formContainer m-3 border rounded p-3">
-        <form action="{{route('gudang.create')}}" method="POST" class="">
+        <form action="{{route('gudang.store')}}" method="POST" class="">
             @csrf
             <div class="inputLabelContainer grid grid-cols-2 gap-0.5">
                 <div class="tb_nama_gudang flex flex-col">
                     <label for="tb_nama_gudang">Nama Gudang</label>
                     <input type="text" name="tb_nama_gudang" id="tb_nama_gudang">
+                </div>
+                <div class="cb_company_id">
+                    <label for="cb_company_id">Company ID</label>
+                    <select name="cb_company_id" id="cb_company_id">
+                        @foreach ($companyData as $company)
+                            <option value="{{ $company->id }}">{{ $company->nama_company }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="cb_user_id">
+                    <label for="cb_user_id">User ID</label>
+                    <select name="cb_user_id" id="cb_user_id">
+                        @foreach ($usersData as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="tb_jalan flex flex-col">
                     <label for="tb_jalan">Jalan 1</label>
@@ -52,15 +68,15 @@
                 </div>
                 <div class="tb_kota_kabupaten flex flex-col">
                     <label for="tb_kota_kabupaten">Kota/Kabupaten</label>
-                    <input type="text" name="tb_kota_kabupaten" id="tb_kota_kabupaten">
+                    <input type="text" name="tb_kota" id="tb_kota">
                 </div>
                 <div class="tb_provinsi flex flex-col">
                     <label for="tb_provinsi">Provinsi</label>
-                    <input type="text" name="tb_provinsi" id="tb_provinsi">
+                    <input type="text" name="tb_prov" id="tb_prov">
                 </div>
                 <div class="tb_kode_pos flex flex-col">
                     <label for="tb_kode_pos">Kode Pos</label>
-                    <input type="text" name="tb_kode_pos" id="tb_kode_pos">
+                    <input type="text" name="tb_kodepos" id="tb_kodepos">
                 </div>
                 <div class="tb_no_telp flex flex-col">
                     <label for="tb_no_telp">No. Telp</label>

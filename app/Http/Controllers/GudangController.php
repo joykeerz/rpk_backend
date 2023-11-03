@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alamat;
+use App\Models\Company;
 use App\Models\Gudang;
 use App\Models\Produk;
 use App\Models\Stok;
@@ -36,11 +37,13 @@ class GudangController extends Controller
 
     public function create(){
         $usersData = User::all();
+        $companyData = Company::all();
         // $res =  response()->json([
         //     'data' => $usersData
         // ], 200);
 
-        return view('gudang.create', ['usersData' => $usersData]);
+
+        return view('gudang.create', ['usersData' => $usersData , 'companyData' => $companyData]);
 
         ///user data untuk dropdown pilih user(penanggung jawab gudang)
     }
@@ -64,16 +67,17 @@ class GudangController extends Controller
 
         $gudang = new Gudang;
         $gudang->alamat_id = $alamat->id;
-        $gudang->company_id = $request->cb_alamat_id;
+        $gudang->company_id = $request->cb_company_id;
         $gudang->user_id = $request->cb_user_id;
         $gudang->nama_gudang = $request->tb_nama_gudang;
         $gudang->no_telp = $request->tb_no_telp;
         $gudang->save();
 
-        return response()->json([
-            'data' => [$alamat, $gudang],
-            'message' => 'gudang berhasil didaftarkan',
-        ], '200');
+        // return response()->json([
+        //     'data' => [$alamat, $gudang],
+        //     'message' => 'gudang berhasil didaftarkan',
+        // ], '200');
+        return redirect()->route('gudang.index')->with('message', 'Data Gudang Berhasil Ditambahkan!');
     }
 
     public function show($id)
