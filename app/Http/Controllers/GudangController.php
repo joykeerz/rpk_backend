@@ -6,6 +6,7 @@ use App\Models\Alamat;
 use App\Models\Gudang;
 use App\Models\Produk;
 use App\Models\Stok;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,6 +32,15 @@ class GudangController extends Controller
         //return $res;
         return view('gudang.index', ['gudangData' => $gudang]);
 
+    }
+
+    public function create(){
+        $usersData = User::all();
+        $res =  response()->json([
+            'data' => $usersData
+        ], 200);
+
+        ///user data untuk dropdown pilih user(penanggung jawab gudang)
     }
 
     public function store(Request $request)

@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\KategoryController;
 use App\Http\Controllers\ManageUserController;
+use App\Http\Controllers\StokController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,4 +92,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/delete/{id}', [CompanyController::class, 'delete'])->name('company.delete');
     });
 
+    ///stok
+    Route::prefix('stok')->group(function(){
+        Route::post('/update/product/stok/{id}', [StokController::class, 'updateFromProduct'])->name('stok.updateFromProduct');
+    });
 });

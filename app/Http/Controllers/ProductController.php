@@ -17,14 +17,30 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = DB::table('produk')
-            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
-            ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid')
-            ->where('produk.id', '=', $id)
+        // $product = DB::table('produk')
+        //     ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+        //     ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid')
+        //     ->where('produk.id', '=', $id)
+        //     ->first();
+        $stok = DB::table('stok')
+            ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
+            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+            ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
+            ->select(
+                'stok.*',
+                'kategori.*',
+                'produk.*',
+                'gudang.*',
+                'kategori.id as kid',
+                'produk.id as pid',
+                'gudang.id as gid',
+                'stok.id as sid'
+            )
+            ->where('stok.id', '=', $id)
             ->first();
 
         // Check if the product exists
-        if (!$product) {
+        if (!$stok) {
             // Return a 404 response if the product doesn't exist
             // echo "Product not found";
             return response()->json([
@@ -32,9 +48,9 @@ class ProductController extends Controller
             ], '404');
         }
 
-        // return response()->json([
-        //     'data' => $product,
-        // ], 200);
+        return response()->json([
+            'data' => $stok,
+        ], 200);
 
         return view('products.show', ['product' => $product]);
     }
@@ -51,7 +67,7 @@ class ProductController extends Controller
         ], 200);
 
         $kategori = DB::table('kategori')
-            ->select('nama_kategori','id')
+            ->select('nama_kategori', 'id')
             ->get();
         //dd($kategori);
 
@@ -61,10 +77,10 @@ class ProductController extends Controller
     function manage()
     {
         $stok = DB::table('stok')
-        ->join('produk','produk.id','=','stok.produk_id')
-        ->join('gudang','gudang.id','=','stok.gudang_id')
-        ->select('stok.*','produk.*','gudang.*','stok.id as sid','produk.id as pid','gudang.id as gid')
-        ->get();
+            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+            ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
+            ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid')
+            ->get();
         return view('product.manage', ['stokData' => $stok]);
     }
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alamat;
 use App\Models\Branch;
 use App\Models\Company;
 use App\Models\Gudang;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,13 +28,37 @@ class CompanyController extends Controller
         ], 200);
     }
 
+    public function create(){
+        ///
+        $usersData = User::all();
+        $res =  response()->json([
+            'data' => $usersData
+        ], 200);
+
+        ///user data untuk dropdown pilih user(Contact Person Cabang)
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        $alamat = new Alamat;
+        $alamat->jalan = $request->tb_jalan;
+        $alamat->jalan_ext = $request->tb_jalan_ext;
+        $alamat->blok = $request->tb_blok;
+        $alamat->rt = $request->tb_rt;
+        $alamat->rw = $request->tb_rw;
+        $alamat->provinsi = $request->tb_prov;
+        $alamat->kota_kabupaten = $request->tb_kota;
+        $alamat->kecamatan = $request->tb_kecamatan;
+        $alamat->kelurahan = $request->tb_kelurahan;
+        $alamat->negara = 'indonesia';
+        $alamat->kode_pos = $request->tb_kodepos;
+        $alamat->save();
+
         $company = new Company;
-        $company->alamat_id = $request->tb_alamat_id;
+        $company->alamat_id = $alamat->id;
         $company->user_id = $request->tb_user_id;
         $company->kode_company = $request->tb_kode_company;
         $company->nama_company = $request->tb_nama_company;
