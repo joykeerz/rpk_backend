@@ -112,9 +112,6 @@ class ProductController extends Controller
     {
         $product = Produk::findOrFail($id);
         // $product = Produk::where('id', '=', $id)->firstOrFail(); // FYI: ini adalah alternate query
-
-
-
         $product->kategori_id = $request->cb_kategori;
         $product->kode_produk = $request->tb_kode_produk;
         $product->nama_produk = $request->tb_nama_produk;
