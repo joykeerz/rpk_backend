@@ -25,8 +25,6 @@ class GudangController extends Controller
             'data' => $gudang
         ], 200);
 
-
-
         // foreach ($products as $key => $value) {
         //     echo "$key:$value->nama_produk, ";
         // }
@@ -82,24 +80,33 @@ class GudangController extends Controller
 
     public function show($id)
     {
+        $usersData = User::all();
+        $companyData = Company::all();
         $gudang = DB::table('gudang')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->join('companies', 'gudang.company_id', '=', 'companies.id')
-            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'company.id as cid')
+            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'companies.id as cid')
             ->where('gudang.id', '=', $id)
             ->first();
 
-        if (!$gudang) {
-            return response()->json([
-                'error' => 'resource not found'
-            ], '404');
-        }
+        // if (!$gudang) {
+        //     return response()->json([
+        //         'error' => 'resource not found'
+        //     ], '404');
+        // }
+
+        $data = [
+            'gudang' => $gudang,
+            'usersData' => $usersData,
+            'companyData' => $companyData
+        ];
+
 
         $res = response()->json([
             'data' => $gudang,
         ], 200);
 
-        // return view('products.show', ['product' => $product]);
+        return view('gudang.show', ['data' => $data,]);
     }
 
     public function update(Request $request, $id)
@@ -136,7 +143,8 @@ class GudangController extends Controller
     {
         $gudang = Gudang::findOrFail($id);
         $gudang->delete();
-        $alamat = Alamat::where('id', $gudang->alamat_id)->delete();
+        $alamat = Alamat::where('id', $gudang->alamat_id); //wkwkw ini kedelete duluan
+        dd($alamat);
         $alamat->delete();
         $stok = Stok::where('gudang_id', $id);
         $stok->delete();
@@ -146,6 +154,7 @@ class GudangController extends Controller
         //     'message' => 'gudang serta alamat dan stok berhasil dihapus'
         // ], '200');
 
+
         return redirect()->route('gudang.index')->with('message', 'Data Gudang Berhasil Dihapus!');
     }
 
@@ -154,7 +163,7 @@ class GudangController extends Controller
         $gudang = DB::table('gudang')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->join('companies', 'gudang.company_id', '=', 'companies.id')
-            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'company.id as cid')
+            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'companies.id as cid')
             ->where('title', 'LIKE', '%' . $request->search . "%")->get();
         if ($gudang) {
             return response()->json($gudang);

@@ -22,7 +22,7 @@
                     <label for="tb_nama_gudang">Nama Gudang</label>
                     <input type="text" name="tb_nama_gudang" id="tb_nama_gudang">
                 </div>
-                <div class="cb_company_id">
+                <div class="cb_company_id flex flex-col">
                     <label for="cb_company_id">Company ID</label>
                     <select name="cb_company_id" id="cb_company_id">
                         @foreach ($companyData as $company)
@@ -30,7 +30,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="cb_user_id">
+                <div class="cb_user_id flex flex-col">
                     <label for="cb_user_id">User ID</label>
                     <select name="cb_user_id" id="cb_user_id">
                         @foreach ($usersData as $user)
@@ -105,6 +105,13 @@
         }
 
         label {
+            margin: 0 3px;
+        }
+
+        select{
+            border: 1px solid #d2d6dc;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
             margin: 0 3px;
         }
     </style>

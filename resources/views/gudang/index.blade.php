@@ -38,7 +38,7 @@
                 Kota: {{ $gudang->kota_kabupaten }}
             </td>
             <td class="p-3 flex justify-evenly">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">Button 1</button>
+                <a href="{{route('gudang.show', ['id' => $gudang->id] )}}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">Button 1</a>
                 <a href="{{ route('gudang.delete', ['id' => $gudang->id]) }}" onclick="return confirmDelete();" class="bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
                     delete
                 </a>
