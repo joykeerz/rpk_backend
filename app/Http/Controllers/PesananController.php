@@ -19,7 +19,8 @@ class PesananController extends Controller
         $res = response()->json([
             'data' => $transaksi
         ], 200);
-        // return view('pesanan.index');
+
+        return view('pesanan.index', ['transaksi' => $transaksi]);
     }
 
     public function show($id){ ///ini tampilin detail transaksi pesanan
@@ -51,14 +52,18 @@ class PesananController extends Controller
         ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
         ->join('stok', 'stok.produk_id', '=', 'produk.id')
         ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid')
-        ->where('stok.jumlah', '>', 0)
+        ->where('stok.jumlah_stok', '>', 0) //.jumlah -> .jumlah_stok
         ->get();
 
-        $res = response()->json([
-            'data' => $products
-        ], 200);
-
-        // return view('pesanan.newOrder', ['product' => $products]);
+        $stok = DB::table('stok')
+        ->join('produk', 'produk.id', '=', 'stok.produk_id')
+        ->select('stok.*', 'produk.*', 'stok.id as sid', 'produk.id as pid')
+        ->where('stok.jumlah_stok', '>', 0) //.jumlah -> .jumlah_stok
+        ->get();
+        // $res = response()->json([
+        //     'data' => $products
+        // ], 200);
+        return view('pesanan.newOrder', ['product' => $stok]);
     }
 
     public function storeOrder(Request $request){
