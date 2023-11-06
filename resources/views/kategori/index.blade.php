@@ -49,18 +49,19 @@
         // Function to trigger SweetAlert for data update
         function updateData(itemId) {
             const initialNamaKategori = document.querySelector(`tr[data-id="${itemId}"] .nama_kategori`).innerText;
-    const initialDeskripsiKategori = document.querySelector(`tr[data-id="${itemId}"] .deskripsi_kategori`).innerText;
+            const initialDeskripsiKategori = document.querySelector(`tr[data-id="${itemId}"] .deskripsi_kategori`)
+            .innerText;
 
             Swal.fire({
                 title: 'Update Data',
                 html: `<form id="updateForm" method="post" action="/category/update/+${itemId}">` +
-            '@csrf' +
-            `<label for="tb_nama_kategori">Nama Kategori:</label>` +
-            `<input id="tb_nama_kategori" class="swal2-input" placeholder="Nama Kategori" name="tb_nama_kategori" value="${initialNamaKategori}">` +
-            `<br>` +
-            `<label for="tb_desk_kategori">Deskripsi Kategori:</label>` +
-            `<textarea id="tb_desk_kategori" class="swal2-textarea w-3/4" placeholder="Deskripsi Kategori" name="tb_desk_kategori">${initialDeskripsiKategori}</textarea>` +
-            `</form>`,
+                    '@csrf' +
+                    `<label for="tb_nama_kategori">Nama Kategori:</label>` +
+                    `<input id="tb_nama_kategori" class="swal2-input" placeholder="Nama Kategori" name="tb_nama_kategori" value="${initialNamaKategori}">` +
+                    `<br>` +
+                    `<label for="tb_desk_kategori">Deskripsi Kategori:</label>` +
+                    `<textarea id="tb_desk_kategori" class="swal2-textarea w-3/4" placeholder="Deskripsi Kategori" name="tb_desk_kategori">${initialDeskripsiKategori}</textarea>` +
+                    `</form>`,
                 focusConfirm: false,
                 preConfirm: () => {
                     const namaKategori = Swal.getPopup().querySelector('#tb_nama_kategori').value;
@@ -155,9 +156,9 @@
             </thead>
             <tbody>
                 @forelse ($kategoriData as $item)
-                <tr class="text-center " data-id="{{ $item->id }}">
-                    <td class="w-1/3 nama_kategori">{{ $item->nama_kategori }}</td>
-                    <td class="deskripsi_kategori">{{ $item->deskripsi_kategori }}</td>
+                    <tr class="text-center " data-id="{{ $item->id }}">
+                        <td class="w-1/3 nama_kategori">{{ $item->nama_kategori }}</td>
+                        <td class="deskripsi_kategori">{{ $item->deskripsi_kategori }}</td>
                         <td>
                             <button onclick="updateData({{ $item->id }})"
                                 class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
