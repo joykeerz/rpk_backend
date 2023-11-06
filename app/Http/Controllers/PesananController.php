@@ -75,43 +75,46 @@ class PesananController extends Controller
     }
 
     public function storeOrder(Request $request){
-        return response()->json($request->data->orderDetails);
-        // $pesanan = new Pesanan;
-        // $pesanan->user_id = $request->tb_user_id;
-        // $pesanan->alamat_id = $request->tb_alamat_id;
-        // $pesanan->kurir_id = $request->tb_kurir_id;
-        // $pesanan->status_pemesanan = 'belum dipesan';
-        // $pesanan->save();
+        return response()->json($request->data['orderDetails']);
+        $res = $request->data['orderDetails'][0]['tb_produk_id'];
+        return $res;
 
-        // $transaksi = new Transaksi;
-        // $transaksi->pesanan_id = $pesanan->id;
-        // $transaksi->status_transaksi = 'belum dibayar';
-        // $transaksi->save();
+        $pesanan = new Pesanan;
+        $pesanan->user_id = $request->data['userData'][0];
+        $pesanan->alamat_id = $request->data['userData'][1];
+        $pesanan->kurir_id = $request->data['userData'][2];
+        $pesanan->status_pemesanan = 'belum dipesan';
+        $pesanan->save();
 
-        // $listDetailPesanan = [];
-        // foreach ($request->tb_produk_id as $key => $value) {
-        //     array_push($listDetailPesanan, [
-        //         'pesanan_id' => $pesanan->id,
-        //         'produk_id' => $value,
-        //         'qty' => $request->tb_qty_produk[$key],
-        //         'harga' => $request->tb_harga_produk[$key],
-        //     ]);
+        $transaksi = new Transaksi;
+        $transaksi->pesanan_id = $pesanan->id;
+        $transaksi->status_pembayaran = 'belum dibayar';
+        $transaksi->save();
+
+        $listDetailPesanan = [];
+        foreach ($request->data['orderDetails'] as $key => $value) {
+            array_push($listDetailPesanan, [
+                'pesanan_id' => $pesanan->id,
+                'produk_id' => $request->data['orderDetails'][$key]['tb_produk_id'],
+                'qty' => $request->data['orderDetails'][$key]['tb_jumlah_produk'],
+                'harga' => $request->data['orderDetails'][$key]['price'],
+            ]);
+        }
+        DB::table('detail_pesanan')->insert($listDetailPesanan);
+
+        // foreach ($request->data['orderDetails'] as $key => $value as $key => $value) {
+        //     $detailPesanan = new DetailPesanan;
+        //     $detailPesanan->pesanan_id = $pesanan->id;
+        //     $detailPesanan->produk_id = $value;
+        //     $detailPesanan->qty = $request->tb_qty_produk[$key];
+        //     $detailPesanan->harga = $request->tb_harga_produk[$key];
+        //     $detailPesanan->save();
         // }
-        // DB::table('detail_pesanan')->insert($listDetailPesanan);
 
-        // // foreach ($request->tb_produk_id as $key => $value) {
-        // //     $detailPesanan = new DetailPesanan;
-        // //     $detailPesanan->pesanan_id = $pesanan->id;
-        // //     $detailPesanan->produk_id = $value;
-        // //     $detailPesanan->qty = $request->tb_qty_produk[$key];
-        // //     $detailPesanan->harga = $request->tb_harga_produk[$key];
-        // //     $detailPesanan->save();
-        // // }
-
-        // return response()->json([
-        //     'message' => 'Pesanan berhasil ditambahkan',
-        //     'data' => $pesanan
-        // ], 200);
+        return response()->json([
+            'message' => 'Pesanan berhasil ditambahkan',
+            'data' => $pesanan
+        ], 200);
     }
 
     public function newTransaksi($id){
