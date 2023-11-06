@@ -19,7 +19,7 @@
                         </div>
                         </header>
 
-                    <form action="route('pesanan.storeOrder')" method="post" class="m-3 border rounded p-3">
+                    <form action="{{route('pesanan.storeOrder')}}" method="post" class="m-3 border rounded p-3">
                                 @csrf
                                 <div class="table_produk w-full">
                                     <table class="w-full text-center border-collapse">
@@ -80,7 +80,7 @@
                 <select name="tb_user_id" id="tb_user_id">
                     <option value="" aria-placeholder="pilih user">Pilih User</option>
                     @foreach ($users as $item)
-                        <option id="tb_user_id_select" value="{{ $item->id }}">{{ $item->name }}</option>
+                        <option id="tb_user_id" value="{{ $item->uid }}">{{ $item->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -111,7 +111,9 @@
 
                 $('#tb_user_id').on('change', function() {
                     var selectedUserId = $(this).val();
+                    console.log(selectedUserId+' selected');
                     var selectedUser = {!! json_encode($users) !!}.find(user => user.id == selectedUserId);
+                    console.log(selectedUser);
                     if (selectedUser) {
                         var alamat = "";
                         if (selectedUser.jalan) alamat += selectedUser.jalan + ', ';
@@ -188,7 +190,7 @@
                 };
 
                 let selectedUser = {!! json_encode($users) !!}.find(user => user.id == userData.tb_user_id);
-                let alamatID = selectedUser ? selectedUser.alamat_id : 'Unknown Address ID';
+                let alamatID = selectedUser.alamat_id ? selectedUser.alamat_id : userData.tb_alamat_id;
 
 
                 let userDataWithAddressID = {
@@ -196,6 +198,7 @@
                     tb_alamat_id: alamatID,
                     tb_kurir_id: userData.tb_kurir_id
                 };
+
 
                 $('tbody tr:not(:last-child)').each(function() {
                     let productName = $(this).find('td:first').text();
@@ -217,17 +220,19 @@
                 });
 
                 let data = {
-                    orderDetails: orderDetails,
+                    orderDetails: [
+                        ...orderDetails
+                    ],
                     userData: [
                         tb_user_id = userDataWithAddressID.tb_user_id,
                         tb_alamat_id = userDataWithAddressID.tb_alamat_id,
                         tb_kurir_id = userDataWithAddressID.tb_kurir_id
                     ]
-                    total: total
                 };
 
-                let productList = orderDetails.map(item => `${item.productName} (Quantity: ${item.quantity})`).join('<br>');
-
+                console.log(orderDetails+ ' order details');
+                let productList = orderDetails.map(item => `${item.productName} (Quantity: ${item.tb_jumlah_produk})`).join('<br>');
+                console.log(productList);
                 Swal.fire({
                     title: 'Confirm Checkout',
                     html: `
@@ -268,7 +273,7 @@
                                 })
                             },
                             error: function(response) {
-                                console.log(response.responseJSON);
+                                console.table(response);
                                 Swal.fire({
                                     title: 'Error!',
                                     text: 'Data gagal diupdate!',
