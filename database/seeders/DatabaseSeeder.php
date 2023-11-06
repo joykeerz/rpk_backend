@@ -280,5 +280,17 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        //kurir seeder
+        DB::table('kurir')->insert([
+            'nama_kurir' => 'none',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('kurir')->insert([
+            'nama_kurir' => 'JNE',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

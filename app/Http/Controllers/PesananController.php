@@ -30,12 +30,14 @@ class PesananController extends Controller
         ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
         ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
         ->where('transaksi.id', '=', $id)
+        ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid')
         ->first();
 
         $detailPesanan = DB::table('detail_pesanan')
         ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
         ->join('pesanan', 'pesanan.id', '=', 'detail_pesanan.pesanan_id')
         ->where('pesanan.id', '=', $transaksi->pesanan_id)
+        ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
         ->get();
 
         $res = response()->json([
