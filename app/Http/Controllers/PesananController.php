@@ -30,12 +30,14 @@ class PesananController extends Controller
         ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
         ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
         ->where('transaksi.id', '=', $id)
+        ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid')
         ->first();
 
         $detailPesanan = DB::table('detail_pesanan')
         ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
         ->join('pesanan', 'pesanan.id', '=', 'detail_pesanan.pesanan_id')
         ->where('pesanan.id', '=', $transaksi->pesanan_id)
+        ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
         ->get();
 
         $res = response()->json([
@@ -77,6 +79,7 @@ class PesananController extends Controller
         $pesanan->user_id = $request->tb_user_id;
         $pesanan->alamat_id = $request->tb_alamat_id;
         $pesanan->kurir_id = $request->tb_kurir_id;
+        $pesanan->status_pemesanan = 'belum dipesan';
         $pesanan->save();
 
         $transaksi = new Transaksi;
@@ -84,13 +87,25 @@ class PesananController extends Controller
         $transaksi->status_transaksi = 'belum dibayar';
         $transaksi->save();
 
+        $listDetailPesanan = [];
         foreach ($request->tb_produk_id as $key => $value) {
-            $detailPesanan = new DetailPesanan;
-            $detailPesanan->pesanan_id = $pesanan->id;
-            $detailPesanan->produk_id = $value;
-            $detailPesanan->jumlah_produk = $request->tb_jumlah_produk[$key];
-            $detailPesanan->save();
+            array_push($listDetailPesanan, [
+                'pesanan_id' => $pesanan->id,
+                'produk_id' => $value,
+                'qty' => $request->tb_qty_produk[$key],
+                'harga' => $request->tb_harga_produk[$key],
+            ]);
         }
+        DB::table('detail_pesanan')->insert($listDetailPesanan);
+
+        // foreach ($request->tb_produk_id as $key => $value) {
+        //     $detailPesanan = new DetailPesanan;
+        //     $detailPesanan->pesanan_id = $pesanan->id;
+        //     $detailPesanan->produk_id = $value;
+        //     $detailPesanan->qty = $request->tb_qty_produk[$key];
+        //     $detailPesanan->harga = $request->tb_harga_produk[$key];
+        //     $detailPesanan->save();
+        // }
 
         return response()->json([
             'message' => 'Pesanan berhasil ditambahkan',

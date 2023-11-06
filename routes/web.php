@@ -86,7 +86,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [GudangController::class, 'create'])->name('gudang.create');
     });
 
-    ///company
+    ///company (Kanwil)
     Route::prefix('company')->group(function(){
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
         Route::post('/store', [CompanyController::class, 'store'])->name('company.store');
@@ -100,7 +100,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update/product/stok/{id}', [StokController::class, 'updateFromProduct'])->name('stok.updateFromProduct');
     });
 
-    ///branch
+    ///branch (KC,KCP)
     Route::prefix('branch')->group(function(){
         Route::get('/', [BranchController::class, 'index'])->name('branch.index');
         Route::get('/manage', [BranchController::class, 'manage'])->name('branch.manage');
