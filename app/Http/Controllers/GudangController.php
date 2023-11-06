@@ -144,7 +144,6 @@ class GudangController extends Controller
         $gudang = Gudang::findOrFail($id);
         $gudang->delete();
         $alamat = Alamat::where('id', $gudang->alamat_id); //wkwkw ini kedelete duluan
-        dd($alamat);
         $alamat->delete();
         $stok = Stok::where('gudang_id', $id);
         $stok->delete();

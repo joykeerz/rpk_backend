@@ -48,11 +48,17 @@ class PesananController extends Controller
     }
 
     public function newOrder(){/// ini tampilin form buat pesanan baru
-        $products = DB::table('produk')
-        ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
-        ->join('stok', 'stok.produk_id', '=', 'produk.id')
-        ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid')
-        ->where('stok.jumlah_stok', '>', 0) //.jumlah -> .jumlah_stok
+        // $products = DB::table('produk')
+        // ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+        // ->join('stok', 'stok.produk_id', '=', 'produk.id')
+        // ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid')
+        // ->where('stok.jumlah_stok', '>', 0) //.jumlah -> .jumlah_stok
+        // ->get();
+
+        $biodata = DB::table('biodata')
+        ->join('users', 'users.id', '=', 'biodata.user_id')
+        ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
+        ->select('biodata.*', 'users.*', 'alamat.*')
         ->get();
 
         $stok = DB::table('stok')
@@ -63,7 +69,7 @@ class PesananController extends Controller
         // $res = response()->json([
         //     'data' => $products
         // ], 200);
-        return view('pesanan.newOrder', ['product' => $stok]);
+        return view('pesanan.newOrder', ['product' => $stok, 'users' => $biodata]);
     }
 
     public function storeOrder(Request $request){
