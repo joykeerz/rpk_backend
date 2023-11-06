@@ -112,7 +112,8 @@
                 $('#tb_user_id').on('change', function() {
                     var selectedUserId = $(this).val();
                     console.log(selectedUserId+' selected');
-                    var selectedUser = {!! json_encode($users) !!}.find(user => user.id == selectedUserId);
+                    console.log({!! json_encode($users) !!});
+                    var selectedUser = {!! json_encode($users) !!}.find(user => user.uid == selectedUserId);
                     console.log(selectedUser);
                     if (selectedUser) {
                         var alamat = "";
