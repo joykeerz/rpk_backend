@@ -48,11 +48,16 @@ class ProductController extends Controller
             ], '404');
         }
 
-        return response()->json([
-            'data' => $stok,
-        ], 200);
+        $kategori = DB::table('kategori')
+        ->select('nama_kategori', 'id')
+        ->get();
+    //dd($kategori);
 
-        return view('products.show', ['product' => $stok]);
+        // return response()->json([
+        //     'data' => $stok,
+        // ], 200);
+
+        return view('product.show', ['product' => $stok , 'kategoriData' => $kategori]);
     }
 
     function index()

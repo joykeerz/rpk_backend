@@ -8,53 +8,11 @@
 @endsection
 
 @section('content')
-{{-- <script>
-    const searchInput = document.getElementById('searchInput');
-    const dataTable = document.getElementById('dataTable');
-
-    // Access your initial data for the table
-    const originalData = {!!json_encode($productsData) !!};
-
-    // Function to filter the data
-    function filterTable(searchText) {
-        const filteredData = originalData.filter(product => {
-            return product.nama_produk.toLowerCase().includes(searchText.toLowerCase());
-        });
-
-        if (filteredData.length === 0) {
-            dataTable.innerHTML = '<tr><td class="text-center" colspan="6">hilang</td></tr>';
-            return;
-        }
-
-        // Clear the table
-        dataTable.innerHTML = '';
-
-        // Populate the table with filtered data
-        filteredData.forEach(product => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td class="px-6 py-4 whitespace-nowrap">${product.id}</td>
-                <td class="px-6 py-4 whitespace-nowrap">${product.nama_produk}</td>
-                <td class="px-6 py-4 whitespace-nowrap">Dummy</td>
-                <td class="px-6 py-4 whitespace-nowrap">${product.stok_produk}</td>
-                <td class="px-6 py-4 whitespace-nowrap">${product.harga_produk}</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <a href="{{ route('product.delete', ['id'=>$product.id]) }}" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>
-                    <a href="#" class="bg-gray-500 text-white rounded-md px-3 py-1 ml-2">edit</a>
-                </td>
-            `;
-            dataTable.appendChild(row);
-        });
-    }
-
-    // Event listener for the search input
-    searchInput.addEventListener('input', function() {
-        filterTable(this.value.trim());
-    });
-
-    // Initialize the table with the original data
-    filterTable('');
-</script> --}}
+<header class="bg-gray-200 p-4">
+    <h2>
+        Manage Product
+    </h2>
+</header>
 <script>
     function confirmDelete() {
         return confirm("Are you sure you want to delete this product?");
@@ -84,7 +42,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->harga_produk }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <a href="{{ route('product.delete', ['id' => $pd->id]) }}" onclick="return confirmDelete();" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>
-                        <a href="#" class="bg-gray-500 text-white rounded-md px-3 py-1 ml-2">edit</a>
+                        <a href="{{route('product.show', ['id' => $pd->id])}}" class="bg-gray-500 text-white rounded-md px-3 py-1 ml-2">edit</a>
                     </td>
                 </tr>
                 @empty
