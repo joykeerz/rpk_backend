@@ -21,6 +21,7 @@ class CompanyController extends Controller
         $companies = DB::table('companies')
             ->join('users', 'users.id', '=', 'companies.user_id')
             ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
+            ->select('companies.*', 'alamat.*', 'users.*', 'companies.id as cid', 'alamat.id as aid', 'users.id as uid')
             ->get();
 
         // return response()->json([
@@ -46,6 +47,13 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'tb_kode_company' => 'required|unique:companies,kode_company',
+        ],[
+            'tb_kode_company.required' => 'Kode Company harus diisi',
+            'tb_kode_company.unique' => 'Kode Company sudah terdaftar',
+        ]);
+
         $alamat = new Alamat;
         $alamat->jalan = $request->tb_jalan;
         $alamat->jalan_ext = $request->tb_jalan_ext;
