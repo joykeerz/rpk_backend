@@ -98,6 +98,7 @@ Route::middleware(['auth'])->group(function () {
     ///stok
     Route::prefix('stok')->group(function(){
         Route::post('/update/product/stok/{id}', [StokController::class, 'updateFromProduct'])->name('stok.updateFromProduct');
+        Route::post('/update/product/restock/{id}', [StokController::class, 'increaseStock'])->name('stok.increase');
     });
 
     ///branch (KC,KCP)

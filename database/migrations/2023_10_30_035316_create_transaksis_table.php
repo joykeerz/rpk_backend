@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('pesanan_id');
-            $table->string('tipe_pembayaran')->nullable();
-            $table->string('status_pembayaran')->nullable();
-            $table->float('diskon')->nullable();
-            $table->float('subtotal_produk')->nullable();
-            $table->float('subtotal_pengiriman')->nullable();
+            $table->string('tipe_pembayaran')->default('none');
+            $table->string('status_pembayaran')->default('none');
+            $table->float('diskon')->default(0);
+            $table->float('subtotal_produk')->default(0);
+            $table->float('subtotal_pengiriman')->default(0);
             $table->timestamps();
         });
     }
