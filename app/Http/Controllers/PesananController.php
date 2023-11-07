@@ -13,15 +13,19 @@ class PesananController extends Controller
 {
     public function index() ///ini tampilin semua transaksi pesanan
     {
+
         $transaksi = DB::table('transaksi')
         ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
         ->join('users', 'users.id', '=', 'pesanan.user_id')
+        ->select('transaksi.*', 'pesanan.*', 'users.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid')
         ->get();
+
         $res = response()->json([
             'data' => $transaksi
         ], 200);
 
-        return view('pesanan.index', ['transaksi' => $transaksi]);
+        echo $res;
+        // return view('pesanan.index', ['transaksi' => $transaksi]);
     }
 
     public function show($id){ ///ini tampilin detail transaksi pesanan
@@ -47,6 +51,8 @@ class PesananController extends Controller
                 'detailPesanan' => $detailPesanan
             ],
         ], 200);
+
+        echo $res;
         // return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
     }
 

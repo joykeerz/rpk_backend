@@ -67,6 +67,22 @@ class StokController extends Controller
         ], '200');
     }
 
+    public function increaseStock(Request $request, $id){
+        $stok = Stok::select('stok.*')
+            ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
+            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+            ->where('stok.id', '=', $id)
+            ->first();
+        $stok->increment('jumlah_stok', $request->tb_jumlah_stok);
+        $stok->save();
+        $res =  response()->json([
+            'data' => $stok,
+            'message' => 'stok berhasil diupdate'
+        ], '200');
+
+        // return $res;
+    }
+
     public function updateFromGudang(Request $request, $id)
     {
     }
