@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailPesanan;
 use App\Models\Pesanan;
+use App\Models\Stok;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -49,14 +50,7 @@ class PesananController extends Controller
         // return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
     }
 
-    public function newOrder(){/// ini tampilin form buat pesanan baru
-        // $products = DB::table('produk')
-        // ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
-        // ->join('stok', 'stok.produk_id', '=', 'produk.id')
-        // ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid')
-        // ->where('stok.jumlah_stok', '>', 0) //.jumlah -> .jumlah_stok
-        // ->get();
-
+    public function newOrder(){
         $biodata = DB::table('biodata')
         ->join('users', 'users.id', '=', 'biodata.user_id')
         ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
@@ -68,16 +62,11 @@ class PesananController extends Controller
         ->select('stok.*', 'produk.*', 'stok.id as sid', 'produk.id as pid')
         ->where('stok.jumlah_stok', '>', 0) //.jumlah -> .jumlah_stok
         ->get();
-        // $res = response()->json([
-        //     'data' => $products
-        // ], 200);
         return view('pesanan.newOrder', ['product' => $stok, 'users' => $biodata]);
     }
 
     public function storeOrder(Request $request){
-        return response()->json($request->data['orderDetails']);
-        $res = $request->data['orderDetails'][0]['tb_produk_id'];
-        return $res;
+        $total = 0;
 
         $pesanan = new Pesanan;
         $pesanan->user_id = $request->data['userData'][0];
@@ -85,11 +74,6 @@ class PesananController extends Controller
         $pesanan->kurir_id = $request->data['userData'][2];
         $pesanan->status_pemesanan = 'belum dipesan';
         $pesanan->save();
-
-        $transaksi = new Transaksi;
-        $transaksi->pesanan_id = $pesanan->id;
-        $transaksi->status_pembayaran = 'belum dibayar';
-        $transaksi->save();
 
         $listDetailPesanan = [];
         foreach ($request->data['orderDetails'] as $key => $value) {
@@ -99,17 +83,21 @@ class PesananController extends Controller
                 'qty' => $request->data['orderDetails'][$key]['tb_jumlah_produk'],
                 'harga' => $request->data['orderDetails'][$key]['price'],
             ]);
+            $currentStok = Stok::find($request->data['orderDetails'][$key]['tb_stok_id']);
+            if($currentStok->jumlah_stok > 0){
+                $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
+            }
+            $currentStok->save();
+            $total += $request->data['orderDetails'][$key]['price'];
         }
         DB::table('detail_pesanan')->insert($listDetailPesanan);
 
-        // foreach ($request->data['orderDetails'] as $key => $value as $key => $value) {
-        //     $detailPesanan = new DetailPesanan;
-        //     $detailPesanan->pesanan_id = $pesanan->id;
-        //     $detailPesanan->produk_id = $value;
-        //     $detailPesanan->qty = $request->tb_qty_produk[$key];
-        //     $detailPesanan->harga = $request->tb_harga_produk[$key];
-        //     $detailPesanan->save();
-        // }
+
+        $transaksi = new Transaksi;
+        $transaksi->pesanan_id = $pesanan->id;
+        $transaksi->status_pembayaran = 'belum dibayar';
+        $transaksi->subtotal_produk = $total;
+        $transaksi->save();
 
         return response()->json([
             'message' => 'Pesanan berhasil ditambahkan',

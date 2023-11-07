@@ -25,6 +25,7 @@
                                     <table class="w-full text-center border-collapse">
                                         <thead>
                                             <tr>
+                                                {{-- <th class="pb-2 border-b border-gray-500">SID</th> --}}
                                                 <th class="pb-2 border-b border-gray-500">Produk</th>
                                                 <th class="pb-2 border-b border-gray-500">Jumlah</th>
                                                 <th class="pb-2 border-b border-gray-500">Satuan Unit Produk</th>
@@ -37,6 +38,7 @@
                                                  @forelse ($product as $index=> $item)
         <tr class="{{ $index % 2 === 0 ? 'bg-gray-100' : 'bg-white' }}" id="tableData">
             <td class="py-5">{{ $item->nama_produk }}</td>
+            <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
             <td class="py-2">{{ $item->jumlah_stok }}</td>
             <td>{{ $item->satuan_unit_produk }}</td>
             <td class="py-2 harga_produk">{{ $item->harga_produk }}</td>
@@ -136,12 +138,14 @@
                             var productId = {!! json_encode($product) !!}.find(product => product
                                 .nama_produk == productName);
 
+                            var stokId = parseFloat($(this).find('.stock_id').text());
                             var price = parseFloat($(this).find('.harga_produk').text());
                             var quantity = parseInt($(this).find('.jumlah_pesanan').val());
                             var subtotal = quantity * price;
 
                             if (!isNaN(quantity) && quantity > 0) {
                                 orderDetails.push({
+                                    tb_stok_id: stokId,
                                     productId: productId.produk_id,
                                     price: price,
                                     quantity: quantity,
@@ -190,7 +194,7 @@
                     tb_kurir_id: $('#tb_kurir_id').val()
                 };
 
-                let selectedUser = {!! json_encode($users) !!}.find(user => user.id == userData.tb_user_id);
+                let selectedUser = {!! json_encode($users) !!}.find(user => user.uid == userData.tb_user_id);
                 let alamatID = selectedUser.alamat_id ? selectedUser.alamat_id : userData.tb_alamat_id;
 
 
@@ -202,6 +206,7 @@
 
 
                 $('tbody tr:not(:last-child)').each(function() {
+                    let stokId = $(this).find('.stock_id').text();
                     let productName = $(this).find('td:first').text();
                     let productId = {!! json_encode($product) !!}.find(product => product.nama_produk === productName);
                     let price = parseFloat($(this).find('.harga_produk').text());
@@ -210,6 +215,7 @@
 
                     if (!isNaN(quantity) && quantity > 0) {
                         orderDetails.push({
+                            tb_stok_id: stokId,
                             productName: productName,
                             tb_produk_id: productId.produk_id,
                             price: price,
