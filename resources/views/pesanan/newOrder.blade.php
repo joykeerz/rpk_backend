@@ -190,7 +190,7 @@
                     tb_kurir_id: $('#tb_kurir_id').val()
                 };
 
-                let selectedUser = {!! json_encode($users) !!}.find(user => user.id == userData.tb_user_id);
+                let selectedUser = {!! json_encode($users) !!}.find(user => user.uid == userData.tb_user_id);
                 let alamatID = selectedUser.alamat_id ? selectedUser.alamat_id : userData.tb_alamat_id;
 
 

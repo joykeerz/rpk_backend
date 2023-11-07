@@ -75,9 +75,9 @@ class PesananController extends Controller
     }
 
     public function storeOrder(Request $request){
-        return response()->json($request->data['orderDetails']);
-        $res = $request->data['orderDetails'][0]['tb_produk_id'];
-        return $res;
+        // return response()->json($request->data['orderDetails']);
+        // $res = $request->data['orderDetails'][0]['tb_produk_id'];
+        // return $res;
 
         $pesanan = new Pesanan;
         $pesanan->user_id = $request->data['userData'][0];
