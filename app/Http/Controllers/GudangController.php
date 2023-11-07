@@ -113,10 +113,10 @@ class GudangController extends Controller
     {
 
         $gudang = Gudang::findOrFail($id);
-        $gudang->company_id = $request->cb_alamat_id;
+        // $gudang->company_id = $request->cb_alamat_id;
         $gudang->user_id = $request->cb_user_id;
-        $gudang->nama_gudang = $request->tb_kode_produk;
-        $gudang->no_telp = $request->tb_nama_produk;
+        $gudang->nama_gudang = $request->tb_nama_gudang;
+        $gudang->no_telp = $request->tb_no_telp;
         $gudang->save();
 
         $alamat = Alamat::findOrFail($gudang->alamat_id);
@@ -133,10 +133,12 @@ class GudangController extends Controller
         $alamat->kode_pos = $request->tb_kodepos;
         $alamat->save();
 
-        return response()->json([
-            'data' => [$gudang, $alamat],
-            'message' => 'gudang berhasil diupdate'
-        ], '200');
+        // return response()->json([
+        //     'data' => [$gudang, $alamat],
+        //     'message' => 'gudang berhasil diupdate'
+        // ], '200');
+
+        return redirect()->route('gudang.index')->with('message', 'Data Gudang Berhasil Diupdate!');
     }
 
     public function delete($id)

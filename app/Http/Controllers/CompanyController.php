@@ -27,7 +27,6 @@ class CompanyController extends Controller
         // return response()->json([
         //     'data' => $companies,
         // ], 200);
-        dd($companies);
         return view('company.index', ['companies' => $companies]);
     }
 
@@ -117,12 +116,14 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'tb_kode_company' => 'required|unique:companies,kode_company',
-        ],[
-            'tb_kode_company.required' => 'Kode Company harus diisi',
-            'tb_kode_company.unique' => 'Kode Company sudah terdaftar',
-        ]);
+        // $validated = $request->validate([
+        //     'tb_kode_company' => 'required|unique:companies,kode_company',
+        // ],[
+        //     'tb_kode_company.required' => 'Kode Company harus diisi',
+        //     'tb_kode_company.unique' => 'Kode Company sudah terdaftar',
+        // ]);
+
+        //bang gatau apa artinya ini
 
         $company = Company::findOrFail($id);
         $company->user_id = $request->tb_user_id;
@@ -146,10 +147,13 @@ class CompanyController extends Controller
         $alamat->kode_pos = $request->tb_kodepos;
         $alamat->save();
 
-        $res =  response()->json([
-            'data' => $company,
-        ], 200);
-        return $res;
+        // $res =  response()->json([
+        //     'data' => $company,
+        // ], 200);
+        // return $res;
+        // dd($company , $alamat);
+
+        return redirect()->route('company.index')->with('success', 'Company berhasil diupdate');
     }
 
     /**
