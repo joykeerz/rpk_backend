@@ -23,18 +23,21 @@ class CompanyController extends Controller
             ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
             ->get();
 
-        return response()->json([
-            'data' => $companies,
-        ], 200);
+        // return response()->json([
+        //     'data' => $companies,
+        // ], 200);
+        dd($companies);
+        return view('company.index', ['companies' => $companies]);
     }
 
     public function create(){
         ///
         $usersData = User::all();
-        $res =  response()->json([
-            'data' => $usersData
-        ], 200);
+        // $res =  response()->json([
+        //     'data' => $usersData
+        // ], 200);
 
+        return view('company.create', ['usersData' => $usersData]);
         ///user data untuk dropdown pilih user(Contact Person Cabang)
     }
 
@@ -66,9 +69,11 @@ class CompanyController extends Controller
         $company->tagline_company = $request->tb_tagline_company;
         $company->save();
 
-        return response()->json([
-            'data' => $company,
-        ], 200);
+        // return response()->json([
+        //     'data' => $company,
+        // ], 200);
+
+        return redirect()->route('company.index')->with('success', 'Company berhasil ditambahkan');
     }
 
     /**
@@ -83,16 +88,20 @@ class CompanyController extends Controller
             ->where('companies.id', '=', $id)
             ->first();
 
+         $usersData = User::all();
+
         if ($company == null) {
             return response()->json([
                 'error' => 'resource not found'
             ], '404');
         }
 
-        $res =  response()->json([
-            'data' => $company,
-        ], 200);
-        return $res;
+        // $res =  response()->json([
+        //     'data' => $company,
+        // ], 200);
+        // return $res;
+
+        return view('company.show', ['company' => $company, 'usersData' => $usersData]);
     }
 
     /**

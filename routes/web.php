@@ -90,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('company')->group(function(){
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
         Route::post('/store', [CompanyController::class, 'store'])->name('company.store');
+        Route::get('/create', [CompanyController::class, 'create'])->name('company.create');
         Route::get('/show/{id}', [CompanyController::class, 'show'])->name('company.show');
         Route::post('/update/{id}', [CompanyController::class, 'update'])->name('company.update');
         Route::get('/delete/{id}', [CompanyController::class, 'delete'])->name('company.delete');
