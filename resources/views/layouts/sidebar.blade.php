@@ -31,7 +31,7 @@
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Barang</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="1"></circle>
                         <circle cx="19" cy="12" r="1"></circle>
                         <circle cx="5" cy="12" r="1"></circle>
@@ -53,6 +53,34 @@
                 </ul>
             </li>
             <li>
+                <a href="#" onclick="toggleSubMenu('pesananSubMenu')"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V6l-3-4H6zM3.8 6h16.4M16 10a4 4 0 1 1-8 0" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Pesanan</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                </svg>
+                </a>
+                <ul  id="pesananSubMenu" class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 " >
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('pesanan.index') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">List
+                            Transaksi</a>
+                    </li>
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('pesanan.newOrder') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Buat Pesanan Baru
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
                 <a href="{{ route('manage.user.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -67,7 +95,7 @@
                 <a href="{{ route('category.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="8" y1="6" x2="21" y2="6"></line>
                         <line x1="8" y1="12" x2="21" y2="12"></line>
                         <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -83,27 +111,68 @@
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     onclick="toggleSubMenu('gudangSubMenu')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9" />
                         <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Gudang</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <circle cx="12" cy="12" r="1"></circle>
                         <circle cx="19" cy="12" r="1"></circle>
                         <circle cx="5" cy="12" r="1"></circle>
                     </svg>
                 </a>
-                <ul    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 " id="gudangSubMenu"> <!-- Nested submenu -->
-                    <li  class="hover:bg-gray-100">
-                        <a href="{{ route('gudang.create') }}" class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input Gudang</a>
+                <ul class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 "
+                    id="gudangSubMenu"> <!-- Nested submenu -->
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('gudang.create') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                            Gudang</a>
                     </li>
-                    <li  class="hover:bg-gray-100">
-                        <a href="{{ route('gudang.index') }}" class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage Gudang</a>
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('gudang.index') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                            Gudang</a>
                     </li>
                 </ul>
+            </li>
+            <li>
+                <a href="#"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onclick="toggleSubMenu('companySubMenu')">
+                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                    <path
+                        d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+                    <path
+                        d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+                </svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">Company</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                </svg>
+                </a>
+                <ul id="companySubMenu"
+                    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                    <!-- Submenu for Barang -->
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('company.create') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                            Company</a>
+                    </li>
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('company.index') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                            Company</a>
+                    </li>
+                </ul>
+
             </li>
             <li>
                 <a href="#"
@@ -144,4 +213,5 @@
         var subMenu = document.getElementById(subMenuId);
         subMenu.classList.toggle('hidden');
     }
+
 </script>

@@ -15,11 +15,13 @@ class BranchController extends Controller
         $branch = DB::table('branches')
         ->join('companies', 'companies.id', '=', 'branches.company_id')
         ->get();
-        return response()->json([
-            'message' => 'Branch berhasil ditampilkan',
-            'data' => $branch
-        ], 200);
-        // return view('branch.index', compact('branches'));
+        // return response()->json([
+        //     'message' => 'Branch berhasil ditampilkan',
+        //     'data' => $branch
+        // ], 200);
+
+
+        return view('branch.index', compact('branch'));
     }
 
     public function manage()
