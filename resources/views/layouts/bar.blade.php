@@ -22,7 +22,7 @@
         @yield('sidebar')
     </div>
 
-    <div class="w-full h-screen overflow-auto">
+    <div class="w-full h-screen overflow-y-auto">
         @yield('content')
 
     </div>

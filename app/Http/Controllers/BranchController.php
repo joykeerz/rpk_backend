@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -43,12 +44,19 @@ class BranchController extends Controller
         $branch->alamat_branch = $request->tb_alamat_branch;
         $branch->save();
 
-        return response()->json([
-            'message' => 'Branch berhasil ditambahkan',
-            'data' => $branch
-        ], 200);
+        // return response()->json([
+        //     'message' => 'Branch berhasil ditambahkan',
+        //     'data' => $branch
+        // ], 200);
 
-        // return redirect()->route('branch.index')->with('success', 'Branch berhasil ditambahkan');
+        return redirect()->route('branch.index')->with('success', 'Branch berhasil ditambahkan');
+    }
+
+    public function create()
+    {
+        $usersData = User::all();
+        $companyData = Company::all();
+        return view('branch.create', ['usersData' => $usersData, 'companyData' => $companyData]);
     }
 
     public function show($id)
@@ -58,11 +66,11 @@ class BranchController extends Controller
         ->where('branches.id', '=', $id)
         ->first();
 
-        return response()->json([
-            'message' => 'Branch berhasil ditampilkan',
-            'data' => $branch
-        ], 200);
-        // return view('branch.show', compact('branch'));
+        // return response()->json([
+        //     'message' => 'Branch berhasil ditampilkan',
+        //     'data' => $branch
+        // ], 200);
+        return view('branch.show', compact('branch'));
     }
 
     public function update(Request $request,$id){

@@ -41,8 +41,8 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->jumlah_stok }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->harga_produk }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <a href="{{ route('product.delete', ['id' => $pd->id]) }}" onclick="return confirmDelete();" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>
-                        <a href="{{route('product.show', ['id' => $pd->id])}}" class="bg-gray-500 text-white rounded-md px-3 py-1 ml-2">edit</a>
+                        <a href="{{ route('product.delete', ['id' => $pd->pid]) }}" onclick="return confirmDelete();" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>
+                        <a href="{{route('product.show', ['id' => $pd->pid])}}" class="bg-gray-500 text-white rounded-md px-3 py-1 ml-2">edit</a>
                     </td>
                 </tr>
                 @empty
