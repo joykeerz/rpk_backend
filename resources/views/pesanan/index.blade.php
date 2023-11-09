@@ -17,39 +17,51 @@
         </div>
     </header>
 
-    @forelse ($transaksi as $item)
-    <div class="tableContainer">
-        <table class="w-full text-center">
-            <thead>
+
+    <div class="tableContainer m-3">
+        <table class="w-full text-center overflow-y-auto border">
+            <thead class="text-center border-b-1 border">
                 <tr>
-                    <th>Kode Transaksi</th>
-                    <th>Nama Pemesan</th>
-                    <th>Status Pembayaran</th>
-                    <th>Status Pemesanan</th>
-                    <th>Total</th>
-                    <th>Detail Pesanan</th>
+                    <th class="px-4 py-2">Kode Transaksi</th>
+                    <th class="px-4 py-2">Nama Pemesan</th>
+                    <th class="px-4 py-2">Status Pembayaran</th>
+                    <th class="px-4 py-2">Status Pemesanan</th>
+                    <th class="px-4 py-2">Total</th>
+                    <th class="px-4 py-2">Detail Pesanan</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>{{ $item->id }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->status_pembayaran }}</td>
-                    <td>{{ $item->status_pemesanan }}</td>
-                    <td>null</td>
-                    <td>
-                        <a href="{{route('pesanan.show',['id' =>$item->id ])}}">bismilah</a>
-                    </td>
-                </tr>
-            </tbody>
+            @forelse ($transaksi as $item)
+                <tbody>
+                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white'}} ">
+                        <td class=" px-4 py-2">{{ $item->id }}</td>
+                        <td class=" px-4 py-2">{{ $item->name }}</td>
+                        <td class=" px-4 py-2">{{ $item->status_pembayaran }}</td>
+                        <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
+                        <td class="subtotal_produk px-4 py-2">{{ $item->subtotal_produk }}</td>
+                        <td>
+                            <a class="" href="{{ route('pesanan.show', ['id' => $item->id]) }}">open</a>
+                        </td>
+                    </tr>
+                </tbody>
+            @empty
+                <h1>tidak ada data yang tersedia</h1>
+            @endforelse
         </table>
 
     </div>
 
 
-    @empty
-        <h1>tidak ada data yang tersedia</h1>
-    @endforelse
 
 
+
+    <script>
+        const subtotal_produk = document.querySelectorAll('.subtotal_produk');
+
+        subtotal_produk.forEach((item) => {
+            item.innerHTML = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(item.innerHTML);
+        });
+    </script>
 @endsection

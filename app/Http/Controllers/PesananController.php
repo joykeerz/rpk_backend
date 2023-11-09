@@ -20,12 +20,12 @@ class PesananController extends Controller
         ->select('transaksi.*', 'pesanan.*', 'users.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid')
         ->get();
 
-        $res = response()->json([
-            'data' => $transaksi
-        ], 200);
+        // $res = response()->json([
+        //     'data' => $transaksi
+        // ], 200);
 
-        echo $res;
-        // return view('pesanan.index', ['transaksi' => $transaksi]);
+
+        return view('pesanan.index', ['transaksi' => $transaksi]);
     }
 
     public function show($id){ ///ini tampilin detail transaksi pesanan
@@ -51,9 +51,7 @@ class PesananController extends Controller
                 'detailPesanan' => $detailPesanan
             ],
         ], 200);
-
-        echo $res;
-        // return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
+        return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
     }
 
     public function newOrder(){

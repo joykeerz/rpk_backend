@@ -88,7 +88,7 @@
             </div>
             <div class="tb_alamat_id flex flex-col">
                 <label for="tb_alamat_id">Alamat</label>
-                <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="form-control" placeholder="ID Alamat">
+                <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="form-control" placeholder="ID Alamat" disabled>
             </div>
             <div class="tb_kurir_id flex flex-col">
                 <label for="tb_kurir_id">Kurir</label>
