@@ -39,29 +39,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('roles')->insert([
-            'nama_role' => 'Manager Sales Pusat',
-            'desk_role' => 'Mengatur master data produk, kategori dan gudang',
+            'nama_role' => 'Penjual Pusat',
+            'desk_role' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('roles')->insert([
-            'nama_role' => 'Manager Sales Kanwil',
-            'desk_role' => 'Mengatur validasi pendaftaran',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        DB::table('roles')->insert([
-            'nama_role' => 'Kepala Gudang',
-            'desk_role' => 'Mengatur Pengiriman Barang',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        DB::table('roles')->insert([
-            'nama_role' => 'Pengguna RPK',
-            'desk_role' => 'Akun RPK',
+            'nama_role' => 'Manager Sales',
+            'desk_role' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
