@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer', function (Blueprint $table) {
+        Schema::create('biodata', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('alamat_id')->default(1);
