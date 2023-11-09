@@ -28,10 +28,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get("/inventory", [App\Http\Controllers\InventoryController::class, 'index']);
-// Route::get("/inputBarang", [App\Http\Controllers\InputBarangController::class, 'index']);
-// Route::get('store', [ProductController::class, 'store']);
-
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -42,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('manage')->middleware('restrictRole:1')->group(function () {
         ///user
         Route::get('/', [ManageUserController::class, 'index'])->name('manage.user.index');
+
         Route::middleware('restrictRole:1')->group(function () {
             Route::get('/user/new', [ManageUserController::class, 'newUser'])->name('manage.user.new');
             Route::post('/user/store', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.store');
@@ -56,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/user/store/{id}/alamat', [ManageUserController::class, 'storeAlamat'])->name('manage.user.storeAlamat');
             Route::post('/user/store/new', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.StoreNewAccount');
         });
+
     });
 
     ///Product

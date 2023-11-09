@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class PesananController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index() ///ini tampilin semua transaksi pesanan
     {
 

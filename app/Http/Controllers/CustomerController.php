@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\DB;
 class CustomerController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $customer = DB::table('biodata')
@@ -47,6 +52,7 @@ class CustomerController extends Controller
             'tb_nama_rpk' => 'required',
             'tb_no_ktp' => 'required',
             'tb_jalan' => 'required',
+            'tb_jalan_ex' => 'required',
             'tb_blok' => 'required',
             'tb_rt' => 'required',
             'tb_rw' => 'required',
@@ -98,12 +104,19 @@ class CustomerController extends Controller
         ]);
 
         $customer = Biodata::findOrfail($id);
+        if (empty($customer)) {
+            abort(404);
+        }
+
         $customer->kode_customer = $request->tb_kode_customer;
         $customer->nama_rpk = $request->tb_nama_rpk;
         $customer->no_ktp = $request->tb_no_ktp;
         $customer->save();
 
         $alamat = Alamat::where('id', '=', $customer->alamat_id)->first();
+        if (empty($alamat)) {
+            abort(404);
+        }
         $alamat->jalan = $request->tb_jalan;
         $alamat->jalan_extra = $request->tb_jalan_extra;
         $alamat->blok = $request->tb_blok;
@@ -123,7 +136,13 @@ class CustomerController extends Controller
     public function delete($id)
     {
         $customer = Biodata::findOrfail($id);
+        if (empty($customer)) {
+            abort(404);
+        }
         $alamat = Alamat::where('id', '=', $customer->alamat_id)->first();
+        if (empty($alamat)) {
+            abort(404);
+        }
         $customer->delete();
         $alamat->delete();
 

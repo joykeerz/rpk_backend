@@ -15,6 +15,7 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
+
     public function show($id)
     {
         // $product = DB::table('produk')
