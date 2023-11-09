@@ -11,6 +11,7 @@ use App\Http\Controllers\KategoryController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,5 +123,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/storeOrder', [PesananController::class, 'storeOrder'])->name('pesanan.storeOrder');
         Route::get('/newTransaksi/{id}', [PesananController::class, 'newTransaksi'])->name('pesanan.newTransaksi');
         Route::post('/storeTransaksi', [PesananController::class, 'storeTransaksi'])->name('pesanan.storeTransaksi');
+    });
+
+    ///customer
+    Route::prefix('customer')->group(function () {
+        Route::get('/', [CustomerController::class, 'index'])->name('customer.index');
+        Route::get('/show/{id}', [CustomerController::class, 'show'])->name('customer.show');
+        Route::post('/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
+        Route::get('/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
     });
 });

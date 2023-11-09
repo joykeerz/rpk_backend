@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('biodata', function (Blueprint $table) {
+        Schema::create('customer', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('alamat_id')->default(1);
-            $table->string('nama_rpk');
-            $table->string('no_ktp');
+            $table->string('kode_customer');
+            $table->string('nama_rpk')->default('none');
+            $table->string('no_ktp')->default('none');
             $table->binary('ktp_img')->nullable();
             $table->timestamps();
         });

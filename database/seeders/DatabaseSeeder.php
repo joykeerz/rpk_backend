@@ -52,6 +52,13 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        DB::table('roles')->insert([
+            'nama_role' => 'customer',
+            'desk_role' => 'none',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         // Admin User Seed
         DB::table('users')->insert([
             'name' => 'Super Admin',
