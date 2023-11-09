@@ -21,15 +21,15 @@
 
 <div class="overflow-auto m-3">
 <input type="text" id="searchInput" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Search...">
-        <table class="min-w-full bg-white">
+        <table class="min-w-full bg-white text-center">
             <thead>
-                <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stok</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Harga</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <tr class="text-center">
+                    <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe</th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Stok</th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Harga</th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,9 +40,15 @@
                     <td class="px-6 py-4 whitespace-nowrap">Dummy</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->jumlah_stok }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->harga_produk }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <a href="{{ route('product.delete', ['id' => $pd->id]) }}" onclick="return confirmDelete();" class="bg-red-500 text-white rounded-md px-3 py-1">delete</a>
-                        <a href="{{route('product.show', ['id' => $pd->id])}}" class="bg-gray-500 text-white rounded-md px-3 py-1 ml-2">edit</a>
+                    <td class="px-6 py-4 whitespace-nowrap flex justify-center">
+                        <a href="{{ route('product.show', ['id' => $pd->pid]) }}"
+                            class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                            <svg class="showIcon"> </svg>
+                        </a>
+                        <a href="{{ route('product.delete', ['id' => $pd->pid]) }}" onclick="return confirmDelete();"
+                            class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
+                            <svg class="deleteIcon"></svg>
+                        </a>
                     </td>
                 </tr>
                 @empty
@@ -53,4 +59,6 @@
             </tbody>
         </table>
     </div>
+
+    <link rel="stylesheet" href="{{asset('svg.css')}}" >
 @endsection

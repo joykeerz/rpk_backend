@@ -35,8 +35,12 @@
                         <td class=" px-4 py-2">{{ $item->partner_company }}</td>
                         <td class=" px-4 py-2">{{ $item->tagline_company }}</td>
                         <td class=" px-4 py-2">{{ $item->provinsi }}</td>
-                        <td class=" px-4 py-2">
-                            <a href="{{ route('company.show', ['id' => $item->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded">Detail</a>
+                        <td class=" px-4 py-2 flex justify-center">
+                            <a href="{{ route('company.show', ['id' => $item->id]) }}" class="bg-blue-500 m-3 hover:bg-blue-700 text-white py-1 px-2 rounded">
+                                <svg class="showIcon"> </svg>
+                            </a>
+                            <a href="{{ route('company.delete', ['id' => $item->id]) }}"  class="bg-red-500 m-3 hover:bg-red-700 text-white py-1 px-2 rounded">
+                                <svg class="deleteIcon"></svg></a>
                         </td>
                     </tr>
                 @empty
@@ -47,4 +51,6 @@
             </tbody>
         </table>
     </div>
+
+    <link rel="stylesheet" href="{{asset('svg.css')}}" >
 @endsection

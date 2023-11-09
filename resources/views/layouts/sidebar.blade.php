@@ -1,11 +1,7 @@
-<div class="sidebar">
-
-</div>
 
 <aside id="logo-sidebar"
-    class="top-0 left-0 z-40 w-64 overflow-auto h-screen transition-transform-translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-    aria-label="Sidebar">
-    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+    class="px-3 pb-4 h-screen bg-white dark:bg-gray-800 w-64">
+    <div class="px-3 pb-4 h-screen bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="#"
@@ -38,7 +34,7 @@
                     </svg>
                 </a>
                 <ul id="barangSubMenu"
-                    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                    class="hidden overflow-hidden transition-transform duration-300 bg-gray-500 rounded m-2 ">
                     <!-- Submenu for Barang -->
                     <li class="hover:bg-gray-100">
                         <a href="{{ route('product.index') }}"
@@ -61,13 +57,14 @@
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Pesanan</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="1"></circle>
-                    <circle cx="19" cy="12" r="1"></circle>
-                    <circle cx="5" cy="12" r="1"></circle>
-                </svg>
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                        <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
                 </a>
-                <ul  id="pesananSubMenu" class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 " >
+                <ul id="pesananSubMenu"
+                    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                     <li class="hover:bg-gray-100">
                         <a href="{{ route('pesanan.index') }}"
                             class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">List
@@ -75,7 +72,8 @@
                     </li>
                     <li class="hover:bg-gray-100">
                         <a href="{{ route('pesanan.newOrder') }}"
-                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Buat Pesanan Baru
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Buat
+                            Pesanan Baru
                         </a>
                     </li>
                 </ul>
@@ -95,7 +93,8 @@
                 <a href="{{ route('category.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <line x1="8" y1="6" x2="21" y2="6"></line>
                         <line x1="8" y1="12" x2="21" y2="12"></line>
                         <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -141,22 +140,24 @@
             </li>
             <li>
                 <a href="#"
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onclick="toggleSubMenu('companySubMenu')">
-                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                    <path
-                        d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-                    <path
-                        d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
-                </svg>
-                <span class="flex-1 ml-3 whitespace-nowrap">Company</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="1"></circle>
-                    <circle cx="19" cy="12" r="1"></circle>
-                    <circle cx="5" cy="12" r="1"></circle>
-                </svg>
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    onclick="toggleSubMenu('companySubMenu')">
+                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 22 21">
+                        <path
+                            d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+                        <path
+                            d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Company</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                        <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
                 </a>
                 <ul id="companySubMenu"
                     class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
@@ -170,6 +171,45 @@
                         <a href="{{ route('company.index') }}"
                             class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
                             Company</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    onclick="toggleSubMenu('branchSubMenu')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Branch</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                        <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
+                </a>
+                <ul id="branchSubMenu"
+                class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                    <li
+
+                        <!-- Submenu for Barang -->
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('branch.create') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                Branch</a>
+                        </li>
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('branch.index') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                Branch</a>
+                        </li>
                     </li>
                 </ul>
 
@@ -213,5 +253,4 @@
         var subMenu = document.getElementById(subMenuId);
         subMenu.classList.toggle('hidden');
     }
-
 </script>

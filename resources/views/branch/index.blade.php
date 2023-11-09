@@ -34,8 +34,15 @@
                     <td class=" px-4 py-2">{{ $item->nama_company }}</td>
                     <td class=" px-4 py-2">{{ $item->no_telp_branch }}</td>
                     <td class=" px-4 py-2">{{ $item->alamat_branch }}</td>
-                    <td class=" px-4 py-2">
-                        <a href="{{ route('branch.show', ['id' => $item->id]) }}">Detail</a>
+                    <td class=" px-4 py-2 flex justify-center">
+                        <a href="{{ route('branch.show', ['id' => $item->id]) }}"
+                            class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                            <svg class="showIcon"> </svg>
+                        </a>
+                        <a href="{{ route('branch.delete', ['id' => $item->id]) }}" onclick="return confirmDelete();"
+                            class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
+                            <svg class="deleteIcon"></svg>
+                        </a>
                     </td>
                 </tr>
             @empty
@@ -43,9 +50,9 @@
                     <td colspan="6">No data available</td>
                 </tr>
             @endforelse
+
         </tbody>
     </table>
+    <link rel="stylesheet" href="{{asset('svg.css')}}" >
 </div>
-
-
 @endsection

@@ -71,12 +71,16 @@ class ProductController extends Controller
             'data' => $products
         ], 200);
 
+        $gudang = DB::table('gudang')
+        ->select('nama_gudang', 'id')
+        ->get();
+
         $kategori = DB::table('kategori')
             ->select('nama_kategori', 'id')
             ->get();
         //dd($kategori);
 
-        return view('product.index', ['productsData' => $products, 'kategoriData' => $kategori]);
+        return view('product.index', ['productsData' => $products, 'kategoriData' => $kategori, 'gudangData' => $gudang]);
     }
 
     function manage()
@@ -86,6 +90,7 @@ class ProductController extends Controller
         ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
         ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid')
         ->get();
+
         return view('product.manage', ['stokData' => $stok]);
     }
 
