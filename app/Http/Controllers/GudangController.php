@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\DB;
 
 class GudangController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $gudang = DB::table('gudang')

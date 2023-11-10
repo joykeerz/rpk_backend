@@ -39,29 +39,22 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('roles')->insert([
-            'nama_role' => 'Manager Sales Pusat',
-            'desk_role' => 'Mengatur master data produk, kategori dan gudang',
+            'nama_role' => 'Penjual Pusat',
+            'desk_role' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('roles')->insert([
-            'nama_role' => 'Manager Sales Kanwil',
-            'desk_role' => 'Mengatur validasi pendaftaran',
+            'nama_role' => 'Manager Sales',
+            'desk_role' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('roles')->insert([
-            'nama_role' => 'Kepala Gudang',
-            'desk_role' => 'Mengatur Pengiriman Barang',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        DB::table('roles')->insert([
-            'nama_role' => 'Pengguna RPK',
-            'desk_role' => 'Akun RPK',
+            'nama_role' => 'customer',
+            'desk_role' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -78,15 +71,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => 'Admin',
-            'email' => 'admin2@mail.com',
+            'name' => 'Penjual Pusat',
+            'email' => 'penjual@mail.com',
             'role_id' => '2',
             'password' => Hash::make('admin123'),
             'no_hp' => '084206969',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
 
         // Alamat Seed
         DB::table('alamat')->insert([
@@ -122,7 +114,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('alamat')->insert([
-            'jalan' => 'Jl. Nusa Raya',
+            'jalan' => 'Jl. Bisa Raya',
             'jalan_ext' => 'Gg. Bangsa Raya',
             'blok' => 'Blok PU No. 11',
             'rt' => '11',
@@ -173,7 +165,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('kategori')->insert([
             'nama_kategori' => 'Minyak Goreng',
-            'deskripsi_kategori' => 'Minyak',
+            'deskripsi_kategori' => 'Minyak sawit',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

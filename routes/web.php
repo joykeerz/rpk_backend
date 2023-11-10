@@ -11,6 +11,7 @@ use App\Http\Controllers\KategoryController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,33 +28,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("/inventory", [App\Http\Controllers\InventoryController::class, 'index']);
-Route::get("/inputBarang", [App\Http\Controllers\InputBarangController::class, 'index']);
-Route::get('store', [ProductController::class, 'store']);
-
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-
 Route::middleware(['auth'])->group(function () {
 
     ///Manage
-    Route::prefix('manage')->group(function () {
+    Route::prefix('manage')->middleware('restrictRole:1')->group(function () {
         ///user
         Route::get('/', [ManageUserController::class, 'index'])->name('manage.user.index');
-        Route::get('/user/new', [ManageUserController::class, 'newUser'])->name('manage.user.new');
-        Route::post('/user/store', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.store');
-        Route::get('/user/verify/{id}', [ManageUserController::class, 'verify'])->name('manage.user.verify');
-        Route::get('/user/reject/{id}', [ManageUserController::class, 'reject'])->name('manage.user.reject');
-        Route::get('/user/edit/{id}', [ManageUserController::class, 'edit'])->name('manage.user.edit');
-        Route::post('/user/update/{id}', [ManageUserController::class, 'update'])->name('manage.user.update');
-        Route::post('/user/update/alamat/{id}', [ManageUserController::class, 'changeAlamat'])->name('manage.user.update.alamat');
-        Route::post('/user/update/password/{id}', [ManageUserController::class, 'changePassword'])->name('manage.user.changePassword');
-        Route::get('/user/delete', [ManageUserController::class, 'delete'])->name('manage.user.delete');
-        Route::post('/user/store/{id}/biodata', [ManageUserController::class, 'storeBiodata'])->name('manage.user.storeBiodata');
-        Route::post('/user/store/{id}/alamat', [ManageUserController::class, 'storeAlamat'])->name('manage.user.storeAlamat');
-        Route::post('/user/store/new', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.StoreNewAccount');
+
+        Route::middleware('restrictRole:1')->group(function () {
+            Route::get('/user/new', [ManageUserController::class, 'newUser'])->name('manage.user.new');
+            Route::post('/user/store', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.store');
+            Route::get('/user/verify/{id}', [ManageUserController::class, 'verify'])->name('manage.user.verify');
+            Route::get('/user/reject/{id}', [ManageUserController::class, 'reject'])->name('manage.user.reject');
+            Route::get('/user/edit/{id}', [ManageUserController::class, 'edit'])->name('manage.user.edit');
+            Route::post('/user/update/{id}', [ManageUserController::class, 'update'])->name('manage.user.update');
+            Route::post('/user/update/alamat/{id}', [ManageUserController::class, 'changeAlamat'])->name('manage.user.update.alamat');
+            Route::post('/user/update/password/{id}', [ManageUserController::class, 'changePassword'])->name('manage.user.changePassword');
+            Route::get('/user/delete', [ManageUserController::class, 'delete'])->name('manage.user.delete');
+            Route::post('/user/store/{id}/biodata', [ManageUserController::class, 'storeBiodata'])->name('manage.user.storeBiodata');
+            Route::post('/user/store/{id}/alamat', [ManageUserController::class, 'storeAlamat'])->name('manage.user.storeAlamat');
+            Route::post('/user/store/new', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.StoreNewAccount');
+        });
+
     });
 
     ///Product
@@ -77,7 +77,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///Gudang
-    Route::prefix('gudang')->group(function(){
+    Route::prefix('gudang')->group(function () {
         Route::get('/', [GudangController::class, 'index'])->name('gudang.index');
         Route::post('/store', [GudangController::class, 'store'])->name('gudang.store');
         Route::get('/show/{id}', [GudangController::class, 'show'])->name('gudang.show');
@@ -87,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///company (Kanwil)
-    Route::prefix('company')->group(function(){
+    Route::prefix('company')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
         Route::post('/store', [CompanyController::class, 'store'])->name('company.store');
         Route::get('/create', [CompanyController::class, 'create'])->name('company.create');
@@ -97,13 +97,13 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///stok
-    Route::prefix('stok')->group(function(){
+    Route::prefix('stok')->group(function () {
         Route::post('/update/product/stok/{id}', [StokController::class, 'updateFromProduct'])->name('stok.updateFromProduct');
         Route::post('/update/product/restock/{id}', [StokController::class, 'increaseStock'])->name('stok.increase');
     });
 
     ///branch (KC,KCP)
-    Route::prefix('branch')->group(function(){
+    Route::prefix('branch')->group(function () {
         Route::get('/', [BranchController::class, 'index'])->name('branch.index');
         Route::get('/manage', [BranchController::class, 'manage'])->name('branch.manage');
         Route::post('/store', [BranchController::class, 'store'])->name('branch.store');
@@ -114,7 +114,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///pesanan
-    Route::prefix('pesanan')->group(function(){
+    Route::prefix('pesanan')->group(function () {
         Route::get('/', [PesananController::class, 'index'])->name('pesanan.index');
         Route::get('/show/{id}', [PesananController::class, 'show'])->name('pesanan.show');
         Route::get('/newOrder', [PesananController::class, 'newOrder'])->name('pesanan.newOrder');
@@ -123,4 +123,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/storeTransaksi', [PesananController::class, 'storeTransaksi'])->name('pesanan.storeTransaksi');
     });
 
+    ///customer
+    Route::prefix('customer')->group(function () {
+        Route::get('/', [CustomerController::class, 'index'])->name('customer.index');
+        Route::get('/show/{id}', [CustomerController::class, 'show'])->name('customer.show');
+        Route::post('/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
+        Route::get('/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+    });
 });

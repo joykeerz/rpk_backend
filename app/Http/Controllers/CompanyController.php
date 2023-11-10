@@ -15,6 +15,12 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //
@@ -30,7 +36,8 @@ class CompanyController extends Controller
         return view('company.index', ['companies' => $companies]);
     }
 
-    public function create(){
+    public function create()
+    {
         ///
         $usersData = User::all();
         // $res =  response()->json([
@@ -48,7 +55,7 @@ class CompanyController extends Controller
     {
         $validated = $request->validate([
             'tb_kode_company' => 'required|unique:companies,kode_company',
-        ],[
+        ], [
             'tb_kode_company.required' => 'Kode Company harus diisi',
             'tb_kode_company.unique' => 'Kode Company sudah terdaftar',
         ]);
@@ -95,7 +102,7 @@ class CompanyController extends Controller
             ->where('companies.id', '=', $id)
             ->first();
 
-         $usersData = User::all();
+        $usersData = User::all();
 
         if ($company == null) {
             return response()->json([
@@ -167,7 +174,7 @@ class CompanyController extends Controller
 
 
         Gudang::where('company_id', $id)
-        ->update(['company_id' => 1]);
+            ->update(['company_id' => 1]);
 
         $company = Company::findOrFail($id);
         $company->delete();

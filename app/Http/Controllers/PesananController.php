@@ -11,14 +11,19 @@ use Illuminate\Support\Facades\DB;
 
 class PesananController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index() ///ini tampilin semua transaksi pesanan
     {
 
         $transaksi = DB::table('transaksi')
-        ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
-        ->join('users', 'users.id', '=', 'pesanan.user_id')
-        ->select('transaksi.*', 'pesanan.*', 'users.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid')
-        ->get();
+            ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
+            ->join('users', 'users.id', '=', 'pesanan.user_id')
+            ->select('transaksi.*', 'pesanan.*', 'users.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid')
+            ->get();
 
         // $res = response()->json([
         //     'data' => $transaksi
@@ -27,22 +32,23 @@ class PesananController extends Controller
         return view('pesanan.index', ['transaksi' => $transaksi]);
     }
 
-    public function show($id){ ///ini tampilin detail transaksi pesanan
+    public function show($id)
+    { ///ini tampilin detail transaksi pesanan
         $transaksi = DB::table('transaksi')
-        ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
-        ->join('users', 'users.id', '=', 'pesanan.user_id')
-        ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
-        ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
-        ->where('transaksi.id', '=', $id)
-        ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid')
-        ->first();
+            ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
+            ->join('users', 'users.id', '=', 'pesanan.user_id')
+            ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
+            ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
+            ->where('transaksi.id', '=', $id)
+            ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid')
+            ->first();
 
         $detailPesanan = DB::table('detail_pesanan')
-        ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
-        ->join('pesanan', 'pesanan.id', '=', 'detail_pesanan.pesanan_id')
-        ->where('pesanan.id', '=', $transaksi->pesanan_id)
-        ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
-        ->get();
+            ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
+            ->join('pesanan', 'pesanan.id', '=', 'detail_pesanan.pesanan_id')
+            ->where('pesanan.id', '=', $transaksi->pesanan_id)
+            ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
+            ->get();
 
         $res = response()->json([
             'data' => [
@@ -50,25 +56,29 @@ class PesananController extends Controller
                 'detailPesanan' => $detailPesanan
             ],
         ], 200);
-        return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
+
+        echo $res;
+        // return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
     }
 
-    public function newOrder(){
+    public function newOrder()
+    {
         $biodata = DB::table('biodata')
-        ->join('users', 'users.id', '=', 'biodata.user_id')
-        ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
-        ->select('biodata.*', 'users.*', 'alamat.*','users.id as uid', 'biodata.id as bid', 'alamat.id as aid')
-        ->get();
+            ->join('users', 'users.id', '=', 'biodata.user_id')
+            ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
+            ->select('biodata.*', 'users.*', 'alamat.*', 'users.id as uid', 'biodata.id as bid', 'alamat.id as aid')
+            ->get();
 
         $stok = DB::table('stok')
-        ->join('produk', 'produk.id', '=', 'stok.produk_id')
-        ->select('stok.*', 'produk.*', 'stok.id as sid', 'produk.id as pid')
-        ->where('stok.jumlah_stok', '>', 0) //.jumlah -> .jumlah_stok
-        ->get();
+            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+            ->select('stok.*', 'produk.*', 'stok.id as sid', 'produk.id as pid')
+            ->where('stok.jumlah_stok', '>', 0) //.jumlah -> .jumlah_stok
+            ->get();
         return view('pesanan.newOrder', ['product' => $stok, 'users' => $biodata]);
     }
 
-    public function storeOrder(Request $request){
+    public function storeOrder(Request $request)
+    {
         $total = 0;
 
         $pesanan = new Pesanan;
@@ -87,7 +97,7 @@ class PesananController extends Controller
                 'harga' => $request->data['orderDetails'][$key]['price'],
             ]);
             $currentStok = Stok::find($request->data['orderDetails'][$key]['tb_stok_id']);
-            if($currentStok->jumlah_stok > 0){
+            if ($currentStok->jumlah_stok > 0) {
                 $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
             }
             $currentStok->save();
@@ -102,24 +112,33 @@ class PesananController extends Controller
         $transaksi->subtotal_produk = $total;
         $transaksi->save();
 
+        // $transaksi = new Transaksi;
+        // $transaksi->pesanan_id = $pesanan->id;
+        // $transaksi->tipe_pembayaran = $request->cb_tipe_pembayaran;
+        // $transaksi->status_pembayaran = 'belum dibayar';
+        // $transaksi->subtotal_produk = $total;
+        // $transaksi->subtotal_pengiriman = $request->tb_subtotal_pengiriman;
+        // $transaksi->save();
+
         return response()->json([
             'message' => 'Pesanan berhasil ditambahkan',
             'data' => $pesanan
         ], 200);
     }
 
-    public function newTransaksi($id){
+    public function newTransaksi($id)
+    {
         $pesanan = DB::table('pesanan')
-        ->join('users', 'users.id', '=', 'pesanan.user_id')
-        ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
-        ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
-        ->where('pesanan.id', '=', $id);
+            ->join('users', 'users.id', '=', 'pesanan.user_id')
+            ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
+            ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
+            ->where('pesanan.id', '=', $id);
 
         $detailPesanan = DB::table('detail_pesanan')
-        ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
-        ->join('pesanan', 'pesanan.id', '=', 'detail_pesanan.pesanan_id')
-        ->where('pesanan.id', '=', $id)
-        ->get();
+            ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
+            ->join('pesanan', 'pesanan.id', '=', 'detail_pesanan.pesanan_id')
+            ->where('pesanan.id', '=', $id)
+            ->get();
 
         $res = response()->json([
             'data' => [
@@ -131,7 +150,8 @@ class PesananController extends Controller
         // return view('pesanan.newTransaksi', ['pesanan' => $pesanan, 'detailPesanan' => $detailPesanan]);
     }
 
-    public function storeTransaksi(Request $request, $id){
+    public function storeTransaksi(Request $request, $id)
+    {
         $transaksi = Transaksi::find($id);
         $transaksi->status_transaksi = $request->tb_status_transaksi;
         $transaksi->tipe_pembayaran = $request->tb_tipe_pembayaran;
