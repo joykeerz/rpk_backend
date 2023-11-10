@@ -71,15 +71,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => 'Admin',
-            'email' => 'admin2@mail.com',
+            'name' => 'Penjual Pusat',
+            'email' => 'penjual@mail.com',
             'role_id' => '2',
             'password' => Hash::make('admin123'),
             'no_hp' => '084206969',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
 
         // Alamat Seed
         DB::table('alamat')->insert([
@@ -115,7 +114,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('alamat')->insert([
-            'jalan' => 'Jl. Nusa Raya',
+            'jalan' => 'Jl. Bisa Raya',
             'jalan_ext' => 'Gg. Bangsa Raya',
             'blok' => 'Blok PU No. 11',
             'rt' => '11',
@@ -166,7 +165,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('kategori')->insert([
             'nama_kategori' => 'Minyak Goreng',
-            'deskripsi_kategori' => 'Minyak',
+            'deskripsi_kategori' => 'Minyak sawit',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

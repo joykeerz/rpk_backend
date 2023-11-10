@@ -27,9 +27,6 @@ class StokController extends Controller
             'message' => 'stok loaded'
         ], 200);
 
-        // foreach ($products as $key => $value) {
-        //     echo "$key:$value->nama_produk, ";
-        // }
         return $res;
         // return view('product.index', ['productsData' => $products]);
     }
@@ -58,7 +55,7 @@ class StokController extends Controller
 
     public function updateFromProduct(Request $request, $id)
     {
-        $stok = Stok::select('stok.*')
+        $stok = Stok::select('stok.*', 'gudang.*', 'produk.*')
             ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
             ->join('produk', 'produk.id', '=', 'stok.produk_id')
             ->where('stok.id', '=', $id)
@@ -72,7 +69,8 @@ class StokController extends Controller
         ], '200');
     }
 
-    public function increaseStock(Request $request, $id){
+    public function increaseStock(Request $request, $id)
+    {
         $stok = Stok::select('stok.*')
             ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
             ->join('produk', 'produk.id', '=', 'stok.produk_id')

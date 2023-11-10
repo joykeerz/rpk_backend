@@ -40,25 +40,17 @@ class ProductController extends Controller
             ->where('stok.id', '=', $id)
             ->first();
 
-        // Check if the product exists
         if (!$stok) {
-            // Return a 404 response if the product doesn't exist
-            // echo "Product not found";
             return response()->json([
                 'error' => 'resource not found'
             ], '404');
         }
 
         $kategori = DB::table('kategori')
-        ->select('nama_kategori', 'id')
-        ->get();
-    //dd($kategori);
+            ->select('nama_kategori', 'id')
+            ->get();
 
-        // return response()->json([
-        //     'data' => $stok,
-        // ], 200);
-
-        return view('product.show', ['product' => $stok , 'kategoriData' => $kategori]);
+        return view('product.show', ['product' => $stok, 'kategoriData' => $kategori]);
     }
 
     function index()
@@ -73,13 +65,12 @@ class ProductController extends Controller
         ], 200);
 
         $gudang = DB::table('gudang')
-        ->select('nama_gudang', 'id')
-        ->get();
+            ->select('nama_gudang', 'id')
+            ->get();
 
         $kategori = DB::table('kategori')
             ->select('nama_kategori', 'id')
             ->get();
-        //dd($kategori);
 
         return view('product.index', ['productsData' => $products, 'kategoriData' => $kategori, 'gudangData' => $gudang]);
     }
@@ -87,10 +78,10 @@ class ProductController extends Controller
     function manage()
     {
         $stok = DB::table('stok')
-        ->join('produk', 'produk.id', '=', 'stok.produk_id')
-        ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
-        ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid')
-        ->get();
+            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+            ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
+            ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid')
+            ->get();
 
         return view('product.manage', ['stokData' => $stok]);
     }
@@ -105,8 +96,6 @@ class ProductController extends Controller
         $product->harga_produk = $request->tb_harga_produk;
         $product->diskon_produk = $request->tb_diskon_produk;
         $product->satuan_unit_produk = $request->tb_satuan;
-        //dd($product);
-        // dd($request->tb_satuan);
         $product->save();
 
         $stok = new Stok;
@@ -115,7 +104,6 @@ class ProductController extends Controller
         $stok->jumlah_stok = $request->tb_jumlah_stok;
         $stok->save();
 
-        //return response()->json($product, '200');
         return redirect()->route('product.manage')->with('success', 'Produk berhasil ditambahkan');
     }
 
@@ -132,11 +120,6 @@ class ProductController extends Controller
         $product->satuan_unit_produk = $request->tb_satuan_unit;
         $product->save();
 
-        // return response()->json([
-        //     'data' => $product,
-        //     'message' => 'produk berhasil diupdate'
-        // ], '200');
-
         return redirect()->route('product.manage')->with('success', 'Produk berhasil diupdate');
     }
 
@@ -147,13 +130,7 @@ class ProductController extends Controller
         $stok = Stok::where('produk_id', $id)->first();
         $stok->delete();
 
-        // return response()->json([
-        //     'message' => 'produk berhasil diupdate'
-        // ], '200');
-
         return redirect()->route('product.manage')->with('success', 'Produk berhasil dihapus');
-
-
     }
 
     public function searchProduct(Request $request)
