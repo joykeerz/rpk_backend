@@ -200,12 +200,26 @@
                 </ul>
         </li>
         <li>
-            <a href=""
+            <a href="#"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
+            onclick="toggleSubMenu('customerSubMenu')" >
             <svg class="customerIcon"></svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">Customer</span>
+                <svg class="submenuOption"></svg>
             </a>
+            <ul id="customerSubMenu"
+                class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                <li class="hover:bg-gray-100">
+                    <a href="{{ route('customer.create') }}"
+                        class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                        Customer</a>
+                </li>
+                <li class="hover:bg-gray-100" >
+                    <a href="{{ route('customer.index') }}"
+                        class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                        Customer</a>
+                </li>
+            </ul>
         </li>
 
 
