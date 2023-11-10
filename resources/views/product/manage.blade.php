@@ -37,7 +37,7 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->nama_produk }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">Dummy</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ $pd->nama_kategori }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->jumlah_stok }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->harga_produk }}</td>
                     <td class="px-6 py-4 whitespace-nowrap flex justify-center">

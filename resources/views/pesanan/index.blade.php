@@ -39,7 +39,7 @@
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
                         <td class="subtotal_produk px-4 py-2">{{ $item->subtotal_produk }}</td>
                         <td>
-                            <a class="" href="{{ route('pesanan.show', ['id' => $item->id]) }}">open</a>
+                            <a class="" href="{{ route('pesanan.show', ['id' => $item->tid]) }}">open</a>
                         </td>
                     </tr>
                 </tbody>
