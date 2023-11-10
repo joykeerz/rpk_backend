@@ -130,10 +130,16 @@
                 <input
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                     type="text" name="tb_nama_kategori" id="tb_nama_kategori">
+                @error('tb_nama_kategori')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
                 <label class="block text-sm font-medium text-gray-700" for="deskripsiKategori">Deskripsi Kategori:</label>
                 <textarea
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                     name="tb_desk_kategori" id="tb_desk_kategori" cols="100" rows="3"></textarea>
+                @error('tb_desk_kategori')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
             </div>
             <div class="flex justify-center">
                 <button type="submit" class="bg-blue-500 text-white py-1 px-4 rounded-md hover:bg-blue-600 m-auto my-2">
