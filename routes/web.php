@@ -101,7 +101,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [StokController::class, 'index'])->name('stok.index');
         Route::get('/show/gudang/{id}', [StokController::class, 'stockByGudang'])->name('stok.show');
         Route::get('/delete/{id}', [StokController::class, 'delete'])->name('stok.delete');
-        Route::get('/create/gudang/{id}', [StokController::class, 'create'])->name('stok.create');
+        Route::get('/create/gudang/{id}', [StokController::class, 'createStock'])->name('stok.create');
+        Route::post('/create/gudang/{id}', [StokController::class, 'insertStock'])->name('stok.insert');
+        Route::get('/show/detail/{id}', [StokController::class, 'showStock'])->name('stok.detail');
+        Route::post('/show/detail/{id}', [StokController::class, 'updateStock'])->name('stok.update');
     });
 
     ///branch (KC,KCP)

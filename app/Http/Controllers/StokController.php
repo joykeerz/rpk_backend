@@ -83,7 +83,6 @@ class StokController extends Controller
         return $res;
     }
 
-
     public function showStock($id)
     {
         $stock = DB::table('stok')
@@ -93,31 +92,58 @@ class StokController extends Controller
             ->where('stok.id', '=', $id)
             ->first();
 
-        return response()->json([
-            'data' => $stock,
-            'message' => 'stok berhasil ditambahkan'
-        ], '200');
-        // return view('products.show', ['product' => $product]);
+        // return response()->json([
+        //     'data' => $stock,
+        //     'message' => 'stok berhasil ditambahkan'
+        // ], '200');
+        return view('stock.detail', ['stock' => $stock]);
     }
 
-    public function createStock(Request $request, $id)
+    public function createStock($id)
     {
-        $stock = Stok::create([
-            'produk_id' => $id,
-            'gudang_id' => $request->cb_gudang_id,
-            'jumlah_stok' => $request->tb_jumlah_stok
+        $gudang = Gudang::findOrFail($id);
+        $products = DB::table('produk')
+            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+            ->select('produk.*', 'kategori.*', 'produk.id as pid', 'kategori.id as kid')
+            ->orderBy('produk.created_at', 'desc')
+            ->get();
+
+        return view('stock.create', ['gudang' => $gudang, 'products' => $products]);
+    }
+
+    public function insertStock(Request $request, $id)
+    {
+
+        $validated = $request->validate([
+            'tb_jumlah_produk' => 'required|numeric',
+            'cb_produk' => 'required'
+        ], [
+            'tb_jumlah_produk.required' => 'jumlah stok tidak boleh kosong',
+            'tb_jumlah_produk.numeric' => 'jumlah stok harus berupa angka',
+            'cb_produk.required' => 'produk tidak boleh kosong',
         ]);
 
-        return response()->json([
-            'data' => $stock,
-            'message' => 'stok berhasil ditambahkan'
-        ], '200');
+        $checkUniqueProduct = Stok::where('produk_id', '=', $request->cb_produk)
+            ->where('gudang_id', '=', $id)
+            ->first();
+
+        if($checkUniqueProduct) {
+            return redirect()->back()->with('message', 'produk sudah ada di gudang ini');
+        }
+
+        $stock = Stok::create([
+            'produk_id' => $request->cb_produk,
+            'gudang_id' => $id,
+            'jumlah_stok' => $request->tb_jumlah_produk
+        ]);
+
+        return redirect()->route('stok.show', ['id' => $id])->with('message', 'stok produk berhasil ditambahkan');
     }
 
     public function updateJumlahStock(Request $request, $id)
     {
         $stok = Stok::findOrfail($id);
-        $stok->jumlah_stok = $request->tb_jumlah_stok;
+        $stok->jumlah_stok = $request->tb_jumlah_produk;
         $stok->save();
         return response()->json([
             'data' => [$stok],
@@ -128,7 +154,7 @@ class StokController extends Controller
     public function increaseStock(Request $request, $id)
     {
         $stok = Stok::findOrfail($id);
-        $stok->increment('jumlah_stok', $request->tb_jumlah_stok);
+        $stok->increment('jumlah_stok', $request->tb_jumlah_produk);
         $stok->save();
         $res =  response()->json([
             'data' => $stok,
@@ -139,7 +165,7 @@ class StokController extends Controller
     public function decreaseStock(Request $request, $id)
     {
         $stok = Stok::findOrfail($id);
-        $stok->decrement('jumlah_stok', $request->tb_jumlah_stok);
+        $stok->decrement('jumlah_stok', $request->tb_jumlah_produk);
         $stok->save();
         $res =  response()->json([
             'data' => $stok,
@@ -147,13 +173,26 @@ class StokController extends Controller
         ], '200');
     }
 
+    public function updateStock(Request $request, $id){
+        $validated = $request->validate([
+            'tb_jumlah_produk' => 'required|numeric'
+        ], [
+            'tb_jumlah_produk.required' => 'jumlah stok tidak boleh kosong',
+            'tb_jumlah_produk.numeric' => 'jumlah stok harus berupa angka'
+        ]);
+
+        $stok = Stok::findOrfail($id);
+        $stok->jumlah_stok = $request->tb_jumlah_produk;
+        $stok->save();
+        return redirect()->route('stok.show', ['id' => $request->tb_gudang_id])->with('message', 'stok produk berhasil ditambahkan');
+    }
+
     public function delete($id)
     {
         $stok = Stok::findOrFail($id);
         $stok->delete();
 
-        return response()->json([
-            'message' => 'stok berhasil dihapus'
-        ], '200');
+        return redirect()->back()->with('message', 'stok berhasil dihapus');
+
     }
 }
