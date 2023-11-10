@@ -90,6 +90,21 @@ class ProductController extends Controller
 
     function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'tb_kode_produk' => 'required',
+            'tb_nama_produk' => 'required',
+            'tb_desk_produk' => 'required',
+            'tb_harga_produk' => 'required',
+            'tb_diskon_produk' => 'required',
+            'tb_satuan' => 'required',
+        ], [
+            'tb_kode_produk.required' => 'Kode produk harus diisi',
+            'tb_nama_produk.required' => 'Nama produk harus diisi',
+            'tb_desk_produk.required' => 'Deskripsi produk harus diisi',
+            'tb_harga_produk.required' => 'Harga produk harus diisi',
+            'tb_diskon_produk.required' => 'Diskon produk harus diisi',
+            'tb_satuan.required' => 'Satuan produk harus diisi',
+        ]);
         $product = new Produk;
         $product->kategori_id = $request->cb_kategori;
         $product->kode_produk = $request->tb_kode_produk;
@@ -111,6 +126,19 @@ class ProductController extends Controller
 
     function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'tb_kode_produk' => 'required',
+            'tb_nama_produk' => 'required',
+            'tb_desk_produk' => 'required',
+            'tb_harga_produk' => 'required',
+
+        ], [
+            'tb_kode_produk.required' => 'Kode produk harus diisi',
+            'tb_nama_produk.required' => 'Nama produk harus diisi',
+            'tb_desk_produk.required' => 'Deskripsi produk harus diisi',
+            'tb_harga_produk.required' => 'Harga produk harus diisi',
+        ]);
+
         $product = Produk::findOrFail($id);
         // $product = Produk::where('id', '=', $id)->firstOrFail(); // FYI: ini adalah alternate query
         $product->kategori_id = $request->cb_kategori;
@@ -118,8 +146,6 @@ class ProductController extends Controller
         $product->nama_produk = $request->tb_nama_produk;
         $product->desk_produk = $request->tb_desk_produk;
         $product->harga_produk = $request->tb_harga_produk;
-        $product->diskon_produk = $request->tb_diskon_produk;
-        $product->satuan_unit_produk = $request->tb_satuan_unit;
         $product->save();
 
         return redirect()->route('product.manage')->with('success', 'Produk berhasil diupdate');

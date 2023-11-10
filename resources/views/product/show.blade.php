@@ -11,10 +11,13 @@
 <header class="bg-gray-200 p-4">
     <h2>
         {{ $product->nama_produk }} (Gudang : {{ $product->nama_gudang}})
+        @foreach ($errors->all() as $error)
+        {{$error}}
+    @endforeach
     </h2>
 </header>
 
-<form action="" method="post">
+<form action="{{route('product.update', ['id' => $product->id])}}" method="post">
     @csrf
     <div class="p-4 flex flex-col">
         <div>
@@ -23,12 +26,18 @@
                 <input type="text"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
                     name="tb_nama_produk" id="tb_nama_produk" placeholder="" value="{{ $product->nama_produk }}">
+                @error('tb_nama_produk')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
             </div>
             <div id="kodeProduk" class="mb-3">
                 <label for="" class="block text-sm font-medium text-gray-700">Kode Produk</label>
                 <input type="text"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
                     name="tb_kode_produk" id="tb_kode_produk" placeholder="" value="{{ $product->kode_produk }}">
+                @error('tb_kode_produk')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
             </div>
             <div id="deskripsiProduk" class="mb-3">
                 <label for="deskripsiProduk" class="block text-sm font-medium text-gray-700">Deskripsi
@@ -36,7 +45,9 @@
                 <input type="text"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                     name="tb_desk_produk" id="tb_desk_produk" placeholder="" value="{{ $product->desk_produk }}">
-                <small id="helpId" class="text-gray-500 text-xs"></small>
+                @error('tb_desk_produk')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
             </div>
 
             <div id="kategori" class="mb-3">
@@ -49,15 +60,9 @@
                         <option value="">Tidak ada data</option>
                     @endforelse
                 </select>
-                <small id="helpId" class="text-gray-500 text-xs"></small>
-            </div>
-
-            <div id="stok" class="mb-3">
-                <label for="" class="block text-sm font-medium text-gray-700">Stok</label>
-                <input type="number"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                    name="tb_jumlah_stok" value="{{ $product->jumlah_stok }}" placeholder="">
-                <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
+                @error('cb_kategori')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
             </div>
 
             <div id="harga" class="mb-3">
@@ -65,9 +70,16 @@
                 <input type="number"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                     name="tb_harga_produk" value="{{ $product->harga_produk }}" placeholder="">
+
+                @error('tb_harga_produk')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
             </div>
 
-
+            <div class="buttonContainer flex justify-center p-4">
+                <button type="submit"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+            </div>
 </form>
 
 

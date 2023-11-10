@@ -24,12 +24,18 @@
                                 <input type="text"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
                                     name="tb_nama_produk" id="tb_nama_produk" placeholder="">
+                                @error('tb_nama_produk')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div id="kodeProduk" class="mb-3">
                                 <label for="" class="block text-sm font-medium text-gray-700">Kode Produk</label>
                                 <input type="text"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
                                     name="tb_kode_produk" id="tb_kode_produk" placeholder="">
+                                @error('tb_kode_produk')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div id="deskripsiProduk" class="mb-3">
                                 <label for="deskripsiProduk" class="block text-sm font-medium text-gray-700">Deskripsi
@@ -37,20 +43,25 @@
                                 <input type="text"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                                     name="tb_desk_produk" id="tb_desk_produk" placeholder="">
-                                <small id="helpId" class="text-gray-500 text-xs"></small>
+                                @error('tb_desk_produk')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div id="kategori" class="mb-3">
                                 <label for="kategori" class="block text-sm font-medium text-gray-700">Kategori</label>
                                 <select id="cb_kategori" name="cb_kategori"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
+                                        <option disabled selected>Open this select menu</option>
                                     @forelse ($kategoriData as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>
                                     @empty
                                         <option value="">Tidak ada data</option>
                                     @endforelse
                                 </select>
-                                <small id="helpId" class="text-gray-500 text-xs"></small>
+                                @error('cb_kategori')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div id="stok" class="mb-3">
@@ -71,17 +82,24 @@
                                     rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                                     name="tb_diskon_produk" id="tb_diskon_produk" value="0" placeholder="">
+                                  @error('tb_diskon_produk')
+                                      <div class="text-red-500">{{ $message }}</div>
+                                  @enderror
                             </div>
 
                             <div id="gudang" class="mb-3">
                                 <label for="" class="block text-sm font-medium text-gray-700">Gudang</label>
                                 <select name="cb_gudang_id" id="cb_gudang_id">
+                                    <option disabled selected>Open this select menu</option>
                                     @forelse ($gudangData as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama_gudang }}</option>
                                     @empty
                                         <option value="">Tidak ada data</option>
                                     @endforelse
                                 </select>
+                                @error('cb_gudang_id')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div id="hargaProduk" class="mb-3">
@@ -89,7 +107,9 @@
                                 <input type="number"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                                     name="tb_harga_produk" id="tb_harga_product" value="0" placeholder="">
-                                <small id="helpId" class="text-gray-500 text-xs"></small>
+                                @error('tb_harga_produk')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div id="satuanUnit" class="mb-3">
@@ -105,6 +125,9 @@
                                     <option value="Unit">Unit</option>
                                     <option value="Box">Box</option>
                                 </select>
+                                @error('tb_satuan')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
 
                         </div>
