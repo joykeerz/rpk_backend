@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Alamat;
 use App\Models\Biodata;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
 class CustomerController extends Controller
 {
     //
@@ -44,43 +45,58 @@ class CustomerController extends Controller
         return view('customer.show', ['customer' => $customer]);
     }
 
-    public function create(Request $request)
+    public function create()
+    {
+        return view('customer.create');
+    }
+
+    public function store(Request $request)
     {
 
-        $validatedData = $request->validate([
-            'tb_kode_customer' => 'required',
-            'tb_nama_rpk' => 'required',
-            'tb_no_ktp' => 'required',
-            'tb_jalan' => 'required',
-            'tb_jalan_ex' => 'required',
-            'tb_blok' => 'required',
-            'tb_rt' => 'required',
-            'tb_rw' => 'required',
-            'tb_provinsi' => 'required',
-            'tb_kota_kabupaten' => 'required',
-            'tb_kecamatan' => 'required',
-            'tb_kelurahan' => 'required',
-            'tb_kode_pos' => 'required',
-        ]);
+        // $validatedData = $request->validate([
+        //     'tb_kode_customer' => 'required',
+        //     'tb_nama_rpk' => 'required',
+        //     'tb_no_ktp' => 'required',
+        //     'tb_jalan' => 'required',
+        //     'tb_jalan_ex' => 'required',
+        //     'tb_blok' => 'required',
+        //     'tb_rt' => 'required',
+        //     'tb_rw' => 'required',
+        //     'tb_provinsi' => 'required',
+        //     'tb_kota_kabupaten' => 'required',
+        //     'tb_kecamatan' => 'required',
+        //     'tb_kelurahan' => 'required',
+        //     'tb_kode_pos' => 'required',
+        // ]);
+
+        $user = new User;
+        $user->role_id = 5;
+        $user->name = $request->tb_nama_user;
+        $user->email = $request->tb_email_user;
+        $user->password = Hash::make($request->tb_password_user);
+        $user->no_hp = $request->tb_hp_user;
+        $user->save();
 
         $alamat = new Alamat;
         $alamat->jalan = $request->tb_jalan;
-        $alamat->jalan_extra = $request->tb_jalan_extra;
+        $alamat->jalan_ext = $request->tb_jalan_2;
         $alamat->blok = $request->tb_blok;
         $alamat->rt = $request->tb_rt;
         $alamat->rw = $request->tb_rw;
-        $alamat->provinsi = $request->tb_provinsi;
-        $alamat->kota_kabupaten = $request->tb_kota_kabupaten;
+        $alamat->provinsi = $request->tb_prov;
+        $alamat->kota_kabupaten = $request->tb_kota;
         $alamat->kecamatan = $request->tb_kecamatan;
         $alamat->kelurahan = $request->tb_kelurahan;
         $alamat->negara = 'indonesia';
-        $alamat->kode_pos = $request->tb_kode_pos;
+        $alamat->kode_pos = $request->tb_kodepos;
         $alamat->save();
 
         $customer = new Biodata;
+        $customer->user_id = $user->id;
+        $customer->alamat_id = $alamat->id;
         $customer->kode_customer = $request->tb_kode_customer;
         $customer->nama_rpk = $request->tb_nama_rpk;
-        $customer->no_ktp = $request->tb_no_ktp;
+        $customer->no_ktp = $request->tb_ktp_rpk;
         $customer->save();
 
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil ditambahkan');
@@ -88,19 +104,33 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $validatedData = $request->validate([
             'tb_kode_customer' => 'required',
             'tb_nama_rpk' => 'required',
-            'tb_no_ktp' => 'required',
+            'tb_ktp_rpk' => 'required',
             'tb_jalan' => 'required',
             'tb_blok' => 'required',
             'tb_rt' => 'required',
             'tb_rw' => 'required',
-            'tb_provinsi' => 'required',
-            'tb_kota_kabupaten' => 'required',
+            'tb_prov' => 'required',
+            'tb_kota' => 'required',
             'tb_kecamatan' => 'required',
             'tb_kelurahan' => 'required',
-            'tb_kode_pos' => 'required',
+            'tb_kodepos' => 'required',
+        ],[
+            'tb_kode_customer.required' => 'Kode customer tidak boleh kosong',
+            'tb_nama_rpk.required' => 'Nama RPK tidak boleh kosong',
+            'tb_no_ktp.required' => 'No KTP tidak boleh kosong',
+            'tb_jalan.required' => 'Jalan tidak boleh kosong',
+            'tb_blok.required' => 'Blok tidak boleh kosong',
+            'tb_rt.required' => 'RT tidak boleh kosong',
+            'tb_rw.required' => 'RW tidak boleh kosong',
+            'tb_prov.required' => 'Provinsi tidak boleh kosong',
+            'tb_kota.required' => 'Kota/Kabupaten tidak boleh kosong',
+            'tb_kecamatan.required' => 'Kecamatan tidak boleh kosong',
+            'tb_kelurahan.required' => 'Kelurahan tidak boleh kosong',
+            'tb_kodepos.required' => 'Kode pos tidak boleh kosong',
         ]);
 
         $customer = Biodata::findOrfail($id);
@@ -110,7 +140,7 @@ class CustomerController extends Controller
 
         $customer->kode_customer = $request->tb_kode_customer;
         $customer->nama_rpk = $request->tb_nama_rpk;
-        $customer->no_ktp = $request->tb_no_ktp;
+        $customer->no_ktp = $request->tb_ktp_rpk;
         $customer->save();
 
         $alamat = Alamat::where('id', '=', $customer->alamat_id)->first();
@@ -118,23 +148,36 @@ class CustomerController extends Controller
             abort(404);
         }
         $alamat->jalan = $request->tb_jalan;
-        $alamat->jalan_extra = $request->tb_jalan_extra;
+        $alamat->jalan_ext = $request->tb_jalan_2;
         $alamat->blok = $request->tb_blok;
         $alamat->rt = $request->tb_rt;
         $alamat->rw = $request->tb_rw;
-        $alamat->provinsi = $request->tb_provinsi;
-        $alamat->kota_kabupaten = $request->tb_kota_kabupaten;
+        $alamat->provinsi = $request->tb_prov;
+        $alamat->kota_kabupaten = $request->tb_kota;
         $alamat->kecamatan = $request->tb_kecamatan;
         $alamat->kelurahan = $request->tb_kelurahan;
         $alamat->negara = 'indonesia';
-        $alamat->kode_pos = $request->tb_kode_pos;
+        $alamat->kode_pos = $request->tb_kodepos;
         $alamat->save();
+
+        $user = User::where('id', '=', $customer->user_id)->first();
+        if (empty($user)) {
+            abort(404);
+        }
+        $user->name = $request->tb_nama_user;
+        $user->email = $request->tb_email_user;
+        $user->no_hp = $request->tb_hp_user;
+        $user->save();
+
+
 
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil diubah');
     }
 
     public function delete($id)
     {
+
+
         $customer = Biodata::findOrfail($id);
         if (empty($customer)) {
             abort(404);
@@ -143,8 +186,11 @@ class CustomerController extends Controller
         if (empty($alamat)) {
             abort(404);
         }
+        $user = User::where('id', '=', $customer->user_id)->first();
         $customer->delete();
         $alamat->delete();
+        $user->delete();
+
 
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil dihapus');
     }

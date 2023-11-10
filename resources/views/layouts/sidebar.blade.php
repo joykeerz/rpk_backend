@@ -1,17 +1,20 @@
-
-<aside id="logo-sidebar"
-    class="px-3 pb-4 h-screen bg-white dark:bg-gray-800 w-64">
+<link rel="stylesheet" href="{{ asset('svg.css') }}">
+<aside id="logo-sidebar" class="px-3 pb-4 h-screen bg-white dark:bg-gray-800 w-64">
     <div class="px-3 pb-4 h-screen bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
+                <a href="{{ route('home') }}"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <svg class="home flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 ">
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Dashboard</span>
+                </a>
+            </li>
+            <li>
                 <a href="#"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                        <path
-                            d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-                        <path
-                            d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+                    <svg
+                        class="pointOfSale w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white dark:bg-gray-800">
                     </svg>
                     <span class="ml-3">Point of Sales</span>
                 </a>
@@ -20,18 +23,10 @@
                 <a href="#"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     onclick="toggleSubMenu('barangSubMenu')">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                        <path
-                            d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
+                    <svg stroke="#9CA3AF" class="barangMenu  w-5 h-5 ">
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Barang</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="19" cy="12" r="1"></circle>
-                        <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
+                    <svg class="openMenu"></svg>
                 </a>
                 <ul id="barangSubMenu"
                     class="hidden overflow-hidden transition-transform duration-300 bg-gray-500 rounded m-2 ">
@@ -51,16 +46,10 @@
             <li>
                 <a href="#" onclick="toggleSubMenu('pesananSubMenu')"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 2L3 6v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V6l-3-4H6zM3.8 6h16.4M16 10a4 4 0 1 1-8 0" />
+                    <svg class="pesanan">
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Pesanan</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="19" cy="12" r="1"></circle>
-                        <circle cx="5" cy="12" r="1"></circle>
+                    <svg class="submenuOption">
                     </svg>
                 </a>
                 <ul id="pesananSubMenu"
@@ -93,8 +82,7 @@
                 <a href="{{ route('category.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="8" y1="6" x2="21" y2="6"></line>
                         <line x1="8" y1="12" x2="21" y2="12"></line>
                         <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -196,10 +184,8 @@
                     </svg>
                 </a>
                 <ul id="branchSubMenu"
-                class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
-                    <li
-
-                        <!-- Submenu for Barang -->
+                    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                    <li <!-- Submenu for Barang -->
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('branch.create') }}"
                                 class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
@@ -212,23 +198,46 @@
                         </li>
                     </li>
                 </ul>
+        </li>
+        <li>
+            <a href="#"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            onclick="toggleSubMenu('customerSubMenu')" >
+            <svg class="customerIcon"></svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">Customer</span>
+                <svg class="submenuOption"></svg>
+            </a>
+            <ul id="customerSubMenu"
+                class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                <li class="hover:bg-gray-100">
+                    <a href="{{ route('customer.create') }}"
+                        class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                        Customer</a>
+                </li>
+                <li class="hover:bg-gray-100" >
+                    <a href="{{ route('customer.index') }}"
+                        class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                        Customer</a>
+                </li>
+            </ul>
+        </li>
 
-            </li>
-            <li>
-                <a href="#"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                    id="logout-button">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 "
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"></path>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Logout</span>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </li>
+
+        <li>
+            <a href="#"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                id="logout-button">
+                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 "
+                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"></path>
+                </svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">Logout</span>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </li>
 
         </ul>
     </div>

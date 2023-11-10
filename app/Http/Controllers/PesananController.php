@@ -25,11 +25,10 @@ class PesananController extends Controller
             ->select('transaksi.*', 'pesanan.*', 'users.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid')
             ->get();
 
-        $res = response()->json([
-            'data' => $transaksi
-        ], 200);
+        // $res = response()->json([
+        //     'data' => $transaksi
+        // ], 200);
 
-        // echo $res;
         return view('pesanan.index', ['transaksi' => $transaksi]);
     }
 

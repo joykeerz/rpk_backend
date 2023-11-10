@@ -34,6 +34,7 @@ class ManageUserController extends Controller
         $allUsers = DB::table('users')
         ->join('roles','users.role_id','=','roles.id')
         ->select('users.*','roles.*','roles.id as rid','users.id as uid')
+        ->where('users.role_id','!=',5 )
         ->get();
         return view('manage.user.index', ['usersData' => $allUsers]);
     }
