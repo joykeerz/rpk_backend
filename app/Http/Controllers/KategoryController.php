@@ -26,6 +26,14 @@ class KategoryController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'tb_nama_kategori' => 'required',
+            'tb_desk_kategori' => 'required',
+        ],[
+            'tb_nama_kategori.required' => 'Nama Kategori Harus Diisi!',
+            'tb_desk_kategori.required' => 'Deskripsi Kategori Harus Diisi!',
+        ]);
+
         $category = new Kategori;
         $category->nama_kategori = $request->tb_nama_kategori;
         $category->deskripsi_kategori = $request->tb_desk_kategori;
