@@ -98,8 +98,10 @@ Route::middleware(['auth'])->group(function () {
 
     ///stok
     Route::prefix('stok')->group(function () {
-        Route::post('/update/product/stok/{id}', [StokController::class, 'updateFromProduct'])->name('stok.updateFromProduct');
-        Route::post('/update/product/restock/{id}', [StokController::class, 'increaseStock'])->name('stok.increase');
+        Route::get('/', [StokController::class, 'index'])->name('stok.index');
+        Route::get('/show/gudang/{id}', [StokController::class, 'stockByGudang'])->name('stok.show');
+        Route::get('/delete/{id}', [StokController::class, 'delete'])->name('stok.delete');
+        Route::get('/create/gudang/{id}', [StokController::class, 'create'])->name('stok.create');
     });
 
     ///branch (KC,KCP)
@@ -130,4 +132,5 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
         Route::get('/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
     });
+
 });

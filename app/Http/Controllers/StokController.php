@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gudang;
 use App\Models\Stok;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,52 +16,107 @@ class StokController extends Controller
 
     public function index()
     {
-        $stok = DB::table('stok')
-            ->join('produk', 'stok.produk_id', '=', 'alamat.id')
-            ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
-            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'company.id as cid')
+        $gudang = DB::table('gudang')
+            ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
+            ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
+            ->orderBy('cat', 'desc')
             ->get();
 
+        $stok = DB::table('stok')
+            ->join('produk', 'stok.produk_id', '=', 'produk.id')
+            ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
+            ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
+            ->orderBy('stok.created_at', 'desc')
+            ->get();
 
-        $res =  response()->json([
-            'data' => $stok,
-            'message' => 'stok loaded'
+        // $gudangStockCount = [];
+        // foreach ($gudang as $g) {
+        //     foreach($stok as $s) {
+        //         if ($g->gid == $s->gid) {
+        //             array_push($gudangStockCount, [
+        //                 'gudang' => $g,
+        //                 'stok' => $s
+        //             ])
+        //         };
+        //     };
+        // };
+
+        // return $gudangStockCount;
+
+        return view('stock.index', ['gudang' => $gudang, 'stok' => $stok]);
+    }
+
+    public function stockByGudang($id)
+    {
+        $gudang = Gudang::findOrFail($id);
+        $stocks = DB::table('stok')
+            ->join('produk', 'stok.produk_id', '=', 'produk.id')
+            ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
+            ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
+            ->where('stok.gudang_id', '=', $id)
+            ->orderBy('stok.created_at', 'desc')
+            ->get();
+
+        // $res = response()->json([
+        //     'data' => $stok
+        // ], 200);
+
+        // return $res;
+
+        return view('stock.showByGudang', ['gudang' => $gudang, 'stocks' => $stocks]);
+    }
+
+    public function stokByProduct($id)
+    {
+        $stock = DB::table('stok')
+            ->join('produk', 'stok.produk_id', '=', 'produk.id')
+            ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
+            ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
+            ->where('stok.produk_id', '=', $id)
+            ->orderBy('stok.created_at', 'desc')
+            ->get();
+
+        $res = response()->json([
+            'data' => $stock
         ], 200);
 
         return $res;
-        // return view('product.index', ['productsData' => $products]);
     }
 
-    public function show($id)
+
+    public function showStock($id)
     {
-        $gudang = DB::table('gudang')
-            ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
-            ->join('companies', 'gudang.company_id', '=', 'companies.id')
-            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'company.id as cid')
-            ->where('gudang.id', '=', $id)
+        $stock = DB::table('stok')
+            ->join('produk', 'stok.produk_id', '=', 'produk.id')
+            ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
+            ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
+            ->where('stok.id', '=', $id)
             ->first();
 
-        if (!$gudang) {
-            return response()->json([
-                'error' => 'resource not found'
-            ], '404');
-        }
-
-        $res = response()->json([
-            'data' => $gudang,
-        ], 200);
-
+        return response()->json([
+            'data' => $stock,
+            'message' => 'stok berhasil ditambahkan'
+        ], '200');
         // return view('products.show', ['product' => $product]);
     }
 
-    public function updateFromProduct(Request $request, $id)
+    public function createStock(Request $request, $id)
     {
-        $stok = Stok::select('stok.*', 'gudang.*', 'produk.*')
-            ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
-            ->join('produk', 'produk.id', '=', 'stok.produk_id')
-            ->where('stok.id', '=', $id)
-            ->first();
-        // $stok = Stok::where('produk_id',$id)->where('gudang_ud',$request->tb_gudang_id)->first();
+        $stock = Stok::create([
+            'produk_id' => $id,
+            'gudang_id' => $request->cb_gudang_id,
+            'jumlah_stok' => $request->tb_jumlah_stok
+        ]);
+
+        return response()->json([
+            'data' => $stock,
+            'message' => 'stok berhasil ditambahkan'
+        ], '200');
+    }
+
+    public function updateJumlahStock(Request $request, $id)
+    {
+        $stok = Stok::findOrfail($id);
         $stok->jumlah_stok = $request->tb_jumlah_stok;
         $stok->save();
         return response()->json([
@@ -71,23 +127,24 @@ class StokController extends Controller
 
     public function increaseStock(Request $request, $id)
     {
-        $stok = Stok::select('stok.*')
-            ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
-            ->join('produk', 'produk.id', '=', 'stok.produk_id')
-            ->where('stok.id', '=', $id)
-            ->first();
+        $stok = Stok::findOrfail($id);
         $stok->increment('jumlah_stok', $request->tb_jumlah_stok);
         $stok->save();
         $res =  response()->json([
             'data' => $stok,
             'message' => 'stok berhasil diupdate'
         ], '200');
-
-        // return $res;
     }
 
-    public function updateFromGudang(Request $request, $id)
+    public function decreaseStock(Request $request, $id)
     {
+        $stok = Stok::findOrfail($id);
+        $stok->decrement('jumlah_stok', $request->tb_jumlah_stok);
+        $stok->save();
+        $res =  response()->json([
+            'data' => $stok,
+            'message' => 'stok berhasil diupdate'
+        ], '200');
     }
 
     public function delete($id)
