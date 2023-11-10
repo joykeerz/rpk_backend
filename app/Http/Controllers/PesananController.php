@@ -24,7 +24,6 @@ class PesananController extends Controller
         //     'data' => $transaksi
         // ], 200);
 
-
         return view('pesanan.index', ['transaksi' => $transaksi]);
     }
 

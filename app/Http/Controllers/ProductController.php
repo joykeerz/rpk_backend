@@ -88,8 +88,10 @@ class ProductController extends Controller
         $stok = DB::table('stok')
         ->join('produk', 'produk.id', '=', 'stok.produk_id')
         ->join('gudang', 'gudang.id', '=', 'stok.gudang_id')
-        ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid')
+        ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
+        ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'kategori.id as kid', 'kategori.*')
         ->get();
+
 
         return view('product.manage', ['stokData' => $stok]);
     }

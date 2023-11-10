@@ -12,51 +12,51 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <header class="bg-gray-200 p-4" ">
-                        <div class="title flex justify-between">
-                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                {{ __('Transaksi Baru') }}
-                            </h2>
-                        </div>
-                        </header>
+                                <div class="title flex justify-between">
+                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                        {{ __('Transaksi Baru') }}
+                                    </h2>
+                                </div>
+                                </header>
 
-                    <form action="{{route('pesanan.storeOrder')}}" method="post" class="m-3 border rounded p-3">
-                                @csrf
-                                <div class="table_produk w-full">
-                                    <table class="w-full text-center border-collapse">
-                                        <thead>
-                                            <tr>
-                                                {{-- <th class="pb-2 border-b border-gray-500">SID</th> --}}
-                                                <th class="pb-2 border-b border-gray-500">Produk</th>
-                                                <th class="pb-2 border-b border-gray-500">Jumlah</th>
-                                                <th class="pb-2 border-b border-gray-500">Satuan Unit Produk</th>
-                                                <th class="pb-2 border-b border-gray-500">Harga</th>
-                                                <th class="pb-2 border-b border-gray-500">Jumlah Pesanan</th>
-                                                <th class="pb-2 border-b border-gray-500">Subtotal</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                 @forelse ($product as $index=> $item)
-        <tr class="{{ $index % 2 === 0 ? 'bg-gray-100' : 'bg-white' }}" id="tableData">
-            <td class="py-5">{{ $item->nama_produk }}</td>
-            <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
-            <td class="py-2">{{ $item->jumlah_stok }}</td>
-            <td>{{ $item->satuan_unit_produk }}</td>
-            <td class="py-2 harga_produk">{{ $item->harga_produk }}</td>
-            <td class="py-5 flex items-center justify-center">
-                <input type="number" name="jumlah_pesanan" class="jumlah_pesanan form-control py-auto"
-                    data-price="{{ $item->harga_produk }}" placeholder="Jumlah Pesanan">
-                <button type="button" class="resetButton ml-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="15" y1="9" x2="9" y2="15"></line>
-                        <line x1="9" y1="9" x2="15" y2="15"></line>
-                    </svg>
-                </button>
-            </td>
-            <td class="py-2 subtotal"></td>
+                            <form action="{{ route('pesanan.storeOrder') }}" method="post" class="m-3 border rounded p-3">
+                                        @csrf
+                                        <div class="table_produk w-full">
+                                            <table class="w-full text-center border-collapse">
+                                                <thead>
+                                                    <tr>
+                                                        {{-- <th class="pb-2 border-b border-gray-500">SID</th> --}}
+                                                        <th class="pb-2 border-b border-gray-500">Produk</th>
+                                                        <th class="pb-2 border-b border-gray-500">Jumlah</th>
+                                                        <th class="pb-2 border-b border-gray-500">Satuan Unit Produk</th>
+                                                        <th class="pb-2 border-b border-gray-500">Harga</th>
+                                                        <th class="pb-2 border-b border-gray-500">Jumlah Pesanan</th>
+                                                        <th class="pb-2 border-b border-gray-500">Subtotal</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+         @forelse ($product as $index=>$item)
+            <tr class="{{ $index % 2 === 0 ? 'bg-gray-100' : 'bg-white' }}" id="tableData">
+                <td class="py-5">{{ $item->nama_produk }}</td>
+                <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
+                <td class="py-2">{{ $item->jumlah_stok }}</td>
+                <td>{{ $item->satuan_unit_produk }}</td>
+                <td class="py-2 harga_produk">{{ $item->harga_produk }}</td>
+                <td class="py-5 flex items-center justify-center">
+                    <input type="number" name="jumlah_pesanan" class="jumlah_pesanan form-control py-auto"
+                        data-price="{{ $item->harga_produk }}" placeholder="Jumlah Pesanan">
+                    <button type="button" class="resetButton ml-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                    </button>
+                </td>
+                <td class="py-2 subtotal"></td>
         </tr>
-    @empty
+        @empty
         @endforelse
         <tr>
             <td class="text-left p-4 font-bold">Total</td>
@@ -88,15 +88,18 @@
             </div>
             <div class="tb_alamat_id flex flex-col">
                 <label for="tb_alamat_id">Alamat</label>
-                <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="form-control" placeholder="ID Alamat" disabled>
+                <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="form-control" placeholder="ID Alamat"
+                    disabled>
             </div>
             <div class="tb_kurir_id flex flex-col">
                 <label for="tb_kurir_id">Kurir</label>
                 <input type="text" name="tb_kurir_id" id="tb_kurir_id" class="form-control" placeholder="ID Kurir">
             </div>
         </div>
-        <button class="" onclick="confirmCheckoutFire(event)">
-            ya
+        <button
+            class="flex justify-center px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200"
+            onclick="confirmCheckoutFire(event)">
+            Beli
         </button>
         </form>
 
@@ -113,7 +116,7 @@
 
                 $('#tb_user_id').on('change', function() {
                     var selectedUserId = $(this).val();
-                    console.log(selectedUserId+' selected');
+                    console.log(selectedUserId + ' selected');
                     console.log({!! json_encode($users) !!});
                     var selectedUser = {!! json_encode($users) !!}.find(user => user.uid == selectedUserId);
                     console.log(selectedUser);
@@ -237,8 +240,9 @@
                     ]
                 };
 
-                console.log(orderDetails+ ' order details');
-                let productList = orderDetails.map(item => `${item.productName} (Quantity: ${item.tb_jumlah_produk})`).join('<br>');
+                console.log(orderDetails + ' order details');
+                let productList = orderDetails.map(item => `${item.productName} (Quantity: ${item.tb_jumlah_produk})`).join(
+                    '<br>');
                 console.log(productList);
                 Swal.fire({
                     title: 'Confirm Checkout',
@@ -296,5 +300,17 @@
                     }
                 });
             }
+
+            const subtotal = document.querySelectorAll('.subtotal');
+            const totalAmount = document.querySelector('#totalAmount');
+
+
+
+
+
+            totalAmount.innerHTML = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(totalAmount.innerHTML);
         </script>
     @endsection
