@@ -41,13 +41,22 @@ class ProductController extends Controller
         return view('product.index', ['kategoriData' => $kategori]);
     }
 
-    function manage()
+    function manage(Request $request)
     {
         $products = DB::table('produk')
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
             ->select('produk.*', 'kategori.*', 'kategori.id as kid', 'produk.id as pid', 'produk.created_at as cat')
             ->orderBy('cat', 'desc')
             ->get();
+
+        // $products = DB::table('produk')
+        //     ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+        //     ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid', 'produk.created_at as cat')
+        //     ->when($request->keyword, function ($query) use ($request) {
+        //         $query->where('nama_produk', 'like', "%{$request->keyword}%");
+        //     })
+        //     ->orderBy('cat', 'desc')
+        //     ->paginate(10);
 
         return view('product.manage', ['products' => $products]);
     }

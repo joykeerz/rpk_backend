@@ -144,23 +144,17 @@ class StokController extends Controller
     public function increaseStock(Request $request, $id)
     {
         $stok = Stok::findOrfail($id);
-        $stok->increment('jumlah_stok', $request->tb_jumlah_produk);
-        $stok->save();
-        $res =  response()->json([
-            'data' => $stok,
-            'message' => 'stok berhasil diupdate'
-        ], '200');
-    }
+        if ($request->qty_stock == null || $request->qty_stock == '' || $request->qty_stock == 0) {
+            return redirect()->back()->with('message', 'jumlah stok tidak boleh kosong');
+        }
+        if($stok->jumlah_stok + $request->qty_stock < 0 ) {
+            return redirect()->back()->with('message', 'jumlah stok tidak boleh kurang dari 0');
+        }
 
-    public function decreaseStock(Request $request, $id)
-    {
-        $stok = Stok::findOrfail($id);
-        $stok->decrement('jumlah_stok', $request->tb_jumlah_produk);
+        $stok->jumlah_stok = $stok->jumlah_stok + $request->qty_stock;
+        // $stok->increment('jumlah_stok', $request->tb_jumlah_produk);
         $stok->save();
-        $res =  response()->json([
-            'data' => $stok,
-            'message' => 'stok berhasil diupdate'
-        ], '200');
+        return redirect()->back()->with('message', 'stok berhasil dirubah');
     }
 
     public function updateStock(Request $request, $id){

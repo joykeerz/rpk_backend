@@ -63,9 +63,9 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Super Admin',
             'email' => 'admin@mail.com',
-            'role_id' => '1',
+            'role_id' => '2',
             'password' => Hash::make('admin123'),
-            'no_hp' => '086969420',
+            'no_hp' => '08123456789',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -73,9 +73,19 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Penjual Pusat',
             'email' => 'penjual@mail.com',
-            'role_id' => '2',
+            'role_id' => '3',
             'password' => Hash::make('admin123'),
             'no_hp' => '084206969',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Manajer Sales',
+            'email' => 'manajer@mail.com',
+            'role_id' => '4',
+            'password' => Hash::make('admin123'),
+            'no_hp' => '084206960',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

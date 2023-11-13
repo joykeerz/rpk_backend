@@ -77,8 +77,9 @@
                             Harga
                         </th>
                         <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Diskon
+                            Increase/Decrase
                         </th>
+
                         <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Actions
                         </th>
@@ -92,7 +93,14 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_produk }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->harga_produk }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $stock->diskon_produk }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <form action="{{ route('stok.increase', ['id' => $stock->sid]) }}" method="post">
+                                    @csrf
+                                    <input class="border rounded-md py-2 px-3 w-full" type="number" name="qty_stock"
+                                        id="qty_stock" placeholder="Ex. -1 or 2">
+                                </form>
+                            </td>
+
                             <td class="px-6 py-4 whitespace-nowrap flex justify-center">
                                 <a href="{{ route('stok.detail', ['id' => $stock->sid]) }}"
                                     class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
@@ -101,8 +109,7 @@
                                 <a href="{{ route('stok.delete', ['id' => $stock->sid]) }}"
                                     class="m-2 bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
                                     onclick="return confirmDelete();">
-                                    {{-- <svg class="editIcon"> </svg> --}}
-                                    delete
+                                    <svg class="deleteIcon"> </svg>
                                 </a>
                             </td>
                         </tr>

@@ -12,6 +12,7 @@ use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ReportingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,11 +36,10 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
 
     ///Manage
-    Route::prefix('manage')->middleware('restrictRole:1')->group(function () {
+    Route::prefix('manage')->group(function () {
         ///user
-        Route::get('/', [ManageUserController::class, 'index'])->name('manage.user.index');
-
-        Route::middleware('restrictRole:1')->group(function () {
+        Route::get('/', [ManageUserController::class, 'index'])->middleware('restrictRole:2,3,4')->name('manage.user.index');
+        Route::middleware('restrictRole:2,4')->group(function () {
             Route::get('/user/new', [ManageUserController::class, 'newUser'])->name('manage.user.new');
             Route::post('/user/store', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.store');
             Route::get('/user/verify/{id}', [ManageUserController::class, 'verify'])->name('manage.user.verify');
@@ -53,11 +53,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/user/store/{id}/alamat', [ManageUserController::class, 'storeAlamat'])->name('manage.user.storeAlamat');
             Route::post('/user/store/new', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.StoreNewAccount');
         });
-
     });
 
     ///Product
-    Route::prefix('product')->group(function () {
+    Route::prefix('product')->middleware('restrictRole:2,3')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('product.index');
         Route::post('/store', [ProductController::class, 'store'])->name('product.store');
         Route::get('/show/{id}', [ProductController::class, 'show'])->name('product.show');
@@ -68,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///Category
-    Route::prefix('category')->group(function () {
+    Route::prefix('category')->middleware('restrictRole:2,3')->group(function () {
         Route::get('/', [KategoryController::class, 'index'])->name('category.index');
         Route::post('/store', [KategoryController::class, 'store'])->name('category.store');
         Route::get('/show/{id}', [KategoryController::class, 'show'])->name('category.show');
@@ -77,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///Gudang
-    Route::prefix('gudang')->group(function () {
+    Route::prefix('gudang')->middleware('restrictRole:2')->group(function () {
         Route::get('/', [GudangController::class, 'index'])->name('gudang.index');
         Route::post('/store', [GudangController::class, 'store'])->name('gudang.store');
         Route::get('/show/{id}', [GudangController::class, 'show'])->name('gudang.show');
@@ -87,7 +86,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///company (Kanwil)
-    Route::prefix('company')->group(function () {
+    Route::prefix('company')->middleware('restrictRole:2')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
         Route::post('/store', [CompanyController::class, 'store'])->name('company.store');
         Route::get('/create', [CompanyController::class, 'create'])->name('company.create');
@@ -97,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///stok
-    Route::prefix('stok')->group(function () {
+    Route::prefix('stok')->middleware('restrictRole:2')->group(function () {
         Route::get('/', [StokController::class, 'index'])->name('stok.index');
         Route::get('/show/gudang/{id}', [StokController::class, 'stockByGudang'])->name('stok.show');
         Route::get('/delete/{id}', [StokController::class, 'delete'])->name('stok.delete');
@@ -105,10 +104,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/create/gudang/{id}', [StokController::class, 'insertStock'])->name('stok.insert');
         Route::get('/show/detail/{id}', [StokController::class, 'showStock'])->name('stok.detail');
         Route::post('/show/detail/{id}', [StokController::class, 'updateStock'])->name('stok.update');
+        Route::post('/increase/{id}', [StokController::class, 'increaseStock'])->name('stok.increase');
     });
 
     ///branch (KC,KCP)
-    Route::prefix('branch')->group(function () {
+    Route::prefix('branch')->middleware('restrictRole:2')->group(function () {
         Route::get('/', [BranchController::class, 'index'])->name('branch.index');
         Route::get('/manage', [BranchController::class, 'manage'])->name('branch.manage');
         Route::post('/store', [BranchController::class, 'store'])->name('branch.store');
@@ -119,7 +119,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///pesanan
-    Route::prefix('pesanan')->group(function () {
+    Route::prefix('pesanan')->middleware('restrictRole:2,3,4')->group(function () {
         Route::get('/', [PesananController::class, 'index'])->name('pesanan.index');
         Route::get('/show/{id}', [PesananController::class, 'show'])->name('pesanan.show');
         Route::get('/newOrder', [PesananController::class, 'newOrder'])->name('pesanan.newOrder');
@@ -129,7 +129,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///customer
-    Route::prefix('customer')->group(function () {
+    Route::prefix('customer')->middleware('restrictRole:2,3,4')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('customer.index');
         Route::get('/show/{id}', [CustomerController::class, 'show'])->name('customer.show');
         Route::get('/create', [CustomerController::class, 'create'])->name('customer.create');
@@ -138,4 +138,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
     });
 
+    ///reporting (Laporan) route
+    Route::prefix('reporting')->middleware('restrictRole:3,2')->group(function () {
+        Route::get('/', [ReportingController::class, 'index'])->name('reporting.index');
+        Route::get('/stok', [ReportingController::class, 'reportStockAll'])->name('reporting.stock');
+        Route::get('/penjualan', [ReportingController::class, 'reportPenjualan'])->name('reporting.penjualan');
+    });
 });
