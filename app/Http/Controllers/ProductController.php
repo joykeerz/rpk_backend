@@ -37,7 +37,6 @@ class ProductController extends Controller
         $kategori = DB::table('kategori')
             ->select('nama_kategori', 'id')
             ->get();
-
         return view('product.index', ['kategoriData' => $kategori]);
     }
 
@@ -48,6 +47,8 @@ class ProductController extends Controller
             ->select('produk.*', 'kategori.*', 'kategori.id as kid', 'produk.id as pid', 'produk.created_at as cat')
             ->orderBy('cat', 'desc')
             ->get();
+
+
 
         // $products = DB::table('produk')
         //     ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')

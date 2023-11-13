@@ -13,32 +13,32 @@
         Manage Product
     </h2>
 </header>
+
 <script>
     function confirmDelete() {
         return confirm("Are you sure you want to delete this product?");
     }
+
 </script>
 
+@include('layouts.searchbar')
 <div class="overflow-auto m-3">
-<input type="text" id="searchInput" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Search...">
-        <table class="min-w-full bg-white text-center">
+    <table class="min-w-full bg-white text-center">
             <thead>
                 <tr class="text-center">
-                    <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                    <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe</th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Stok</th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Harga</th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($stokData as $pd)
-                <tr>
+                @forelse ($products as $pd)
+                <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white'}}">
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->nama_produk }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->nama_kategori }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $pd->jumlah_stok }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $pd->harga_produk }}</td>
                     <td class="px-6 py-4 whitespace-nowrap flex justify-center">
                         <a href="{{ route('product.show', ['id' => $pd->pid]) }}"

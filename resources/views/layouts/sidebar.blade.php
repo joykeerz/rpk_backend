@@ -1,15 +1,16 @@
 <link rel="stylesheet" href="{{ asset('svg.css') }}">
-<aside id="logo-sidebar" class="px-3 pb-4 h-screen bg-white dark:bg-gray-800 w-64">
-    <div class="px-3 pb-4 h-screen bg-white dark:bg-gray-800">
+<aside id="logo-sidebar" class="px-3 pb-4 min-h-screen max-h-fit bg-white dark:bg-gray-800 w-64">
+    <div class="px-3 pb-4 min-h-screen max-h-fit bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{ route('home') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="home flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 ">
                     </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Dashboard</span>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Dashboard RPK</span>
                 </a>
             </li>
+            <hr>
             <li>
                 <a href="#"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -19,80 +20,100 @@
                     <span class="ml-3">Point of Sales</span>
                 </a>
             </li>
-            <li>
-                <a href="#"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                    onclick="toggleSubMenu('barangSubMenu')">
-                    <svg stroke="#9CA3AF" class="barangMenu  w-5 h-5 ">
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Barang</span>
-                    <svg class="openMenu"></svg>
-                </a>
-                <ul id="barangSubMenu"
-                    class="hidden overflow-hidden transition-transform duration-300 bg-gray-500 rounded m-2 ">
-                    <!-- Submenu for Barang -->
-                    <li class="hover:bg-gray-100">
-                        <a href="{{ route('product.index') }}"
-                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
-                            Barang</a>
-                    </li>
-                    <li class="hover:bg-gray-100">
-                        <a href="{{ route('product.manage') }}"
-                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
-                            Barang</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" onclick="toggleSubMenu('pesananSubMenu')"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="pesanan">
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Pesanan</span>
-                    <svg class="submenuOption">
-                    </svg>
-                </a>
-                <ul id="pesananSubMenu"
-                    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
-                    <li class="hover:bg-gray-100">
-                        <a href="{{ route('pesanan.index') }}"
-                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">List
-                            Transaksi</a>
-                    </li>
-                    <li class="hover:bg-gray-100">
-                        <a href="{{ route('pesanan.newOrder') }}"
-                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Buat
-                            Pesanan Baru
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="{{ route('manage.user.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">User</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('category.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="8" y1="6" x2="21" y2="6"></line>
-                        <line x1="8" y1="12" x2="21" y2="12"></line>
-                        <line x1="8" y1="18" x2="21" y2="18"></line>
-                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Kategori</span>
-                </a>
-            </li>
+            @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
+                <li>
+                    <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        onclick="toggleSubMenu('barangSubMenu')">
+                        <svg stroke="#9CA3AF" class="barangMenu  w-5 h-5 ">
+                        </svg>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Barang</span>
+                        <svg class="openMenu"></svg>
+                    </a>
+                    <ul id="barangSubMenu"
+                        class="hidden overflow-hidden transition-transform duration-300 bg-gray-500 rounded m-2 ">
+                        <!-- Submenu for Barang -->
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('product.index') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                Barang</a>
+                        </li>
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('product.manage') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                Barang</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+            @if (Auth::user()->role_id == 3 || Auth::user()->role_id == 4)
+                <li>
+                    <a href="#" onclick="toggleSubMenu('pesananSubMenu')"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="pesanan">
+                        </svg>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Pesanan</span>
+                        <svg class="submenuOption">
+                        </svg>
+                    </a>
+                    <ul id="pesananSubMenu"
+                        class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('pesanan.index') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">List
+                                Transaksi</a>
+                        </li>
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('pesanan.newOrder') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Buat
+                                Pesanan Baru
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+            @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
+                <li class="stok">
+                    <a href="{{ route('stok.index') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="stockIcon"></svg>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Stok</span>
+                    </a>
+                </li>
+            @endif
+            @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3 || Auth::user()->role_id == 4)
+                <li class="user">
+                    <a href="{{ route('manage.user.index') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="flex-1 ml-3 whitespace-nowrap">User</span>
+                    </a>
+                </li>
+            @endif
+            @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
+                <li class="kategori">
+                    <a href="{{ route('category.index') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Kategori</span>
+                    </a>
+                </li>
+            @endif
+            @if(Auth::user()->role_id == 2)
             <li>
                 <a href="#"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -186,43 +207,43 @@
                 <ul id="branchSubMenu"
                     class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                     <li <!-- Submenu for Barang -->
-                        <li class="hover:bg-gray-100">
-                            <a href="{{ route('branch.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
-                                Branch</a>
-                        </li>
-                        <li class="hover:bg-gray-100">
-                            <a href="{{ route('branch.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
-                                Branch</a>
-                        </li>
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('branch.create') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                            Branch</a>
+                    </li>
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('branch.index') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                            Branch</a>
                     </li>
                 </ul>
-        </li>
-        <li>
-            <a href="#"
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            onclick="toggleSubMenu('customerSubMenu')" >
-            <svg class="customerIcon"></svg>
-                <span class="flex-1 ml-3 whitespace-nowrap">Customer</span>
-                <svg class="submenuOption"></svg>
-            </a>
-            <ul id="customerSubMenu"
-                class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
-                <li class="hover:bg-gray-100">
-                    <a href="{{ route('customer.create') }}"
-                        class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
-                        Customer</a>
-                </li>
-                <li class="hover:bg-gray-100" >
-                    <a href="{{ route('customer.index') }}"
-                        class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
-                        Customer</a>
-                </li>
-            </ul>
-        </li>
-
-
+            </li>
+            @endif
+            @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3 || Auth::user()->role_id == 4)
+            <li>
+                <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    onclick="toggleSubMenu('customerSubMenu')">
+                    <svg class="customerIcon"></svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Customer</span>
+                    <svg class="submenuOption"></svg>
+                </a>
+                <ul id="customerSubMenu"
+                    class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('customer.create') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                            Customer</a>
+                    </li>
+                    <li class="hover:bg-gray-100">
+                        <a href="{{ route('customer.index') }}"
+                            class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                            Customer</a>
+                    </li>
+                </ul>
+            </li>
+            @endif
         <li>
             <a href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"

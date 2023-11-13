@@ -15,6 +15,8 @@
         </h2>
     </header>
 
+    @include('layouts.searchbar')
+
     <div class="overflow-y-auto m-3">
         <table class="min-w-full table-auto border ">
             <thead class="text-center border-b-1 border">
