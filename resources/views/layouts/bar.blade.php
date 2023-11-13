@@ -24,7 +24,9 @@
     </div>
 
     <div class="w-full h-screen overflow-y-auto">
+
         @yield('content')
+        @yield('searchBar')
 
     </div>
     </div>

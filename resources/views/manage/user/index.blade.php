@@ -9,6 +9,8 @@
 
 
 @section('content')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <header>
         <div class="title flex m-5 justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -35,7 +37,20 @@
             </button>
         </div>
         <script>
-            // After the page loads
+
+            $(document).ready(function() {
+                $('#searchInput').on('input', function() {
+                    var searchValue = $(this).val().toLowerCase();
+                    $('tbody tr').filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+                        if ($(this).text().toLowerCase().indexOf(searchValue) > -1) {
+                            $(this).removeClass('bg-gray-100');
+                        } else {
+                            $(this).addClass('bg-white');
+                        }
+                    });
+                });
+            });
             document.addEventListener('DOMContentLoaded', function() {
                 var alert = document.getElementById('alertMessage');
 
@@ -56,6 +71,29 @@
         </script>
     @endif
 
+    <script>
+         $(document).ready(function() {
+        $('#searchInput').on('input', function() {
+            var searchValue = $(this).val().toLowerCase();
+            $('tbody tr').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+                if ($(this).text().toLowerCase().indexOf(searchValue) > -1) {
+                    $(this).removeClass('bg-gray-100');
+                } else {
+                    $(this).addClass('bg-white');
+                }
+            });
+        });
+    });
+
+    </script>
+
+    <div class="searchBar flex justify-center m-3">
+        <input type="text" id="searchInput"
+            class="rounded-md border-gray border shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3 py-2 w-1/4"
+            placeholder="Search...">
+    </div>
+
 
     <div class="table-responsive mx-3">
         <table class="min-w-full divide-y divide-gray-200 text-center">
@@ -72,7 +110,7 @@
             </thead>
             <tbody>
                 @forelse ($usersData as $ud)
-                    <tr class="hover:bg-gray-50">
+                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white'}}">
                         {{-- <td>{{ $loop->iteration }}</td> --}}
                         <td>{{ $ud->id }}</td>
                         <td>{{ $ud->name }}</td>

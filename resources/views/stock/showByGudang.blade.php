@@ -60,10 +60,10 @@
         <input type="text" id="searchInput"
             class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             placeholder="Search...">
-        <div class="border border-gray-400">
-            <table class="min-w-full bg-white text-center">
+        <div class="border border-gray-400 rounded">
+            <table class="min-w-full bg-white text-center rounded">
                 <thead>
-                    <tr class="text-center">
+                    <tr class="text-center ">
                         <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">#
                         </th>
                         <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
@@ -86,7 +86,7 @@
                 </thead>
                 <tbody>
                     @forelse ($stocks as $stock)
-                        <tr>
+                        <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white'}}">
                             <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->kode_produk }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_produk }}</td>
