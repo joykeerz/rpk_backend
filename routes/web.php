@@ -139,9 +139,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///reporting (Laporan) route
-    Route::prefix('reporting')->middleware('restrictRole:3,2')->group(function () {
-        Route::get('/', [ReportingController::class, 'index'])->name('reporting.index');
-        Route::get('/stok', [ReportingController::class, 'reportStockAll'])->name('reporting.stock');
-        Route::get('/penjualan', [ReportingController::class, 'reportPenjualan'])->name('reporting.penjualan');
+    Route::prefix('laporan')->middleware('restrictRole:3,2')->group(function () {
+        Route::get('/', [ReportingController::class, 'index'])->name('laporan.index');
+        Route::get('/stok', [ReportingController::class, 'reportStockAll'])->name('laporan.stock');
+        Route::get('/penjualan', [ReportingController::class, 'reportPenjualan'])->name('laporan.penjualan');
     });
 });

@@ -31,8 +31,8 @@ class ReportingController extends Controller
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->select('stok.*', 'produk.*', 'gudang.*', 'kategori.*', 'alamat.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'kategori.id as kid', 'alamat.id as aid', 'stok.created_at as cat')
-            ->when($request->keyword, function ($query) use ($request) {
-                $query->whereBetween('created_at', [$request->from, $request->to]);
+            ->when($request->from, function ($query) use ($request) {
+                $query->whereBetween('stok.created_at', [$request->from, $request->to]);
             })
             ->orderBy('stok.created_at', 'desc')
             ->get();
@@ -40,7 +40,21 @@ class ReportingController extends Controller
         return view('reporting.stok', ['stocks' => $stocks]);
     }
 
-    public function reportPenjualan()
+    public function reportPenjualan(Request $request)
     {
+        $transaksi = DB::table('transaksi')
+            ->join('pesanan', 'transaksi.pesanan_id', '=', 'pesanan.id')
+            ->join('alamat', 'pesanan.alamat_id', '=', 'alamat.id')
+            ->join('users', 'pesanan.user_id', '=', 'users.id')
+            ->join('kurir', 'pesanan.kurir_id', '=', 'kurir.id')
+            ->join('biodata', 'users.id', '=', 'biodata.user_id')
+            ->select('transaksi.*', 'pesanan.*', 'alamat.*', 'users.*', 'kurir.*', 'biodata.*', 'transaksi.id as tid', 'pesanan.id as pid', 'alamat.id as aid', 'users.id as uid', 'kurir.id as kid', 'biodata.id as bid', 'transaksi.created_at as cat')
+            ->when($request->from, function ($query) use ($request) {
+                $query->whereBetween('stok.created_at', [$request->from, $request->to]);
+            })
+            ->orderBy('transaksi.created_at', 'desc')
+            ->get();
+
+        return view('reporting.penjualan', ['transaksi' => $transaksi]);
     }
 }
