@@ -57,12 +57,6 @@ class StokController extends Controller
             ->orderBy('stok.created_at', 'desc')
             ->get();
 
-        // $res = response()->json([
-        //     'data' => $stok
-        // ], 200);
-
-        // return $res;
-
         return view('stock.showByGudang', ['gudang' => $gudang, 'stocks' => $stocks]);
     }
 
@@ -92,10 +86,6 @@ class StokController extends Controller
             ->where('stok.id', '=', $id)
             ->first();
 
-        // return response()->json([
-        //     'data' => $stock,
-        //     'message' => 'stok berhasil ditambahkan'
-        // ], '200');
         return view('stock.detail', ['stock' => $stock]);
     }
 

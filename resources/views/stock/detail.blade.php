@@ -35,7 +35,7 @@
             @csrf
             <div class="inputKategori p-4">
                 <label class="block text-sm font-medium text-gray-700" for="cb_produk">Pilih Produk:</label>
-                <select class="border rounded-md py-2 px-3 w-full" name="cb_produk" id="cb_produk">
+                <select disabled class="border rounded-md py-2 px-3 w-full" name="cb_produk" id="cb_produk">
                     <option selected value="{{ $stock->sid }}">{{ $stock->nama_produk }}</option>
                 </select>
                 <label class="block text-sm font-medium text-gray-700" for="tb_jumlah_produk">Jumlah Produk:</label>

@@ -57,8 +57,8 @@ class PesananController extends Controller
             ],
         ], 200);
 
-        echo $res;
-        // return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
+        // echo $res;
+        return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
     }
 
     public function newOrder()
