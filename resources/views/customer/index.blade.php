@@ -21,7 +21,10 @@
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('Manage Customer') }}
     </h2>
+
 </header>
+
+@include('layouts.searchbar')
 
 <div class="table-responsive m-3">
     <table class="min-w-full divide-y divide-gray-200 text-center">
