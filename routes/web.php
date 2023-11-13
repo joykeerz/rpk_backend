@@ -96,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///stok
-    Route::prefix('stok')->middleware('restrictRole:2')->group(function () {
+    Route::prefix('stok')->middleware('restrictRole:4')->group(function () {
         Route::get('/', [StokController::class, 'index'])->name('stok.index');
         Route::get('/show/gudang/{id}', [StokController::class, 'stockByGudang'])->name('stok.show');
         Route::get('/delete/{id}', [StokController::class, 'delete'])->name('stok.delete');

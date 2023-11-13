@@ -50,7 +50,7 @@ class ReportingController extends Controller
             ->join('biodata', 'users.id', '=', 'biodata.user_id')
             ->select('transaksi.*', 'pesanan.*', 'alamat.*', 'users.*', 'kurir.*', 'biodata.*', 'transaksi.id as tid', 'pesanan.id as pid', 'alamat.id as aid', 'users.id as uid', 'kurir.id as kid', 'biodata.id as bid', 'transaksi.created_at as cat')
             ->when($request->from, function ($query) use ($request) {
-                $query->whereBetween('stok.created_at', [$request->from, $request->to]);
+                $query->whereBetween('transaksi.created_at', [$request->from, $request->to]);
             })
             ->orderBy('transaksi.created_at', 'desc')
             ->get();
