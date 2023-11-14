@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportingController extends Controller
 {
@@ -56,5 +58,23 @@ class ReportingController extends Controller
             ->get();
 
         return view('reporting.penjualan', ['transaksi' => $transaksi]);
+    }
+
+    public function exportStok(Request $request)
+    {
+        $stocks = DB::table('stok')
+            ->join('produk', 'stok.produk_id', '=', 'produk.id')
+            ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
+            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+            ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
+            ->select('stok.*', 'produk.*', 'gudang.*', 'kategori.*', 'alamat.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'kategori.id as kid', 'alamat.id as aid', 'stok.created_at as cat')
+            ->when($request->from, function ($query) use ($request) {
+                $query->whereBetween('stok.created_at', [$request->from, $request->to]);
+            })
+            ->orderBy('stok.created_at', 'desc')
+            ->get();
+
+        $pdf = Pdf::loadView('reporting.exportStok', ['stocks' => $stocks]);
+        return $pdf->stream('Laporan Stok' . now() . '.pdf');
     }
 }

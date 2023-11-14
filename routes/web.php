@@ -143,5 +143,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [ReportingController::class, 'index'])->name('laporan.index');
         Route::get('/stok', [ReportingController::class, 'reportStockAll'])->name('laporan.stock');
         Route::get('/penjualan', [ReportingController::class, 'reportPenjualan'])->name('laporan.penjualan');
+        Route::get('/laporan/stok/export', [ReportingController::class, 'exportStok'])->name('laporan.stok.export');
     });
 });
