@@ -74,7 +74,26 @@ class ReportingController extends Controller
             ->orderBy('stok.created_at', 'desc')
             ->get();
 
-        $pdf = Pdf::loadView('reporting.exportStok', ['stocks' => $stocks]);
+        $pdf = Pdf::loadView('reporting.exportStok', ['stocks' => $stocks, 'from' => $request->from, 'to' => $request->to]);
         return $pdf->stream('Laporan Stok' . now() . '.pdf');
+        // return view('reporting.exportStok', ['stocks' => $stocks, 'from' => $request->from, 'to' => $request->to]);
+    }
+
+    public function exportPenjualan(Request $request)
+    {
+        $transaksi = DB::table('transaksi')
+            ->join('pesanan', 'transaksi.pesanan_id', '=', 'pesanan.id')
+            ->join('alamat', 'pesanan.alamat_id', '=', 'alamat.id')
+            ->join('users', 'pesanan.user_id', '=', 'users.id')
+            ->join('kurir', 'pesanan.kurir_id', '=', 'kurir.id')
+            ->join('biodata', 'users.id', '=', 'biodata.user_id')
+            ->select('transaksi.*', 'pesanan.*', 'alamat.*', 'users.*', 'kurir.*', 'biodata.*', 'transaksi.id as tid', 'pesanan.id as pid', 'alamat.id as aid', 'users.id as uid', 'kurir.id as kid', 'biodata.id as bid', 'transaksi.created_at as cat')
+            ->when($request->from, function ($query) use ($request) {
+                $query->whereBetween('transaksi.created_at', [$request->from, $request->to]);
+            })
+            ->orderBy('transaksi.created_at', 'desc')
+            ->get();
+        $pdf = Pdf::loadView('reporting.exportPenjualan', ['transaksi' => $transaksi, 'from' => $request->from, 'to' => $request->to]);
+        return $pdf->stream('Laporan Penjualan' . now() . '.pdf');
     }
 }

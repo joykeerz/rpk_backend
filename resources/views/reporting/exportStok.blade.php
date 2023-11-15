@@ -11,19 +11,19 @@
 </head>
 
 <body>
-    <div class="container mt-4">
-        <h3 class="alert alert-success">{{ $stocks }}</h3>
+    <div class="container-fluid mt-4">
+        <h3 class="alert alert-success">Laporan Stok Dari {{ $from }} S.d {{ $to }}</h3>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Kode</th>
-                    <th scope="col">Produk</th>
-                    <th scope="col">Kategori</th>
-                    <th scope="col">Harga</th>
-                    <th scope="col">Jumlah</th>
-                    <th scope="col">Gudang</th>
-                    <th scope="col">Alamat</th>
+                    <th>#</th>
+                    <th>Kode</th>
+                    <th>Produk</th>
+                    <th>Kategori</th>
+                    <th>Harga</th>
+                    <th>Jumlah</th>
+                    <th>Gudang</th>
+                    <th>Alamat</th>
                 </tr>
             </thead>
             <tbody>

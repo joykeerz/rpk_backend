@@ -25,7 +25,7 @@
             placeholder="Search...">
 
         <div class="flex flex-row align-middle justify-between bg-gray-100 px-2 py-1 rounded-md">
-            <form action="{{ route('laporan.stock') }}" method="get">
+            <form action="{{ route('laporan.stok.export') }}" method="get">
                 @csrf
                 From:
                 <input class="border border-gray-400 rounded px-2 py-1" type="date" name="from" id="from">
@@ -35,6 +35,8 @@
                     Filter
                 </button>
             </form>
+
+
         </div>
 
         <table class="min-w-full bg-white text-center">
