@@ -69,14 +69,12 @@ class ProductController extends Controller
             'tb_nama_produk' => 'required',
             'tb_desk_produk' => 'required',
             'tb_harga_produk' => 'required',
-            'tb_diskon_produk' => 'required',
             'tb_satuan' => 'required',
         ], [
             'tb_kode_produk.required' => 'Kode produk harus diisi',
             'tb_nama_produk.required' => 'Nama produk harus diisi',
             'tb_desk_produk.required' => 'Deskripsi produk harus diisi',
             'tb_harga_produk.required' => 'Harga produk harus diisi',
-            'tb_diskon_produk.required' => 'Diskon produk harus diisi',
             'tb_satuan.required' => 'Satuan produk harus diisi',
         ]);
         $product = new Produk;

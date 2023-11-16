@@ -64,19 +64,11 @@
                                 @enderror
                             </div>
 
-                            <div id="stok" class="mb-3">
-                                <label for="" class="block text-sm font-medium text-gray-700">Stok</label>
-                                <input type="number"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                                    name="tb_jumlah_stok" placeholder="">
-                                <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
-                            </div>
-
                             <div id="diskonProduk" class="mb-3">
                                 <label for="diskonProduk" class="block text-sm font-medium text-gray-700">Diskon Produk
                                     (dalam
                                     persen)</label>
-                                <input type="number" name="tb_diskon_produk"
+                                <input value="0" type="number" name="tb_diskon_produk"
                                     id="tb_diskon_produk
                                     class="mt-1 block w-full
                                     rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
@@ -85,11 +77,12 @@
                                   @error('tb_diskon_produk')
                                       <div class="text-red-500">{{ $message }}</div>
                                   @enderror
+                                <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
                             </div>
 
                             <div id="hargaProduk" class="mb-3">
                                 <label for="" class="block text-sm font-medium text-gray-700">Harga</label>
-                                <input type="number"
+                                <input value="0" type="number"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                                     name="tb_harga_produk" id="tb_harga_product"  placeholder="">
                                 @error('tb_harga_produk')
