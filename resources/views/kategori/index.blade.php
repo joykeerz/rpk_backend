@@ -80,7 +80,9 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = '{{ route('category.update', ['id' => 'itemId']) }} ';
+                    // let url = `{{ route('category.update', ['id' => 'itemId']) }} `;
+                    var url = "{{ route('category.update', ':id') }}";
+                    url = url.replace(':id', itemId);
                     const data = result.value;
                     console.log(data);
                     $.ajax({
