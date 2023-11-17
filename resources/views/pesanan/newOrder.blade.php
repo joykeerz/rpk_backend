@@ -262,9 +262,10 @@
                     confirmButtonText: 'Confirm',
                     cancelButtonText: 'Cancel'
                 }).then((result) => {
+                    let url = '{{ route('pesanan.storeOrder') }}';
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: {{ route('pesanan.storeOrder')}},
+                            url: url,
                             type: 'POST',
                             data: {
                                 _token: '{{ csrf_token() }}',
