@@ -103,7 +103,9 @@
                     <th scope="col">No.Hp</th>
                     <th scope="col">Status</th>
                     <th scope="col">Role</th>
-                    <th scope="col">Actions</th>
+                    @if (Auth::user()->role_id != 3)
+                        <th scope="col">Actions</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
