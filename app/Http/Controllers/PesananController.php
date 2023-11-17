@@ -97,9 +97,13 @@ class PesananController extends Controller
                 'harga' => $request->data['orderDetails'][$key]['price'],
             ]);
             $currentStok = Stok::find($request->data['orderDetails'][$key]['tb_stok_id']);
-            if ($currentStok->jumlah_stok > 0) {
-                $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
+            // if ($currentStok->jumlah_stok > 0 && $currentStok->jumlah_stok >= $request->data['orderDetails'][$key]['tb_jumlah_produk']) {
+            //     $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
+            // }
+            if ($currentStok->jumlah_stok == 0 || $currentStok->jumlah_stok <= $request->data['orderDetails'][$key]['tb_jumlah_produk']) {
+                return redirect()->back()->with('message','Stok tidak mencukupi');
             }
+            $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
             $currentStok->save();
             $total += $request->data['orderDetails'][$key]['price'];
         }

@@ -12,51 +12,97 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <header class="bg-gray-200 p-4" ">
-                                <div class="title flex justify-between">
-                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                        {{ __('Transaksi Baru') }}
-                                    </h2>
-                                </div>
-                                </header>
+                                    <div class="title flex justify-between">
+                                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                            {{ __('Transaksi Baru') }}
+                                        </h2>
+                                    </div>
+                                    </header>
+                                    @if (Session::has('message'))
+        <div class="bg-green-200 border-t border-b border-white-500  px-4 py-3 relative" role="alert" id="alertMessage">
+            <p>{{ Session::get('message') }}.</p>
+            <button type="button" data-dismiss="alert" aria-label="Close"
+                class="close-button absolute top-0 bottom-0 right-0 px-4 py-3 text-rose">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="#ff3b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+            </button>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $('#searchInput').on('input', function() {
+                    var searchValue = $(this).val().toLowerCase();
+                    $('tbody tr').filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+                        if ($(this).text().toLowerCase().indexOf(searchValue) > -1) {
+                            $(this).removeClass('bg-gray-100');
+                        } else {
+                            $(this).addClass('bg-white');
+                        }
+                    });
+                });
+            });
+            document.addEventListener('DOMContentLoaded', function() {
+                var alert = document.getElementById('alertMessage');
 
-                            <form action="{{ route('pesanan.storeOrder') }}" method="post" class="m-3 border rounded p-3">
-                                        @csrf
-                                        <div class="table_produk w-full">
-                                            <table class="w-full text-center border-collapse">
-                                                <thead>
-                                                    <tr>
-                                                        {{-- <th class="pb-2 border-b border-gray-500">SID</th> --}}
-                                                        <th class="pb-2 border-b border-gray-500">Produk</th>
-                                                        <th class="pb-2 border-b border-gray-500">Jumlah</th>
-                                                        <th class="pb-2 border-b border-gray-500">Satuan Unit Produk</th>
-                                                        <th class="pb-2 border-b border-gray-500">Harga</th>
-                                                        <th class="pb-2 border-b border-gray-500">Jumlah Pesanan</th>
-                                                        <th class="pb-2 border-b border-gray-500">Subtotal</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-         @forelse ($product as $index=>$item)
-            <tr class="{{ $index % 2 === 0 ? 'bg-gray-100' : 'bg-white' }}" id="tableData">
-                <td class="py-5">{{ $item->nama_produk }}</td>
-                <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
-                <td class="py-2">{{ $item->jumlah_stok }}</td>
-                <td>{{ $item->satuan_unit_produk }}</td>
-                <td class="py-2 harga_produk">{{ $item->harga_produk }}</td>
-                <td class="py-5 flex items-center justify-center">
-                    <input type="number" name="jumlah_pesanan" class="jumlah_pesanan form-control py-auto"
-                        data-price="{{ $item->harga_produk }}" placeholder="Jumlah Pesanan">
-                    <button type="button" class="resetButton ml-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="15" y1="9" x2="9" y2="15"></line>
-                            <line x1="9" y1="9" x2="15" y2="15"></line>
-                        </svg>
-                    </button>
-                </td>
-                <td class="py-2 subtotal"></td>
+                if (alert) {
+                    setTimeout(function() {
+                        alert.style.display = 'none';
+                    }, 5000); // 5000 milliseconds = 5 seconds
+                }
+
+                // Optionally, you might want to add functionality to close the alert with the close button
+                var closeButton = alert.querySelector('.close-button');
+                if (closeButton) {
+                    closeButton.addEventListener('click', function() {
+                        alert.style.display = 'none';
+                    });
+                }
+            });
+        </script>
+    @endif
+
+                                <form action="{{ route('pesanan.storeOrder') }}" method="post" class="m-3 border rounded p-3">
+                                            @csrf
+                                            <div class="table_produk w-full">
+                                                <table class="w-full text-center border-collapse">
+                                                    <thead>
+                                                        <tr>
+                                                            {{-- <th class="pb-2 border-b border-gray-500">SID</th> --}}
+                                                            <th class="pb-2 border-b border-gray-500">Produk</th>
+                                                            <th class="pb-2 border-b border-gray-500">Jumlah</th>
+                                                            <th class="pb-2 border-b border-gray-500">Satuan Unit Produk</th>
+                                                            <th class="pb-2 border-b border-gray-500">Harga</th>
+                                                            <th class="pb-2 border-b border-gray-500">Jumlah Pesanan</th>
+                                                            <th class="pb-2 border-b border-gray-500">Subtotal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+              @forelse ($product as $index=>$item)
+        <tr class="{{ $index % 2 === 0 ? 'bg-gray-100' : 'bg-white' }}" id="tableData">
+            <td class="py-5">{{ $item->nama_produk }}</td>
+            <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
+            <td class="py-2">{{ $item->jumlah_stok }}</td>
+            <td>{{ $item->satuan_unit_produk }}</td>
+            <td class="py-2 harga_produk">{{ $item->harga_produk }}</td>
+            <td class="py-5 flex items-center justify-center">
+                <input type="number" name="jumlah_pesanan" class="jumlah_pesanan form-control py-auto"
+                    data-price="{{ $item->harga_produk }}" placeholder="Jumlah Pesanan">
+                <button type="button" class="resetButton ml-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                </button>
+            </td>
+            <td class="py-2 subtotal"></td>
         </tr>
-        @empty
+    @empty
         @endforelse
         <tr>
             <td class="text-left p-4 font-bold">Total</td>
