@@ -84,7 +84,7 @@
                     const data = result.value;
                     console.log(data);
                     $.ajax({
-                        url: '/category/update/' + itemId,
+                        url: url,
                         type: 'POST',
                         data: {
                             _token: '{{ csrf_token() }}',
