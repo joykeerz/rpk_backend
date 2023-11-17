@@ -72,7 +72,7 @@ class PesananController extends Controller
         $stok = DB::table('stok')
             ->join('produk', 'produk.id', '=', 'stok.produk_id')
             ->select('stok.*', 'produk.*', 'stok.id as sid', 'produk.id as pid')
-            ->where('stok.jumlah_stok', '>', 0) //.jumlah -> .jumlah_stok
+            ->where('stok.jumlah_stok', '>', 0)
             ->get();
         return view('pesanan.newOrder', ['product' => $stok, 'users' => $biodata]);
     }

@@ -93,6 +93,7 @@ class ReportingController extends Controller
             })
             ->orderBy('transaksi.created_at', 'desc')
             ->get();
+            // dd($request->from);
         $pdf = Pdf::loadView('reporting.exportPenjualan', ['transaksi' => $transaksi, 'from' => $request->from, 'to' => $request->to]);
         return $pdf->stream('Laporan Penjualan' . now() . '.pdf');
     }
