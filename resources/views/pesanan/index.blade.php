@@ -37,7 +37,7 @@
                         <td class=" px-4 py-2">{{ $item->name }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pembayaran }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
-                        <td class="subtotal_produk px-4 py-2">{{ number_format($item->subtotal_produk) }}</td>
+                        <td class="subtotal_produk px-4 py-2">IDR {{number_format($item->subtotal_produk) }}</td>
                         <td>
                             <a class="" href="{{ route('pesanan.show', ['id' => $item->tid]) }}">open</a>
                         </td>
@@ -54,7 +54,7 @@
 
 
 
-    <script>
+    {{-- <script>
         const subtotal_produk = document.querySelectorAll('.subtotal_produk');
 
         subtotal_produk.forEach((item) => {
@@ -63,5 +63,5 @@
                 currency: 'IDR'
             }).format(item.innerHTML);
         });
-    </script>
+    </script> --}}
 @endsection
