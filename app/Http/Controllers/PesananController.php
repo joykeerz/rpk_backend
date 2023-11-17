@@ -100,8 +100,10 @@ class PesananController extends Controller
             // if ($currentStok->jumlah_stok > 0 && $currentStok->jumlah_stok >= $request->data['orderDetails'][$key]['tb_jumlah_produk']) {
             //     $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
             // }
-            if ($currentStok->jumlah_stok == 0 || $currentStok->jumlah_stok <= $request->data['orderDetails'][$key]['tb_jumlah_produk']) {
-                return redirect()->back()->with('message','Stok tidak mencukupi');
+            if ($currentStok->jumlah_stok == 0 || $currentStok->jumlah_stok < $request->data['orderDetails'][$key]['tb_jumlah_produk']) {
+                return response()->json([
+                    'message' => 'Pesanan gagal ditambahkan, stok tidak mencukupi',
+                ], 200);
             }
             $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
             $currentStok->save();
