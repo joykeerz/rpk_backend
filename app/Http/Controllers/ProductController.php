@@ -29,7 +29,7 @@ class ProductController extends Controller
             ->select('nama_kategori', 'id')
             ->get();
 
-        return view('product.show', ['products' => $products, 'kategoriData' => $kategori]);
+        return view('product.show', ['product' => $products, 'kategoriData' => $kategori]);
     }
 
     function index()
