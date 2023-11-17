@@ -50,7 +50,7 @@
         function updateData(itemId) {
             const initialNamaKategori = document.querySelector(`tr[data-id="${itemId}"] .nama_kategori`).innerText;
             const initialDeskripsiKategori = document.querySelector(`tr[data-id="${itemId}"] .deskripsi_kategori`)
-            .innerText;
+                .innerText;
 
             Swal.fire({
                 title: 'Update Data',
@@ -80,7 +80,7 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url let url = {{route('category.update', ['id' => ${itemId}])}}';
+                    let url = {{ route('category.update', ['id' => ${itemId}]) }} ';
                     const data = result.value;
                     console.log(data);
                     $.ajax({
