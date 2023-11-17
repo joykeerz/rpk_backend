@@ -37,7 +37,7 @@
                         <td class=" px-4 py-2">{{ $item->name }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pembayaran }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
-                        <td class="subtotal_produk px-4 py-2">{{ $item->subtotal_produk }}</td>
+                        <td class="subtotal_produk px-4 py-2">{{ number_format($item->subtotal_produk) }}</td>
                         <td>
                             <a class="" href="{{ route('pesanan.show', ['id' => $item->tid]) }}">open</a>
                         </td>
