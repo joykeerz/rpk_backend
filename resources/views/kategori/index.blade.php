@@ -80,6 +80,7 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
+                    let url let url = {{route('category.update', ['id' => ${itemId}])}}';
                     const data = result.value;
                     console.log(data);
                     $.ajax({
