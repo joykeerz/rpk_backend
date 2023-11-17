@@ -264,7 +264,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/pesanan/storeOrder',
+                            url: {{ route('pesanan.storeOrder')}},
                             type: 'POST',
                             data: {
                                 _token: '{{ csrf_token() }}',
