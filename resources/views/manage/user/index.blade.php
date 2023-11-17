@@ -37,7 +37,6 @@
             </button>
         </div>
         <script>
-
             $(document).ready(function() {
                 $('#searchInput').on('input', function() {
                     var searchValue = $(this).val().toLowerCase();
@@ -72,20 +71,19 @@
     @endif
 
     <script>
-         $(document).ready(function() {
-        $('#searchInput').on('input', function() {
-            var searchValue = $(this).val().toLowerCase();
-            $('tbody tr').filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
-                if ($(this).text().toLowerCase().indexOf(searchValue) > -1) {
-                    $(this).removeClass('bg-gray-100');
-                } else {
-                    $(this).addClass('bg-white');
-                }
+        $(document).ready(function() {
+            $('#searchInput').on('input', function() {
+                var searchValue = $(this).val().toLowerCase();
+                $('tbody tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+                    if ($(this).text().toLowerCase().indexOf(searchValue) > -1) {
+                        $(this).removeClass('bg-gray-100');
+                    } else {
+                        $(this).addClass('bg-white');
+                    }
+                });
             });
         });
-    });
-
     </script>
 
     <div class="searchBar flex justify-center m-3">
@@ -110,9 +108,9 @@
             </thead>
             <tbody>
                 @forelse ($usersData as $ud)
-                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white'}}">
+                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }}">
                         {{-- <td>{{ $loop->iteration }}</td> --}}
-                        <td>{{ $ud->id }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $ud->name }}</td>
                         <td>{{ $ud->email }}</td>
                         <td>{{ $ud->no_hp }}</td>
@@ -132,19 +130,21 @@
                             @endswitch
                         </td>
                         <td>{{ $ud->nama_role }}</td>
-                        <td class="flex justify-evenly p-2">
-                            <a href="{{ route('manage.user.verify', ['id' => $ud->uid]) }}"
-                                class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-green-500 hover:text-white duration-200">Verify
-                            </a>
+                        @if (Auth::user()->role_id != 3)
+                            <td class="flex justify-evenly p-2">
+                                <a href="{{ route('manage.user.verify', ['id' => $ud->uid]) }}"
+                                    class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-green-500 hover:text-white duration-200">Verify
+                                </a>
 
-                            <a href="{{ route('manage.user.reject', ['id' => $ud->uid]) }}"
-                                class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-red-500 hover:text-white duration-200">Reject
-                            </a>
+                                <a href="{{ route('manage.user.reject', ['id' => $ud->uid]) }}"
+                                    class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-red-500 hover:text-white duration-200">Reject
+                                </a>
 
-                            <a href="{{ route('manage.user.edit', ['id' => $ud->uid]) }}"
-                                class="bg-blue-500 text-white py-1 px-3 rounded-lg">Manage
-                            </a>
-                        </td>
+                                <a href="{{ route('manage.user.edit', ['id' => $ud->uid]) }}"
+                                    class="bg-blue-500 text-white py-1 px-3 rounded-lg">Manage
+                                </a>
+                            </td>
+                        @endif
                     </tr>
                     @empty
                         <tr>
