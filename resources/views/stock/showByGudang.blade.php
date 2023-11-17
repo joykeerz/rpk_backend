@@ -92,7 +92,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->kode_produk }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_produk }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $stock->harga_produk }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">IDR {{ number_format($stock->harga_produk) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <form action="{{ route('stok.increase', ['id' => $stock->sid]) }}" method="post">
                                     @csrf
