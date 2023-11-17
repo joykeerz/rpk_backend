@@ -33,7 +33,7 @@
                         <td>{{ $stock->kode_produk }}</td>
                         <td>{{ $stock->nama_produk }}</td>
                         <td>{{ $stock->nama_kategori }}</td>
-                        <td>{{ 'IDR ' . number_format($stock->harga_produk, 2) }}</td>
+                        <td>{{ 'Rp ' . number_format($stock->harga_produk, 2) }}</td>
                         <td>{{ $stock->jumlah_stok }}</td>
                         <td>{{ $stock->nama_gudang }}</td>
                         <td>

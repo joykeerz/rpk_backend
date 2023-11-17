@@ -65,7 +65,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $trans->tipe_pembayaran }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $trans->status_pembayaran }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $trans->status_pemesanan }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ 'IDR ' . number_format($trans->subtotal_produk, 2) }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ 'Rp ' . number_format($trans->subtotal_produk, 2) }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $trans->cat }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $trans->nama_kurir }}</td>
                     </tr>

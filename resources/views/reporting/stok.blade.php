@@ -66,7 +66,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $stock->kode_produk }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_produk }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_kategori }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ 'IDR ' . number_format($stock->harga_produk, 2) }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ 'Rp ' . number_format($stock->harga_produk, 2) }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_gudang }}</td>
                         <td class="px-6 py-4 whitespace-normal">

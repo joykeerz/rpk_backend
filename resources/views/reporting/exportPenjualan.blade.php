@@ -34,7 +34,7 @@
                         <td>{{ $trans->tipe_pembayaran }}</td>
                         <td>{{ $trans->status_pembayaran }}</td>
                         <td>{{ $trans->status_pemesanan }}</td>
-                        <td>{{ 'IDR ' . number_format($trans->subtotal_produk, 2) }}</td>
+                        <td>{{ 'Rp ' . number_format($trans->subtotal_produk, 2) }}</td>
                         <td>{{ $trans->cat }}</td>
                         <td>{{ $trans->nama_kurir }}</td>
                     </tr>
