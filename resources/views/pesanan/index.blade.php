@@ -33,7 +33,7 @@
             @forelse ($transaksi as $item)
                 <tbody>
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white'}} ">
-                        <td class=" px-4 py-2">{{ $item->id }}</td>
+                        <td class=" px-4 py-2">{{ $item->tid }}</td>
                         <td class=" px-4 py-2">{{ $item->name }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pembayaran }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
