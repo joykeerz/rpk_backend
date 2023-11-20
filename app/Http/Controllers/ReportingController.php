@@ -77,7 +77,6 @@ class ReportingController extends Controller
 
         $pdf = Pdf::loadView('reporting.exportStok', ['stocks' => $stocks, 'from' => $request->from, 'to' => $request->to, 'currentDate' => $currentDate]);
         return $pdf->stream('Laporan Stok' . now() . '.pdf');
-        // return view('reporting.exportStok', ['stocks' => $stocks, 'from' => $request->from, 'to' => $request->to]);
     }
 
     public function exportPenjualan(Request $request)
