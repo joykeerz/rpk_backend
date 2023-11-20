@@ -9,9 +9,14 @@
 @endsection
 
 @section('content')
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this company?");
+        }
+    </script>
     <header class="bg-gray-200 p-3">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kantor Wilayah') }}
+            {{ __('Kantor Wilayah (Company)') }}
         </h2>
     </header>
 
@@ -31,17 +36,19 @@
             </thead>
             <tbody class="text-center">
                 @forelse ($companies as $item)
-                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white'}}  ">
+                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }}  ">
                         <td class=" px-4 py-2">{{ $item->kode_company }}</td>
                         <td class=" px-4 py-2">{{ $item->nama_company }}</td>
                         <td class=" px-4 py-2">{{ $item->partner_company }}</td>
                         <td class=" px-4 py-2">{{ $item->tagline_company }}</td>
                         <td class=" px-4 py-2">{{ $item->provinsi }}</td>
                         <td class=" px-4 py-2 flex justify-center">
-                            <a href="{{ route('company.show', ['id' => $item->id]) }}" class="bg-blue-500 m-3 hover:bg-blue-700 text-white py-1 px-2 rounded">
+                            <a href="{{ route('company.show', ['id' => $item->cid]) }}"
+                                class="bg-blue-500 m-3 hover:bg-blue-700 text-white py-1 px-2 rounded">
                                 <svg class="showIcon"> </svg>
                             </a>
-                            <a href="{{ route('company.delete', ['id' => $item->id]) }}"  class="bg-red-500 m-3 hover:bg-red-700 text-white py-1 px-2 rounded">
+                            <a href="{{ route('company.delete', ['id' => $item->cid]) }}" onclick="return confirmDelete()"
+                                class="bg-red-500 m-3 hover:bg-red-700 text-white py-1 px-2 rounded">
                                 <svg class="deleteIcon"></svg></a>
                         </td>
                     </tr>
@@ -54,5 +61,5 @@
         </table>
     </div>
 
-    <link rel="stylesheet" href="{{asset('svg.css')}}" >
+    <link rel="stylesheet" href="{{ asset('svg.css') }}">
 @endsection

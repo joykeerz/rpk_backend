@@ -16,11 +16,12 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Manage User') }}
             </h2>
-
-            <div class="button">
-                <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200"
-                    href="{{ route('manage.user.new') }}">New User</a>
-            </div>
+            @if (Auth::user()->role_id != 3)
+                <div class="button">
+                    <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200"
+                        href="{{ route('manage.user.new') }}">New User</a>
+                </div>
+            @endif
         </div>
     </header>
     @if (Session::has('message'))

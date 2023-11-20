@@ -13,7 +13,7 @@
 
 <header class="bg-gray-200 p-3">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Buat Branch Baru
+        Buat Cabang Baru (Branch)
     </h2>
 </header>
 
@@ -22,7 +22,7 @@
         @csrf
         <div class="inputLabelContainer grid grid-cols-2 gap-0.5">
             <div class="cb_company_id flex flex-col">
-                <label for="cb_company_id">Nama Kantor Wilayah</label>
+                <label for="cb_company_id">Kantor Wilayah (Company)</label>
                 <select name="cb_company_id" id="cb_company_id">
                     @foreach ($companyData as $item)
                         <option value="{{ $item->id }}">{{ $item->nama_company }}</option>

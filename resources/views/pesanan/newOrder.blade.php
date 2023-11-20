@@ -12,13 +12,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <header class="bg-gray-200 p-4" ">
-                                    <div class="title flex justify-between">
-                                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                            {{ __('Transaksi Baru') }}
-                                        </h2>
-                                    </div>
-                                    </header>
-                                    @if (Session::has('message'))
+                                            <div class="title flex justify-between">
+                                                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                                    {{ __('Buat Pesanan Baru') }}
+                                                </h2>
+                                            </div>
+                                            </header>
+                                              @if (Session::has('message'))
         <div class="bg-green-200 border-t border-b border-white-500  px-4 py-3 relative" role="alert" id="alertMessage">
             <p>{{ Session::get('message') }}.</p>
             <button type="button" data-dismiss="alert" aria-label="Close"
@@ -63,90 +63,91 @@
                 }
             });
         </script>
-    @endif
+        @endif
 
-                                <form action="{{ route('pesanan.storeOrder') }}" method="post" class="m-3 border rounded p-3">
-                                            @csrf
-                                            <div class="table_produk w-full">
-                                                <table class="w-full text-center border-collapse">
-                                                    <thead>
-                                                        <tr>
-                                                            {{-- <th class="pb-2 border-b border-gray-500">SID</th> --}}
-                                                            <th class="pb-2 border-b border-gray-500">Produk</th>
-                                                            <th class="pb-2 border-b border-gray-500">Jumlah</th>
-                                                            <th class="pb-2 border-b border-gray-500">Satuan Unit Produk</th>
-                                                            <th class="pb-2 border-b border-gray-500">Harga</th>
-                                                            <th class="pb-2 border-b border-gray-500">Jumlah Pesanan</th>
-                                                            <th class="pb-2 border-b border-gray-500">Subtotal</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-              @forelse ($product as $index=>$item)
-        <tr class="{{ $index % 2 === 0 ? 'bg-gray-100' : 'bg-white' }}" id="tableData">
-            <td class="py-5">{{ $item->nama_produk }}</td>
-            <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
-            <td class="py-2">{{ $item->jumlah_stok }}</td>
-            <td>{{ $item->satuan_unit_produk }}</td>
-            <td class="py-2 harga_produk">{{ $item->harga_produk }}</td>
-            <td class="py-5 flex items-center justify-center">
-                <input type="number" name="jumlah_pesanan" class="jumlah_pesanan form-control py-auto"
-                    data-price="{{ $item->harga_produk }}" placeholder="Jumlah Pesanan">
-                <button type="button" class="resetButton ml-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="15" y1="9" x2="9" y2="15"></line>
-                        <line x1="9" y1="9" x2="15" y2="15"></line>
-                    </svg>
-                </button>
-            </td>
-            <td class="py-2 subtotal"></td>
-        </tr>
-    @empty
-        @endforelse
-        <tr>
-            <td class="text-left p-4 font-bold">Total</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <div id="totalDisplay" class="">
-                    <span id="totalAmount" class="font-bold">0</span>
+        <form action="{{ route('pesanan.storeOrder') }}" method="post" class="m-3 border rounded p-3">
+            @csrf
+            <div class="table_produk w-full">
+                <table class="w-full text-center border-collapse">
+                    <thead>
+                        <tr>
+                            {{-- <th class="pb-2 border-b border-gray-500">SID</th> --}}
+                            <th class="pb-2 border-b border-gray-500">Produk</th>
+                            <th class="pb-2 border-b border-gray-500">Jumlah</th>
+                            <th class="pb-2 border-b border-gray-500">Satuan Unit Produk</th>
+                            <th class="pb-2 border-b border-gray-500">Harga</th>
+                            <th class="pb-2 border-b border-gray-500">Jumlah Pesanan</th>
+                            <th class="pb-2 border-b border-gray-500">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($product as $index=>$item)
+                            <tr class="{{ $index % 2 === 0 ? 'bg-gray-100' : 'bg-white' }}" id="tableData">
+                                <td class="py-5">{{ $item->nama_produk }}</td>
+                                <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
+                                <td class="py-2">{{ $item->jumlah_stok }}</td>
+                                <td>{{ $item->satuan_unit_produk }}</td>
+                                <td class="py-2 harga_produk">{{ $item->harga_produk }}</td>
+                                <td class="py-5 flex items-center justify-center">
+                                    <input type="number" name="jumlah_pesanan" class="jumlah_pesanan form-control py-auto"
+                                        data-price="{{ $item->harga_produk }}" placeholder="Jumlah Pesanan">
+                                    <button type="button" class="resetButton ml-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="#ff0000" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                                        </svg>
+                                    </button>
+                                </td>
+                                <td class="py-2 subtotal"></td>
+                            </tr>
+                        @empty
+                        @endforelse
+                        <tr>
+                            <td class="text-left p-4 font-bold">Total</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div id="totalDisplay" class="">
+                                    <span id="totalAmount" class="font-bold">0</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="formContainer inputLabelContainer grid grid-cols-2 gap-0.5">
+
+                <div class="tb_user_id flex flex-col">
+                    <label for="tb_user_id">Pilih User</label>
+                    <select name="tb_user_id" id="tb_user_id">
+                        <option value="" aria-placeholder="pilih user">Pilih User</option>
+                        @foreach ($users as $item)
+                            <option id="tb_user_id" value="{{ $item->uid }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-            </td>
-        </tr>
-        </tbody>
-        </table>
-
-        </div>
-
-        <div class="formContainer inputLabelContainer grid grid-cols-2 gap-0.5">
-
-            <div class="tb_user_id flex flex-col">
-                <label for="tb_user_id">Pilih User</label>
-                <select name="tb_user_id" id="tb_user_id">
-                    <option value="" aria-placeholder="pilih user">Pilih User</option>
-                    @foreach ($users as $item)
-                        <option id="tb_user_id" value="{{ $item->uid }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
+                <div class="tb_alamat_id flex flex-col">
+                    <label for="tb_alamat_id">Alamat</label>
+                    <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="form-control" placeholder="ID Alamat"
+                        disabled>
+                </div>
+                <div class="tb_kurir_id flex flex-col">
+                    <label for="tb_kurir_id">Kurir</label>
+                    <input type="text" name="tb_kurir_id" id="tb_kurir_id" class="form-control" placeholder="ID Kurir">
+                </div>
             </div>
-            <div class="tb_alamat_id flex flex-col">
-                <label for="tb_alamat_id">Alamat</label>
-                <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="form-control" placeholder="ID Alamat"
-                    disabled>
-            </div>
-            <div class="tb_kurir_id flex flex-col">
-                <label for="tb_kurir_id">Kurir</label>
-                <input type="text" name="tb_kurir_id" id="tb_kurir_id" class="form-control" placeholder="ID Kurir">
-            </div>
-        </div>
-        <button
-            class="flex justify-center px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200"
-            onclick="confirmCheckoutFire(event)">
-            Beli
-        </button>
+            <button
+                class="flex justify-center px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200"
+                onclick="confirmCheckoutFire(event)">
+                Beli
+            </button>
         </form>
 
         <script>

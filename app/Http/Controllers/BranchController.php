@@ -18,14 +18,15 @@ class BranchController extends Controller
     public function index()
     {
         $branch = DB::table('branches')
-        ->join('companies', 'companies.id', '=', 'branches.company_id')
-        ->get();
+            ->join('companies', 'companies.id', '=', 'branches.company_id')
+            ->select('branches.*', 'companies.nama_company', 'branches.id as bid', 'companies.id as cid')
+            ->get();
         // return response()->json([
         //     'message' => 'Branch berhasil ditampilkan',
         //     'data' => $branch
         // ], 200);
 
-
+        // dd($branch);
         return view('branch.index', compact('branch'));
     }
 
@@ -66,18 +67,17 @@ class BranchController extends Controller
     public function show($id)
     {
         $branch = DB::table('branches')
-        ->join('companies', 'companies.id', '=', 'branches.company_id')
-        ->where('branches.id', '=', $id)
-        ->first();
+            ->join('companies', 'companies.id', '=', 'branches.company_id')
+            ->where('branches.id', '=', $id)
+            ->select('branches.*','companies.*','branches.id as bid', 'companies.id as cid')
+            ->first();
+        $companyData = Company::all();
 
-        // return response()->json([
-        //     'message' => 'Branch berhasil ditampilkan',
-        //     'data' => $branch
-        // ], 200);
-        return view('branch.show', compact('branch'));
+        return view('branch.show', ['branch' => $branch, 'companyData' => $companyData]);
     }
 
-    public function update(Request $request,$id){
+    public function update(Request $request, $id)
+    {
         $branch = Branch::find($id);
         $branch->company_id = $request->cb_company_id;
         $branch->nama_branch = $request->tb_nama_branch;
@@ -85,23 +85,14 @@ class BranchController extends Controller
         $branch->alamat_branch = $request->tb_alamat_branch;
         $branch->save();
 
-        return response()->json([
-            'message' => 'Branch berhasil diupdate',
-            'data' => $branch
-        ], 200);
-        // return redirect()->route('branch.index')->with('success', 'Branch berhasil diupdate');
+        return redirect()->route('branch.index')->with('success', 'Branch berhasil diupdate');
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         $branch = Branch::find($id);
         $branch->delete();
 
-        return response()->json([
-            'message' => 'Branch berhasil dihapus',
-            'data' => $branch
-        ], 200);
-        // return redirect()->route('branch.index')->with('success', 'Branch berhasil dihapus');
+        return redirect()->route('branch.index')->with('success', 'Branch berhasil dihapus');
     }
-
 }

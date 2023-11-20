@@ -30,19 +30,12 @@ class CompanyController extends Controller
             ->select('companies.*', 'alamat.*', 'users.*', 'companies.id as cid', 'alamat.id as aid', 'users.id as uid')
             ->get();
 
-        // return response()->json([
-        //     'data' => $companies,
-        // ], 200);
         return view('company.index', ['companies' => $companies]);
     }
 
     public function create()
     {
-        ///
         $usersData = User::all();
-        // $res =  response()->json([
-        //     'data' => $usersData
-        // ], 200);
 
         return view('company.create', ['usersData' => $usersData]);
         ///user data untuk dropdown pilih user(Contact Person Cabang)
@@ -83,10 +76,6 @@ class CompanyController extends Controller
         $company->tagline_company = $request->tb_tagline_company;
         $company->save();
 
-        // return response()->json([
-        //     'data' => $company,
-        // ], 200);
-
         return redirect()->route('company.index')->with('success', 'Company berhasil ditambahkan');
     }
 
@@ -110,11 +99,6 @@ class CompanyController extends Controller
             ], '404');
         }
 
-        // $res =  response()->json([
-        //     'data' => $company,
-        // ], 200);
-        // return $res;
-
         return view('company.show', ['company' => $company, 'usersData' => $usersData]);
     }
 
@@ -129,8 +113,6 @@ class CompanyController extends Controller
         //     'tb_kode_company.required' => 'Kode Company harus diisi',
         //     'tb_kode_company.unique' => 'Kode Company sudah terdaftar',
         // ]);
-
-        //bang gatau apa artinya ini
 
         $company = Company::findOrFail($id);
         $company->user_id = $request->tb_user_id;
@@ -154,21 +136,14 @@ class CompanyController extends Controller
         $alamat->kode_pos = $request->tb_kodepos;
         $alamat->save();
 
-        // $res =  response()->json([
-        //     'data' => $company,
-        // ], 200);
-        // return $res;
-        // dd($company , $alamat);
-
         return redirect()->route('company.index')->with('success', 'Company berhasil diupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
         Branch::where('company_id', $id)
             ->update(['company_id' => 1]);
 
@@ -178,8 +153,7 @@ class CompanyController extends Controller
 
         $company = Company::findOrFail($id);
         $company->delete();
-        return response()->json([
-            'message' => "{$company} berhasil dihapus",
-        ], '200');
+
+        return redirect()->route('company.index')->with('success', 'Company berhasil dihapus');
     }
 }

@@ -62,6 +62,7 @@ class ReportingController extends Controller
 
     public function exportStok(Request $request)
     {
+        $currentDate = date('Y-m-d');
         $stocks = DB::table('stok')
             ->join('produk', 'stok.produk_id', '=', 'produk.id')
             ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
@@ -74,13 +75,14 @@ class ReportingController extends Controller
             ->orderBy('stok.created_at', 'desc')
             ->get();
 
-        $pdf = Pdf::loadView('reporting.exportStok', ['stocks' => $stocks, 'from' => $request->from, 'to' => $request->to]);
+        $pdf = Pdf::loadView('reporting.exportStok', ['stocks' => $stocks, 'from' => $request->from, 'to' => $request->to, 'currentDate' => $currentDate]);
         return $pdf->stream('Laporan Stok' . now() . '.pdf');
         // return view('reporting.exportStok', ['stocks' => $stocks, 'from' => $request->from, 'to' => $request->to]);
     }
 
     public function exportPenjualan(Request $request)
     {
+        $currentDate = date('Y-m-d');
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'transaksi.pesanan_id', '=', 'pesanan.id')
             ->join('alamat', 'pesanan.alamat_id', '=', 'alamat.id')
@@ -94,7 +96,7 @@ class ReportingController extends Controller
             ->orderBy('transaksi.created_at', 'desc')
             ->get();
             // dd($request->from);
-        $pdf = Pdf::loadView('reporting.exportPenjualan', ['transaksi' => $transaksi, 'from' => $request->from, 'to' => $request->to]);
+        $pdf = Pdf::loadView('reporting.exportPenjualan', ['transaksi' => $transaksi, 'from' => $request->from, 'to' => $request->to, 'currentDate' => $currentDate]);
         return $pdf->stream('Laporan Penjualan' . now() . '.pdf');
     }
 }

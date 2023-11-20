@@ -16,14 +16,14 @@
 </header>
 
 <div class="formContainer m-3 border rounded p-3">
-    <form action="{{route('company.update', ['id'=>$company->id])}}" method="post">
+    <form action="{{route('company.update', ['id'=>$company->cid])}}" method="post">
         @csrf
         <div class="formContainer grid grid-cols-2 gap-0.5">
             <div class="namaCompany">
                 <label for="" class="block text-sm font-medium text-gray-700">Nama Company</label>
                 <input type="text"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
-                    focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1" name="tb_nama_company"
+                    focus:ring-indigo-200 focus:ring-opacity-50 border p-1" name="tb_nama_company"
                     id="tb_nama_company" placeholder="" value="{{ $company->nama_company }}" >
             </div>
 

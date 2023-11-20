@@ -53,21 +53,33 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
 
-        // $validatedData = $request->validate([
-        //     'tb_kode_customer' => 'required',
-        //     'tb_nama_rpk' => 'required',
-        //     'tb_no_ktp' => 'required',
-        //     'tb_jalan' => 'required',
-        //     'tb_jalan_ex' => 'required',
-        //     'tb_blok' => 'required',
-        //     'tb_rt' => 'required',
-        //     'tb_rw' => 'required',
-        //     'tb_provinsi' => 'required',
-        //     'tb_kota_kabupaten' => 'required',
-        //     'tb_kecamatan' => 'required',
-        //     'tb_kelurahan' => 'required',
-        //     'tb_kode_pos' => 'required',
-        // ]);
+        $validatedData = $request->validate([
+            'tb_kode_customer' => 'required',
+            'tb_nama_rpk' => 'required',
+            'tb_ktp_rpk' => 'required',
+            'tb_jalan' => 'required',
+            'tb_blok' => 'required',
+            'tb_rt' => 'required',
+            'tb_rw' => 'required',
+            'tb_prov' => 'required',
+            'tb_kota' => 'required',
+            'tb_kecamatan' => 'required',
+            'tb_kelurahan' => 'required',
+            'tb_kodepos' => 'required',
+        ],[
+            'tb_kode_customer.required' => 'Kode customer tidak boleh kosong',
+            'tb_nama_rpk.required' => 'Nama RPK tidak boleh kosong',
+            'tb_no_ktp.required' => 'No KTP tidak boleh kosong',
+            'tb_jalan.required' => 'Jalan tidak boleh kosong',
+            'tb_blok.required' => 'Blok tidak boleh kosong',
+            'tb_rt.required' => 'RT tidak boleh kosong',
+            'tb_rw.required' => 'RW tidak boleh kosong',
+            'tb_prov.required' => 'Provinsi tidak boleh kosong',
+            'tb_kota.required' => 'Kota/Kabupaten tidak boleh kosong',
+            'tb_kecamatan.required' => 'Kecamatan tidak boleh kosong',
+            'tb_kelurahan.required' => 'Kelurahan tidak boleh kosong',
+            'tb_kodepos.required' => 'Kode pos tidak boleh kosong',
+        ]);
 
         $user = new User;
         $user->role_id = 5;
@@ -104,7 +116,6 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $validatedData = $request->validate([
             'tb_kode_customer' => 'required',
             'tb_nama_rpk' => 'required',
@@ -137,7 +148,6 @@ class CustomerController extends Controller
         if (empty($customer)) {
             abort(404);
         }
-
         $customer->kode_customer = $request->tb_kode_customer;
         $customer->nama_rpk = $request->tb_nama_rpk;
         $customer->no_ktp = $request->tb_ktp_rpk;
@@ -169,28 +179,25 @@ class CustomerController extends Controller
         $user->no_hp = $request->tb_hp_user;
         $user->save();
 
-
-
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil diubah');
     }
 
     public function delete($id)
     {
-
-
         $customer = Biodata::findOrfail($id);
         if (empty($customer)) {
             abort(404);
         }
+
         $alamat = Alamat::where('id', '=', $customer->alamat_id)->first();
         if (empty($alamat)) {
             abort(404);
         }
+
         $user = User::where('id', '=', $customer->user_id)->first();
         $customer->delete();
         $alamat->delete();
         $user->delete();
-
 
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil dihapus');
     }

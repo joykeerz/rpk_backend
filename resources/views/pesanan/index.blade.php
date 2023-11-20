@@ -17,6 +17,7 @@
         </div>
     </header>
 
+    @include('layouts.searchbar')
 
     <div class="tableContainer m-3">
         <table class="w-full text-center overflow-y-auto border">
@@ -30,22 +31,24 @@
                     <th class="px-4 py-2">Detail Pesanan</th>
                 </tr>
             </thead>
-            @forelse ($transaksi as $item)
-                <tbody>
-                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white'}} ">
+            <tbody>
+                @forelse ($transaksi as $item)
+                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
                         <td class=" px-4 py-2">{{ $item->tid }}</td>
                         <td class=" px-4 py-2">{{ $item->name }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pembayaran }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
-                        <td class="subtotal_produk px-4 py-2">Rp {{number_format($item->subtotal_produk) }}</td>
+                        <td class="subtotal_produk px-4 py-2">Rp {{ number_format($item->subtotal_produk) }}</td>
                         <td>
                             <a class="" href="{{ route('pesanan.show', ['id' => $item->tid]) }}">open</a>
                         </td>
                     </tr>
-                </tbody>
-            @empty
-                <h1>tidak ada data yang tersedia</h1>
-            @endforelse
+                @empty
+                    <tr>
+                        <td colspan="6">Tidak ada data</td>
+                    </tr>
+                @endforelse
+            </tbody>
         </table>
 
     </div>

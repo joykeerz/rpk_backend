@@ -11,13 +11,13 @@
 </head>
 
 <body>
-    <div class="container-fluid mt-4">
+    <div class="table-responsive mt-4">
         @if ($from != null && $to != null)
             <h3 class="alert alert-success">Laporan Stok Dari {{ $from }} S.d {{ $to }}</h3>
         @else
-            <h3 class="alert alert-success">Laporan Stok Keseluruhan</h3>
+            <h3 class="alert alert-success">Laporan Stok Keseluruhan S.d {{$currentDate}}</h3>
         @endif
-        <table class="table table-bordered">
+        <table class="table table-sm table-bordered">
             <thead>
                 <tr>
                     <th>#</th>
@@ -25,9 +25,10 @@
                     <th>Produk</th>
                     <th>Kategori</th>
                     <th>Harga</th>
-                    <th>Jumlah</th>
+                    <th>Qty</th>
                     <th>Gudang</th>
                     <th>Alamat</th>
+                    <th>Tgl.Input</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,10 +53,13 @@
                                 {{ $stock->provinsi }}
                             </p>
                         </td>
+                        <td>
+                           {{$stock->cat}}
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">No Data</td>
+                        <td colspan="9" class="text-center">No Data</td>
                     </tr>
                 @endforelse
             </tbody>
