@@ -18,6 +18,9 @@ return new class extends Migration
             $table->unsignedInteger('kurir_id');
             $table->string('status_pemesanan');
             $table->timestamps();
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('alamat_id')->references('id')->on('alamat')->onDelete('cascade');
+            // $table->foreign('kurir_id')->references('id')->on('kurir')->onDelete('cascade');
         });
     }
 

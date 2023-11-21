@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedInteger('gudang_id');
             $table->float('jumlah_stok');
             $table->timestamps();
+            // $table->foreign('produk_id')->references('id')->on('produk')->onDelete('cascade');
+            // $table->foreign('gudang_id')->references('id')->on('gudang')->onDelete('cascade');
         });
     }
 

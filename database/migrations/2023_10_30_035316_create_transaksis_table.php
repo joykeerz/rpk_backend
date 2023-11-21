@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('subtotal_produk')->default(0);
             $table->float('subtotal_pengiriman')->default(0);
             $table->timestamps();
+            // $table->foreign('pesanan_id')->references('id')->on('pesanan')->onDelete('cascade');
         });
     }
 

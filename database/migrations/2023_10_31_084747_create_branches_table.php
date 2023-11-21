@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('no_telp_branch');
             $table->string('alamat_branch');
             $table->timestamps();
+            // $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

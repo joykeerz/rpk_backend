@@ -18,6 +18,8 @@ return new class extends Migration
             $table->float('qty');
             $table->float('harga');
             $table->timestamps();
+            // $table->foreign('pesanan_id')->reference('id')->on('pesanan')->onDelete('cascade');
+            // $table->foreign('produk_id')->reference('id')->on('produk')->onDelete('cascade');
         });
     }
 
