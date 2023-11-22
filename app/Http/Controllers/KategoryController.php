@@ -37,6 +37,7 @@ class KategoryController extends Controller
         $category = new Kategori;
         $category->nama_kategori = $request->tb_nama_kategori;
         $category->deskripsi_kategori = $request->tb_desk_kategori;
+        $category->external_kategori_id = $request->tb_external_id;
         $category->save();
         // return response()->json([
         //     'data' => $category,
@@ -58,6 +59,7 @@ class KategoryController extends Controller
         $category = Kategori::find($id);
         $category->nama_kategori = $request->tb_nama_kategori;
         $category->deskripsi_kategori = $request->tb_desk_kategori;
+        $category->external_kategori_id = $request->tb_external_kategori_id;
         $category->save();
         return response()->json([
             'data' => $category,

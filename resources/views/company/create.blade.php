@@ -83,13 +83,17 @@
                 <label for="tb_kodepos">Kode Pos</label>
                 <input type="text" name="tb_kodepos" id="tb_kodepos">
             </div>
+            <div class="tb_external_id flex flex-col">
+                <label for="tb_external_id">ID External</label>
+                <input type="text" name="tb_external_id" id="tb_external_id">
+            </div>
         </div>
 
-          <div class="flex justify-center my-3"> <!-- Flex container to center the button -->
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
-                    Create
-                </button>
-            </div>
+        <div class="flex justify-center my-3"> <!-- Flex container to center the button -->
+            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+                Create
+            </button>
+        </div>
 
     </form>
 </div>

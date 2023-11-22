@@ -69,7 +69,7 @@
                                     (dalam
                                     persen)</label>
                                 <input value="0" type="number" name="tb_diskon_produk"
-                                    id="tb_diskon_produk
+                                    id="tb_diskon_produk"
                                     class="mt-1 block w-full
                                     rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
@@ -78,16 +78,6 @@
                                       <div class="text-red-500">{{ $message }}</div>
                                   @enderror
                                 <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
-                            </div>
-
-                            <div id="hargaProduk" class="mb-3">
-                                <label for="" class="block text-sm font-medium text-gray-700">Harga</label>
-                                <input value="0" type="number"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                                    name="tb_harga_produk" id="tb_harga_product"  placeholder="">
-                                @error('tb_harga_produk')
-                                    <div class="text-red-500">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <div id="satuanUnit" class="mb-3">
@@ -108,7 +98,16 @@
                                 @enderror
                             </div>
 
+                            <div id="externalIdProduk" class="mb-3">
+                                <label for="externalIdProduk" class="block text-sm font-medium text-gray-700">ID Eksternal</label>
+                                <input type="text" name="tb_external_id" id="tb_external_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1" name="tb_external_id" id="tb_external_id">
+                                  @error('tb_external_id')
+                                      <div class="text-red-500">{{ $message }}</div>
+                                  @enderror
+                                <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
+                            </div>
                         </div>
+
                         <div class="buttonContainer flex justify-center">
                             <button type="submit"
                             class="px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200">

@@ -15,6 +15,7 @@
         </h2>
     </header>
 
+    @include('layouts.alert')
     @include('layouts.searchbar')
 
     <script>

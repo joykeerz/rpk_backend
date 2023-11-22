@@ -48,8 +48,6 @@ class ProductController extends Controller
             ->orderBy('cat', 'desc')
             ->get();
 
-
-
         // $products = DB::table('produk')
         //     ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
         //     ->select('kategori.*', 'produk.*', 'kategori.id as kid', 'produk.id as pid', 'produk.created_at as cat')
@@ -68,26 +66,27 @@ class ProductController extends Controller
             'tb_kode_produk' => 'required',
             'tb_nama_produk' => 'required',
             'tb_desk_produk' => 'required',
-            'tb_harga_produk' => 'required',
             'tb_satuan' => 'required',
+            'cb_kategori' => 'required',
         ], [
             'tb_kode_produk.required' => 'Kode produk harus diisi',
             'tb_nama_produk.required' => 'Nama produk harus diisi',
             'tb_desk_produk.required' => 'Deskripsi produk harus diisi',
-            'tb_harga_produk.required' => 'Harga produk harus diisi',
             'tb_satuan.required' => 'Satuan produk harus diisi',
+            'cb_kategori.required' => 'Kategori harus diisi',
         ]);
+
         $product = new Produk;
         $product->kategori_id = $request->cb_kategori;
         $product->kode_produk = $request->tb_kode_produk;
         $product->nama_produk = $request->tb_nama_produk;
         $product->desk_produk = $request->tb_desk_produk;
-        $product->harga_produk = $request->tb_harga_produk;
         $product->diskon_produk = $request->tb_diskon_produk;
         $product->satuan_unit_produk = $request->tb_satuan;
+        $product->external_produk_id = $request->tb_external_id;
         $product->save();
 
-        return redirect()->route('product.manage')->with('success', 'Produk berhasil ditambahkan');
+        return redirect()->route('product.manage')->with('message', 'Produk berhasil ditambahkan');
     }
 
     function update(Request $request, $id)
@@ -96,13 +95,11 @@ class ProductController extends Controller
             'tb_kode_produk' => 'required',
             'tb_nama_produk' => 'required',
             'tb_desk_produk' => 'required',
-            'tb_harga_produk' => 'required',
 
         ], [
             'tb_kode_produk.required' => 'Kode produk harus diisi',
             'tb_nama_produk.required' => 'Nama produk harus diisi',
             'tb_desk_produk.required' => 'Deskripsi produk harus diisi',
-            'tb_harga_produk.required' => 'Harga produk harus diisi',
         ]);
 
         $product = Produk::findOrFail($id);
@@ -111,10 +108,10 @@ class ProductController extends Controller
         $product->kode_produk = $request->tb_kode_produk;
         $product->nama_produk = $request->tb_nama_produk;
         $product->desk_produk = $request->tb_desk_produk;
-        $product->harga_produk = $request->tb_harga_produk;
+        $product->external_produk_id = $request->tb_external_id;
         $product->save();
 
-        return redirect()->route('product.manage')->with('success', 'Produk berhasil diupdate');
+        return redirect()->route('product.manage')->with('message', 'Produk berhasil diupdate');
     }
 
     function delete($id)
@@ -122,7 +119,7 @@ class ProductController extends Controller
         $product = Produk::findOrFail($id);
         $product->delete();
 
-        return redirect()->route('product.manage')->with('success', 'Produk berhasil dihapus');
+        return redirect()->route('product.manage')->with('message', 'Produk berhasil dihapus');
     }
 
     public function searchProduct(Request $request)

@@ -88,6 +88,7 @@
                     href="#" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
                     aria-expanded="false">
                     <!-- User avatar -->
+                    <small class="px-2 ml-2 text-white">{{Auth::user()->name}}</small>
                     <img src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg" class="rounded-full"
                         style="height: 25px; width: 25px" alt="" loading="lazy" />
                 </a>

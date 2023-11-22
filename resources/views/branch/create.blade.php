@@ -41,6 +41,10 @@
                 <label for="tb_alamat_branch">Alamat</label>
                 <input type="text" name="tb_alamat_branch" id="tb_alamat_branch">
             </div>
+            <div class="tb_id_external flex flex-col">
+                <label for="tb_id_external">ID Eksternal</label>
+                <input type="text" name="tb_id_external" id="tb_id_external">
+            </div>
         </div>
 
         <div class="flex justify-center my-3"> <!-- Flex container to center the button -->

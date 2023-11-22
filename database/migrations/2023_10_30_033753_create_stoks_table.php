@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('produk_id');
             $table->unsignedInteger('gudang_id');
             $table->float('jumlah_stok');
+            $table->float('harga_stok');
             $table->unsignedBigInteger('external_stok_id')->nullable();
             $table->timestamps();
             // $table->foreign('produk_id')->references('id')->on('produk')->onDelete('cascade');

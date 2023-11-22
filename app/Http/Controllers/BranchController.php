@@ -21,23 +21,7 @@ class BranchController extends Controller
             ->join('companies', 'companies.id', '=', 'branches.company_id')
             ->select('branches.*', 'companies.nama_company', 'branches.id as bid', 'companies.id as cid')
             ->get();
-        // return response()->json([
-        //     'message' => 'Branch berhasil ditampilkan',
-        //     'data' => $branch
-        // ], 200);
-
-        // dd($branch);
         return view('branch.index', compact('branch'));
-    }
-
-    public function manage()
-    {
-        $company = Company::all();
-        return response()->json([
-            'message' => 'Company berhasil ditampilkan',
-            'data' => $company
-        ], 200);
-        // return view('branch.create', compact('companies'));
     }
 
     public function store(Request $request)
@@ -47,14 +31,10 @@ class BranchController extends Controller
         $branch->nama_branch = $request->tb_nama_branch;
         $branch->no_telp_branch = $request->tb_no_telp_branch;
         $branch->alamat_branch = $request->tb_alamat_branch;
+        $branch->external_branch_id = $request->tb_id_external;
         $branch->save();
 
-        // return response()->json([
-        //     'message' => 'Branch berhasil ditambahkan',
-        //     'data' => $branch
-        // ], 200);
-
-        return redirect()->route('branch.index')->with('success', 'Branch berhasil ditambahkan');
+        return redirect()->route('branch.index')->with('message', 'Branch berhasil ditambahkan');
     }
 
     public function create()
@@ -83,9 +63,10 @@ class BranchController extends Controller
         $branch->nama_branch = $request->tb_nama_branch;
         $branch->no_telp_branch = $request->tb_no_telp_branch;
         $branch->alamat_branch = $request->tb_alamat_branch;
+        $branch->external_branch_id = $request->tb_id_external;
         $branch->save();
 
-        return redirect()->route('branch.index')->with('success', 'Branch berhasil diupdate');
+        return redirect()->route('branch.index')->with('message', 'Branch berhasil diupdate');
     }
 
     public function delete($id)
@@ -93,6 +74,6 @@ class BranchController extends Controller
         $branch = Branch::find($id);
         $branch->delete();
 
-        return redirect()->route('branch.index')->with('success', 'Branch berhasil dihapus');
+        return redirect()->route('branch.index')->with('message', 'Branch berhasil dihapus');
     }
 }

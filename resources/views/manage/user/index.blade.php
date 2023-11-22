@@ -10,8 +10,7 @@
 
 @section('content')
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <header>
+    <header class="bg-gray-200 py-1">
         <div class="title flex m-5 justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Manage User') }}

@@ -20,6 +20,7 @@
         </h2>
     </header>
 
+    @include('layouts.alert')
     @include('layouts.searchbar')
 
     <div class="overflow-y-auto m-3">

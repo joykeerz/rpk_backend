@@ -145,6 +145,14 @@
                     focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1" name="tb_kodepos"
                     id="tb_kodepos" placeholder="" value="{{ $company->kode_pos }}" >
             </div>
+
+            <div class="external_id">
+                <label for="" class="block text-sm font-medium text-gray-700">ID External</label>
+                <input type="text"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300
+                    focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border p-1" name="tb_external_id"
+                    id="tb_external_id" placeholder="" value="{{ $company->external_company_id }}" >
+            </div>
         </div>
         <div class="buttonContainer flex justify-center p-4">
             <button type="submit"

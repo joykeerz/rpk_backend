@@ -22,8 +22,8 @@
             @yield('sidebar')
         </div>
 
-        <div class="w-full h-screen overflow-y-auto my-16">
-
+        <div class="w-full h-full overflow-y-auto">
+            <div class="my-14"></div>
             @yield('content')
             @yield('searchBar')
 

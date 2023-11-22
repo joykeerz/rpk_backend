@@ -41,19 +41,12 @@ class GudangController extends Controller
     public function create(){
         $usersData = User::all();
         $companyData = Company::all();
-        // $res =  response()->json([
-        //     'data' => $usersData
-        // ], 200);
-
 
         return view('gudang.create', ['usersData' => $usersData , 'companyData' => $companyData]);
-
-        ///user data untuk dropdown pilih user(penanggung jawab gudang)
     }
 
     public function store(Request $request)
     {
-
         $alamat = new Alamat;
         $alamat->jalan = $request->tb_jalan;
         $alamat->jalan_ext = $request->tb_jalan_ext;
@@ -74,12 +67,9 @@ class GudangController extends Controller
         $gudang->user_id = $request->cb_user_id;
         $gudang->nama_gudang = $request->tb_nama_gudang;
         $gudang->no_telp = $request->tb_no_telp;
+        $gudang->external_gudang_id = $request->tb_external_id;
         $gudang->save();
 
-        // return response()->json([
-        //     'data' => [$alamat, $gudang],
-        //     'message' => 'gudang berhasil didaftarkan',
-        // ], '200');
         return redirect()->route('gudang.index')->with('message', 'Data Gudang Berhasil Ditambahkan!');
     }
 
@@ -93,12 +83,6 @@ class GudangController extends Controller
             ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'companies.id as cid')
             ->where('gudang.id', '=', $id)
             ->first();
-
-        // if (!$gudang) {
-        //     return response()->json([
-        //         'error' => 'resource not found'
-        //     ], '404');
-        // }
 
         $data = [
             'gudang' => $gudang,
@@ -122,6 +106,7 @@ class GudangController extends Controller
         $gudang->user_id = $request->cb_user_id;
         $gudang->nama_gudang = $request->tb_nama_gudang;
         $gudang->no_telp = $request->tb_no_telp;
+        $gudang->external_gudang_id = $request->tb_external_id;
         $gudang->save();
 
         $alamat = Alamat::findOrFail($gudang->alamat_id);
@@ -138,11 +123,6 @@ class GudangController extends Controller
         $alamat->kode_pos = $request->tb_kodepos;
         $alamat->save();
 
-        // return response()->json([
-        //     'data' => [$gudang, $alamat],
-        //     'message' => 'gudang berhasil diupdate'
-        // ], '200');
-
         return redirect()->route('gudang.index')->with('message', 'Data Gudang Berhasil Diupdate!');
     }
 
@@ -154,12 +134,6 @@ class GudangController extends Controller
         $alamat->delete();
         $stok = Stok::where('gudang_id', $id);
         $stok->delete();
-        // $alamat = Alamat::where('id', $gudang->alamat_id)->delete();
-
-        // return response()->json([
-        //     'message' => 'gudang serta alamat dan stok berhasil dihapus'
-        // ], '200');
-
 
         return redirect()->route('gudang.index')->with('message', 'Data Gudang Berhasil Dihapus!');
     }

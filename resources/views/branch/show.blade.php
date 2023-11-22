@@ -43,6 +43,10 @@
                         <input type="text" name="tb_alamat_branch" id="tb_alamat_branch"
                             value="{{ $branch->alamat_branch }}">
                     </div>
+                    <div class="tb_id_external flex flex-col">
+                        <label for="tb_id_external">ID Eksternal</label>
+                        <input value="{{$branch->external_branch_id}}" type="text" name="tb_id_external" id="tb_id_external">
+                    </div>
                 </div>
             </div>
 

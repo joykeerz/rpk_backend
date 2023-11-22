@@ -74,9 +74,10 @@ class CompanyController extends Controller
         $company->nama_company = $request->tb_nama_company;
         $company->partner_company = $request->tb_partner_company;
         $company->tagline_company = $request->tb_tagline_company;
+        $company->external_company_id = $request->tb_external_id;
         $company->save();
 
-        return redirect()->route('company.index')->with('success', 'Company berhasil ditambahkan');
+        return redirect()->route('company.index')->with('message', 'Company berhasil ditambahkan');
     }
 
     /**
@@ -120,6 +121,7 @@ class CompanyController extends Controller
         $company->nama_company = $request->tb_nama_company;
         $company->partner_company = $request->tb_partner_company;
         $company->tagline_company = $request->tb_tagline_company;
+        $company->external_company_id = $request->tb_external_id;
         $company->save();
 
         $alamat = Alamat::findOrFail($company->alamat_id);
@@ -136,7 +138,7 @@ class CompanyController extends Controller
         $alamat->kode_pos = $request->tb_kodepos;
         $alamat->save();
 
-        return redirect()->route('company.index')->with('success', 'Company berhasil diupdate');
+        return redirect()->route('company.index')->with('message', 'Company berhasil diupdate');
     }
 
     /**
@@ -154,6 +156,6 @@ class CompanyController extends Controller
         $company = Company::findOrFail($id);
         $company->delete();
 
-        return redirect()->route('company.index')->with('success', 'Company berhasil dihapus');
+        return redirect()->route('company.index')->with('message', 'Company berhasil dihapus');
     }
 }

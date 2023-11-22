@@ -94,7 +94,7 @@
 
         <div class="kodepos w-1/2 p-2">
             <label for="" class="block text-sm font-medium text-gray-700">Kode Pos</label>
-            <input type="number"
+            <input type="text"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                 focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1" name="tb_kodepos"
                 id="tb_kodepos" placeholder="" value="{{ $data['gudang']->kode_pos }}">
@@ -102,7 +102,7 @@
 
         <div class="no_telp w-1/2 p-2">
             <label for="" class="block text-sm font-medium text-gray-700">No. Telp</label>
-            <input type="number"
+            <input type="text"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                 focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1" name="tb_no_telp"
                 id="tb_no_telp" placeholder="" value="{{ $data['gudang']->no_telp }}">

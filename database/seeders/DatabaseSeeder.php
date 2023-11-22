@@ -107,57 +107,6 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        DB::table('alamat')->insert([
-            'jalan' => 'Jl. Nusa Bangsa',
-            'jalan_ext' => 'Gg. Riya Raya',
-            'blok' => 'Blok Jk No. 11',
-            'rt' => '05',
-            'rw' => '10',
-            'provinsi' => 'Banten',
-            'kota_kabupaten' => 'Tangerang',
-            'kecamatan' => 'Serpong',
-            'kelurahan' => 'Rawa Buaya',
-            'negara' => 'Indonesia',
-            'kode_pos' => '15318',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        DB::table('alamat')->insert([
-            'jalan' => 'Jl. Bisa Raya',
-            'jalan_ext' => 'Gg. Bangsa Raya',
-            'blok' => 'Blok PU No. 11',
-            'rt' => '11',
-            'rw' => '05',
-            'provinsi' => 'Banten',
-            'kota_kabupaten' => 'Tangerang',
-            'kecamatan' => 'Serpong',
-            'kelurahan' => 'Rawa Ikan',
-            'negara' => 'Indonesia',
-            'kode_pos' => '15310',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        // Biodata & RPK Seed
-        DB::table('biodata')->insert([
-            'user_id' => 1,
-            'alamat_id' => 2,
-            'nama_rpk' => 'RPK Joy',
-            'no_ktp' => '123456789',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        DB::table('biodata')->insert([
-            'user_id' => 2,
-            'alamat_id' => 3,
-            'nama_rpk' => 'RPK Mahran',
-            'no_ktp' => '123456789',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
         // Kategori Seed
         DB::table('kategori')->insert([
             'nama_kategori' => 'none',
@@ -193,7 +142,6 @@ class DatabaseSeeder extends Seeder
             'kode_produk' => 'B0001',
             'nama_produk' => 'Beras Al Hambra Biryani Kemasan',
             'desk_produk' => 'none',
-            'harga_produk' => 40500,
             'diskon_produk' => 0,
             'satuan_unit_produk' => 'gr',
             'created_at' => now(),
@@ -205,7 +153,6 @@ class DatabaseSeeder extends Seeder
             'kode_produk' => 'M0001',
             'nama_produk' => 'Minyak Goreng Bimoli',
             'desk_produk' => 'none',
-            'harga_produk' => 50200,
             'diskon_produk' => 0,
             'satuan_unit_produk' => 'liter',
             'created_at' => now(),
@@ -217,7 +164,6 @@ class DatabaseSeeder extends Seeder
             'kode_produk' => 'D0001',
             'nama_produk' => 'Daging Sapi Wagyu',
             'desk_produk' => 'none',
-            'harga_produk' => 82500,
             'diskon_produk' => 0,
             'satuan_unit_produk' => 'kg',
             'created_at' => now(),
@@ -228,7 +174,8 @@ class DatabaseSeeder extends Seeder
         DB::table('stok')->insert([
             'produk_id' => 1,
             'gudang_id' => 1,
-            'jumlah_stok' => 5,
+            'jumlah_stok' => 420,
+            'harga_stok' => 12000,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -236,7 +183,8 @@ class DatabaseSeeder extends Seeder
         DB::table('stok')->insert([
             'produk_id' => 2,
             'gudang_id' => 1,
-            'jumlah_stok' => 5,
+            'jumlah_stok' => 69,
+            'harga_stok' => 30000,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -244,7 +192,8 @@ class DatabaseSeeder extends Seeder
         DB::table('stok')->insert([
             'produk_id' => 3,
             'gudang_id' => 1,
-            'jumlah_stok' => 5,
+            'jumlah_stok' => 86,
+            'harga_stok' => 120000,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

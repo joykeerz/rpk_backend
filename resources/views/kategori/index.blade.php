@@ -8,73 +8,45 @@
 @endsection
 
 @section('content')
-    @if (session('message'))
-        <div class="bg-green-200 border-t border-b border-white-500  px-4 py-3 relative" id="alertMessage">
-            {{ session('message') }}
-            <button type="button" data-dismiss="alert" aria-label="Close"
-                class="close-button absolute top-0 bottom-0 right-0 px-4 py-3 text-rose">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="#ff3b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
-                </svg>
-            </button>
-        </div>
 
-        <script>
-            // After the page loads
-            document.addEventListener('DOMContentLoaded', function() {
-                var alert = document.getElementById('alertMessage');
-
-                if (alert) {
-                    setTimeout(function() {
-                        alert.style.display = 'none';
-                    }, 5000); // 5000 milliseconds = 5 seconds
-                }
-
-                // Optionally, you might want to add functionality to close the alert with the close button
-                var closeButton = alert.querySelector('.close-button');
-                if (closeButton) {
-                    closeButton.addEventListener('click', function() {
-                        alert.style.display = 'none';
-                    });
-                }
-            });
-        </script>
-    @endif
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         // Function to trigger SweetAlert for data update
         function updateData(itemId) {
             const initialNamaKategori = document.querySelector(`tr[data-id="${itemId}"] .nama_kategori`).innerText;
-            const initialDeskripsiKategori = document.querySelector(`tr[data-id="${itemId}"] .deskripsi_kategori`)
-                .innerText;
+            const initialDeskripsiKategori = document.querySelector(`tr[data-id="${itemId}"] .deskripsi_kategori`).innerText;
+            const initialExternalKategoriId = document.querySelector(`tr[data-id="${itemId}"] .external_kategori_id`).innerText;
 
             Swal.fire({
                 title: 'Update Data',
                 html: `<form id="updateForm" method="post" action="/category/update/+${itemId}">` +
                     '@csrf' +
                     `<label for="tb_nama_kategori">Nama Kategori:</label>` +
+                    `<br>` +
                     `<input id="tb_nama_kategori" class="swal2-input" placeholder="Nama Kategori" name="tb_nama_kategori" value="${initialNamaKategori}">` +
                     `<br>` +
                     `<label for="tb_desk_kategori">Deskripsi Kategori:</label>` +
                     `<textarea id="tb_desk_kategori" class="swal2-textarea w-3/4" placeholder="Deskripsi Kategori" name="tb_desk_kategori">${initialDeskripsiKategori}</textarea>` +
+                    `<br>`+
+                    `<label for="tb_external_kategori_id">ID External:</label>` +
+                    `<input id="tb_external_kategori_id" class="swal2-input" placeholder="id external" name="tb_external_kategori_id" value="${initialExternalKategoriId}">` +
                     `</form>`,
                 focusConfirm: false,
                 preConfirm: () => {
                     const namaKategori = Swal.getPopup().querySelector('#tb_nama_kategori').value;
                     const deskripsiKategori = Swal.getPopup().querySelector('#tb_desk_kategori').value;
+                    const externalKategoriId = Swal.getPopup().querySelector('#tb_external_kategori_id').value;
 
-                    if (!namaKategori || !deskripsiKategori) {
+                    if (!namaKategori || !deskripsiKategori || !externalKategoriId) {
                         Swal.showValidationMessage(`Please enter all the required fields`)
                     }
                     console.log(namaKategori);
                     console.log(deskripsiKategori);
                     return {
                         namaKategori: namaKategori,
-                        deskripsiKategori: deskripsiKategori
+                        deskripsiKategori: deskripsiKategori,
+                        externalKategoriId: externalKategoriId
                     }
 
                 }
@@ -90,7 +62,8 @@
                         data: {
                             _token: '{{ csrf_token() }}',
                             tb_nama_kategori: data.namaKategori,
-                            tb_desk_kategori: data.deskripsiKategori
+                            tb_desk_kategori: data.deskripsiKategori,
+                            tb_external_kategori_id: data.externalKategoriId
                         },
                         success: function(response) {
                             console.log(response);
@@ -123,6 +96,7 @@
     <div class="title bg-gray-200 p-4">
         <h3 class="text-xl">Kategori</h3>
     </div>
+    @include('layouts.alert')
 
     <div class="inputKategoriContainer">
         <form action="{{ route('category.store') }}" method="POST">
@@ -133,6 +107,13 @@
                     class="mt-1 block w-full rounded-m shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                     type="text" name="tb_nama_kategori" id="tb_nama_kategori">
                 @error('tb_nama_kategori')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+                <label class="block text-sm font-medium text-gray-700" for="external">ID External:</label>
+                <input
+                    class="mt-1 block w-full rounded-m shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
+                    type="text" name="tb_external_id" id="tb_external_id">
+                @error('tb_external_id')
                     <div class="text-red-500">{{ $message }}</div>
                 @enderror
                 <label class="block text-sm font-medium text-gray-700" for="deskripsiKategori">Deskripsi Kategori:</label>
@@ -160,6 +141,7 @@
                 <tr>
                     <th>Nama Kategori</th>
                     <th>Deskripsi Kategori</th>
+                    <th>ID External</th>
                 </tr>
             </thead>
             <tbody>
@@ -167,6 +149,7 @@
                     <tr class="text-center " data-id="{{ $item->id }}">
                         <td class="w-1/3 nama_kategori">{{ $item->nama_kategori }}</td>
                         <td class="deskripsi_kategori">{{ $item->deskripsi_kategori }}</td>
+                        <td class="external_kategori_id">{{ $item->external_kategori_id }}</td>
                         <td>
                             <button onclick="updateData({{ $item->id }})"
                                 class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">

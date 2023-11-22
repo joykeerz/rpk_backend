@@ -12,13 +12,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <header class="bg-gray-200 p-4" ">
-                                            <div class="title flex justify-between">
-                                                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                                    {{ __('Buat Pesanan Baru') }}
-                                                </h2>
-                                            </div>
-                                            </header>
-                                              @if (Session::has('message'))
+        <div class="title flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Buat Pesanan Baru') }}
+            </h2>
+        </div>
+    </header>
+    @if (Session::has('message'))
         <div class="bg-green-200 border-t border-b border-white-500  px-4 py-3 relative" role="alert" id="alertMessage">
             <p>{{ Session::get('message') }}.</p>
             <button type="button" data-dismiss="alert" aria-label="Close"
@@ -87,10 +87,10 @@
                                 <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
                                 <td class="py-2">{{ $item->jumlah_stok }}</td>
                                 <td>{{ $item->satuan_unit_produk }}</td>
-                                <td class="py-2 harga_produk">{{ $item->harga_produk }}</td>
+                                <td class="py-2 harga_produk">{{ $item->harga_stok }}</td>
                                 <td class="py-5 flex items-center justify-center">
                                     <input type="number" name="jumlah_pesanan" class="jumlah_pesanan form-control py-auto"
-                                        data-price="{{ $item->harga_produk }}" placeholder="Jumlah Pesanan">
+                                        data-price="{{ $item->harga_stok }}" placeholder="Jumlah Pesanan">
                                     <button type="button" class="resetButton ml-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="#ff0000" stroke-width="2"
@@ -348,14 +348,8 @@
                     }
                 });
             }
-
             const subtotal = document.querySelectorAll('.subtotal');
             const totalAmount = document.querySelector('#totalAmount');
-
-
-
-
-
             totalAmount.innerHTML = new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR'

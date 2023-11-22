@@ -250,7 +250,7 @@
                     <a href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                         onclick="toggleSubMenu('laporanSubMenu')">
-                        <svg class="customerIcon"></svg>
+                        <i class="fa-solid fa-file-lines text-2xl text-gray-500"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Laporan</span>
                         <svg class="submenuOption"></svg>
                     </a>
@@ -268,7 +268,7 @@
                 </li>
             @endif
 
-            <li>
+            {{-- <li>
                 <a href="#"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     id="logout-button">
@@ -282,7 +282,7 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
-            </li>
+            </li> --}}
 
         </ul>
     </div>

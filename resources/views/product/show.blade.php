@@ -20,7 +20,7 @@
     <form action="{{ route('product.update', ['id' => $product->id]) }}" method="post">
         @csrf
         <div class="p-4 flex flex-col">
-            <div>
+            <div class="p-4 grid grid-cols-2 gap-1 border rounded">
                 <div id="namaProduk" class="mb-3">
                     <label for="" class="block text-sm font-medium text-gray-700">Nama Produk</label>
                     <input type="text"
@@ -49,7 +49,6 @@
                         <div class="text-red-500">{{ $message }}</div>
                     @enderror
                 </div>
-
                 <div id="kategori" class="mb-3">
                     <label for="kategori" class="block text-sm font-medium text-gray-700">Kategori</label>
                     <select id="cb_kategori" name="cb_kategori"
@@ -65,21 +64,51 @@
                         <div class="text-red-500">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <div id="harga" class="mb-3">
-                    <label for="" class="block text-sm font-medium text-gray-700">Harga</label>
-                    <input type="number"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                        name="tb_harga_produk" value="{{ $product->harga_produk }}" placeholder="">
-
-                    @error('tb_harga_produk')
+                <div id="diskonProduk" class="mb-3">
+                    <label for="diskonProduk" class="block text-sm font-medium text-gray-700">
+                        Diskon Produk(dalam persen)
+                    </label>
+                    <input value="{{$product->diskon_produk}}" type="number" name="tb_diskon_produk"
+                        id="tb_diskon_produk"
+                        class="mt-1 block w-full
+                        rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
+                        focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
+                        name="tb_diskon_produk" id="tb_diskon_produk"  placeholder="">
+                      @error('tb_diskon_produk')
+                          <div class="text-red-500">{{ $message }}</div>
+                      @enderror
+                    <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
+                </div>
+                <div id="satuanUnit" class="mb-3">
+                    <label for="satuanUnit" class="block text-sm font-medium text-gray-700">Satuan Unit</label>
+                    <select id="tb_satuan" name="tb_satuan"
+                        class="
+                        block border w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
+                        focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
+                        <option selected value="{{$product->satuan_unit_produk}}">{{$product->satuan_unit_produk}}</option>
+                        <option value="Kg">Kg</option>
+                        <option value="Gram">Gram</option>
+                        <option value="Liter">Liter</option>
+                        <option value="Unit">Unit</option>
+                        <option value="Box">Box</option>
+                    </select>
+                    @error('tb_satuan')
                         <div class="text-red-500">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="buttonContainer flex justify-center p-4">
-                    <button type="submit"
-                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                <div id="externalIdProduk" class="mb-3">
+                    <label for="externalIdProduk" class="block text-sm font-medium text-gray-700">ID Eksternal</label>
+                    <input value="{{$product->external_produk_id}}" type="text" name="tb_external_id" id="tb_external_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1" name="tb_external_id" id="tb_external_id">
+                      @error('tb_external_id')
+                          <div class="text-red-500">{{ $message }}</div>
+                      @enderror
+                    <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
                 </div>
+            </div>
+            <div class="buttonContainer flex justify-center p-4">
+                <button type="submit"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+            </div>
     </form>
 @endsection

@@ -32,10 +32,10 @@ class ManageUserController extends Controller
     public function index()
     {
         $allUsers = DB::table('users')
-        ->join('roles','users.role_id','=','roles.id')
-        ->select('users.*','roles.*','roles.id as rid','users.id as uid')
-        ->where('users.role_id','!=',5 )
-        ->get();
+            ->join('roles', 'users.role_id', '=', 'roles.id')
+            ->select('users.*', 'roles.*', 'roles.id as rid', 'users.id as uid')
+            ->where('users.role_id', '!=', 1)
+            ->get();
         return view('manage.user.index', ['usersData' => $allUsers]);
     }
 
@@ -59,8 +59,8 @@ class ManageUserController extends Controller
     public function edit($id)
     {
         $userData = DB::table('users')
-        ->where('users.id','=',$id)
-        ->first();
+            ->where('users.id', '=', $id)
+            ->first();
         // return view('manage.user.details', ['userData' => $userData, 'userProfile' => $userProfile, 'userAlamat' => $userAlamat]);
         return view('manage.user.details', ['userData' => $userData]);
     }

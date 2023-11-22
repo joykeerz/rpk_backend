@@ -23,7 +23,7 @@
                     <input type="text" name="tb_nama_gudang" id="tb_nama_gudang">
                 </div>
                 <div class="cb_company_id flex flex-col">
-                    <label for="cb_company_id">Company ID</label>
+                    <label for="cb_company_id">Company</label>
                     <select name="cb_company_id" id="cb_company_id">
                         @foreach ($companyData as $company)
                             <option value="{{ $company->id }}">{{ $company->nama_company }}</option>
@@ -31,7 +31,7 @@
                     </select>
                 </div>
                 <div class="cb_user_id flex flex-col">
-                    <label for="cb_user_id">User ID</label>
+                    <label for="cb_user_id">User Penanggung Jawab</label>
                     <select name="cb_user_id" id="cb_user_id">
                         @foreach ($usersData as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -81,6 +81,10 @@
                 <div class="tb_no_telp flex flex-col">
                     <label for="tb_no_telp">No. Telp</label>
                     <input type="text" name="tb_no_telp" id="tb_no_telp">
+                </div>
+                <div class="tb_external_id flex flex-col">
+                    <label for="tb_external_id">ID External</label>
+                    <input type="text" name="tb_external_id" id="tb_external_id">
                 </div>
 
             </div>
