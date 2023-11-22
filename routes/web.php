@@ -25,9 +25,8 @@ use App\Http\Controllers\ReportingController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 

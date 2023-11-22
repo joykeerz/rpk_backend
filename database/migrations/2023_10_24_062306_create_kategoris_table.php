@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_kategori');
             $table->string('deskripsi_kategori');
+            $table->unsignedBigInteger('external_kategori_id')->nullable();
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama_company');
             $table->string('partner_company');
             $table->string('tagline_company');
+            $table->unsignedBigInteger('external_company_id')->nullable();
             $table->timestamps();
             // $table->foreign('alamat_id')->references('id')->on('alamat')->onDelete('cascade');
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

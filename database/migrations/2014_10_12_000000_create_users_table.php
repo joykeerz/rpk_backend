@@ -20,8 +20,11 @@ return new class extends Migration
             $table->string('no_hp')->unique();
             $table->string('password');
             $table->integer('isVerified')->default(0);
+            $table->unsignedBigInteger('external_user_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            // $table->unsignedBigInteger('created_by')->nullable();
+            // $table->unsignedBigInteger('updated_by')->nullable();
             // $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }

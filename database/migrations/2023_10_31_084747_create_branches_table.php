@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_branch');
             $table->string('no_telp_branch');
             $table->string('alamat_branch');
+            $table->unsignedBigInteger('external_branch_id')->nullable();
             $table->timestamps();
             // $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });

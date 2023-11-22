@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('user_id'); //kepala gudang
             $table->string('nama_gudang');
             $table->string('no_telp');
+            $table->unsignedBigInteger('external_gudang_id')->nullable();
             $table->timestamps();
             // $table->foreign('alamat_id')->references('id)->on('alamat')->onDelete('cascade');
             // $table->foreign('company_id')->references('id)->on('companies')->onDelete('cascade');

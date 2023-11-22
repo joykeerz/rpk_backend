@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_role');
             $table->string('desk_role');
+            $table->unsignedBigInteger('external_role_id')->nullable();
             $table->timestamps();
         });
     }

@@ -4,31 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>RPK BULOG DASHBOARD</title>
+    <link rel="shortcut icon" href="{{ asset('images/dashboard/logo_1.png') }}" type="image/x-icon">
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="../../css/svg.css">
+    <script src="https://kit.fontawesome.com/545d382107.js" crossorigin="anonymous"></script>
 </head>
 
 
 
 <body>
-
-    <!-- <div class="header w-full h-screen bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-        </div> -->
-        @yield('navbar')
+    @yield('navbar')
 
 
     <div class="flex">
-    <div>
-        @yield('sidebar')
-    </div>
+        <div>
+            @yield('sidebar')
+        </div>
 
-    <div class="w-full h-screen overflow-y-auto">
+        <div class="w-full h-screen overflow-y-auto my-16">
 
-        @yield('content')
-        @yield('searchBar')
+            @yield('content')
+            @yield('searchBar')
 
-    </div>
+        </div>
     </div>
 
 </body>

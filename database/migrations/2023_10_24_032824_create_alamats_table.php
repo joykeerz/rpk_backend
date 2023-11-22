@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('kelurahan')->nullable();
             $table->string('negara');
             $table->string('kode_pos');
+            $table->unsignedBigInteger('external_alamat_id')->nullable();
             $table->timestamps();
         });
     }

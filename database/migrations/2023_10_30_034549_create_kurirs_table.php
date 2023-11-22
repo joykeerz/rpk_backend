@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('kurir', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kurir');
+            $table->unsignedBigInteger('external_kurir_id')->nullable();
             $table->timestamps();
         });
     }

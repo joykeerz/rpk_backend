@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('harga_produk')->default(0);
             $table->float('diskon_produk')->default(0);
             $table->string('satuan_unit_produk');
+            $table->unsignedBigInteger('external_produk_id')->nullable();
             $table->timestamps();
             // $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
         });
