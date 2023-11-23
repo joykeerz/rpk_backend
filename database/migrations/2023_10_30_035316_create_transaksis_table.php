@@ -19,6 +19,8 @@ return new class extends Migration
             $table->float('diskon')->default(0);
             $table->float('subtotal_produk')->default(0);
             $table->float('subtotal_pengiriman')->default(0);
+            $table->float('total_qty')->default(0);
+            $table->float('total_pembayaran')->default(0);
             $table->unsignedBigInteger('external_transaksi_id')->nullable();
             $table->timestamps();
             // $table->foreign('pesanan_id')->references('id')->on('pesanan')->onDelete('cascade');

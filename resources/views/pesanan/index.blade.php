@@ -18,6 +18,7 @@
     </header>
 
     @include('layouts.searchbar')
+    @include('layouts.alert')
 
     <div class="tableContainer m-3">
         <table class="w-full text-center overflow-y-auto border">
@@ -34,7 +35,7 @@
             <tbody>
                 @forelse ($transaksi as $item)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
-                        <td class=" px-4 py-2">{{ $item->tid }}</td>
+                        <td class=" px-4 py-2">K{{ $item->tid }}</td>
                         <td class=" px-4 py-2">{{ $item->name }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pembayaran }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>

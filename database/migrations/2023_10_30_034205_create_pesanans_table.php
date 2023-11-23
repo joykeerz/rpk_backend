@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('alamat_id');
             $table->unsignedInteger('kurir_id');
-            $table->string('status_pemesanan');
+            $table->string('status_pemesanan')->default('diproses');
             $table->unsignedBigInteger('external_pesanan_id')->nullable();
             $table->timestamps();
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

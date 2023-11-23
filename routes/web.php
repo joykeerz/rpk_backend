@@ -126,6 +126,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/storeOrder', [PesananController::class, 'storeOrder'])->name('pesanan.storeOrder');
         Route::get('/newTransaksi/{id}', [PesananController::class, 'newTransaksi'])->name('pesanan.newTransaksi');
         Route::post('/storeTransaksi', [PesananController::class, 'storeTransaksi'])->name('pesanan.storeTransaksi');
+        Route::get('/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
+        Route::post('/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
     });
 
     ///customer

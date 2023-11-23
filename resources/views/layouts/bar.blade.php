@@ -11,8 +11,6 @@
     <script src="https://kit.fontawesome.com/545d382107.js" crossorigin="anonymous"></script>
 </head>
 
-
-
 <body>
     @yield('navbar')
 
@@ -22,11 +20,11 @@
             @yield('sidebar')
         </div>
 
-        <div class="w-full h-full overflow-y-auto">
-            <div class="my-14"></div>
-            @yield('content')
+        <div class="w-full h-screen overflow-y-auto">
+            <div class="my-14">
+                @yield('content')
+            </div>
             @yield('searchBar')
-
         </div>
     </div>
 

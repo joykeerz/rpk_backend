@@ -41,7 +41,7 @@ class PesananController extends Controller
             ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
             ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
             ->where('transaksi.id', '=', $id)
-            ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid')
+            ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
             ->first();
 
         $detailPesanan = DB::table('detail_pesanan')
@@ -58,8 +58,36 @@ class PesananController extends Controller
             ],
         ], 200);
 
-        // echo $res;
         return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
+    }
+
+    public function edit($id){
+        $transaksi = DB::table('transaksi')
+            ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
+            ->join('users', 'users.id', '=', 'pesanan.user_id')
+            ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
+            ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
+            ->where('transaksi.id', '=', $id)
+            ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
+            ->first();
+
+        $detailPesanan = DB::table('detail_pesanan')
+            ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
+            ->join('pesanan', 'pesanan.id', '=', 'detail_pesanan.pesanan_id')
+            ->where('pesanan.id', '=', $transaksi->pesanan_id)
+            ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
+            ->get();
+
+        $kurir = Kurir::all();
+
+        $res = response()->json([
+            'data' => [
+                'transaksi' => $transaksi,
+                'detailPesanan' => $detailPesanan
+            ],
+        ], 200);
+
+        return view('pesanan.edit', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan, 'kurir' => $kurir]);
     }
 
     public function newOrder($id)
@@ -83,13 +111,18 @@ class PesananController extends Controller
 
     public function storeOrder(Request $request)
     {
-        $total = 0;
+        $subtotal_produk = 0;
+        $total_qty = 0;
+        $total_pembayaran = 0;
+        // $pajak_include = 0;
+        // $pajak_exclude = 0;
+        $subtotal_pengiriman = 0;
 
         $pesanan = new Pesanan;
         $pesanan->user_id = $request->data['userData'][0];
         $pesanan->alamat_id = $request->data['userData'][1];
         $pesanan->kurir_id = $request->data['userData'][2];
-        $pesanan->status_pemesanan = 'belum dipesan';
+        $pesanan->status_pemesanan = 'diproses';
         $pesanan->save();
 
         $listDetailPesanan = [];
@@ -100,18 +133,19 @@ class PesananController extends Controller
                 'qty' => $request->data['orderDetails'][$key]['tb_jumlah_produk'],
                 'harga' => $request->data['orderDetails'][$key]['price'],
             ]);
+
             $currentStok = Stok::find($request->data['orderDetails'][$key]['tb_stok_id']);
-            // if ($currentStok->jumlah_stok > 0 && $currentStok->jumlah_stok >= $request->data['orderDetails'][$key]['tb_jumlah_produk']) {
-            //     $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
-            // }
             if ($currentStok->jumlah_stok == 0 || $currentStok->jumlah_stok < $request->data['orderDetails'][$key]['tb_jumlah_produk']) {
                 return response()->json([
                     'message' => 'Pesanan gagal ditambahkan, stok tidak mencukupi',
                 ], 200);
             }
+
             $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
             $currentStok->save();
-            $total += $request->data['orderDetails'][$key]['price'];
+
+            $total_qty += $request->data['orderDetails'][$key]['tb_jumlah_produk'];
+            $subtotal_produk += $request->data['orderDetails'][$key]['price'];
         }
         DB::table('detail_pesanan')->insert($listDetailPesanan);
 
@@ -119,7 +153,9 @@ class PesananController extends Controller
         $transaksi = new Transaksi;
         $transaksi->pesanan_id = $pesanan->id;
         $transaksi->status_pembayaran = 'belum dibayar';
-        $transaksi->subtotal_produk = $total;
+        $transaksi->subtotal_produk = $subtotal_produk;
+        $transaksi->total_qty = $total_qty;
+        $transaksi->total_pembayaran = $subtotal_produk + $subtotal_pengiriman;
         $transaksi->save();
 
         // $transaksi = new Transaksi;
@@ -186,5 +222,23 @@ class PesananController extends Controller
             ->get();
 
         return view('pesanan.showByGudang', ['gudang' => $gudang]);
+    }
+
+    public function update(Request $request,$id){
+        // dd('bjir');
+        $transaksi = Transaksi::find($id);
+        $transaksi->tipe_pembayaran = $request->cb_status_pembayaran;
+        $transaksi->status_pembayaran = $request->cb_status_pembayaran;
+        $transaksi->subtotal_pengiriman = $request->tb_biaya_kirim;
+        $transaksi->diskon = $request->tb_diskon;
+        $transaksi->total_pembayaran = $request->tb_total_pembayaran;
+        $transaksi->save();
+
+        $pesanan = Pesanan::find($transaksi->pesanan_id);
+        $pesanan->status_pemesanan = $request->cb_status_pemesanan;
+        $pesanan->kurir_id = $request->cb_kurir;
+        $pesanan->save();
+
+        return redirect()->route('pesanan.index')->with('message', 'Transaksi berhasil diupdate');
     }
 }

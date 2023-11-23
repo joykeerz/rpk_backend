@@ -128,7 +128,7 @@
             <div class="formContainer inputLabelContainer grid grid-cols-2 gap-0.5">
 
                 <div class="tb_user_id flex flex-col">
-                    <label for="tb_user_id">Pilih User</label>
+                    <label for="tb_user_id">Pilih Customer</label>
                     <select name="tb_user_id" id="tb_user_id">
                         <option selected disabled aria-placeholder="pilih user">Pilih User</option>
                         @forelse ($users as $item)
