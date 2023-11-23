@@ -113,6 +113,16 @@
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
                                         </div>
+
+                                        <div class="mb-4">
+                                            <label for="tb_external_id" class="block text-sm font-medium text-gray-700">ID External</label>
+                                            <input required id="tb_external_id" type="text"
+                                                class="border rounded-md py-2 px-3 w-full" name="tb_external_id" placeholder="">
+                                            @error('tb_external_id')
+                                                <p class="text-red-500 text-sm">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
                                         <button type="submit"
                                             class="px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200">
                                             Submit

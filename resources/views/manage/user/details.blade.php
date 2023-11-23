@@ -52,6 +52,20 @@
                                 <hr class="my-4">
                                 <form method="POST" action="{{ route('manage.user.update', ['id' => $userData->id]) }}">
                                     @csrf
+
+                                    <div class="mb-4">
+                                        <label for="tb_nama_user"
+                                            class="block text-sm font-medium text-gray-700">Role</label>
+                                        <select class="border rounded-md py-2 px-3 w-full" name="cb_role"
+                                            id="cb_role">
+                                            @forelse ($roles as $role)
+                                                <option value="{{ $role->id }}" @if($role->id == $userData->role_id) selected @endif>{{ $role->nama_role }}</option>
+                                            @empty
+                                                <option value="">Role Kosong</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
+
                                     <div class="mb-4">
                                         <label for="tb_nama_user" class="block text-sm font-medium text-gray-700">Name</label>
                                         <input required id="tb_nama_user" value="{{ $userData->name }}" type="text" class="border rounded-md py-2 px-3 w-full" name="tb_nama_user" placeholder="">
@@ -73,6 +87,14 @@
                                             Handphone</label>
                                         <input required id="tb_hp_user" value="{{ $userData->no_hp }}" type="text" class="border rounded-md py-2 px-3 w-full" name="tb_hp_user" placeholder="">
                                         @error('tb_hp_user')
+                                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="tb_external_id" class="block text-sm font-medium text-gray-700">ID External</label>
+                                        <input required id="tb_external_id" value="{{ $userData->external_user_id }}" type="text" class="border rounded-md py-2 px-3 w-full" name="tb_external_id" placeholder="">
+                                        @error('tb_external_id')
                                         <p class="text-red-500 text-sm">{{ $message }}</p>
                                         @enderror
                                     </div>

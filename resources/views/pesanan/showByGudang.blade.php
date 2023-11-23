@@ -10,7 +10,7 @@
 @section('content')
     <header class="bg-gray-200 p-4">
         <h2>
-            Manage Stocks By Gudang
+            Make Order By Gudang
         </h2>
     </header>
     <script>
@@ -56,14 +56,10 @@
                             </p>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap flex justify-center">
-                            <a href="{{ route('stok.show', ['id' => $gd->gid]) }}"
+                            <a href="{{ route('pesanan.newOrder', ['id' => $gd->gid]) }}"
                                 class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                                <svg class="showIcon"> </svg>
+                                <i class="fa-solid fa-chevron-right"></i>
                             </a>
-                            {{-- <a href="{{ route('stok.delete', ['id' => $gd->id]) }}" onclick="return confirmDelete();"
-                                class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
-                                <svg class="deleteIcon"></svg>
-                            </a> --}}
                         </td>
                     </tr>
                 @empty

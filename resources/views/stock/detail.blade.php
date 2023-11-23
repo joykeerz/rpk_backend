@@ -8,20 +8,7 @@
 @endsection
 
 @section('content')
-    @if (session('message'))
-        <div class="bg-green-200 border-t border-b border-white-500  px-4 py-3 relative" id="alertMessage">
-            {{ session('message') }}
-            <button type="button" data-dismiss="alert" aria-label="Close"
-                class="close-button absolute top-0 bottom-0 right-0 px-4 py-3 text-rose">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="#ff3b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
-                </svg>
-            </button>
-        </div>
-    @endif
+    @include('layouts.alert')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -41,6 +28,9 @@
                 <label class="block text-sm font-medium text-gray-700" for="tb_jumlah_produk">Jumlah Produk:</label>
                 <input value="{{ $stock->jumlah_stok }}" id="tb_jumlah_produk" type="number"
                     class="border rounded-md py-2 px-3 w-full" name="tb_jumlah_produk" placeholder="">
+                <label class="block text-sm font-medium text-gray-700" for="tb_harga_stok">Harga Stok:</label>
+                <input value="{{ $stock->harga_stok }}" id="tb_harga_stok" type="number"
+                    class="border rounded-md py-2 px-3 w-full" name="tb_harga_stok" placeholder="">
 
                 <input type="hidden" name="tb_gudang_id" value="{{ $stock->gid }}">
                 @foreach ($errors->all() as $error)

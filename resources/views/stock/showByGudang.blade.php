@@ -92,7 +92,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->kode_produk }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_produk }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($stock->harga_produk) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($stock->harga_stok) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <form action="{{ route('stok.increase', ['id' => $stock->sid]) }}" method="post">
                                     @csrf
@@ -115,7 +115,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">No Data</td>
+                            <td colspan="7" class="text-center">No Data</td>
                         </tr>
                     @endforelse
                 </tbody>

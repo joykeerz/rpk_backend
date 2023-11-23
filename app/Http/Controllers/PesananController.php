@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailPesanan;
+use App\Models\Kurir;
 use App\Models\Pesanan;
 use App\Models\Stok;
 use App\Models\Transaksi;
@@ -61,7 +62,7 @@ class PesananController extends Controller
         return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
     }
 
-    public function newOrder()
+    public function newOrder($id)
     {
         $biodata = DB::table('biodata')
             ->join('users', 'users.id', '=', 'biodata.user_id')
@@ -69,12 +70,15 @@ class PesananController extends Controller
             ->select('biodata.*', 'users.*', 'alamat.*', 'users.id as uid', 'biodata.id as bid', 'alamat.id as aid')
             ->get();
 
+        $kurir = Kurir::all();
+
         $stok = DB::table('stok')
             ->join('produk', 'produk.id', '=', 'stok.produk_id')
             ->select('stok.*', 'produk.*', 'stok.id as sid', 'produk.id as pid')
             ->where('stok.jumlah_stok', '>', 0)
+            ->where('stok.gudang_id', '=', $id)
             ->get();
-        return view('pesanan.newOrder', ['product' => $stok, 'users' => $biodata]);
+        return view('pesanan.newOrder', ['product' => $stok, 'users' => $biodata, 'kurir' => $kurir]);
     }
 
     public function storeOrder(Request $request)
@@ -172,5 +176,15 @@ class PesananController extends Controller
         ], 200);
 
         // return redirect()->route('pesanan.index')->with('success', 'Transaksi berhasil ditambahkan');
+    }
+
+    public function orderByGudangSelector(){
+        $gudang = DB::table('gudang')
+            ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
+            ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
+            ->orderBy('cat', 'desc')
+            ->get();
+
+        return view('pesanan.showByGudang', ['gudang' => $gudang]);
     }
 }

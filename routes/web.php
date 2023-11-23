@@ -121,7 +121,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('pesanan')->middleware('restrictRole:2,3,4')->group(function () {
         Route::get('/', [PesananController::class, 'index'])->name('pesanan.index');
         Route::get('/show/{id}', [PesananController::class, 'show'])->name('pesanan.show');
-        Route::get('/newOrder', [PesananController::class, 'newOrder'])->name('pesanan.newOrder');
+        Route::get('/order/gudang', [PesananController::class, 'orderByGudangSelector'])->name('pesanan.selectGudang');
+        Route::get('/newOrder/gudang/{id}', [PesananController::class, 'newOrder'])->name('pesanan.newOrder');
         Route::post('/storeOrder', [PesananController::class, 'storeOrder'])->name('pesanan.storeOrder');
         Route::get('/newTransaksi/{id}', [PesananController::class, 'newTransaksi'])->name('pesanan.newTransaksi');
         Route::post('/storeTransaksi', [PesananController::class, 'storeTransaksi'])->name('pesanan.storeTransaksi');

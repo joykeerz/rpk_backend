@@ -61,8 +61,9 @@ class ManageUserController extends Controller
         $userData = DB::table('users')
             ->where('users.id', '=', $id)
             ->first();
+        $roles = Role::all();
         // return view('manage.user.details', ['userData' => $userData, 'userProfile' => $userProfile, 'userAlamat' => $userAlamat]);
-        return view('manage.user.details', ['userData' => $userData]);
+        return view('manage.user.details', ['userData' => $userData, 'roles' => $roles]);
     }
 
     public function update(Request $request, $id)
@@ -74,9 +75,12 @@ class ManageUserController extends Controller
         ]);
 
         $userData = User::find($id);
+        $userData->role_id = $request->cb_role;
         $userData->name = $request->tb_nama_user;
         $userData->email = $request->tb_email_user;
         $userData->no_hp = $request->tb_hp_user;
+        $userData->external_user_id = $request->tb_external_id;
+        $userData->save();
 
         return redirect()->route('manage.user.edit', ['id' => $id])->with('message', 'Akun berhasil diupdate');
     }
@@ -99,6 +103,7 @@ class ManageUserController extends Controller
         $user->email = $request->tb_email_user;
         $user->password = Hash::make($request->tb_password_user);
         $user->no_hp = $request->tb_hp_user;
+        $user->external_user_id = $request->tb_external_id;
         $user->save();
 
         return redirect()->route('manage.user.index')->with('message', "Akun berhasil dibuat");

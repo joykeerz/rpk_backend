@@ -104,6 +104,9 @@
                                 <td class="py-2 subtotal"></td>
                             </tr>
                         @empty
+                        <tr>
+                            <td colspan="6">Tidak ada data</td>
+                        </tr>
                         @endforelse
                         <tr>
                             <td class="text-left p-4 font-bold">Total</td>
@@ -127,20 +130,27 @@
                 <div class="tb_user_id flex flex-col">
                     <label for="tb_user_id">Pilih User</label>
                     <select name="tb_user_id" id="tb_user_id">
-                        <option value="" aria-placeholder="pilih user">Pilih User</option>
-                        @foreach ($users as $item)
+                        <option selected disabled aria-placeholder="pilih user">Pilih User</option>
+                        @forelse ($users as $item)
                             <option id="tb_user_id" value="{{ $item->uid }}">{{ $item->name }}</option>
-                        @endforeach
+                        @empty
+                            <option value="">Tidak ada data</option>
+                        @endforelse
                     </select>
                 </div>
                 <div class="tb_alamat_id flex flex-col">
                     <label for="tb_alamat_id">Alamat</label>
-                    <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="form-control" placeholder="ID Alamat"
+                    <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="form-control" placeholder="Detail Alamat"
                         disabled>
                 </div>
                 <div class="tb_kurir_id flex flex-col">
                     <label for="tb_kurir_id">Kurir</label>
-                    <input type="text" name="tb_kurir_id" id="tb_kurir_id" class="form-control" placeholder="ID Kurir">
+                    <select name="tb_kurir_id" id="tb_kurir_id">
+                        <option selected disabled aria-placeholder="pilih user">Pilih Kurir</option>
+                        @foreach ($kurir as $kurir)
+                            <option id="tb_kurir_id" value="{{ $kurir->id }}">{{ $kurir->nama_kurir }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <button

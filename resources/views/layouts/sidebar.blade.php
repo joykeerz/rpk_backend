@@ -65,7 +65,7 @@
                                 Transaksi</a>
                         </li>
                         <li class="hover:bg-gray-100">
-                            <a href="{{ route('pesanan.newOrder') }}"
+                            <a href="{{ route('pesanan.selectGudang') }}"
                                 class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Buat
                                 Pesanan Baru
                             </a>
