@@ -20,6 +20,9 @@ return new class extends Migration
             $table->float('diskon_produk')->default(0);
             $table->string('satuan_unit_produk');
             $table->unsignedBigInteger('external_produk_id')->nullable();
+            $table->unsignedBigInteger('product_file_id')->nullable();
+            //make column for image
+            $table->string('produk_file_path')->nullable();
             $table->timestamps();
             // $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
         });

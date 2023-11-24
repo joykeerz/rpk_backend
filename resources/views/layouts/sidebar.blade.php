@@ -267,6 +267,50 @@
                     </ul>
                 </li>
             @endif
+            @if (Auth::user()->role_id == 2)
+                <li>
+                    <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        onclick="toggleSubMenu('bannerSubMenu')">
+                        <i class="fa-solid fa-images text-2xl text-gray-500"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Banner</span>
+                        <svg class="submenuOption"></svg>
+                    </a>
+                    <ul id="bannerSubMenu"
+                        class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('banner.create') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input Banner</a>
+                        </li>
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('banner.index') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage Banner</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+            @if (Auth::user()->role_id == 2)
+                <li>
+                    <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        onclick="toggleSubMenu('beritaSubMenu')">
+                        <i class="fa-solid fa-newspaper text-2xl text-gray-500"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Berita</span>
+                        <svg class="submenuOption"></svg>
+                    </a>
+                    <ul id="beritaSubMenu"
+                        class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('berita.create') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input Berita</a>
+                        </li>
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('berita.index') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage Berita</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
             {{-- <li>
                 <a href="#"

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('kode_customer')->nullable();
             $table->string('nama_rpk')->default('none');
             $table->string('no_ktp')->default('none');
-            $table->binary('ktp_img')->nullable();
+            $table->string('ktp_img')->nullable();
             $table->unsignedBigInteger('external_biodata_id')->nullable();
             $table->timestamps();
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

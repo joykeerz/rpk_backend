@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
 class CustomerController extends Controller
 {
     //
@@ -52,7 +54,6 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'tb_kode_customer' => 'required',
             'tb_nama_rpk' => 'required',
@@ -66,7 +67,8 @@ class CustomerController extends Controller
             'tb_kecamatan' => 'required',
             'tb_kelurahan' => 'required',
             'tb_kodepos' => 'required',
-        ],[
+            'tb_img_ktp' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
             'tb_kode_customer.required' => 'Kode customer tidak boleh kosong',
             'tb_nama_rpk.required' => 'Nama RPK tidak boleh kosong',
             'tb_no_ktp.required' => 'No KTP tidak boleh kosong',
@@ -79,6 +81,10 @@ class CustomerController extends Controller
             'tb_kecamatan.required' => 'Kecamatan tidak boleh kosong',
             'tb_kelurahan.required' => 'Kelurahan tidak boleh kosong',
             'tb_kodepos.required' => 'Kode pos tidak boleh kosong',
+            'tb_img_ktp.required' => 'Foto KTP tidak boleh kosong',
+            'tb_img_ktp.image' => 'Foto KTP harus berupa gambar',
+            'tb_img_ktp.mime' => 'Foto KTP harus berformat jpeg, png, jpg, gif, svg',
+            'tb_img_ktp.max' => 'Foto KTP maksimal 2MB',
         ]);
 
         $user = new User;
@@ -109,6 +115,13 @@ class CustomerController extends Controller
         $customer->kode_customer = $request->tb_kode_customer;
         $customer->nama_rpk = $request->tb_nama_rpk;
         $customer->no_ktp = $request->tb_ktp_rpk;
+
+        if ($request->hasFile('tb_img_ktp')) {
+            $filePath = $request->file('tb_img_ktp')->store('images/ktp', 'public');
+            $validatedData['tb_img_ktp'] = $filePath;
+            $customer->ktp_img = $filePath;
+        }
+
         $customer->save();
 
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil ditambahkan');
@@ -129,7 +142,8 @@ class CustomerController extends Controller
             'tb_kecamatan' => 'required',
             'tb_kelurahan' => 'required',
             'tb_kodepos' => 'required',
-        ],[
+            'tb_img_ktp' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
             'tb_kode_customer.required' => 'Kode customer tidak boleh kosong',
             'tb_nama_rpk.required' => 'Nama RPK tidak boleh kosong',
             'tb_no_ktp.required' => 'No KTP tidak boleh kosong',
@@ -142,6 +156,8 @@ class CustomerController extends Controller
             'tb_kecamatan.required' => 'Kecamatan tidak boleh kosong',
             'tb_kelurahan.required' => 'Kelurahan tidak boleh kosong',
             'tb_kodepos.required' => 'Kode pos tidak boleh kosong',
+            'tb_img_ktp.image' => 'Foto KTP harus berupa gambar',
+            'tb_img_ktp.max' => 'Foto KTP maksimal 2MB',
         ]);
 
         $customer = Biodata::findOrfail($id);
@@ -151,6 +167,14 @@ class CustomerController extends Controller
         $customer->kode_customer = $request->tb_kode_customer;
         $customer->nama_rpk = $request->tb_nama_rpk;
         $customer->no_ktp = $request->tb_ktp_rpk;
+        if ($request->hasFile('tb_img_ktp')) {
+            $filePath = $request->file('tb_img_ktp')->store('images/ktp', 'public');
+            $validatedData['tb_img_ktp'] = $filePath;
+            if (!empty($customer->ktp_img)) {
+                Storage::disk('public')->delete($customer->ktp_img);
+            }
+            $customer->ktp_img = $filePath;
+        }
         $customer->save();
 
         $alamat = Alamat::where('id', '=', $customer->alamat_id)->first();

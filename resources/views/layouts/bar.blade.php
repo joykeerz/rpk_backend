@@ -9,6 +9,15 @@
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="../../css/svg.css">
     <script src="https://kit.fontawesome.com/545d382107.js" crossorigin="anonymous"></script>
+    @yield('plugins')
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piechart-outlabels"></script> --}}
+
 </head>
 
 <body>
@@ -27,7 +36,7 @@
             @yield('searchBar')
         </div>
     </div>
-
+@yield('script')
 </body>
 
 </html>

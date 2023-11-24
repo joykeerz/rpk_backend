@@ -17,7 +17,7 @@
         </h2>
     </header>
 
-    <form action="{{ route('product.update', ['id' => $product->id]) }}" method="post">
+    <form enctype="multipart/form-data" action="{{ route('product.update', ['id' => $product->id]) }}" method="post">
         @csrf
         <div class="p-4 flex flex-col">
             <div class="p-4 grid grid-cols-2 gap-1 border rounded">
@@ -106,6 +106,20 @@
                     <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
                 </div>
             </div>
+
+            <div id="imageProduk" class="mb-3 mt-2">
+                <label for="imageProduk" class="block text-sm font-medium text-gray-700">Gambar Produk</label>
+                <input value="0" type="file" name="file_image_produk" id="file_image_produk"
+                    class="mt-1 block w-full
+                    rounded-md shadow-sm focus:border-indigo-300 focus:ring
+                    focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
+                    name="file_image_produk" id="file_image_produk">
+                @error('file_image_produk')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+                <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
+            </div>
+
             <div class="buttonContainer flex justify-center p-4">
                 <button type="submit"
                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GudangController;
@@ -147,5 +149,25 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/penjualan', [ReportingController::class, 'reportPenjualan'])->name('laporan.penjualan');
         Route::get('/laporan/stok/export', [ReportingController::class, 'exportStok'])->name('laporan.stok.export');
         Route::get('/laporan/penjualan/export', [ReportingController::class, 'exportPenjualan'])->name('laporan.penjualan.export');
+    });
+
+    ///Banner Route
+    Route::prefix('banner')->middleware('restrictRole:2')->group(function () {
+        Route::get('/', [BannerController::class, 'index'])->name('banner.index');
+        Route::get('/create', [BannerController::class, 'create'])->name('banner.create');
+        Route::post('/store', [BannerController::class, 'store'])->name('banner.store');
+        Route::get('/show/{id}', [BannerController::class, 'show'])->name('banner.show');
+        Route::post('/update/{id}', [BannerController::class, 'update'])->name('banner.update');
+        Route::get('/delete/{id}', [BannerController::class, 'delete'])->name('banner.delete');
+    });
+
+    ///Berita Route
+    Route::prefix('berita')->middleware('restrictRole:2')->group(function () {
+        Route::get('/', [BeritaController::class, 'index'])->name('berita.index');
+        Route::get('/create', [BeritaController::class, 'create'])->name('berita.create');
+        Route::post('/store', [BeritaController::class, 'store'])->name('berita.store');
+        Route::get('/show/{id}', [BeritaController::class, 'show'])->name('berita.show');
+        Route::post('/update/{id}', [BeritaController::class, 'update'])->name('berita.update');
+        Route::get('/delete/{id}', [BeritaController::class, 'delete'])->name('berita.delete');
     });
 });

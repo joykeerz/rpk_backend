@@ -13,7 +13,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Detail Customer : {{ $customer->name }}
             @foreach ($errors->all() as $error)
-                {{$error}}
+                {{ $error }}
             @endforeach
         </h2>
     </header>
@@ -23,7 +23,8 @@
             <div class="w-full ">
                 <div class="bg-white rounded-lg shadow-md">
                     <div class="p-4 w-full mx-3">
-                        <form method="POST" action="{{ route('customer.update', ['id' => $customer->bid]) }}">
+                        <form enctype="multipart/form-data" method="POST"
+                            action="{{ route('customer.update', ['id' => $customer->bid]) }}">
                             <div class="flex w-full justify-between">
                                 @csrf
                                 <div class="w-full md:w-1/2">
@@ -104,6 +105,8 @@
                                                 <label for="tb_img_ktp"
                                                     class="leading-7 block text-sm font-medium text-gray-700">KTP
                                                     IMG</label>
+                                                <img src="{{ asset('storage/' . $customer->ktp_img) }}" alt="gambar"
+                                                    class="h-56 w-full object-cover">
                                                 <input type="file" id="tb_img_ktp" name="tb_img_ktp"
                                                     class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
                                             </div>
