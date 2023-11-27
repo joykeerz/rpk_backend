@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $stockCountByMonth = DB::table('stok')
+        ->select('stock.*')
+        ->whereBetween('created_at', [now()->startOfMonth(), now()])
+        ->count();
+        $transaksiCountByMonth  = DB::table('transaksi')
+        ->select('transaksi.*')
+        ->whereBetween('created_at', [now()->startOfMonth(), now()])
+        ->count();
+        return view('home', ['stockCountByMonth' => $stockCountByMonth, 'transaksiCountByMonth' => $transaksiCountByMonth]);
     }
 }

@@ -1,57 +1,74 @@
 @extends('layouts.bar')
 
 @section('navbar')
-@include('layouts.navbar')
+    @include('layouts.navbar')
 @endsection
 
 @section('sidebar')
-@include('layouts.sidebar')
+    @include('layouts.sidebar')
 @endsection
 
 @section('content')
-
-<header>
-    <div class="title flex m-5 justify-between">
-
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Dashboard RPK
+    <header class="bg-gray-200 p-4">
+        <h2>
+            Homepage
         </h2>
-    </div>
-</header>
-<div class="container mx-auto my-5 rounded">
-    <div class="flex justify-center">
-        <div class="w-8/12">
+    </header>
+    <div class="container mx-auto my-5 rounded">
+        <div class="flex justify-center">
             <div class="bg-white shadow-md rounded-lg">
-                <div class="bg-white dark:bg-gray-800 text-white py-2 px-4 rounded">{{ __('Hai,') }} {{Auth::user()->name}}</div>
+                <div class="bg-white dark:bg-gray-800 text-white py-2 px-4 rounded">{{ __('Selamat Datang,') }}
+                    {{ Auth::user()->name }}</div>
 
                 <div class="p-4">
                     @if (session('status'))
-                    <div class="bg-green-200 text-green-800 border-l-4 border-green-500 py-2 px-4 mb-4">
-                        {{ session('status') }}
-                    </div>
+                        <div class="bg-green-200 text-green-800 border-l-4 border-green-500 py-2 px-4 mb-4">
+                            {{ session('status') }}
+                        </div>
                     @endif
-                    <div class="flex flex-wrap">
-                        <div class="w-1/2">
-                            <div class="bg-white border border-black rounded-lg p-4 m-3 text-center">
-                                <h4 class="text-lg font-semibold">Products</h4>
-                                <div class="button m-2">
-                                    <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200" href="{{ route('product.index') }}">Manage</a>
+                    <div class="flex flex-col text-center gap-4">
+                        <h1 class="text-3xl uppercase">Dashboard RPK</h1>
+                        <div class="flex gap-4">
+                            <div class="card w-96 bg-base-100 shadow-md">
+                                <div class="card-body">
+                                    <div class="flex items-center p-4 bg-white rounded-lg shadow-xs">
+                                        <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full">
+                                            <i class="fa-solid fa-cubes text-2xl"></i>
+                                        </div>
+                                        <div>
+                                            <p class="mb-2 text-sm font-medium text-gray-600">
+                                                Total Stok
+                                            </p>
+                                            <p class="text-lg font-semibold text-gray-700">
+                                                {{$stockCountByMonth}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card w-96 bg-base-100 shadow-md">
+                                <div class="card-body">
+                                    <div class="flex items-center p-4 bg-white rounded-lg shadow-xs">
+                                        <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full">
+                                            <i class="fa-solid fa-receipt text-2xl"></i>
+                                        </div>
+                                        <div>
+                                            <p class="mb-2 text-sm font-medium text-gray-600">
+                                                Total Transaksi
+                                            </p>
+                                            <p class="text-lg font-semibold text-gray-700">
+                                                {{$transaksiCountByMonth}}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="w-1/2">
-                            <div class="bg-white border rounded-lg border-black p-4 m-3 text-center">
-                                <h4 class="text-lg font-semibold">Users</h4>
-                                <div class="button m-2 ">
-                                <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200" href="{{route('manage.user.index')}}">Manage</a>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
 @endsection
