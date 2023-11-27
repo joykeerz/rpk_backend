@@ -21,7 +21,7 @@
     @include('layouts.alert')
 
     <div class="tableContainer m-3">
-        <table class="w-full text-center overflow-y-auto border">
+        <table class="w-full text-center overflow-y-auto border mb-4    ">
             <thead class="text-center border-b-1 border">
                 <tr>
                     <th class="px-4 py-2">Kode Transaksi</th>
@@ -51,13 +51,8 @@
                 @endforelse
             </tbody>
         </table>
-
+        {{ $transaksi->links('pagination::tailwind') }}
     </div>
-
-
-
-
-
     {{-- <script>
         const subtotal_produk = document.querySelectorAll('.subtotal_produk');
 
