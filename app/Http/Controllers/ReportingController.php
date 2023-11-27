@@ -75,8 +75,8 @@ class ReportingController extends Controller
             ->orderBy('stok.created_at', 'desc')
             ->get();
 
-        $pdf = Pdf::loadView('reporting.exportStok', ['stocks' => $stocks, 'from' => $request->from, 'to' => $request->to, 'currentDate' => $currentDate]);
-        return $pdf->stream('Laporan Stok' . now() . '.pdf');
+        $pdf = Pdf::loadView('reporting.exportStok', ['stocks' => $stocks, 'from' => $request->from, 'to' => $request->to, 'currentDate' => $currentDate])->setPaper('a4', 'landscape');
+        return $pdf->stream('Laporan Stok ' . now() . '.pdf');
     }
 
     public function exportPenjualan(Request $request)
@@ -94,8 +94,8 @@ class ReportingController extends Controller
             })
             ->orderBy('transaksi.created_at', 'desc')
             ->get();
-            // dd($request->from);
-        $pdf = Pdf::loadView('reporting.exportPenjualan', ['transaksi' => $transaksi, 'from' => $request->from, 'to' => $request->to, 'currentDate' => $currentDate]);
-        return $pdf->stream('Laporan Penjualan' . now() . '.pdf');
+        // dd($request->from);
+        $pdf = Pdf::loadView('reporting.exportPenjualan', ['transaksi' => $transaksi, 'from' => $request->from, 'to' => $request->to, 'currentDate' => $currentDate])->setPaper('a4', 'landscape');
+        return $pdf->stream($filename = 'Laporan Penjualan ' . now() . '.pdf');
     }
 }

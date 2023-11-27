@@ -20,18 +20,15 @@
     </script>
 
     <div class="overflow-auto m-3">
-        <input type="text" id="searchInput"
-            class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            placeholder="Search...">
-
-        <div class="flex flex-row align-middle justify-between bg-gray-100 px-2 py-1 rounded-md">
+        <div class="w-fit flex flex-row align-middle justify-between bg-gray-100 px-2 py-2 rounded-md">
             <form action="{{ route('laporan.stok.export') }}" method="get">
                 @csrf
                 From:
                 <input class="border border-gray-400 rounded px-2 py-1" type="date" name="from" id="from">
                 To:
                 <input class="border border-gray-400 rounded px-2 py-1" type="date" name="to" id="to">
-                <button type="submit" class="bege-white text-black font-bold py-1 px-2 rounded">
+                <button type="submit" class="btn btn-sm btn-primary">
+                    <i class="fa-solid fa-filter"></i>
                     Filter
                 </button>
             </form>
@@ -39,37 +36,41 @@
 
         </div>
 
-        <table class="min-w-full bg-white text-center">
+        <table class="table table-sm">
             <thead>
                 <tr class="text-center">
-                    <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
+                    <th scope="col" class="text-xs text-gray-500 uppercase tracking-wider">#</th>
+                    <th scope="col" class="text-xs text-gray-500 uppercase tracking-wider">Kode
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Produk
+                    <th scope="col" class="text-xs text-gray-500 uppercase tracking-wider">Produk
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori
+                    <th scope="col" class="text-xs text-gray-500 uppercase tracking-wider">Kategori
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Harga
+                    <th scope="col" class="text-xs text-gray-500 uppercase tracking-wider">Harga
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah
+                    <th scope="col" class="text-xs text-gray-500 uppercase tracking-wider">Stok
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Gudang
+                    <th scope="col" class="text-xs text-gray-500 uppercase tracking-wider">Satuan
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Alamat
+                    <th scope="col" class="text-xs text-gray-500 uppercase tracking-wider">Gudang
+                    </th>
+                    <th scope="col" class="text-xs text-gray-500 uppercase tracking-wider">Diskon
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($stocks as $stock)
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $stock->kode_produk }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_produk }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_kategori }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ 'Rp ' . number_format($stock->harga_produk, 2) }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_gudang }}</td>
-                        <td class="px-6 py-4 whitespace-normal">
+                        <td class="whitespace-nowrap">{{ $loop->iteration }}</td>
+                        <td class="whitespace-nowrap">{{ $stock->kode_produk }}</td>
+                        <td class="whitespace-nowrap">{{ $stock->nama_produk }}</td>
+                        <td class="whitespace-nowrap">{{ $stock->nama_kategori }}</td>
+                        <td class="whitespace-nowrap">{{ 'Rp ' . number_format($stock->harga_stok, 2) }}</td>
+                        <td class="whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
+                        <td class="whitespace-nowrap">{{ $stock->satuan_unit_produk }}</td>
+                        <td class="whitespace-nowrap">{{ $stock->nama_gudang }}</td>
+                        <td class="whitespace-normal">{{$stock->diskon_produk}}%</td>
+                        {{-- <td class="whitespace-normal">
                             <p class="line-clamp-1">
                                 {{ $stock->jalan }},
                                 {{ $stock->blok }},
@@ -80,7 +81,7 @@
                                 {{ $stock->kota_kabupaten }},
                                 {{ $stock->provinsi }}
                             </p>
-                        </td>
+                        </td> --}}
                     </tr>
                 @empty
                     <tr>

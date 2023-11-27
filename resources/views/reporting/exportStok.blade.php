@@ -26,8 +26,9 @@
                     <th>Kategori</th>
                     <th>Harga</th>
                     <th>Qty</th>
+                    <th>Satuan</th>
                     <th>Gudang</th>
-                    <th>Alamat</th>
+                    <th>Diskon</th>
                     <th>Tgl.Input</th>
                 </tr>
             </thead>
@@ -38,10 +39,12 @@
                         <td>{{ $stock->kode_produk }}</td>
                         <td>{{ $stock->nama_produk }}</td>
                         <td>{{ $stock->nama_kategori }}</td>
-                        <td>{{ 'Rp ' . number_format($stock->harga_produk, 2) }}</td>
+                        <td>{{ 'Rp ' . number_format($stock->harga_stok, 2) }}</td>
                         <td>{{ $stock->jumlah_stok }}</td>
+                        <td>{{ $stock->satuan_unit_produk }}</td>
                         <td>{{ $stock->nama_gudang }}</td>
-                        <td>
+                        <td>{{ $stock->diskon_produk }}%</td>
+                        {{-- <td>
                             <p>
                                 {{ $stock->jalan }},
                                 {{ $stock->blok }},
@@ -52,7 +55,7 @@
                                 {{ $stock->kota_kabupaten }},
                                 {{ $stock->provinsi }}
                             </p>
-                        </td>
+                        </td> --}}
                         <td>
                            {{$stock->cat}}
                         </td>

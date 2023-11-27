@@ -10,7 +10,7 @@
 @section('content')
     <header class="bg-gray-200 p-4">
         <h2>
-            Stok Reporting
+            Penjualan Reporting
         </h2>
     </header>
     <script>
@@ -20,54 +20,60 @@
     </script>
 
     <div class="overflow-auto m-3">
-        <input type="text" id="searchInput"
-            class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            placeholder="Search...">
-
-        <div class="flex flex-row align-middle justify-between bg-gray-100 px-2 py-1 rounded-md">
+        <div class="w-fit flex flex-row align-middle justify-between bg-gray-100 px-2 py-2 rounded-md">
             <form action="{{ route('laporan.penjualan.export') }}" method="get">
                 @csrf
                 From:
                 <input class="border border-gray-400 rounded px-2 py-1" type="date" name="from" id="from">
                 To:
                 <input class="border border-gray-400 rounded px-2 py-1" type="date" name="to" id="to">
-                <button type="submit" class="bege-white text-black font-bold py-1 px-2 rounded">
+                <button type="submit" class="btn btn-sm btn-primary">
+                    <i class="fa-solid fa-filter"></i>
                     Filter
                 </button>
             </form>
         </div>
 
-        <table class="min-w-full bg-white text-center">
+        <table class="table table-sm">
             <thead>
                 <tr class="text-center">
-                    <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Customer
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">#</th>
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">Customer
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe Pembayaran
+                    <th scope="col" class="text-gray-500 uppercase tracking-wider">Tipe Pembayaran
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status Pembayaran
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">Status Pembayaran
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status Pemesanan
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">Status Pemesanan
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">Subtotal
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl. Transaksi
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">Biaya Kirim
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Metode Kirim
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">Qty
+                    </th>
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">Total
+                    </th>
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">Tgl. Transaksi
+                    </th>
+                    <th scope="col" class=" text-gray-500 uppercase tracking-wider">Metode Kirim
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($transaksi as $trans)
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $trans->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $trans->tipe_pembayaran }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $trans->status_pembayaran }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $trans->status_pemesanan }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ 'Rp ' . number_format($trans->subtotal_produk, 2) }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $trans->cat }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $trans->nama_kurir }}</td>
+                        <td class="whitespace-nowrap">{{ $loop->iteration }}</td>
+                        <td class="whitespace-nowrap">{{ $trans->name }}</td>
+                        <td class="whitespace-nowrap">{{ $trans->tipe_pembayaran }}</td>
+                        <td class="whitespace-nowrap">{{ $trans->status_pembayaran }}</td>
+                        <td class="whitespace-nowrap">{{ $trans->status_pemesanan }}</td>
+                        <td class="whitespace-nowrap">{{ 'Rp ' . number_format($trans->subtotal_produk, 2) }}</td>
+                        <td class="whitespace-nowrap">{{ 'Rp ' . number_format($trans->subtotal_pengiriman, 2) }}</td>
+                        <td class="whitespace-nowrap">{{ 'Rp ' . number_format($trans->total_qty, 2) }}</td>
+                        <td class="whitespace-nowrap">{{ 'Rp ' . number_format($trans->total_pembayaran, 2) }}</td>
+                        <td class="whitespace-nowrap">{{ $trans->cat }}</td>
+                        <td class="whitespace-nowrap">{{ $trans->nama_kurir }}</td>
                     </tr>
                 @empty
                     <tr>

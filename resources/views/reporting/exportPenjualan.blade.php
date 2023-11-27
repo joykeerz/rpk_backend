@@ -15,7 +15,7 @@
         @if ($from != null && $to != null)
             <h3 class="alert alert-success">Laporan Penjualan Dari {{ $from }} S.d {{ $to }}</h3>
         @else
-            <h3 class="alert alert-success">Laporan Penjualan Keseluruhan S.d {{$currentDate}}</h3>
+            <h3 class="alert alert-success">Laporan Penjualan Keseluruhan S.d {{ $currentDate }}</h3>
         @endif
         <table class="table table-sm table-bordered">
             <thead>
@@ -25,6 +25,9 @@
                     <th>Tipe Pembayaran</th>
                     <th>Status Pembayaran</th>
                     <th>Status Pemesanan</th>
+                    <th>Subtotal</th>
+                    <th>Biaya Kirim</th>
+                    <th>Total Qty</th>
                     <th>Total</th>
                     <th>Tgl. Trans</th>
                     <th>Metode Kirim</th>
@@ -39,6 +42,9 @@
                         <td>{{ $trans->status_pembayaran }}</td>
                         <td>{{ $trans->status_pemesanan }}</td>
                         <td>{{ 'Rp ' . number_format($trans->subtotal_produk, 2) }}</td>
+                        <td>{{ 'Rp ' . number_format($trans->subtotal_pengiriman, 2) }}</td>
+                        <td>{{ $trans->total_qty }}</td>
+                        <td>{{ 'Rp ' . number_format($trans->total_pembayaran, 2) }}</td>
                         <td>{{ $trans->cat }}</td>
                         <td>{{ $trans->nama_kurir }}</td>
                     </tr>
