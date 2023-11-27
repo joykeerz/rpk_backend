@@ -54,7 +54,7 @@
                     <span>
                         <input
                             class="mt-1 block w-full rounded-m shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                            type="text" name="tb_biaya_kirim" id="tb_biaya_kirim" onkeyup="calculateBiayaKirim()"
+                            type="text" readonly name="tb_biaya_kirim" id="tb_biaya_kirim" onkeyup="calculateBiayaKirim()"
                             value="{{ $transaksi->subtotal_pengiriman }}">
                         @error('tb_biaya_kirim')
                             <div class="text-red-500">{{ $message }}</div>
@@ -66,7 +66,7 @@
                     <span>
                         <input
                             class="mt-1 block w-full rounded-m shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                            onkeyup="calculateDiscount()" type="text" name="tb_diskon" id="discountPercentage"
+                            onkeyup="calculateDiscount()" readonly ="text" name="tb_diskon" id="discountPercentage"
                             value="{{ $transaksi->diskon }}">
                         @error('tb_diskon')
                             <div class="text-red-500">{{ $message }}</div>
@@ -78,7 +78,7 @@
                     <span>
                         <input
                             class="mt-1 block w-full rounded-m shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                            type="text" name="tb_total_pembayaran" id="tb_total_pembayaran"
+                            type="text" readonly name="tb_total_pembayaran" id="tb_total_pembayaran"
                             value="{{ $transaksi->total_pembayaran }}">
                         @error('tb_total_pembayaran')
                             <div class="text-red-500">{{ $message }}</div>
