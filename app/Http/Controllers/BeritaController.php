@@ -100,7 +100,7 @@ class BeritaController extends Controller
             }
             $berita->gambar_berita = $filePath;
         }
-        $berita->slug_berita = \Str::slug($request->judul_berita);
+        $berita->slug_berita = Str::slug($request->judul_berita);
         $berita->penulis_berita = $request->penulis_berita;
         $berita->kategori_berita = $request->kategori_berita;
         $berita->user_id = auth()->user()->id;

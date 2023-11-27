@@ -112,49 +112,6 @@
                                 @enderror
                                 <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
                             </div>
-                            <div id="externalIdProduk" class="mb-3">
-                                <label for="externalIdProduk" class="block text-sm font-medium text-gray-700">ID
-                                    Eksternal</label>
-
-                                <fieldset class="flex flex-wrap gap-3">
-                                    <legend class="sr-only">Color</legend>
-
-                                    <div>
-                                        <input type="radio" name="ColorOption" value="ColorBlack" id="ColorBlack"
-                                            class="peer hidden" checked />
-
-                                        <label for="ColorBlack"
-                                            class="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white">
-                                            <p class="text-sm font-medium">Include</p>
-                                        </label>
-                                    </div>
-
-                                    <div>
-                                        <input type="radio" name="ColorOption" value="ColorRed" id="ColorRed"
-                                            class="peer hidden" />
-
-                                        <label for="ColorRed"
-                                            class="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white">
-                                            <p class="text-sm font-medium">Exclude</p>
-                                        </label>
-                                    </div>
-
-                                    <div>
-                                        <input type="radio" name="ColorOption" value="ColorBlue" id="ColorBlue"
-                                            class="peer hidden" />
-
-                                        <label for="ColorBlue"
-                                            class="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white">
-                                            <p class="text-sm font-medium">Non</p>
-                                        </label>
-                                    </div>
-                                </fieldset>
-
-                                @error('tb_external_id')
-                                    <div class="text-red-500">{{ $message }}</div>
-                                @enderror
-                                <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
-                            </div>
                         </div>
                         <div id="imageProduk" class="mb-3">
                             <label for="imageProduk" class="block text-sm font-medium text-gray-700">Gambar
