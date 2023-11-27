@@ -28,7 +28,7 @@ class CompanyController extends Controller
             ->join('users', 'users.id', '=', 'companies.user_id')
             ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
             ->select('companies.*', 'alamat.*', 'users.*', 'companies.id as cid', 'alamat.id as aid', 'users.id as uid')
-            ->get();
+            ->paginate(15);
 
         return view('company.index', ['companies' => $companies]);
     }

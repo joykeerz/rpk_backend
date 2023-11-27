@@ -64,6 +64,7 @@
                 @endforelse
             </tbody>
         </table>
+        {{ $banners->links('pagination::tailwind') }}
     </div>
 
     <link rel="stylesheet" href="{{ asset('svg.css') }}">

@@ -70,6 +70,8 @@
 
         </tbody>
     </table>
+    {{ $customer->links('pagination::tailwind') }}
+
 </div>
 
 <style>

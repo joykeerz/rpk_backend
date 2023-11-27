@@ -40,7 +40,7 @@ class StokController extends Controller
             ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
             ->where('stok.gudang_id', '=', $id)
             ->orderBy('stok.id', 'desc')
-            ->get();
+            ->paginate(15);
 
         return view('stock.showByGudang', ['gudang' => $gudang, 'stocks' => $stocks]);
     }

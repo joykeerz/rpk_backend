@@ -16,7 +16,7 @@ class BannerController extends Controller
 
     public function index()
     {
-        $banners = Banner::all();
+        $banners = Banner::paginate(15);
         return view('banner.index', compact('banners'));
     }
 

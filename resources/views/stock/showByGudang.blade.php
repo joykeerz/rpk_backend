@@ -87,7 +87,7 @@
                 </thead>
                 <tbody>
                     @forelse ($stocks as $stock)
-                        <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white'}}">
+                        <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }}">
                             <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->kode_produk }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_produk }}</td>
@@ -120,6 +120,8 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $stocks->links('pagination::tailwind') }}
+
         </div>
     </div>
 

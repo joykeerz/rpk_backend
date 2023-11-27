@@ -24,7 +24,7 @@ class PesananController extends Controller
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
             ->join('users', 'users.id', '=', 'pesanan.user_id')
             ->select('transaksi.*', 'pesanan.*', 'users.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid')
-            ->paginate(5);
+            ->paginate(15);
         // dd($transaksi);
         // $res = response()->json([
         //     'data' => $transaksi

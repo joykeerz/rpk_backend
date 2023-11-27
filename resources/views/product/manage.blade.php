@@ -63,6 +63,8 @@
                 @endforelse
             </tbody>
         </table>
+    {{ $products->links('pagination::tailwind') }}
+
     </div>
 
     <link rel="stylesheet" href="{{ asset('svg.css') }}">

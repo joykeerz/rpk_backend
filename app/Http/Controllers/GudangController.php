@@ -24,7 +24,7 @@ class GudangController extends Controller
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->join('companies', 'gudang.company_id', '=', 'companies.id')
             ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'companies.id as cid')
-            ->get();
+            ->paginate(15);
 
         $res =  response()->json([
             'data' => $gudang

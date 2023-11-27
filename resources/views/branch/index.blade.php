@@ -60,6 +60,7 @@
 
             </tbody>
         </table>
+        {{ $branch->links('pagination::tailwind') }}
         <link rel="stylesheet" href="{{ asset('svg.css') }}">
     </div>
 @endsection

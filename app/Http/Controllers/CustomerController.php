@@ -26,7 +26,7 @@ class CustomerController extends Controller
             ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
             ->where('users.role_id', '=', 5)
             ->orderby('biodata.created_at', 'desc')
-            ->get();
+            ->paginate(15);
 
         return view('customer.index', ['customer' => $customer]);
     }

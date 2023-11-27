@@ -168,5 +168,7 @@
                 @endforelse
             </tbody>
         </table>
+    {{ $kategoriData->links('pagination::tailwind') }}
+
     </div>
 @endsection

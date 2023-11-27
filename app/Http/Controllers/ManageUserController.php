@@ -35,7 +35,7 @@ class ManageUserController extends Controller
             ->join('roles', 'users.role_id', '=', 'roles.id')
             ->select('users.*', 'roles.*', 'roles.id as rid', 'users.id as uid')
             ->where('users.role_id', '!=', 1)
-            ->get();
+            ->paginate(15);
         return view('manage.user.index', ['usersData' => $allUsers]);
     }
 

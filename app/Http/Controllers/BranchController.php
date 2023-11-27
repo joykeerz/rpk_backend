@@ -20,7 +20,7 @@ class BranchController extends Controller
         $branch = DB::table('branches')
             ->join('companies', 'companies.id', '=', 'branches.company_id')
             ->select('branches.*', 'companies.nama_company', 'branches.id as bid', 'companies.id as cid')
-            ->get();
+            ->paginate(15);
         return view('branch.index', compact('branch'));
     }
 

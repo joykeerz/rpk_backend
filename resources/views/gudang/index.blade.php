@@ -60,6 +60,8 @@
                 @endforelse
             </tbody>
         </table>
+    {{ $gudangData->links('pagination::tailwind') }}
+
     </div>
 
 

@@ -47,21 +47,21 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($berita as $berita)
+                @forelse ($berita as $brt)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }}">
                         <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <img src="{{ asset('storage/' . $berita->gambar_berita) }}" alt="gambar" class="w-20 h-20">
+                            <img src="{{ asset('storage/' . $brt->gambar_berita) }}" alt="gambar" class="w-20 h-20">
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $berita->judul_berita }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $berita->kategori_berita }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $berita->penulis_berita }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $brt->judul_berita }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $brt->kategori_berita }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $brt->penulis_berita }}</td>
                         <td class="px-6 py-4 whitespace-nowrap flex justify-center">
-                            <a href="{{ route('berita.show', ['id' => $berita->id]) }}"
+                            <a href="{{ route('berita.show', ['id' => $brt->id]) }}"
                                 class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
                                 <svg class="showIcon"> </svg>
                             </a>
-                            <a href="{{ route('berita.delete', ['id' => $berita->id]) }}" onclick="return confirmDelete();"
+                            <a href="{{ route('berita.delete', ['id' => $brt->id]) }}" onclick="return confirmDelete();"
                                 class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
                                 <svg class="deleteIcon"></svg>
                             </a>
@@ -74,6 +74,7 @@
                 @endforelse
             </tbody>
         </table>
+        {{ $berita->links('pagination::tailwind') }}
     </div>
 
     <link rel="stylesheet" href="{{ asset('svg.css') }}">

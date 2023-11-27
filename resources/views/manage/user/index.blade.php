@@ -156,5 +156,7 @@
 
                 </tbody>
             </table>
+    {{ $usersData->links('pagination::tailwind') }}
+
         </div>
     @endsection

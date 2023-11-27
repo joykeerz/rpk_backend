@@ -17,7 +17,7 @@ class KategoryController extends Controller
 
     public function index()
     {
-        $categories = Kategori::all();
+        $categories = Kategori::paginate(15);
         // return response()->json([
         //     'data' => $categories,
         // ], '200');
