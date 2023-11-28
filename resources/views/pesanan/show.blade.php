@@ -15,8 +15,10 @@
                 Detail Pesanan {{ $transaksi->name }}
             </h2>
             <div class="button">
-                <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200"
-                    href="{{ route('pesanan.edit', ['id' => $transaksi->tid]) }}">Edit</a>
+                <a class="btn btn-sm btn-primary" href="{{ route('pesanan.edit', ['id' => $transaksi->tid]) }}">
+                    <i class="fa-solid fa-pencil"></i>
+                    Edit
+                </a>
             </div>
         </div>
     </header>

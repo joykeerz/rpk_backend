@@ -22,10 +22,14 @@
                 <form enctype="multipart/form-data" action="{{ Route('product.store') }}" method="post">
                     @csrf
                     <div>
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            <strong class="font-bold">Perhatian!</strong>
+                            <span class="block sm:inline">Pastikan semua data bersimbol * terisi dengan benar</span>
+                        </div>
                         <div class="p-4 grid grid-cols-2 gap-1">
                             <div id="namaProduk" class="mb-3">
-                                <label for="" class="block text-sm font-medium text-gray-700">Nama Produk</label>
-                                <input type="text"
+                                <label for="" class="block text-sm font-medium text-gray-700">Nama Produk*</label>
+                                <input value="{{ old('tb_nama_produk') }}" type="text"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
                                     name="tb_nama_produk" id="tb_nama_produk" placeholder="">
                                 @error('tb_nama_produk')
@@ -33,8 +37,8 @@
                                 @enderror
                             </div>
                             <div id="kodeProduk" class="mb-3">
-                                <label for="" class="block text-sm font-medium text-gray-700">Kode Produk</label>
-                                <input type="text"
+                                <label for="" class="block text-sm font-medium text-gray-700">Kode Produk*</label>
+                                <input value="{{ old('tb_kode_produk') }}" type="text"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
                                     name="tb_kode_produk" id="tb_kode_produk" placeholder="">
                                 @error('tb_kode_produk')
@@ -43,8 +47,8 @@
                             </div>
                             <div id="deskripsiProduk" class="mb-3">
                                 <label for="deskripsiProduk" class="block text-sm font-medium text-gray-700">Deskripsi
-                                    Produk</label>
-                                <input type="text"
+                                    Produk*</label>
+                                <input value="{{ old('tb_desk_produk') }}" type="text"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                                     name="tb_desk_produk" id="tb_desk_produk" placeholder="">
                                 @error('tb_desk_produk')
@@ -53,12 +57,12 @@
                             </div>
 
                             <div id="kategori" class="mb-3">
-                                <label for="kategori" class="block text-sm font-medium text-gray-700">Kategori</label>
+                                <label for="kategori" class="block text-sm font-medium text-gray-700">Kategori*</label>
                                 <select id="cb_kategori" name="cb_kategori"
                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                     <option disabled selected>Open this select menu</option>
                                     @forelse ($kategoriData as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>
+                                        <option value="{{ $item->id }}" {{ (old("cb_kategori") == $item->id ? "selected":"") }}>{{ $item->nama_kategori }}</option>
                                     @empty
                                         <option value="">Tidak ada data</option>
                                     @endforelse
@@ -84,14 +88,14 @@
                             </div>
 
                             <div id="satuanUnit" class="mb-3">
-                                <label for="satuanUnit" class="block text-sm font-medium text-gray-700">Satuan Unit</label>
+                                <label for="satuanUnit" class="block text-sm font-medium text-gray-700">Satuan Unit*</label>
                                 <select id="tb_satuan" name="tb_satuan"
                                     class="
                                     block border w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                     <option disabled selected>Open this select menu</option>
                                     @forelse ($satuanData as $satuan)
-                                        <option value="{{ $satuan->id }}">{{ $satuan->simbol_satuan }}</option>
+                                        <option value="{{ $satuan->id }}" {{ (old("tb_satuan") == $satuan->id ? "selected":"") }}>{{ $satuan->simbol_satuan }}</option>
 
                                     @empty
                                         <option disabled>No Data</option>
@@ -103,14 +107,14 @@
                             </div>
 
                             <div id="pajakProduk" class="mb-3">
-                                <label for="pajakProduk" class="block text-sm font-medium text-gray-700">Pajak</label>
+                                <label for="pajakProduk" class="block text-sm font-medium text-gray-700">Pajak*</label>
                                 <select id="tb_pajak" name="tb_pajak"
                                     class="
                                     block border w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                     <option disabled selected>Open this select menu</option>
                                     @forelse ($pajakData as $pajak)
-                                        <option value="{{ $pajak->id }}">{{ $pajak->nama_pajak }}</option>
+                                        <option value="{{ $pajak->id }}" {{ (old("tb_pajak") == $pajak->id ? "selected":"") }}>{{ $pajak->nama_pajak }}</option>
                                     @empty
                                         <option disabled>No Data</option>
                                     @endforelse
@@ -123,7 +127,7 @@
                             <div id="externalIdProduk" class="mb-3">
                                 <label for="externalIdProduk" class="block text-sm font-medium text-gray-700">ID
                                     Eksternal</label>
-                                <input type="text" name="tb_external_id" id="tb_external_id"
+                                <input value="{{old('tb_external_id')}}" type="text" name="tb_external_id" id="tb_external_id"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                                     name="tb_external_id" id="tb_external_id">
                                 @error('tb_external_id')
@@ -131,22 +135,24 @@
                                 @enderror
                                 <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
                             </div>
+
+                            <div id="imageProduk" class="mb-3">
+                                <label for="imageProduk" class="block text-sm font-medium text-gray-700">Gambar
+                                    Produk</label>
+                                <img id="preview_img" class="h-56 w-full object-cover">
+                                <input onchange="loadFile(event)" value="{{old('file_image_produk')}}" type="file" name="file_image_produk"
+                                    id="file_image_produk"
+                                    class="mt-1 block w-full
+                                    rounded-md shadow-sm focus:border-indigo-300 focus:ring
+                                    focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
+                                    name="file_image_produk" id="file_image_produk">
+                                @error('file_image_produk')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
+                                <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
+                            </div>
                         </div>
-                        <div id="imageProduk" class="mb-3">
-                            <label for="imageProduk" class="block text-sm font-medium text-gray-700">Gambar
-                                Produk</label>
-                            <img id="preview_img" class="h-56 w-full object-cover">
-                            <input onchange="loadFile(event)" value="0" type="file" name="file_image_produk"
-                                id="file_image_produk"
-                                class="mt-1 block w-full
-                                rounded-md shadow-sm focus:border-indigo-300 focus:ring
-                                focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                                name="file_image_produk" id="file_image_produk">
-                            @error('file_image_produk')
-                                <div class="text-red-500">{{ $message }}</div>
-                            @enderror
-                            <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
-                        </div>
+
 
 
                         <div class="buttonContainer flex justify-center">

@@ -97,6 +97,22 @@ class ManageUserController extends Controller
 
     public function StoreNewAccount(Request $request)
     {
+        $request->validate([
+            'tb_nama_user' => 'required',
+            'tb_email_user' => 'required|email|unique:users,email',
+            'tb_password_user' => 'required',
+            'tb_hp_user' => 'required|numeric|unique:users,no_hp',
+        ], [
+            'tb_nama_user.required' => 'Nama tidak boleh kosong',
+            'tb_email_user.required' => 'Email tidak boleh kosong',
+            'tb_password_user.required' => 'Password tidak boleh kosong',
+            'tb_hp_user.required' => 'Nomor HP tidak boleh kosong',
+            'tb_email_user.email' => 'Email tidak valid',
+            'tb_email_user.unique' => 'Email sudah terdaftar',
+            'tb_hp_user.unique' => 'Nomor HP sudah terdaftar',
+            'tb_hp_user.numeric' => 'Nomor HP harus numeric',
+        ]);
+
         $user = new User;
         $user->role_id = $request->cb_role;
         $user->name = $request->tb_nama_user;

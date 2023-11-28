@@ -51,6 +51,11 @@
                     <div class="bg-gray-100 py-2 px-4 font-semibold">New User</div>
                     <div class="p-4 w-full mx-3">
                         <form method="POST" action="{{ route('manage.user.store') }}">
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+                                role="alert">
+                                <strong class="font-bold">Perhatian!</strong>
+                                <span class="block sm:inline">Pastikan semua data bersimbol * terisi dengan benar</span>
+                            </div>
                             <div class="flex w-full justify-between">
                                 @csrf
                                 <div class="w-full md:w-1/2">
@@ -59,12 +64,14 @@
                                         <hr class="my-4">
 
                                         <div class="mb-4">
-                                            <label for="tb_nama_user"
-                                                class="block text-sm font-medium text-gray-700">Role</label>
+                                            <label for="cb_role"
+                                                class="block text-sm font-medium text-gray-700">Role*</label>
                                             <select class="border rounded-md py-2 px-3 w-full" name="cb_role"
                                                 id="cb_role">
                                                 @forelse ($roles as $role)
-                                                    <option value="{{ $role->id }}">{{ $role->nama_role }}</option>
+                                                    <option value="{{ $role->id }}"
+                                                        {{ old('cb_role') == $role->id ? 'selected' : '' }}>
+                                                        {{ $role->nama_role }}</option>
                                                 @empty
                                                     <option value="">Role Kosong</option>
                                                 @endforelse
@@ -73,10 +80,10 @@
 
                                         <div class="mb-4">
                                             <label for="tb_nama_user"
-                                                class="block text-sm font-medium text-gray-700">Name</label>
-                                            <input required id="tb_nama_user" type="text"
-                                                class="border rounded-md py-2 px-3 w-full" name="tb_nama_user"
-                                                placeholder="">
+                                                class="block text-sm font-medium text-gray-700">Name*</label>
+                                            <input value="{{ old('tb_nama_user') }}" required id="tb_nama_user"
+                                                type="text" class="border rounded-md py-2 px-3 w-full"
+                                                name="tb_nama_user" placeholder="">
                                             @error('tb_nama_user')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
@@ -84,21 +91,22 @@
 
                                         <div class="mb-4">
                                             <label for="tb_email_user"
-                                                class="block text-sm font-medium text-gray-700">Email</label>
-                                            <input required id="tb_email_user" type="text"
-                                                class="border rounded-md py-2 px-3 w-full" name="tb_email_user"
-                                                placeholder="">
+                                                class="block text-sm font-medium text-gray-700">Email*</label>
+                                            <input value="{{ old('tb_email_user') }}" required id="tb_email_user"
+                                                type="text" class="border rounded-md py-2 px-3 w-full"
+                                                name="tb_email_user" placeholder="">
                                             @error('tb_email_user')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
+                                            <label class="text-gray-400 text-sm">email harus unik</label>
                                         </div>
 
                                         <div class="mb-4">
                                             <label for="tb_password_user"
-                                                class="block text-sm font-medium text-gray-700">Password</label>
-                                            <input required id="tb_password_user" type="password"
-                                                class="border rounded-md py-2 px-3 w-full" name="tb_password_user"
-                                                placeholder="">
+                                                class="block text-sm font-medium text-gray-700">Password*</label>
+                                            <input value="{{ old('tb_password_user') }}" required id="tb_password_user"
+                                                type="password" class="border rounded-md py-2 px-3 w-full"
+                                                name="tb_password_user" placeholder="">
                                             @error('tb_password_user')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
@@ -106,18 +114,21 @@
 
                                         <div class="mb-4">
                                             <label for="tb_hp_user" class="block text-sm font-medium text-gray-700">No.
-                                                Handphone</label>
-                                            <input required id="tb_hp_user" type="text"
+                                                Handphone*</label>
+                                            <input value="{{ old('tb_hp_user') }}" required id="tb_hp_user" type="text"
                                                 class="border rounded-md py-2 px-3 w-full" name="tb_hp_user" placeholder="">
                                             @error('tb_hp_user')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
+                                            <label class="text-gray-400 text-sm">nomor handphone harus unik</label>
                                         </div>
 
                                         <div class="mb-4">
-                                            <label for="tb_external_id" class="block text-sm font-medium text-gray-700">ID External</label>
-                                            <input required id="tb_external_id" type="text"
-                                                class="border rounded-md py-2 px-3 w-full" name="tb_external_id" placeholder="">
+                                            <label for="tb_external_id" class="block text-sm font-medium text-gray-700">ID
+                                                External</label>
+                                            <input value="{{old('tb_external_id')}}" id="tb_external_id" type="text"
+                                                class="border rounded-md py-2 px-3 w-full" name="tb_external_id"
+                                                placeholder="">
                                             @error('tb_external_id')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror

@@ -61,7 +61,8 @@ class PesananController extends Controller
         return view('pesanan.show', ['transaksi' => $transaksi, 'detailPesanan' => $detailPesanan]);
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
             ->join('users', 'users.id', '=', 'pesanan.user_id')
@@ -102,10 +103,12 @@ class PesananController extends Controller
 
         $stok = DB::table('stok')
             ->join('produk', 'produk.id', '=', 'stok.produk_id')
-            ->select('stok.*', 'produk.*', 'stok.id as sid', 'produk.id as pid')
+            ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
+            ->select('stok.*', 'produk.*','satuan_unit.simbol_satuan', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
             ->where('stok.jumlah_stok', '>', 0)
             ->where('stok.gudang_id', '=', $id)
             ->get();
+
         return view('pesanan.newOrder', ['product' => $stok, 'users' => $biodata, 'kurir' => $kurir]);
     }
 
@@ -122,7 +125,7 @@ class PesananController extends Controller
         $pesanan->user_id = $request->data['userData'][0];
         $pesanan->alamat_id = $request->data['userData'][1];
         $pesanan->kurir_id = $request->data['userData'][2];
-        $pesanan->status_pemesanan = 'diproses';
+        $pesanan->status_pemesanan = 'menunggu verifikasi';
         $pesanan->save();
 
         $listDetailPesanan = [];
@@ -152,7 +155,7 @@ class PesananController extends Controller
 
         $transaksi = new Transaksi;
         $transaksi->pesanan_id = $pesanan->id;
-        $transaksi->status_pembayaran = 'menunggu verifikasi';
+        $transaksi->status_pembayaran = 'belum dibayar';
         $transaksi->subtotal_produk = $subtotal_produk;
         $transaksi->total_qty = $total_qty;
         $transaksi->total_pembayaran = $subtotal_produk + $subtotal_pengiriman;
@@ -206,7 +209,8 @@ class PesananController extends Controller
         // return redirect()->route('pesanan.index')->with('success', 'Transaksi berhasil ditambahkan');
     }
 
-    public function orderByGudangSelector(){
+    public function orderByGudangSelector()
+    {
         $gudang = DB::table('gudang')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
@@ -216,7 +220,8 @@ class PesananController extends Controller
         return view('pesanan.showByGudang', ['gudang' => $gudang]);
     }
 
-    public function update(Request $request,$id){
+    public function update(Request $request, $id)
+    {
         // dd('bjir');
         $transaksi = Transaksi::find($id);
         $transaksi->tipe_pembayaran = $request->cb_status_pembayaran;

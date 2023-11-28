@@ -41,7 +41,10 @@
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
                         <td class="subtotal_produk px-4 py-2">Rp {{ number_format($item->subtotal_produk) }}</td>
                         <td>
-                            <a class="" href="{{ route('pesanan.show', ['id' => $item->tid]) }}">open</a>
+                            <a class="btn btn-sm btn-primary" href="{{ route('pesanan.show', ['id' => $item->tid]) }}">
+                                <i class="fa-solid fa-search"></i>
+                                open
+                            </a>
                         </td>
                     </tr>
                 @empty

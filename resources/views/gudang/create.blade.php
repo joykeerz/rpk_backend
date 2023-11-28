@@ -19,72 +19,114 @@
             @csrf
             <div class="inputLabelContainer grid grid-cols-2 gap-0.5">
                 <div class="tb_nama_gudang flex flex-col">
-                    <label for="tb_nama_gudang">Nama Gudang</label>
-                    <input type="text" name="tb_nama_gudang" id="tb_nama_gudang">
+                    <label for="tb_nama_gudang">Nama Gudang*</label>
+                    <input value="{{old('tb_nama_gudang')}}" type="text" name="tb_nama_gudang" id="tb_nama_gudang">
+                    @error('tb_nama_gudang')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="cb_company_id flex flex-col">
-                    <label for="cb_company_id">Company</label>
+                    <label for="cb_company_id">Company*</label>
                     <select name="cb_company_id" id="cb_company_id">
                         @foreach ($companyData as $company)
-                            <option value="{{ $company->id }}">{{ $company->nama_company }}</option>
+                            <option value="{{ $company->id }}" {{ old('cb_company_id') == $company->id ? 'selected' : '' }}>{{ $company->nama_company }}</option>
                         @endforeach
                     </select>
+                    @error('cb_company_id')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="cb_user_id flex flex-col">
-                    <label for="cb_user_id">User Penanggung Jawab</label>
+                    <label for="cb_user_id">User Penanggung Jawab*</label>
                     <select name="cb_user_id" id="cb_user_id">
                         @foreach ($usersData as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            <option value="{{ $user->id }}" {{ old('cb_user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="tb_jalan flex flex-col">
-                    <label for="tb_jalan">Jalan 1</label>
-                    <input type="text" name="tb_jalan" id="tb_jalan">
+                    <label for="tb_jalan">Jalan 1*</label>
+                    <input value="{{old('tb_jalan')}}" type="text" name="tb_jalan" id="tb_jalan">
+                    @error('tb_jalan')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_jalan_ext flex flex-col">
                     <label for="tb_jalan_ext">Jalan 2</label>
-                    <input type="text" name="tb_jalan_ext" id="tb_jalan_ext">
+                    <input value="{{old('tb_jalan_ext')}}" type="text" name="tb_jalan_ext" id="tb_jalan_ext">
+                    @error('tb_jalan_ext')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_blok flex flex-col">
                     <label for="tb_blok">Blok</label>
-                    <input type="text" name="tb_blok" id="tb_blok">
+                    <input value="{{old('tb_blok')}}" type="text" name="tb_blok" id="tb_blok">
+                    @error('tb_blok')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_rt flex flex-col">
                     <label for="tb_rt">RT</label>
-                    <input type="text" name="tb_rt" id="tb_rt">
+                    <input value="{{old('tb_rt')}}" type="text" name="tb_rt" id="tb_rt">
+                    @error('tb_rt')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_rw flex flex-col">
                     <label for="tb_rw">RW</label>
-                    <input type="text" name="tb_rw" id="tb_rw">
+                    <input value="{{old('tb_rw')}}" type="text" name="tb_rw" id="tb_rw">
+                    @error('tb_rw')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_kelurahan flex flex-col">
                     <label for="tb_kelurahan">Kelurahan</label>
                     <input type="text" name="tb_kelurahan" id="tb_kelurahan">
+                    @error('tb_kelurahan')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_kecamatan flex flex-col">
-                    <label for="tb_kecamatan">Kecamatan</label>
+                    <label for="tb_kecamatan">Kecamatan*</label>
                     <input type="text" name="tb_kecamatan" id="tb_kecamatan">
+                    @error('tb_kecamatan')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_kota_kabupaten flex flex-col">
-                    <label for="tb_kota_kabupaten">Kota/Kabupaten</label>
+                    <label for="tb_kota_kabupaten">Kota/Kabupaten*</label>
                     <input type="text" name="tb_kota" id="tb_kota">
+                    @error('tb_kota')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_provinsi flex flex-col">
-                    <label for="tb_provinsi">Provinsi</label>
+                    <label for="tb_provinsi">Provinsi*</label>
                     <input type="text" name="tb_prov" id="tb_prov">
+                    @error('tb_prov')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_kode_pos flex flex-col">
-                    <label for="tb_kode_pos">Kode Pos</label>
-                    <input type="text" name="tb_kodepos" id="tb_kodepos">
+                    <label for="tb_kode_pos">Kode Pos*</label>
+                    <input value="{{old('tb_kode_pos')}}" type="text" name="tb_kodepos" id="tb_kodepos">
+                    @error('tb_kodepos')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_no_telp flex flex-col">
-                    <label for="tb_no_telp">No. Telp</label>
-                    <input type="text" name="tb_no_telp" id="tb_no_telp">
+                    <label for="tb_no_telp">No. Telp*</label>
+                    <input value="{{old('tb_no_telp')}}" type="text" name="tb_no_telp" id="tb_no_telp">
+                    @error('tb_no_telp')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="tb_external_id flex flex-col">
                     <label for="tb_external_id">ID External</label>
-                    <input type="text" name="tb_external_id" id="tb_external_id">
+                    <input value="{{old('tb_external_id')}}" type="text" name="tb_external_id" id="tb_external_id">
+                    @error('tb_external_id')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
 
             </div>

@@ -127,9 +127,9 @@ class ProductController extends Controller
             $productFiles = new ProductFile;
             $productFiles->file_name = $filePath;
             $productFiles->save();
+            $product->product_file_id = $productFiles->id;
+            $product->produk_file_path = $filePath;
         }
-        $product->product_file_id = $productFiles->id;
-        $product->produk_file_path = $filePath;
         $product->save();
 
         return redirect()->route('product.manage')->with('message', 'Produk berhasil ditambahkan');

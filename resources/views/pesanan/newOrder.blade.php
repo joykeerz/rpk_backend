@@ -86,7 +86,7 @@
                                 <td class="py-5">{{ $item->nama_produk }}</td>
                                 <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
                                 <td class="py-2">{{ $item->jumlah_stok }}</td>
-                                <td>{{ $item->satuan_unit_produk }}</td>
+                                <td>{{ $item->simbol_satuan }}</td>
                                 <td class="py-2 harga_produk">{{ $item->harga_stok }}</td>
                                 <td class="py-5 flex items-center justify-center">
                                     <input type="number" name="jumlah_pesanan" class="jumlah_pesanan form-control py-auto"

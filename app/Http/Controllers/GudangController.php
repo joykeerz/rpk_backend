@@ -47,6 +47,28 @@ class GudangController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'tb_nama_gudang' => 'required',
+            'tb_no_telp' => 'required',
+            'tb_jalan' => 'required',
+            'tb_prov' => 'required',
+            'tb_kota' => 'required',
+            'tb_kecamatan' => 'required',
+            'tb_kodepos' => 'required',
+            'cb_company_id' => 'required',
+            'cb_user_id' => 'required',
+        ],[
+            'tb_nama_gudang.required' => 'Nama Gudang tidak boleh kosong!',
+            'tb_no_telp.required' => 'No Telepon tidak boleh kosong!',
+            'tb_jalan.required' => 'Jalan tidak boleh kosong!',
+            'tb_prov.required' => 'Provinsi tidak boleh kosong!',
+            'tb_kota.required' => 'Kota tidak boleh kosong!',
+            'tb_kecamatan.required' => 'Kecamatan tidak boleh kosong!',
+            'tb_kodepos.required' => 'Kode Pos tidak boleh kosong!',
+            'cb_company_id.required' => 'Company tidak boleh kosong!',
+            'cb_user_id.required' => 'User tidak boleh kosong!',
+        ]);
+
         $alamat = new Alamat;
         $alamat->jalan = $request->tb_jalan;
         $alamat->jalan_ext = $request->tb_jalan_ext;

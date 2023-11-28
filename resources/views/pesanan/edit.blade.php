@@ -228,9 +228,9 @@
 
                         </dl>
                     </div>
-                    <div class="buttonContainer flex justify-center">
+                    <div class="buttonContainer flex justify-center mt-4">
                         <button type="submit"
-                            class="px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200">
+                            class="btn btn-sm btn-primary">
                             Submit
                         </button>
                     </div>

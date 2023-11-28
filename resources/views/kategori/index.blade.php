@@ -104,6 +104,7 @@
             <div class="inputKategori p-4">
                 <label class="block text-sm font-medium text-gray-700" for="kategori">Nama Kategori:</label>
                 <input
+                    value="{{ old('tb_nama_kategori') }}"
                     class="mt-1 block w-full rounded-m shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                     type="text" name="tb_nama_kategori" id="tb_nama_kategori">
                 @error('tb_nama_kategori')
@@ -111,6 +112,7 @@
                 @enderror
                 <label class="block text-sm font-medium text-gray-700" for="external">ID External:</label>
                 <input
+                    value="{{ old('tb_external_id') }}"
                     class="mt-1 block w-full rounded-m shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                     type="text" name="tb_external_id" id="tb_external_id">
                 @error('tb_external_id')
@@ -119,7 +121,9 @@
                 <label class="block text-sm font-medium text-gray-700" for="deskripsiKategori">Deskripsi Kategori:</label>
                 <textarea
                     class="mt-1 block w-full rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                    name="tb_desk_kategori" id="tb_desk_kategori" cols="100" rows="3"></textarea>
+                    name="tb_desk_kategori" id="tb_desk_kategori" cols="100" rows="3">
+                    {{ old('tb_desk_kategori') }}
+                </textarea>
                 @error('tb_desk_kategori')
                     <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -139,6 +143,7 @@
         <table class="table w-full  border-spacing-3">
             <thead class="border-b ">
                 <tr>
+                    <th>#</th>
                     <th>Nama Kategori</th>
                     <th>Deskripsi Kategori</th>
                     <th>ID External</th>
@@ -146,8 +151,9 @@
             </thead>
             <tbody>
                 @forelse ($kategoriData as $item)
-                    <tr class="text-center " data-id="{{ $item->id }}">
-                        <td class="w-1/3 nama_kategori">{{ $item->nama_kategori }}</td>
+                    <tr class="text-start" data-id="{{ $item->id }}">
+                        <td >{{ $loop->iteration }}</td>
+                        <td class="nama_kategori">{{ $item->nama_kategori }}</td>
                         <td class="deskripsi_kategori">{{ $item->deskripsi_kategori }}</td>
                         <td class="external_kategori_id">{{ $item->external_kategori_id }}</td>
                         <td>

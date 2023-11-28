@@ -131,25 +131,28 @@
                     @enderror
                     <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
                 </div>
-            </div>
 
-            <div id="imageProduk" class="mb-3 mt-2">
-                <label for="imageProduk" class="block text-sm font-medium text-gray-700">Gambar Produk</label>
-                <img src="{{ asset('storage/' . $product->produk_file_path) }}" id="preview_img" class="h-fit w-full object-cover">
-                <input onchange="loadFile(event)"  value="" type="file" name="file_image_produk" id="file_image_produk"
-                    class="mt-1 block w-full
-                    rounded-md shadow-sm focus:border-indigo-300 focus:ring
-                    focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                    name="file_image_produk" id="file_image_produk">
-                @error('file_image_produk')
-                    <div class="text-red-500">{{ $message }}</div>
-                @enderror
-                <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
+                <div id="imageProduk" class="mb-3 mt-2">
+                    <label for="imageProduk" class="block text-sm font-medium text-gray-700">Gambar Produk</label>
+                    <img src="{{ asset('storage/' . $product->produk_file_path) }}" id="preview_img" class="h-fit w-full object-cover">
+                    <input onchange="loadFile(event)"  value="" type="file" name="file_image_produk" id="file_image_produk"
+                        class="mt-1 block w-full
+                        rounded-md shadow-sm focus:border-indigo-300 focus:ring
+                        focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
+                        name="file_image_produk" id="file_image_produk">
+                    @error('file_image_produk')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
+                    <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
+                </div>
             </div>
 
             <div class="buttonContainer flex justify-center p-4">
                 <button type="submit"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                    class="btn btn-sm btn-primary">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Save
+                </button>
             </div>
     </form>
 @endsection
