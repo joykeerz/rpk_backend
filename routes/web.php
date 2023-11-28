@@ -14,7 +14,9 @@ use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PajakController;
 use App\Http\Controllers\ReportingController;
+use App\Http\Controllers\SatuanUnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,7 +154,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///Banner Route
-    Route::prefix('banner')->middleware('restrictRole:2')->group(function () {
+    Route::prefix('banner')->middleware('restrictRole:2,3,4')->group(function () {
         Route::get('/', [BannerController::class, 'index'])->name('banner.index');
         Route::get('/create', [BannerController::class, 'create'])->name('banner.create');
         Route::post('/store', [BannerController::class, 'store'])->name('banner.store');
@@ -162,12 +164,32 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///Berita Route
-    Route::prefix('berita')->middleware('restrictRole:2')->group(function () {
+    Route::prefix('berita')->middleware('restrictRole:2,3,4')->group(function () {
         Route::get('/', [BeritaController::class, 'index'])->name('berita.index');
         Route::get('/create', [BeritaController::class, 'create'])->name('berita.create');
         Route::post('/store', [BeritaController::class, 'store'])->name('berita.store');
         Route::get('/show/{id}', [BeritaController::class, 'show'])->name('berita.show');
         Route::post('/update/{id}', [BeritaController::class, 'update'])->name('berita.update');
         Route::get('/delete/{id}', [BeritaController::class, 'delete'])->name('berita.delete');
+    });
+
+    ///Pajak Route
+    Route::prefix('pajak')->middleware('restrictRole:2,3,4')->group(function () {
+        Route::get('/', [PajakController::class, 'index'])->name('pajak.index');
+        Route::get('/create', [PajakController::class, 'create'])->name('pajak.create');
+        Route::post('/store', [PajakController::class, 'store'])->name('pajak.store');
+        Route::get('/show/{id}', [PajakController::class, 'show'])->name('pajak.show');
+        Route::post('/update/{id}', [PajakController::class, 'update'])->name('pajak.update');
+        Route::get('/delete/{id}', [PajakController::class, 'destroy'])->name('pajak.delete');
+    });
+
+    ///satuan unit route
+    Route::prefix('satuan-unit')->middleware('restrictRole:2,3,4')->group(function(){
+        Route::get('/', [SatuanUnitController::class, 'index'])->name('satuan-unit.index');
+        Route::get('/create', [SatuanUnitController::class, 'create'])->name('satuan-unit.create');
+        Route::post('/store', [SatuanUnitController::class, 'store'])->name('satuan-unit.store');
+        Route::get('/show/{id}', [SatuanUnitController::class, 'show'])->name('satuan-unit.show');
+        Route::post('/update/{id}', [SatuanUnitController::class, 'update'])->name('satuan-unit.update');
+        Route::get('/delete/{id}', [SatuanUnitController::class, 'destroy'])->name('satuan-unit.delete');
     });
 });

@@ -136,36 +136,65 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        //pajak
+        DB::table('pajak')->insert([
+            'nama_pajak' => 'Non Pajak',
+            'jenis_pajak' => 'Non',
+            'persentase_pajak' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        //satuan unit
+        DB::table('satuan_unit')->insert([
+            'nama_satuan' => 'none',
+            'simbol_satuan' => 'none',
+            'keterangan' => 'none',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('satuan_unit')->insert([
+            'nama_satuan' => 'Kilogram',
+            'simbol_satuan' => 'Kg',
+            'keterangan' => 'none',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         //produk
         DB::table('produk')->insert([
             'kategori_id' => 2,
+            'pajak_id' => 1,
+            'satuan_unit_id' => 2,
             'kode_produk' => 'B0001',
             'nama_produk' => 'Beras Al Hambra Biryani Kemasan',
             'desk_produk' => 'none',
             'diskon_produk' => 0,
-            'satuan_unit_produk' => 'gr',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('produk')->insert([
             'kategori_id' => 3,
+            'pajak_id' => 1,
+            'satuan_unit_id' => 2,
             'kode_produk' => 'M0001',
             'nama_produk' => 'Minyak Goreng Bimoli',
             'desk_produk' => 'none',
             'diskon_produk' => 0,
-            'satuan_unit_produk' => 'liter',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('produk')->insert([
             'kategori_id' => 4,
+            'pajak_id' => 1,
+            'satuan_unit_id' => 2,
             'kode_produk' => 'D0001',
             'nama_produk' => 'Daging Sapi Wagyu',
             'desk_produk' => 'none',
             'diskon_produk' => 0,
-            'satuan_unit_produk' => 'kg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

@@ -154,6 +154,7 @@
                                         class="mt-1 block w-full rounded-m shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                         <option selected value="{{ $transaksi->status_pemesanan }}">current :
                                             {{ $transaksi->status_pemesanan }}</option>
+                                        <option>menunggu verifikasi</option>
                                         <option>diproses</option>
                                         <option>dikirim</option>
                                         <option>selesai</option>

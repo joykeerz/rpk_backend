@@ -280,11 +280,13 @@
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('banner.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input Banner</a>
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                Banner</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('banner.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage Banner</a>
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                Banner</a>
                         </li>
                     </ul>
                 </li>
@@ -302,11 +304,61 @@
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('berita.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input Berita</a>
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                Berita</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('berita.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage Berita</a>
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                Berita</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+            @if (Auth::user()->role_id == 2)
+                <li>
+                    <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        onclick="toggleSubMenu('pajakSubMenu')">
+                        <i class="fa-solid fa-coins text-gray-500 text-2xl"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Pajak</span>
+                        <svg class="submenuOption"></svg>
+                    </a>
+                    <ul id="pajakSubMenu"
+                        class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('pajak.create') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                Pajak</a>
+                        </li>
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('pajak.index') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                Pajak</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+            @if (Auth::user()->role_id == 2)
+                <li>
+                    <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        onclick="toggleSubMenu('satuanUnitSubMenu')">
+                        <i class="fa-solid fa-boxes-stacked text-gray-500 text-2xl"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Satuan Unit</span>
+                        <svg class="submenuOption"></svg>
+                    </a>
+                    <ul id="satuanUnitSubMenu"
+                        class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('satuan-unit.create') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                Satuan Unit</a>
+                        </li>
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('satuan-unit.index') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                Satuan Unit</a>
                         </li>
                     </ul>
                 </li>

@@ -90,13 +90,32 @@
                                     block border w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                     <option disabled selected>Open this select menu</option>
-                                    <option value="Kg">Kg</option>
-                                    <option value="Gram">Gram</option>
-                                    <option value="Liter">Liter</option>
-                                    <option value="Unit">Unit</option>
-                                    <option value="Box">Box</option>
+                                    @forelse ($satuanData as $satuan)
+                                        <option value="{{ $satuan->id }}">{{ $satuan->simbol_satuan }}</option>
+
+                                    @empty
+                                        <option disabled>No Data</option>
+                                    @endforelse
                                 </select>
                                 @error('tb_satuan')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div id="pajakProduk" class="mb-3">
+                                <label for="pajakProduk" class="block text-sm font-medium text-gray-700">Pajak</label>
+                                <select id="tb_pajak" name="tb_pajak"
+                                    class="
+                                    block border w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
+                                    focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
+                                    <option disabled selected>Open this select menu</option>
+                                    @forelse ($pajakData as $pajak)
+                                        <option value="{{ $pajak->id }}">{{ $pajak->nama_pajak }}</option>
+                                    @empty
+                                        <option disabled>No Data</option>
+                                    @endforelse
+                                </select>
+                                @error('tb_pajak')
                                     <div class="text-red-500">{{ $message }}</div>
                                 @enderror
                             </div>

@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('kategori_id');
+            $table->unsignedInteger('pajak_id')->default(0);
+            $table->unsignedInteger('satuan_unit_id')->default(0);
+            $table->unsignedBigInteger('product_file_id')->nullable();
             $table->string('kode_produk');
             $table->string('nama_produk');
             $table->string('desk_produk');
             $table->float('diskon_produk')->default(0);
-            $table->string('satuan_unit_produk');
             $table->unsignedBigInteger('external_produk_id')->nullable();
-            $table->unsignedBigInteger('product_file_id')->nullable();
             //make column for image
             $table->string('produk_file_path')->nullable();
             $table->timestamps();

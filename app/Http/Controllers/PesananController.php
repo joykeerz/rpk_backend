@@ -152,19 +152,11 @@ class PesananController extends Controller
 
         $transaksi = new Transaksi;
         $transaksi->pesanan_id = $pesanan->id;
-        $transaksi->status_pembayaran = 'belum dibayar';
+        $transaksi->status_pembayaran = 'menunggu verifikasi';
         $transaksi->subtotal_produk = $subtotal_produk;
         $transaksi->total_qty = $total_qty;
         $transaksi->total_pembayaran = $subtotal_produk + $subtotal_pengiriman;
         $transaksi->save();
-
-        // $transaksi = new Transaksi;
-        // $transaksi->pesanan_id = $pesanan->id;
-        // $transaksi->tipe_pembayaran = $request->cb_tipe_pembayaran;
-        // $transaksi->status_pembayaran = 'belum dibayar';
-        // $transaksi->subtotal_produk = $total;
-        // $transaksi->subtotal_pengiriman = $request->tb_subtotal_pengiriman;
-        // $transaksi->save();
 
         return response()->json([
             'message' => 'Pesanan berhasil ditambahkan',
