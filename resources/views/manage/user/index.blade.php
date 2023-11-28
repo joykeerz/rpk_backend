@@ -17,8 +17,11 @@
             </h2>
             @if (Auth::user()->role_id != 3)
                 <div class="button">
-                    <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200"
-                        href="{{ route('manage.user.new') }}">New User</a>
+                    <a class="btn btn-sm btn-primary"
+                        href="{{ route('manage.user.new') }}">
+                        <i class="fa-solid fa-add"></i>
+                        New User
+                    </a>
                 </div>
             @endif
         </div>
@@ -135,15 +138,20 @@
                         @if (Auth::user()->role_id != 3)
                             <td class="flex justify-evenly p-2">
                                 <a href="{{ route('manage.user.verify', ['id' => $ud->uid]) }}"
-                                    class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-green-500 hover:text-white duration-200">Verify
+                                    class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-green-500 hover:text-white duration-200">
+                                    <i class="fa-solid fa-check"></i>
+                                    Verify
                                 </a>
 
                                 <a href="{{ route('manage.user.reject', ['id' => $ud->uid]) }}"
-                                    class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-red-500 hover:text-white duration-200">Reject
+                                    class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-red-500 hover:text-white duration-200">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    Reject
                                 </a>
 
                                 <a href="{{ route('manage.user.edit', ['id' => $ud->uid]) }}"
-                                    class="bg-blue-500 text-white py-1 px-3 rounded-lg">Manage
+                                    class="btn btn-sm btn-primary">
+                                    <i class="fa-solid fa-eye"></i>
                                 </a>
                             </td>
                         @endif

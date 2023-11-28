@@ -27,6 +27,11 @@
             <div class="w-full ">
                 <div class="bg-white rounded-lg shadow-md">
                     <div class="p-4 w-full mx-3">
+                        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                            role="alert">
+                            <strong class="font-bold">Perhatian!</strong>
+                            <span class="block sm:inline">Pastikan semua data bersimbol * terisi dengan benar</span>
+                        </div>
                         <form enctype="multipart/form-data" method="POST" action="{{ route('customer.store') }}">
                             <div class="flex w-full justify-between">
                                 @csrf
@@ -36,8 +41,8 @@
                                         <hr class="my-4">
                                         <div class="mb-4">
                                             <label for="tb_nama_user"
-                                                class="block text-sm font-medium text-gray-700">Name</label>
-                                            <input required id="tb_nama_user" type="text"
+                                                class="block text-sm font-medium text-gray-700">Name*</label>
+                                            <input value="{{ old('tb_nama_user') }}" id="tb_nama_user" type="text"
                                                 class="border rounded-md py-2 px-3 w-full" name="tb_nama_user"
                                                 placeholder="">
                                             @error('tb_nama_user')
@@ -47,8 +52,8 @@
 
                                         <div class="mb-4">
                                             <label for="tb_email_user"
-                                                class="block text-sm font-medium text-gray-700">Email</label>
-                                            <input required id="tb_email_user" type="text"
+                                                class="block text-sm font-medium text-gray-700">Email*</label>
+                                            <input value="{{ old('tb_email_user') }}" id="tb_email_user" type="text"
                                                 class="border rounded-md py-2 px-3 w-full" name="tb_email_user"
                                                 placeholder="">
                                             @error('tb_email_user')
@@ -58,10 +63,10 @@
 
                                         <div class="mb-4">
                                             <label for="tb_password_user"
-                                                class="block text-sm font-medium text-gray-700">Password</label>
-                                            <input required id="tb_password_user" type="password"
-                                                class="border rounded-md py-2 px-3 w-full" name="tb_password_user"
-                                                placeholder="">
+                                                class="block text-sm font-medium text-gray-700">Password*</label>
+                                            <input value="{{ old('tb_password_user') }}" id="tb_password_user"
+                                                type="password" class="border rounded-md py-2 px-3 w-full"
+                                                name="tb_password_user" placeholder="">
                                             @error('tb_password_user')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
@@ -69,8 +74,8 @@
 
                                         <div class="mb-4">
                                             <label for="tb_hp_user" class="block text-sm font-medium text-gray-700">No.
-                                                Handphone</label>
-                                            <input required id="tb_hp_user" type="text"
+                                                Handphone*</label>
+                                            <input value="{{ old('tb_hp_user') }}" id="tb_hp_user" type="text"
                                                 class="border rounded-md py-2 px-3 w-full" name="tb_hp_user" placeholder="">
                                             @error('tb_hp_user')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -83,31 +88,47 @@
                                             <div class="mb-4">
                                                 <label for="tb_nama_rpk"
                                                     class="leading-7 block text-sm font-medium text-gray-700">Nama
-                                                    RPK</label>
-                                                <input required type="text" id="tb_nama_rpk" name="tb_nama_rpk"
+                                                    RPK*</label>
+                                                <input value="{{ old('tb_nama_rpk') }}" type="text" id="tb_nama_rpk"
+                                                    name="tb_nama_rpk"
                                                     class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
+                                                @error('tb_nama_rpk')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
                                             </div>
                                             <div class="mb-4">
                                                 <label for="tb_kode_customer"
-                                                    class="leading-7 block text-sm font-medium text-gray-700"> Kode RPK
+                                                    class="leading-7 block text-sm font-medium text-gray-700"> Kode RPK*
                                                 </label>
-                                                <input type="text" name="tb_kode_customer" id=""
+                                                <input value="{{ old('tb_kode_customer') }}" type="text"
+                                                    name="tb_kode_customer" id="tb_kode_customer"
                                                     class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
+                                                @error('tb_kode_customer')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
                                             </div>
                                             <div class="mb-4">
                                                 <label for="tb_ktp_rpk"
                                                     class="leading-7 block text-sm font-medium text-gray-700">KTP
-                                                    RPK</label>
-                                                <input required type="text" id="tb_ktp_rpk" name="tb_ktp_rpk"
+                                                    RPK*</label>
+                                                <input value="{{ old('tb_ktp_rpk') }}" type="text" id="tb_ktp_rpk"
+                                                    name="tb_ktp_rpk"
                                                     class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
+                                                @error('tb_ktp_rpk')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
                                             </div>
                                             <div class="mb-4">
                                                 <label for="tb_img_ktp"
                                                     class="leading-7 block text-sm font-medium text-gray-700">KTP
-                                                    IMG</label>
+                                                    Image*</label>
                                                 <img id="preview_img" class="h-56 w-full object-cover">
-                                                <input onchange="loadFile(event)" type="file" id="tb_img_ktp" name="tb_img_ktp"
+                                                <input value="{{ old('tb_img_ktp') }}" onchange="loadFile(event)"
+                                                    type="file" id="tb_img_ktp" name="tb_img_ktp"
                                                     class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
+                                                @error('tb_img_ktp')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -119,74 +140,111 @@
                                         <h4 class="text-lg font-semibold">Alamat</h4>
                                         <hr class="my-4">
 
-
                                         <div class="mb-4">
                                             <label for="tb_jalan"
-                                                class="block text-sm font-medium text-gray-700">Jalan</label>
-                                            <input type="text" class="border rounded-md py-2 px-3 w-full" name="tb_jalan"
+                                                class="block text-sm font-medium text-gray-700">Jalan*</label>
+                                            <input value="{{ old('tb_jalan') }}" type="text"
+                                                class="border rounded-md py-2 px-3 w-full" name="tb_jalan"
                                                 placeholder="">
+                                            @error('tb_jalan')
+                                                <p class="text-red-500 text-sm">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="mb-4">
                                             <label for="tb_jalan_2" class="block text-sm font-medium text-gray-700">Jalan
                                                 2</label>
-                                            <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                name="tb_jalan_2" placeholder="">
+                                            <input value="{{ old('tb_jalan_2') }}" type="text"
+                                                class="border rounded-md py-2 px-3 w-full" name="tb_jalan_2"
+                                                placeholder="">
+                                                @error('tb_jalan_2')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
                                         </div>
                                         <div class="mb-4">
                                             <label for="tb_blok"
                                                 class="block text-sm font-medium text-gray-700">Blok</label>
-                                            <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                name="tb_blok" placeholder="">
+                                            <input value="{{ old('tb_blok') }}" type="text"
+                                                class="border rounded-md py-2 px-3 w-full" name="tb_blok" placeholder="">
+                                                @error('tb_blok')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
                                         </div>
                                         <div class="grid grid-cols-2 gap-4">
                                             <div class="mb-4">
                                                 <label for="tb_rt"
                                                     class="block text-sm font-medium text-gray-700">RT</label>
-                                                <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    name="tb_rt" placeholder="">
+                                                <input value="{{ old('tb_rt') }}" type="text"
+                                                    class="border rounded-md py-2 px-3 w-full" name="tb_rt"
+                                                    placeholder="">
+                                                    @error('tb_rt')
+                                                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                    @enderror
                                             </div>
                                             <div class="mb-4">
                                                 <label for="tb_rw"
                                                     class="block text-sm font-medium text-gray-700">RW</label>
-                                                <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    name="tb_rw" placeholder="">
+                                                <input value="{{ old('tb_rw') }}" type="text"
+                                                    class="border rounded-md py-2 px-3 w-full" name="tb_rw"
+                                                    placeholder="">
+                                                    @error('tb_rw')
+                                                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                    @enderror
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-2 gap-4">
                                             <div class="mb-4">
                                                 <label for="tb_prov"
-                                                    class="block text-sm font-medium text-gray-700">Provinsi</label>
+                                                    class="block text-sm font-medium text-gray-700">Provinsi*</label>
 
-                                                <input type="text" name="tb_prov" id="tb_prov"
-                                                    class="border rounded-md py-2 px-3 w-full">
+                                                <input value="{{ old('tb_prov') }}" type="text" name="tb_prov"
+                                                    id="tb_prov" class="border rounded-md py-2 px-3 w-full">
+                                                    @error('tb_prov')
+                                                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                    @enderror
                                             </div>
                                             <div class="mb-4">
                                                 <label for="tb_kota"
-                                                    class="block text-sm font-medium text-gray-700">Kota/Kabupaten</label>
-                                                <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    name="tb_kota" placeholder="">
+                                                    class="block text-sm font-medium text-gray-700">Kota/Kabupaten*</label>
+                                                <input value="{{ old('tb_kota') }}" type="text"
+                                                    class="border rounded-md py-2 px-3 w-full" name="tb_kota"
+                                                    placeholder="">
+                                                    @error('tb_kota')
+                                                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                    @enderror
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-2 gap-4">
                                             <div class="mb-4">
                                                 <label for="tb_kecamatan"
-                                                    class="block text-sm font-medium text-gray-700">Kecamatan</label>
-                                                <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    name="tb_kecamatan" placeholder="">
+                                                    class="block text-sm font-medium text-gray-700">Kecamatan*</label>
+                                                <input value="{{ old('tb_kecamatan') }}" type="text"
+                                                    class="border rounded-md py-2 px-3 w-full" name="tb_kecamatan"
+                                                    placeholder="">
+                                                    @error('tb_kecamatan')
+                                                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                    @enderror
                                             </div>
                                             <div class="mb-4">
                                                 <label for="tb_kelurahan"
                                                     class="block text-sm font-medium text-gray-700">Kelurahan</label>
-                                                <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    name="tb_kelurahan" placeholder="">
+                                                <input value="{{ old('tb_kelurahan') }}" type="text"
+                                                    class="border rounded-md py-2 px-3 w-full" name="tb_kelurahan"
+                                                    placeholder="">
+                                                    @error('tb_kelurahan')
+                                                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                    @enderror
                                             </div>
                                         </div>
                                         <div class="mb-4">
                                             <label for="tb_kodepos" class="block text-sm font-medium text-gray-700">Kode
-                                                Pos</label>
+                                                Pos*</label>
 
-                                            <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                name="tb_kodepos" placeholder="">
+                                            <input value="{{ old('tb_kodepos') }}" type="text"
+                                                class="border rounded-md py-2 px-3 w-full" name="tb_kodepos"
+                                                placeholder="">
+                                                @error('tb_kodepos')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
                                         </div>
                                         <button type="submit"
                                             class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Create

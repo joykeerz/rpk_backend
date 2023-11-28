@@ -93,5 +93,12 @@ class PajakController extends Controller
 
     public function search(Request $request)
     {
+        $search = $request->get('search');
+        $pajak = Pajak::where(function ($query) use ($search) {
+            $query->where('nama_pajak', 'like', '%' . $search . '%')
+                ->orWhere('jenis_pajak', 'like', '%' . $search . '%')
+                ->orWhere('persentase_pajak', 'like', '%' . $search . '%');
+        })->paginate(15);
+        return view('pajak.index', compact('pajak'));
     }
 }

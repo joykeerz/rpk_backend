@@ -26,6 +26,21 @@ class BranchController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'cb_company_id' => 'required',
+            'tb_nama_branch' => 'required',
+            'tb_no_telp_branch' => 'required|numeric',
+            'tb_alamat_branch' => 'required',
+            'tb_id_external' => 'required',
+        ],[
+            'cb_company_id.required' => 'Nama Company harus diisi',
+            'tb_nama_branch.required' => 'Nama Branch harus diisi',
+            'tb_no_telp_branch.required' => 'No Telp harus diisi',
+            'tb_alamat_branch.required' => 'Alamat harus diisi',
+            'tb_id_external.required' => 'ID External harus diisi',
+            'tb_no_telp_branch.numeric' => 'No Telp harus berupa angka',
+        ]);
+
         $branch = new Branch;
         $branch->company_id = $request->cb_company_id;
         $branch->nama_branch = $request->tb_nama_branch;

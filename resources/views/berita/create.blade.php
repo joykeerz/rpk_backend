@@ -69,34 +69,35 @@
                                 @enderror
                                 <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
                             </div>
+                            <div id="imageBerita" class="mb-3">
+                                <label for="imageBerita" class="block text-sm font-medium text-gray-700">Gambar
+                                    Banner</label>
+                                <img id="preview_img" class="h-fit w-full object-cover">
+                                <input onchange="loadFile(event)" value="0" type="file" name="gambar_berita"
+                                    id="gambar_berita"
+                                    class="mt-1 block w-full
+                                    rounded-md shadow-sm focus:border-indigo-300 focus:ring
+                                    focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
+                                    name="gambar_berita" id="gambar_berita">
+                                @error('gambar_berita')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+
+                            <div id="deksripsiBerita" class="mb-3">
+                                <label for="deskripsi_berita" class="block text-sm font-medium text-gray-700">Isi Berita</label>
+                                <textarea
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
+                                    name="deskripsi_berita" id="deskripsi_berita" cols="30" rows="2"></textarea>
+
+                                @error('deskripsi_berita')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
-                        <div id="imageBerita" class="mb-3">
-                            <label for="imageBerita" class="block text-sm font-medium text-gray-700">Gambar
-                                Banner</label>
-                            <img id="preview_img" class="h-fit w-full object-cover">
-                            <input onchange="loadFile(event)" value="0" type="file" name="gambar_berita"
-                                id="gambar_berita"
-                                class="mt-1 block w-full
-                                rounded-md shadow-sm focus:border-indigo-300 focus:ring
-                                focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                                name="gambar_berita" id="gambar_berita">
-                            @error('gambar_berita')
-                                <div class="text-red-500">{{ $message }}</div>
-                            @enderror
 
-                        </div>
-
-                        <div id="deksripsiBerita" class="mb-3">
-                            <label for="deskripsi_berita" class="block text-sm font-medium text-gray-700">Isi Berita</label>
-                            <textarea
-                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
-                                name="deskripsi_berita" id="deskripsi_berita" cols="30" rows="10"></textarea>
-
-                            @error('deskripsi_berita')
-                                <div class="text-red-500">{{ $message }}</div>
-                            @enderror
-                        </div>
 
                         <div class="buttonContainer flex justify-center">
                             <button type="submit"

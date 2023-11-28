@@ -41,7 +41,7 @@
                         <td>{{ $stock->nama_kategori }}</td>
                         <td>{{ 'Rp ' . number_format($stock->harga_stok, 2) }}</td>
                         <td>{{ $stock->jumlah_stok }}</td>
-                        <td>{{ $stock->satuan_unit_produk }}</td>
+                        <td>{{ $stock->simbol_satuan }}</td>
                         <td>{{ $stock->nama_gudang }}</td>
                         <td>{{ $stock->diskon_produk }}%</td>
                         {{-- <td>
