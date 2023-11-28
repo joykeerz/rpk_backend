@@ -54,6 +54,7 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
+        dd(storage_path());
         $validatedData = $request->validate([
             'tb_kode_customer' => 'required',
             'tb_nama_rpk' => 'required',
