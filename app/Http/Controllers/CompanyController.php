@@ -48,9 +48,28 @@ class CompanyController extends Controller
     {
         $validated = $request->validate([
             'tb_kode_company' => 'required|unique:companies,kode_company',
+            'tb_nama_company' => 'required',
+            'tb_partner_company' => 'required',
+            'tb_tagline_company' => 'required',
+            'tb_jalan' => 'required',
+            'tb_prov' => 'required',
+            'tb_kota' => 'required',
+            'tb_kecamatan' => 'required',
+            'tb_kodepos' => 'required',
+            'tb_user_id' => 'required'
         ], [
             'tb_kode_company.required' => 'Kode Company harus diisi',
             'tb_kode_company.unique' => 'Kode Company sudah terdaftar',
+            'tb_nama_company.required' => 'Nama Company harus diisi',
+            'tb_partner_company.required' => 'Partner Company harus diisi',
+            'tb_tagline_company.required' => 'Tagline Company harus diisi',
+            'tb_jalan.required' => 'Jalan harus diisi',
+            'tb_prov.required' => 'Provinsi harus diisi',
+            'tb_kota.required' => 'Kota harus diisi',
+            'tb_kecamatan.required' => 'Kecamatan harus diisi',
+            'tb_kodepos.required' => 'Kode Pos harus diisi',
+            'tb_user_id.required' => 'User harus diisi'
+
         ]);
 
         $alamat = new Alamat;
