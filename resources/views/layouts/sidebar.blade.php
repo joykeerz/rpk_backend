@@ -28,7 +28,7 @@
                         onclick="toggleSubMenu('barangSubMenu')">
                         <svg stroke="#9CA3AF" class="barangMenu  w-5 h-5 ">
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Barang</span>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Produk</span>
                         <svg class="openMenu"></svg>
                     </a>
                     <ul id="barangSubMenu"
@@ -37,12 +37,12 @@
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('product.index') }}"
                                 class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
-                                Barang</a>
+                                Produk</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('product.manage') }}"
                                 class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
-                                Barang</a>
+                                Produk</a>
                         </li>
                     </ul>
                 </li>

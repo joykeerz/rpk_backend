@@ -1,7 +1,5 @@
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
         $('#searchInput').on('input', function() {
             var searchValue = $(this).val().toLowerCase();
             $('tbody tr').filter(function() {
@@ -17,5 +15,7 @@
 </script>
 
 <div class="searchBar flex justify-center m-3">
-    <input type="text" id="searchInput" class="rounded-md border-gray border shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3 py-2 w-1/4" placeholder="Search...">
+    <input type="text" id="searchInput"
+        class="rounded-md border-gray border shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3 py-2 w-1/4"
+        placeholder="Search...">
 </div>

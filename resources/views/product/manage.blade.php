@@ -7,12 +7,13 @@
     @include('layouts.sidebar')
 @endsection
 
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
+@endsection
+
 @section('content')
-    <script>
-        function confirmDelete() {
-            return confirm("Are you sure you want to delete this product?");
-        }
-    </script>
     <header class="bg-gray-200 p-4">
         <h2>
             Manage Product
@@ -23,13 +24,14 @@
 
     @include('layouts.searchbar')
     <div class="overflow-auto m-3">
-        <table class="min-w-full bg-white text-center">
+        <table id="myTable" class="min-w-full bg-white text-center">
             <thead>
                 <tr class="text-center">
                     <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Gambar
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
+                    </th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori
                     </th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions
@@ -46,8 +48,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $pd->nama_produk }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $pd->nama_kategori }}</td>
                         <td class="px-6 py-4 whitespace-nowrap flex justify-center">
-                            <a href="{{ route('product.show', ['id' => $pd->pid]) }}"
-                                class="btn btn-sm btn-primary mr-1">
+                            <a href="{{ route('product.show', ['id' => $pd->pid]) }}" class="btn btn-sm btn-primary mr-1">
                                 {{-- <svg class="showIcon"> </svg> --}}
                                 <i class="fa-solid fa-eye"></i>
                             </a>
@@ -66,9 +67,28 @@
                 @endforelse
             </tbody>
         </table>
-    {{ $products->links('pagination::tailwind') }}
+        {{ $products->links('pagination::tailwind') }}
 
     </div>
 
     <link rel="stylesheet" href="{{ asset('svg.css') }}">
+@endsection
+
+@section('script')
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this product?");
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                responsive: true,
+                searching: false,
+                ordering: true,
+                paging: false,
+                info: false,
+            });
+        });
+    </script>
 @endsection

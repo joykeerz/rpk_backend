@@ -7,9 +7,13 @@
     @include('layouts.sidebar')
 @endsection
 
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
+@endsection
 
 @section('content')
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <header class="bg-gray-200 py-1">
         <div class="title flex m-5 justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -17,8 +21,7 @@
             </h2>
             @if (Auth::user()->role_id != 3)
                 <div class="button">
-                    <a class="btn btn-sm btn-primary"
-                        href="{{ route('manage.user.new') }}">
+                    <a class="btn btn-sm btn-primary" href="{{ route('manage.user.new') }}">
                         <i class="fa-solid fa-add"></i>
                         New User
                     </a>
@@ -26,6 +29,8 @@
             @endif
         </div>
     </header>
+    @include('layouts.alert')
+
     @if (Session::has('message'))
         <div class="bg-green-200 border-t border-b border-white-500  px-4 py-3 relative" role="alert" id="alertMessage">
             <p>{{ Session::get('message') }}.</p>
@@ -97,10 +102,10 @@
 
 
     <div class="table-responsive mx-3">
-        <table class="min-w-full divide-y divide-gray-200 text-center">
+        <table id="myTable" class="min-w-full divide-y divide-gray-200 text-center">
             <thead class="text-center">
                 <tr>
-                    <th scope="col">No</th>
+                    <th scope="col">#</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Email</th>
                     <th scope="col">No.Hp</th>
@@ -138,13 +143,13 @@
                         @if (Auth::user()->role_id != 3)
                             <td class="flex justify-evenly p-2">
                                 <a href="{{ route('manage.user.verify', ['id' => $ud->uid]) }}"
-                                    class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-green-500 hover:text-white duration-200">
+                                    class="btn btn-sm btn primary mr-1">
                                     <i class="fa-solid fa-check"></i>
                                     Verify
                                 </a>
 
                                 <a href="{{ route('manage.user.reject', ['id' => $ud->uid]) }}"
-                                    class="bg-gray-300 text-gray-700 py-1 px-3 rounded-lg hover:bg-red-500 hover:text-white duration-200">
+                                    class="btn btn-sm btn-outline mr-1">
                                     <i class="fa-solid fa-xmark"></i>
                                     Reject
                                 </a>
@@ -164,7 +169,21 @@
 
                 </tbody>
             </table>
-    {{ $usersData->links('pagination::tailwind') }}
+            {{ $usersData->links('pagination::tailwind') }}
 
         </div>
+    @endsection
+
+    @section('script')
+        <script>
+            $(document).ready(function() {
+                $('#myTable').DataTable({
+                    responsive: true,
+                    searching: false,
+                    ordering: true,
+                    paging: false,
+                    info: false,
+                });
+            });
+        </script>
     @endsection
