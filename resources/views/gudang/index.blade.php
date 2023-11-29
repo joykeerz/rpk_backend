@@ -43,12 +43,12 @@
                         </td>
                         <td class="p-3 flex justify-center">
                             <a href="{{ route('gudang.show', ['id' => $gudang->gid]) }}"
-                                class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                                <svg class="showIcon"> </svg>
+                                class="btn btn-sm btn-primary mr-2">
+                                <i class="fa-solid fa-eye"></i>
                             </a>
                             <a href="{{ route('gudang.delete', ['id' => $gudang->gid]) }}" onclick="return confirmDelete();"
-                                class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
-                                <svg class="deleteIcon"></svg>
+                                class="btn btn-sm btn-error text-white">
+                                <i class="fa-solid fa-trash"></i>
                             </a>
 
                         </td>

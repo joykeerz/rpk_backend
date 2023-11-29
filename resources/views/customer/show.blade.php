@@ -8,6 +8,10 @@
     @include('layouts.sidebar')
 @endsection
 
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@endsection
+
 @section('content')
     <header class="bg-gray-200 p-3">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -169,9 +173,11 @@
                                                 <label for="tb_prov"
                                                     class="block text-sm font-medium text-gray-700">Provinsi</label>
 
-                                                <input type="text" name="tb_prov" id="tb_prov"
-                                                    value="{{ $customer->provinsi }}"
+                                                <select onchange="loadKota(event);" name="tb_prov" id="tb_prov"
                                                     class="border rounded-md py-2 px-3 w-full">
+                                                    {{-- <option class="bg-slate-400 text-white" selected value="{{ $customer->provinsi }}">
+                                                        {{ $customer->provinsi }}</option> --}}
+                                                </select>
 
                                                 @error('tb_prov')
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -180,9 +186,14 @@
                                             <div class="mb-4">
                                                 <label for="tb_kota"
                                                     class="block text-sm font-medium text-gray-700">Kota/Kabupaten</label>
-                                                <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    value="{{ $customer->kota_kabupaten }}" name="tb_kota"
-                                                    placeholder="">
+
+                                                <select onchange="loadKecamatan(event);" name="tb_kota" id="tb_kota"
+                                                    class="border rounded-md py-2 px-3 w-full">
+                                                    <option class="bg-slate-400 text-white" selected
+                                                        value="{{ $customer->kota_kabupaten }}">
+                                                        {{ $customer->kota_kabupaten }}</option>
+                                                </select>
+
                                                 @error('tb_kota')
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                                 @enderror
@@ -192,9 +203,12 @@
                                             <div class="mb-4">
                                                 <label for="tb_kecamatan"
                                                     class="block text-sm font-medium text-gray-700">Kecamatan</label>
-                                                <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    value="{{ $customer->kecamatan }}" name="tb_kecamatan"
-                                                    placeholder="">
+                                                <select onchange="loadKelurahan(event);" name="tb_kecamatan"
+                                                    id="tb_kecamatan" class="border rounded-md py-2 px-3 w-full">
+                                                    <option class="bg-slate-400 text-white" selected
+                                                        value="{{ $customer->kecamatan }}">
+                                                        {{ $customer->kecamatan }}</option>
+                                                </select>
                                                 @error('tb_kecamatan')
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                                 @enderror
@@ -202,9 +216,12 @@
                                             <div class="mb-4">
                                                 <label for="tb_kelurahan"
                                                     class="block text-sm font-medium text-gray-700">Kelurahan</label>
-                                                <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    value="{{ $customer->kelurahan }}" name="tb_kelurahan"
-                                                    placeholder="">
+                                                <select name="tb_kelurahan" id="tb_kelurahan"
+                                                    class="border rounded-md py-2 px-3 w-full">
+                                                    <option class="bg-slate-400 text-white" selected
+                                                        value="{{ $customer->kelurahan }}">
+                                                        {{ $customer->kelurahan }}</option>
+                                                </select>
                                                 @error('tb_kelurahan')
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                                 @enderror
@@ -235,4 +252,167 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            var id_prov_init;
+            var id_kota_init;
+            var id_kecamatan_init;
+            var id_kelurahan_init;
+
+            $.ajax({
+                url: "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    $.each(result, function(key, value) {
+                        if (value.name == '{{ $customer->provinsi }}') {
+                            $('#tb_prov').append('<option selected data-id="' + value.id +
+                                '">' + value
+                                .name + '</option>');
+                            id_prov_init = value.id;
+                        }
+                        $('#tb_prov').append('<option data-id="' + value.id + '">' + value
+                            .name + '</option>');
+                    });
+                }
+            }).done(function() {
+                $.ajax({
+                    url: "https://www.emsifa.com/api-wilayah-indonesia/api/regencies/" +
+                        id_prov_init +
+                        ".json",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(result) {
+                        $.each(result, function(key, value) {
+                            if (value.name == '{{ $customer->kota_kabupaten }}') {
+                                $('#tb_kota').append('<option selected data-id="' +
+                                    value.id +
+                                    '">' + value
+                                    .name + '</option>');
+                                id_kota_init = value.id;
+                            }
+                            $('#tb_kota').append('<option data-id="' + value.id + '">' +
+                                value
+                                .name + '</option>');
+                        });
+                    }
+                }).done(function() {
+                    $.ajax({
+                        url: "https://www.emsifa.com/api-wilayah-indonesia/api/districts/" +
+                            id_kota_init +
+                            ".json",
+                        type: "GET",
+                        dataType: "json",
+                        success: function(result) {
+                            $.each(result, function(key, value) {
+                                if (value.name ==
+                                    '{{ $customer->kecamatan }}') {
+                                    $('#tb_kecamatan').append(
+                                        '<option selected data-id="' +
+                                        value.id +
+                                        '">' + value
+                                        .name + '</option>');
+                                    id_kecamatan_init = value.id;
+                                }
+                                $('#tb_kecamatan').append('<option data-id="' +
+                                    value.id + '">' +
+                                    value
+                                    .name + '</option>');
+                            });
+                        }
+                    }).done(function() {
+                        $.ajax({
+                            url: "https://www.emsifa.com/api-wilayah-indonesia/api/villages/" +
+                                id_kecamatan_init +
+                                ".json",
+                            type: "GET",
+                            dataType: "json",
+                            success: function(result) {
+                                $.each(result, function(key, value) {
+                                    if (value.name ==
+                                        '{{ $customer->kelurahan }}') {
+                                        $('#tb_kelurahan').append(
+                                            '<option selected data-id="' +
+                                            value.id +
+                                            '">' + value
+                                            .name + '</option>');
+                                        id_kelurahan_init = value.id;
+                                    }
+                                    $('#tb_kelurahan').append(
+                                        '<option data-id="' + value
+                                        .id + '">' +
+                                        value
+                                        .name + '</option>');
+                                });
+                            }
+                        })
+                    })
+                })
+            });
+        });
+    </script>
+    <script>
+        var loadKota = function(event) {
+            var id_prov = $('#tb_prov').find(':selected').data('id');
+            $.ajax({
+                url: "https://www.emsifa.com/api-wilayah-indonesia/api/regencies/" + id_prov +
+                    ".json",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    $('#tb_kota').empty();
+                    $('#tb_kecamatan').empty();
+                    $('#tb_kelurahan').empty();
+                    $('#tb_kota').append('<option disabled selected>Pilih Kota/Kabupaten</option>');
+                    $('#tb_kecamatan').append('<option disabled selected>Pilih Kecamatan</option>');
+                    $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
+                    $.each(result, function(key, value) {
+                        $('#tb_kota').append('<option data-id="' + value.id + '">' + value
+                            .name + '</option>');
+                    });
+                }
+            });
+        };
+
+        var loadKecamatan = function(event) {
+            var id_kota = $('#tb_kota').find(':selected').data('id');
+            $.ajax({
+                url: "https://www.emsifa.com/api-wilayah-indonesia/api/districts/" + id_kota +
+                    ".json",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    $('#tb_kecamatan').empty();
+                    $('#tb_kecamatan').append('<option disabled selected>Pilih Kecamatan</option>');
+                    $('#tb_kelurahan').empty();
+                    $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
+                    $.each(result, function(key, value) {
+                        $('#tb_kecamatan').append('<option data-id="' + value.id + '">' + value
+                            .name + '</option>');
+                    });
+                }
+            });
+        }
+
+        var loadKelurahan = function(event) {
+            var id_kecamatan = $('#tb_kecamatan').find(':selected').data('id');
+            $.ajax({
+                url: "https://www.emsifa.com/api-wilayah-indonesia/api/villages/" + id_kecamatan +
+                    ".json",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    $('#tb_kelurahan').empty();
+                    $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
+                    $.each(result, function(key, value) {
+                        $('#tb_kelurahan').append('<option data-id="' + value.id + '">' + value
+                            .name + '</option>');
+                    });
+                }
+            });
+        }
+    </script>
 @endsection
