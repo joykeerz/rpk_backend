@@ -7,8 +7,13 @@
     @include('layouts.sidebar')
 @endsection
 
-@section('content')
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
+@endsection
 
+@section('content')
     <script>
         function confirmDelete() {
             return confirm("Are you sure you want to delete this product?");
@@ -24,7 +29,7 @@
     @include('layouts.searchbar')
 
     <div class="overflow-y-auto m-3">
-        <table class="min-w-full table-auto border">
+        <table id="myTable" class="min-w-full table-auto border">
             <thead class="border text-center">
                 <tr class="">
                     <th class="p-3">Nama Gudang</th>
@@ -34,7 +39,7 @@
             </thead>
             <tbody class="text-center">
                 @forelse ($gudangData as $gudang)
-                    <tr class="border {{ $loop->even ? 'bg-gray-100' : 'bg-white'}} ">
+                    <tr class="border {{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
                         <td class="p-3">{{ $gudang->nama_gudang }}</td>
                         <td class="p-3">
                             Provinsi: {{ $gudang->provinsi }}
@@ -60,13 +65,30 @@
                 @endforelse
             </tbody>
         </table>
-    {{ $gudangData->links('pagination::tailwind') }}
+        {{ $gudangData->links('pagination::tailwind') }}
 
     </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="{{asset('svg.css')}}" >
+    <link rel="stylesheet" href="{{ asset('svg.css') }}">
+@endsection
 
+@section('script')
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this product?");
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                responsive: true,
+                searching: false,
+                ordering: true,
+                paging: false,
+                info: false,
+            });
+        });
+    </script>
 @endsection

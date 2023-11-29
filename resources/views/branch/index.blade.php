@@ -8,6 +8,12 @@
     @include('layouts.sidebar')
 @endsection
 
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
+@endsection
+
 @section('content')
     <header class="bg-gray-200 p-3">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -24,9 +30,10 @@
         }
     </script>
     <div class="overflow-y-auto m-3">
-        <table class="min-w-full table-auto border ">
+        <table id="myTable" class="min-w-full table-auto border ">
             <thead class="text-center border-b-1 border">
                 <tr>
+                    <th class="px-4 py-2">#</th>
                     <th class="px-4 py-2">Nama Branch</th>
                     <th class="px-4 py-2">Company</th>
                     <th class="px-4 py-2">No Telp</th>
@@ -37,18 +44,19 @@
             <tbody class="text-center">
                 @forelse ($branch as $item)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
+                        <td class=" px-4 py-2">{{ $loop->iteration }}</td>
                         <td class=" px-4 py-2">{{ $item->nama_branch }}</td>
                         <td class=" px-4 py-2">{{ $item->nama_company }}</td>
                         <td class=" px-4 py-2">{{ $item->no_telp_branch }}</td>
                         <td class=" px-4 py-2">{{ $item->alamat_branch }}</td>
                         <td class=" px-4 py-2 flex justify-center">
                             <a href="{{ route('branch.show', ['id' => $item->bid]) }}"
-                                class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                                <svg class="showIcon"> </svg>
+                                class="btn btn-sm btn-primary mr-1">
+                                <i class="fa-solid fa-eye"></i>
                             </a>
                             <a href="{{ route('branch.delete', ['id' => $item->bid]) }}" onclick="return confirmDelete();"
-                                class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
-                                <svg class="deleteIcon"></svg>
+                                class="btn btn-sm btn-error text-white">
+                                <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>
                     </tr>
@@ -64,3 +72,17 @@
         <link rel="stylesheet" href="{{ asset('svg.css') }}">
     </div>
 @endsection
+
+@section('script')
+        <script>
+            $(document).ready(function() {
+                $('#myTable').DataTable({
+                    responsive: true,
+                    searching: false,
+                    ordering: true,
+                    paging: false,
+                    info: false,
+                });
+            });
+        </script>
+    @endsection

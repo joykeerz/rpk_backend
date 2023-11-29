@@ -8,6 +8,12 @@
     @include('layouts.sidebar')
 @endsection
 
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
+@endsection
+
 @section('content')
     <script>
         function confirmDelete() {
@@ -24,7 +30,7 @@
     @include('layouts.searchbar')
 
     <div class="overflow-y-auto m-3">
-        <table class="min-w-full table-auto border ">
+        <table id="myTable" class="min-w-full table-auto border ">
             <thead class="text-center border-b-1 border">
                 <tr>
                     <th class="px-4 py-2">Kode Kantor</th>
@@ -65,4 +71,18 @@
     </div>
 
     <link rel="stylesheet" href="{{ asset('svg.css') }}">
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                responsive: true,
+                searching: false,
+                ordering: true,
+                paging: false,
+                info: false,
+            });
+        });
+    </script>
 @endsection

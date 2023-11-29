@@ -143,7 +143,7 @@
                         @if (Auth::user()->role_id != 3)
                             <td class="flex justify-evenly p-2">
                                 <a href="{{ route('manage.user.verify', ['id' => $ud->uid]) }}"
-                                    class="btn btn-sm btn primary mr-1">
+                                    class="btn btn-sm primary mr-1">
                                     <i class="fa-solid fa-check"></i>
                                     Verify
                                 </a>
