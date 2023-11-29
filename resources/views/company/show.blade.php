@@ -66,7 +66,8 @@
                     <input type="text"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                     focus:ring-indigo-200 focus:ring-opacity-50 border p-1ne_company"
-                        id="tb_tagline_company" placeholder="" value="{{ $company->tagline_company }}">
+                        id="tb_tagline_company" name="tb_tagline_company" placeholder=""
+                        value="{{ $company->tagline_company }}">
                 </div>
 
                 <div class="jalan">

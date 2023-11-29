@@ -128,7 +128,7 @@ class CompanyController extends Controller
     public function update(Request $request, $id)
     {
 
-        dd($request->tb_tagline_company);
+        // dd($request->tb_tagline_company);
         // $validated = $request->validate([
         //     'tb_kode_company' => 'required|unique:companies,kode_company',
         // ],[
