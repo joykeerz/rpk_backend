@@ -4,7 +4,7 @@
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{ route('home') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ">
                     <i class="fa-solid fa-home"></i>
                     <span class="flex-1 ml-3 whitespace-nowrap">Dashboard RPK</span>
                 </a>
@@ -36,12 +36,12 @@
                         <!-- Submenu for Barang -->
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('product.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('product.index') ? 'active' : '' }}">Input
                                 Produk</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('product.manage') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('product.manage') ? 'active' : '' }}">Manage
                                 Produk</a>
                         </li>
                     </ul>
@@ -61,12 +61,12 @@
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('pesanan.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">List
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black{{ Request::routeIs('pesanan.index') ? 'active' : '' }}">List
                                 Transaksi</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('pesanan.selectGudang') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Buat
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('pesanan.selectGudang') ? 'active' : '' }}">Buat
                                 Pesanan Baru
                             </a>
                         </li>
@@ -76,7 +76,7 @@
             @if (Auth::user()->role_id == 4)
                 <li class="stok">
                     <a href="{{ route('stok.index') }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ Request::routeIs('stok.index') ? 'active' : '' }}">
                         <svg class="stockIcon"></svg>
                         <span class="flex-1 ml-3 whitespace-nowrap">Stok</span>
                     </a>
@@ -85,7 +85,7 @@
             @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3 || Auth::user()->role_id == 4)
                 <li class="user">
                     <a href="{{ route('manage.user.index') }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ Request::routeIs('manage.user.index') ? 'active' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round">
@@ -99,7 +99,7 @@
             @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
                 <li class="kategori">
                     <a href="{{ route('category.index') }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ Request::routeIs('category.index') ? 'active' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round">
@@ -138,12 +138,12 @@
                         id="gudangSubMenu"> <!-- Nested submenu -->
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('gudang.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('gudang.create') ? 'active' : '' }}">Input
                                 Gudang</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('gudang.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('gudang.index') ? 'active' : '' }}">Manage
                                 Gudang</a>
                         </li>
                     </ul>
@@ -174,12 +174,12 @@
                         <!-- Submenu for Barang -->
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('company.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('company.create') ? 'active' : '' }}">Input
                                 Company</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('company.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('company.index') ? 'active' : '' }}">Manage
                                 Company</a>
                         </li>
                     </ul>
@@ -207,15 +207,15 @@
                     </a>
                     <ul id="branchSubMenu"
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
-                        <li <!-- Submenu for Barang -->
+
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('branch.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('branch.create') ? 'active' : '' }}">Input
                                 Branch</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('branch.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('branch.index') ? 'active' : '' }}">Manage
                                 Branch</a>
                         </li>
                     </ul>
@@ -234,12 +234,12 @@
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('customer.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('customer.create') ? 'active' : '' }}">Input
                                 Customer</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('customer.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('customer.index') ? 'active' : '' }}">Manage
                                 Customer</a>
                         </li>
                     </ul>
@@ -258,11 +258,11 @@
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('laporan.stock') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Stok</a>
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('laporan.stock') ? 'active' : '' }}">Stok</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('laporan.penjualan') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Penjualan</a>
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('laporan.penjualan') ? 'active' : '' }}">Penjualan</a>
                         </li>
                     </ul>
                 </li>
@@ -280,12 +280,12 @@
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('banner.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('banner.create') ? 'active' : '' }}">Input
                                 Banner</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('banner.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('banner.index') ? 'active' : '' }}">Manage
                                 Banner</a>
                         </li>
                     </ul>
@@ -304,12 +304,12 @@
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('berita.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('berita.create') ? 'active' : '' }}">Input
                                 Berita</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('berita.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('berita.index') ? 'active' : '' }}">Manage
                                 Berita</a>
                         </li>
                     </ul>
@@ -328,12 +328,12 @@
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('pajak.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('pajak.create') ? 'active' : '' }}">Input
                                 Pajak</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('pajak.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('pajak.index') ? 'active' : '' }}">Manage
                                 Pajak</a>
                         </li>
                     </ul>
@@ -352,34 +352,17 @@
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('satuan-unit.create') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Input
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('satuan-unit.create') ? 'active' : '' }}">Input
                                 Satuan Unit</a>
                         </li>
                         <li class="hover:bg-gray-100">
                             <a href="{{ route('satuan-unit.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black ">Manage
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black {{ Request::routeIs('satuan-unit.index') ? 'active' : '' }}">Manage
                                 Satuan Unit</a>
                         </li>
                     </ul>
                 </li>
             @endif
-
-            {{-- <li>
-                <a href="#"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                    id="logout-button">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 "
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"></path>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Logout</span>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </li> --}}
-
         </ul>
     </div>
 </aside>
@@ -388,6 +371,7 @@
 
 
 <script>
+
     function confirmLogout() {
         if (confirm("Are you sure you want to log out?")) {
             document.getElementById('logout-form').submit();

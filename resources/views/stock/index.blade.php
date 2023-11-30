@@ -57,13 +57,10 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap flex justify-center">
                             <a href="{{ route('stok.show', ['id' => $gd->gid]) }}"
-                                class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                                <svg class="showIcon"> </svg>
+                                class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-eye"></i>
                             </a>
-                            {{-- <a href="{{ route('stok.delete', ['id' => $gd->id]) }}" onclick="return confirmDelete();"
-                                class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
-                                <svg class="deleteIcon"></svg>
-                            </a> --}}
+
                         </td>
                     </tr>
                 @empty

@@ -17,7 +17,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piechart-outlabels"></script> --}}
-
+    <style>
+        .active {
+            background-color: #4a5568; /* Change this color to match your design */
+            color: #ffffff; /* Change this color to match your design */
+        }
+    </style>
 </head>
 
 <body>

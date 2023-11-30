@@ -33,6 +33,7 @@
         <table id="myTable" class="min-w-full table-auto border ">
             <thead class="text-center border-b-1 border">
                 <tr>
+                    <th class="px-4 py-2">#</th>
                     <th class="px-4 py-2">Nama Satuan</th>
                     <th class="px-4 py-2">Simbol Satuan</th>
                     <th class="px-4 py-2">Keterangan</th>
@@ -42,6 +43,7 @@
             <tbody class="text-center">
                 @forelse ($satuanUnit as $st)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
+                        <td class="px-4 py-2">{{ $loop->iteration }}</td>
                         <td class="px-4 py-2">{{ $st->nama_satuan }}</td>
                         <td class="px-4 py-2">{{ $st->simbol_satuan }}</td>
                         <td class="px-4 py-2">{{ $st->keterangan }}</td>

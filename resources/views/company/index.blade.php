@@ -33,6 +33,7 @@
         <table id="myTable" class="min-w-full table-auto border ">
             <thead class="text-center border-b-1 border">
                 <tr>
+                    <th class="px-4 py-2">#</th>
                     <th class="px-4 py-2">Kode Kantor</th>
                     <th class="px-4 py-2">Nama Kantor</th>
                     <th class="px-4 py-2">Partner</th>
@@ -44,6 +45,7 @@
             <tbody class="text-center">
                 @forelse ($companies as $item)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }}  ">
+                        <td class=" px-4 py-2">{{ $loop->iteration }}</td>
                         <td class=" px-4 py-2">{{ $item->kode_company }}</td>
                         <td class=" px-4 py-2">{{ $item->nama_company }}</td>
                         <td class=" px-4 py-2">{{ $item->partner_company }}</td>

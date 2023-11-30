@@ -7,21 +7,25 @@
     @include('layouts.sidebar')
 @endsection
 
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
+@endsection
+
 @section('content')
     <header class="bg-gray-200 p-4 flex justify-between">
         <h2>
             Viewing stocks in {{ $gudang->nama_gudang }}
         </h2>
         <div class="button">
-            <a class="btn btn-primary align-center w-full border border-black p-2 rounded hover:bg-gray-800 hover:text-white duration-200"
-                href="{{ route('stok.create', ['id' => $gudang->id]) }}">Add Stock</a>
+            <a class="btn btn-sm btn-primary" href="{{ route('stok.create', ['id' => $gudang->id]) }}">
+                <i class="fa-solid fa-plus"></i>
+                Add Stock
+            </a>
         </div>
     </header>
-    <script>
-        function confirmDelete() {
-            return confirm("Are you sure you want to delete this stock?");
-        }
-    </script>
+
     @if (Session::has('message'))
         <div class="bg-green-200 border-t border-b border-white-500  px-4 py-3 relative" role="alert" id="alertMessage">
             <p>{{ Session::get('message') }}.</p>
@@ -35,35 +39,12 @@
                 </svg>
             </button>
         </div>
-        <script>
-            // After the page loads
-            document.addEventListener('DOMContentLoaded', function() {
-                var alert = document.getElementById('alertMessage');
-
-                if (alert) {
-                    setTimeout(function() {
-                        alert.style.display = 'none';
-                    }, 5000); // 5000 milliseconds = 5 seconds
-                }
-
-                // Optionally, you might want to add functionality to close the alert with the close button
-                var closeButton = alert.querySelector('.close-button');
-                if (closeButton) {
-                    closeButton.addEventListener('click', function() {
-                        alert.style.display = 'none';
-                    });
-                }
-            });
-        </script>
     @endif
     <div class="overflow-auto m-3">
-        <input type="text" id="searchInput"
-            class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            placeholder="Search...">
-        <div class="border border-gray-400 rounded">
-            <table class="min-w-full bg-white text-center rounded">
+        <div class="overflow-x-auto">
+            <table class="table table-zebra">
                 <thead>
-                    <tr class="text-center ">
+                    <tr class="text-center">
                         <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">#
                         </th>
                         <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
@@ -87,13 +68,14 @@
                 </thead>
                 <tbody>
                     @forelse ($stocks as $stock)
-                        <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }}">
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $stock->kode_produk }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $stock->nama_produk }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($stock->harga_stok) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                        <tr class="hover">
+                            <td class="whitespace-nowrap">{{ $loop->iteration }}</td>
+                            <td class="whitespace-nowrap">{{ $stock->kode_produk }}</td>
+                            <td class="whitespace-nowrap">{{ $stock->nama_produk }}</td>
+                            <td class="whitespace-nowrap">{{ $stock->nama_kategori }}</td>
+                            <td class="whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
+                            <td class="whitespace-nowrap">Rp {{ number_format($stock->harga_stok) }}</td>
+                            <td class="whitespace-nowrap">
                                 <form action="{{ route('stok.increase', ['id' => $stock->sid]) }}" method="post">
                                     @csrf
                                     <input class="border rounded-md py-2 px-3 w-full" type="number" name="qty_stock"
@@ -103,13 +85,12 @@
 
                             <td class="px-6 py-4 whitespace-nowrap flex justify-center">
                                 <a href="{{ route('stok.detail', ['id' => $stock->sid]) }}"
-                                    class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                                    <svg class="showIcon"> </svg>
+                                    class="btn btn-sm btn-primary mr-1">
+                                    <i class="fa-solid fa-pencil"></i>
                                 </a>
-                                <a href="{{ route('stok.delete', ['id' => $stock->sid]) }}"
-                                    class="m-2 bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
+                                <a href="{{ route('stok.delete', ['id' => $stock->sid]) }}" class="btn btn-sm btn-error"
                                     onclick="return confirmDelete();">
-                                    <svg class="deleteIcon"> </svg>
+                                    <i class="fa-solid fa-trash text-gray-200"></i>
                                 </a>
                             </td>
                         </tr>
@@ -126,4 +107,30 @@
     </div>
 
     <link rel="stylesheet" href="{{ asset('svg.css') }}">
+@endsection
+
+@section('script')
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this stock?");
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var alert = document.getElementById('alertMessage');
+
+            if (alert) {
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                }, 5000);
+            }
+
+            var closeButton = alert.querySelector('.close-button');
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    alert.style.display = 'none';
+                });
+            }
+        });
+    </script>
 @endsection

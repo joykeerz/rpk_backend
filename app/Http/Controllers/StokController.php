@@ -22,13 +22,7 @@ class StokController extends Controller
             ->orderBy('cat', 'desc')
             ->get();
 
-        $stok = DB::table('stok')
-            ->join('produk', 'stok.produk_id', '=', 'produk.id')
-            ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
-            ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
-            ->orderBy('stok.created_at', 'desc')
-            ->get();
-        return view('stock.index', ['gudang' => $gudang, 'stok' => $stok]);
+        return view('stock.index', ['gudang' => $gudang]);
     }
 
     public function stockByGudang($id)
@@ -37,7 +31,8 @@ class StokController extends Controller
         $stocks = DB::table('stok')
             ->join('produk', 'stok.produk_id', '=', 'produk.id')
             ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
-            ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
+            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+            ->select('stok.*', 'kategori.nama_kategori', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
             ->where('stok.gudang_id', '=', $id)
             ->orderBy('stok.id', 'desc')
             ->paginate(15);
@@ -71,7 +66,6 @@ class StokController extends Controller
 
     public function insertStock(Request $request, $id)
     {
-
         $validated = $request->validate([
             'tb_jumlah_produk' => 'required|numeric',
             'tb_harga_stok' => 'required|numeric',
@@ -87,8 +81,7 @@ class StokController extends Controller
         $checkUniqueProduct = Stok::where('produk_id', '=', $request->cb_produk)
             ->where('gudang_id', '=', $id)
             ->first();
-
-        if($checkUniqueProduct) {
+        if ($checkUniqueProduct) {
             return redirect()->back()->with('error', 'produk sudah ada di gudang ini');
         }
 
@@ -119,7 +112,7 @@ class StokController extends Controller
         if ($request->qty_stock == null || $request->qty_stock == '' || $request->qty_stock == 0) {
             return redirect()->back()->with('message', 'jumlah stok tidak boleh kosong');
         }
-        if($stok->jumlah_stok + $request->qty_stock < 0 ) {
+        if ($stok->jumlah_stok + $request->qty_stock < 0) {
             return redirect()->back()->with('message', 'jumlah stok tidak boleh kurang dari 0');
         }
 
@@ -128,7 +121,8 @@ class StokController extends Controller
         return redirect()->back()->with('message', 'stok berhasil dirubah');
     }
 
-    public function updateStock(Request $request, $id){
+    public function updateStock(Request $request, $id)
+    {
         $validated = $request->validate([
             'tb_jumlah_produk' => 'required|numeric',
             'tb_harga_stok' => 'required|numeric'
@@ -143,6 +137,7 @@ class StokController extends Controller
         $stok->jumlah_stok = $request->tb_jumlah_produk;
         $stok->harga_stok = $request->tb_harga_stok;
         $stok->save();
+
         return redirect()->route('stok.show', ['id' => $request->tb_gudang_id])->with('message', 'stok produk berhasil diupdate');
     }
 
@@ -152,6 +147,5 @@ class StokController extends Controller
         $stok->delete();
 
         return redirect()->back()->with('message', 'stok berhasil dihapus');
-
     }
 }

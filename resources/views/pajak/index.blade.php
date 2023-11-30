@@ -33,6 +33,7 @@
         <table id="myTable" class="min-w-full table-auto border ">
             <thead class="text-center border-b-1 border">
                 <tr>
+                    <th class="px-4 py-2">#</th>
                     <th class="px-4 py-2">Nama Pajak</th>
                     <th class="px-4 py-2">Jenis Pajak</th>
                     <th class="px-4 py-2">Persentase(%)</th>
@@ -42,6 +43,7 @@
             <tbody class="text-center">
                 @forelse ($pajak as $pjk)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
+                        <td class="px-4 py-2">{{ $loop->iteration }}</td>
                         <td class="px-4 py-2">{{ $pjk->nama_pajak }}</td>
                         <td class="px-4 py-2">{{ $pjk->jenis_pajak }}</td>
                         <td class="px-4 py-2">{{ $pjk->persentase_pajak }}%</td>

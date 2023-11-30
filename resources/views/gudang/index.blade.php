@@ -32,6 +32,7 @@
         <table id="myTable" class="min-w-full table-auto border">
             <thead class="border text-center">
                 <tr class="">
+                    <th class="p-3">#</th>
                     <th class="p-3">Nama Gudang</th>
                     <th class="p-3">Alamat</th>
                     <th class="p-3">Action</th>
@@ -40,6 +41,7 @@
             <tbody class="text-center">
                 @forelse ($gudangData as $gudang)
                     <tr class="border {{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
+                        <td class="p-3">{{ $loop->iteration }}</td>
                         <td class="p-3">{{ $gudang->nama_gudang }}</td>
                         <td class="p-3">
                             Provinsi: {{ $gudang->provinsi }}
