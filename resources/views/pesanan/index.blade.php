@@ -7,6 +7,11 @@
     @include('layouts.sidebar')
 @endsection
 
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
+@endsection
 
 @section('content')
     <header class=" bg-gray-200 p-4">
@@ -21,7 +26,7 @@
     @include('layouts.alert')
 
     <div class="tableContainer m-3">
-        <table class="w-full text-center overflow-y-auto border mb-4    ">
+        <table id="myTable" class="w-full text-center overflow-y-auto border mb-4    ">
             <thead class="text-center border-b-1 border">
                 <tr>
                     <th class="px-4 py-2">Kode Transaksi</th>
@@ -35,7 +40,7 @@
             <tbody>
                 @forelse ($transaksi as $item)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
-                        <td class=" px-4 py-2">K{{ $item->tid }}</td>
+                        <td class=" px-4 py-2">{{ $item->kode_transaksi }}</td>
                         <td class=" px-4 py-2">{{ $item->name }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pembayaran }}</td>
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
@@ -66,4 +71,18 @@
             }).format(item.innerHTML);
         });
     </script> --}}
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                responsive: true,
+                searching: false,
+                ordering: true,
+                paging: false,
+                info: false,
+            });
+        });
+    </script>
 @endsection

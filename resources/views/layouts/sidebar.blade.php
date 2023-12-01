@@ -60,8 +60,8 @@
                     <ul id="pesananSubMenu"
                         class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
                         <li class="hover:bg-gray-100">
-                            <a href="{{ route('pesanan.index') }}"
-                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black{{ Request::routeIs('pesanan.index') ? 'active' : '' }}">List
+                            <a href="{{ route('pesanan.selectTransaksi') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black{{ Request::routeIs('pesanan.selectTransaksi') ? 'active' : '' }}">List
                                 Transaksi</a>
                         </li>
                         <li class="hover:bg-gray-100">

@@ -110,7 +110,6 @@
                         @forelse ($pajakData as $pajak)
                             <option value="{{ $pajak->id }}" @if ($pajak->id == $product->pajak_id) selected @endif>
                                 {{ $pajak->nama_pajak }}</option>
-                            <option value="{{ $pajak->id }}">{{ $pajak->nama_pajak }}</option>
                         @empty
                             <option disabled>No Data</option>
                         @endforelse

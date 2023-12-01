@@ -10,6 +10,8 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+
 class PesananController extends Controller
 {
     public function __construct()
@@ -17,18 +19,16 @@ class PesananController extends Controller
         $this->middleware('auth');
     }
 
-    public function index() ///ini tampilin semua transaksi pesanan
+    public function index($id)
     {
 
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
             ->join('users', 'users.id', '=', 'pesanan.user_id')
+            ->join('gudang', 'gudang.id', '=', 'pesanan.gudang_id')
             ->select('transaksi.*', 'pesanan.*', 'users.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid')
+            ->where('pesanan.gudang_id', '=', $id)
             ->paginate(15);
-        // dd($transaksi);
-        // $res = response()->json([
-        //     'data' => $transaksi
-        // ], 200);
 
         return view('pesanan.index', ['transaksi' => $transaksi]);
     }
@@ -104,16 +104,46 @@ class PesananController extends Controller
         $stok = DB::table('stok')
             ->join('produk', 'produk.id', '=', 'stok.produk_id')
             ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
-            ->select('stok.*', 'produk.*','satuan_unit.simbol_satuan', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
+            ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
+            ->select('stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.simbol_satuan', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
             ->where('stok.jumlah_stok', '>', 0)
             ->where('stok.gudang_id', '=', $id)
             ->get();
 
-        return view('pesanan.newOrder', ['product' => $stok, 'users' => $biodata, 'kurir' => $kurir]);
+        $kodeCompany = DB::table('gudang')
+            ->join('companies', 'companies.id', '=', 'gudang.company_id')
+            ->select('companies.kode_company')
+            ->where('gudang.id', '=', $id)
+            ->first();
+
+        return view('pesanan.newOrderEx', ['product' => $stok, 'users' => $biodata, 'kurir' => $kurir, 'gudang_id' => $id, 'kodeCompany' => $kodeCompany->kode_company]);
     }
 
     public function storeOrder(Request $request)
     {
+        /*
+        $lastTransactionLastMonth = Transaksi::whereMonth('created_at', '=', now()->subMonth()->month)
+            ->whereYear('created_at', '=', now()->subMonth()->year)
+            ->orderBy('created_at', 'desc')
+            ->select('created_at', 'kode_transaksi')
+            ->first();
+        $count = 0;
+        $lastTransactionLastMonth = Transaksi::orderBy('created_at', 'desc')
+            ->select('created_at', 'kode_transaksi')
+            ->first();
+        if (isEmpty($lastTransactionLastMonth)) {
+            $nextNomorUrut = str_pad($count+1, 6, '0', STR_PAD_LEFT);
+        } else {
+            $currentNomorUrut = explode('/', $lastTransactionLastMonth->kode_transaksi);
+            if ($currentNomorUrut[1] < 100000) {
+                $nextNomorUrut = str_pad($count+1, 6, '0', STR_PAD_LEFT);
+            } else {
+                $nextNomorUrut = str_pad($currentNomorUrut[1] + 1, 6, '0', STR_PAD_LEFT);;
+            }
+        }
+        return response()->json($nextNomorUrut, 200);
+        */
+
         $subtotal_produk = 0;
         $total_qty = 0;
         $total_pembayaran = 0;
@@ -125,6 +155,7 @@ class PesananController extends Controller
         $pesanan->user_id = $request->data['userData'][0];
         $pesanan->alamat_id = $request->data['userData'][1];
         $pesanan->kurir_id = $request->data['userData'][2];
+        $pesanan->gudang_id = $request->data['userData'][3];
         $pesanan->status_pemesanan = 'menunggu verifikasi';
         $pesanan->save();
 
@@ -159,6 +190,9 @@ class PesananController extends Controller
         $transaksi->subtotal_produk = $subtotal_produk;
         $transaksi->total_qty = $total_qty;
         $transaksi->total_pembayaran = $subtotal_produk + $subtotal_pengiriman;
+
+
+        $transaksi->kode_transaksi = 'ORD/' . $pesanan->id . '/' . now()->format('m') . '/' . now()->format('Y') . '/' . $request->data['userData'][4];
         $transaksi->save();
 
         return response()->json([
@@ -237,5 +271,16 @@ class PesananController extends Controller
         $pesanan->save();
 
         return redirect()->route('pesanan.index')->with('message', 'Transaksi berhasil diupdate');
+    }
+
+    public function transaksiByGudangSelector()
+    {
+        $gudang = DB::table('gudang')
+            ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
+            ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
+            ->orderBy('cat', 'desc')
+            ->get();
+
+        return view('pesanan.transaksiByGudang', ['gudang' => $gudang]);
     }
 }

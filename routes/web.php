@@ -123,9 +123,10 @@ Route::middleware(['auth'])->group(function () {
 
     ///pesanan
     Route::prefix('pesanan')->middleware('restrictRole:2,3,4')->group(function () {
-        Route::get('/', [PesananController::class, 'index'])->name('pesanan.index');
+        Route::get('/transaksi/gudang/{id}', [PesananController::class, 'index'])->name('pesanan.index');
         Route::get('/show/{id}', [PesananController::class, 'show'])->name('pesanan.show');
         Route::get('/order/gudang', [PesananController::class, 'orderByGudangSelector'])->name('pesanan.selectGudang');
+        Route::get('/transaksi/gudang', [PesananController::class, 'transaksiByGudangSelector'])->name('pesanan.selectTransaksi');
         Route::get('/newOrder/gudang/{id}', [PesananController::class, 'newOrder'])->name('pesanan.newOrder');
         Route::post('/storeOrder', [PesananController::class, 'storeOrder'])->name('pesanan.storeOrder');
         Route::get('/newTransaksi/{id}', [PesananController::class, 'newTransaksi'])->name('pesanan.newTransaksi');
@@ -184,7 +185,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     ///satuan unit route
-    Route::prefix('satuan-unit')->middleware('restrictRole:2,3,4')->group(function(){
+    Route::prefix('satuan-unit')->middleware('restrictRole:2,3,4')->group(function () {
         Route::get('/', [SatuanUnitController::class, 'index'])->name('satuan-unit.index');
         Route::get('/create', [SatuanUnitController::class, 'create'])->name('satuan-unit.create');
         Route::post('/store', [SatuanUnitController::class, 'store'])->name('satuan-unit.store');
