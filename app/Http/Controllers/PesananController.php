@@ -143,12 +143,10 @@ class PesananController extends Controller
         }
         return response()->json($nextNomorUrut, 200);
         */
+        // return response()->json($request->data['userData'], 200);
 
         $subtotal_produk = 0;
         $total_qty = 0;
-        $total_pembayaran = 0;
-        // $pajak_include = 0;
-        // $pajak_exclude = 0;
         $subtotal_pengiriman = 0;
 
         $pesanan = new Pesanan;
@@ -166,6 +164,11 @@ class PesananController extends Controller
                 'produk_id' => $request->data['orderDetails'][$key]['tb_produk_id'],
                 'qty' => $request->data['orderDetails'][$key]['tb_jumlah_produk'],
                 'harga' => $request->data['orderDetails'][$key]['price'],
+                'dpp' => $request->data['orderDetails'][$key]['dpp'],
+                'ppn' => $request->data['orderDetails'][$key]['ppn'],
+                'jenis_pajak' => $request->data['orderDetails'][$key]['jenis_pajak'],
+                'persentase_pajak' => $request->data['orderDetails'][$key]['persentase_pajak'],
+                'subtotal_detail' => $request->data['orderDetails'][$key]['subtotal'],
             ]);
 
             $currentStok = Stok::find($request->data['orderDetails'][$key]['tb_stok_id']);
@@ -179,20 +182,25 @@ class PesananController extends Controller
             $currentStok->save();
 
             $total_qty += $request->data['orderDetails'][$key]['tb_jumlah_produk'];
-            $subtotal_produk += $request->data['orderDetails'][$key]['price'];
+            $subtotal_produk += $request->data['orderDetails'][$key]['subtotal'];
         }
         DB::table('detail_pesanan')->insert($listDetailPesanan);
 
-
         $transaksi = new Transaksi;
         $transaksi->pesanan_id = $pesanan->id;
+        $transaksi->tipe_pembayaran = 'Transef Bank';
         $transaksi->status_pembayaran = 'belum dibayar';
         $transaksi->subtotal_produk = $subtotal_produk;
+        $transaksi->subtotal_pengiriman = $subtotal_pengiriman;
         $transaksi->total_qty = $total_qty;
         $transaksi->total_pembayaran = $subtotal_produk + $subtotal_pengiriman;
-
-
         $transaksi->kode_transaksi = 'ORD/' . $pesanan->id . '/' . now()->format('m') . '/' . now()->format('Y') . '/' . $request->data['userData'][4];
+        $transaksi->total_dpp = $request->data['userData'][5];
+        $transaksi->total_ppn = $request->data['userData'][6];
+        $transaksi->dpp_terutang = $request->data['userData'][7];
+        $transaksi->ppn_terutang = $request->data['userData'][8];
+        $transaksi->dpp_dibebaskan = $request->data['userData'][9];
+        $transaksi->ppn_dibebaskan = $request->data['userData'][10];
         $transaksi->save();
 
         return response()->json([
