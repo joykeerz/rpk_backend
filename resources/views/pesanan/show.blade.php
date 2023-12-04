@@ -23,15 +23,19 @@
         </div>
     </header>
 
-    <div class="columns-2 m-3">
-        <div class="tableContainer p-3 max-w-md mx-auto bg-white border rounded-md overflow-hidden shadow-md">
-            <table class="w-full text-center border-collapse">
+    <div class="container columns-2 m-3">
+        <div class="p-3 max-w-lg mx-auto bg-white border rounded-md overflow-scroll shadow-md">
+            <table class="table table-xs table-zebra hover">
                 <thead>
                     <tr>
-                        <th class="pb-2 border-b border-gray-500">No</th>
-                        <th class="pb-2 border-b border-gray-500">Nama Produk</th>
+                        <th class="pb-2 border-b border-gray-500">#</th>
+                        <th class="pb-2 border-b border-gray-500">Produk</th>
                         <th class="pb-2 border-b border-gray-500">Jumlah</th>
                         <th class="pb-2 border-b border-gray-500">Harga</th>
+                        <th class="pb-2 border-b border-gray-500">Pajak</th>
+                        <th class="pb-2 border-b border-gray-500">DPP</th>
+                        <th class="pb-2 border-b border-gray-500">PPN</th>
+                        <th class="pb-2 border-b border-gray-500">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,12 +45,16 @@
                             <td>{{ $item->nama_produk }}</td>
                             <td>{{ $item->qty }}</td>
                             <td>Rp {{ number_format($item->harga) }}</td>
+                            <td>{{ $item->jenis_pajak }}/{{$item->persentase_pajak}}%</td>
+                            <td>Rp {{ number_format($item->dpp) }}</td>
+                            <td>Rp {{ number_format($item->ppn) }}</td>
+                            <td>Rp {{ number_format($item->subtotal_detail) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="2" class="pt-2 border-t border-gray-500">Subtotal</td>
+                        <td colspan="6" class="pt-2 border-t border-gray-500">Subtotal</td>
                         <td class="pt-2 border-t border-gray-500">{{ $transaksi->total_qty }}</td>
                         <td class="pt-2 border-t border-gray-500">Rp {{ number_format($transaksi->subtotal_produk) }}</td>
                     </tr>

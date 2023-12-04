@@ -38,7 +38,7 @@
             <div class="my-14">
                 @yield('content')
             </div>
-            @yield('searchBar')
+            {{-- @yield('searchBar') --}}
         </div>
     </div>
 @yield('script')
