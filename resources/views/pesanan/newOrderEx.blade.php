@@ -167,10 +167,10 @@
                 var pajak = 0;
 
                 if (jenis_pajak == 'Include' || jenis_pajak == 'include') {
-                    dpp = (subtotal * (100 / (100 + persentase)));
+                    dpp = subtotal * (100 / (100 + persentase));
                     console.log('DPP: ', dpp);
 
-                    pajak = (dpp * (persentase / 100));
+                    pajak = dpp * (persentase / 100);
                     console.log('Pajak: ', pajak);
 
                     subtotal = dpp + pajak;
