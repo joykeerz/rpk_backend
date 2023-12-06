@@ -45,7 +45,7 @@
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
                         <td class="px-4 py-2">{{ $loop->iteration }}</td>
                         <td class="px-4 py-2">{{ $st->nama_satuan }}</td>
-                        <td class="px-4 py-2">{{ $st->simbol_satuan }}</td>
+                        <td class="px-4 py-2">{{ $st->satuan_unit_produk }}</td>
                         <td class="px-4 py-2">{{ $st->keterangan }}</td>
                         <td class="px-4 py-2 flex justify-center">
                             <a href="{{ route('satuan-unit.show', ['id' => $st->id]) }}"

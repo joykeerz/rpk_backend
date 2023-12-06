@@ -30,7 +30,7 @@
                 </div>
                 <div class="simbolSatuan flex flex-col">
                     <label for="simbolSatuan">Simbol Satuan</label>
-                    <input value="{{$satuanUnit->simbol_satuan}}" type="text" name="simbolSatuan" id="simbolSatuan">
+                    <input value="{{$satuanUnit->satuan_unit_produk}}" type="text" name="simbolSatuan" id="simbolSatuan">
                     @error('simbolSatuan')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror

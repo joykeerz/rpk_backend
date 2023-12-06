@@ -42,7 +42,7 @@ class SatuanUnitController extends Controller
 
         $satuanUnit = new SatuanUnit();
         $satuanUnit->nama_satuan = $request->namaSatuan;
-        $satuanUnit->simbol_satuan = $request->simbolSatuan;
+        $satuanUnit->satuan_unit_produk = $request->simbolSatuan;
         $satuanUnit->keterangan = $request->keteranganSatuan;
         $satuanUnit->external_satuan_unit_id = $request->idExternal;
         $satuanUnit->save();
@@ -63,7 +63,7 @@ class SatuanUnitController extends Controller
 
         $satuanUnit = SatuanUnit::findOrFail($request->id);
         $satuanUnit->nama_satuan = $request->namaSatuan;
-        $satuanUnit->simbol_satuan = $request->simbolSatuan;
+        $satuanUnit->satuan_unit_produk = $request->simbolSatuan;
         $satuanUnit->keterangan = $request->keteranganSatuan;
         $satuanUnit->external_satuan_unit_id = $request->idExternal;
         $satuanUnit->save();

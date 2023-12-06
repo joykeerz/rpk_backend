@@ -46,8 +46,8 @@
             <tbody>
                 @forelse ($customer as $item=>$ud)
                     <tr class="hover:bg-gray-50">
-                        {{-- <td>{{ $loop->iteration }}</td> --}}
-                        <td>{{ $item + 1 }}</td>
+                        <td>{{ $loop->iteration }}</td>
+                        {{-- <td>{{ $item + 1 }}</td> --}}
                         <td>{{ $ud->name }}</td>
                         <td>
                             <span class="truncate">
