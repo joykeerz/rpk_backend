@@ -95,7 +95,7 @@
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                     <option disabled selected>Open this select menu</option>
                                     @forelse ($satuanData as $satuan)
-                                        <option value="{{ $satuan->id }}" {{ (old("tb_satuan") == $satuan->id ? "selected":"") }}>{{ $satuan->simbol_satuan }}</option>
+                                        <option value="{{ $satuan->id }}" {{ (old("tb_satuan") == $satuan->id ? "selected":"") }}>{{ $satuan->nama_satuan }}</option>
 
                                     @empty
                                         <option disabled>No Data</option>
