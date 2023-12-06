@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('external_satuan_unit_id')->nullable();
             $table->string('nama_satuan');
-            $table->string('satuan_unit_produk ');
+            $table->string('satuan_unit_produk');
             $table->string('keterangan');
             $table->timestamps();
         });
