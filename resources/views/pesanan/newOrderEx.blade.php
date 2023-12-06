@@ -46,7 +46,7 @@
                             <td class="py-5" id="js_nama_produk">{{ $item->nama_produk }}</td>
                             <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
                             <td class="py-2">{{ $item->jumlah_stok }}</td>
-                            <td>{{ $item->simbol_satuan }}</td>
+                            <td>{{ $item->satuan_unit_produk }}</td>
                             <td class="py-2 harga_produk">{{ $item->harga_stok }}</td>
                             <td class="py-2" id="jenis_pajak">{{ $item->jenis_pajak }}</td>
                             <td class="py-2" id="persenan_pajak">{{ $item->persentase_pajak }}</td>
