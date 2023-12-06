@@ -16,13 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         // Roles Seed
         DB::table('roles')->insert([
             'nama_role' => 'none',
@@ -40,21 +33,21 @@ class DatabaseSeeder extends Seeder
 
         DB::table('roles')->insert([
             'nama_role' => 'Penjual Pusat',
-            'desk_role' => 'none',
+            'desk_role' => 'penjual pusat bulog',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('roles')->insert([
             'nama_role' => 'Manager Sales',
-            'desk_role' => 'none',
+            'desk_role' => 'manager sales cabang',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('roles')->insert([
             'nama_role' => 'customer',
-            'desk_role' => 'none',
+            'desk_role' => 'pengguna rpk',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

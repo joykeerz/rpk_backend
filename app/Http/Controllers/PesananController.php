@@ -105,7 +105,7 @@ class PesananController extends Controller
             ->join('produk', 'produk.id', '=', 'stok.produk_id')
             ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
             ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
-            ->select('stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.simbol_satuan', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
+            ->select('stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
             ->where('stok.jumlah_stok', '>', 0)
             ->where('stok.gudang_id', '=', $id)
             ->get();
