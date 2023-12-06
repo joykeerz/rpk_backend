@@ -188,7 +188,7 @@ class PesananController extends Controller
 
         $transaksi = new Transaksi;
         $transaksi->pesanan_id = $pesanan->id;
-        $transaksi->tipe_pembayaran = 'Transef Bank';
+        $transaksi->tipe_pembayaran = 'Transfer Bank';
         $transaksi->status_pembayaran = 'belum dibayar';
         $transaksi->subtotal_produk = $subtotal_produk;
         $transaksi->subtotal_pengiriman = $subtotal_pengiriman;
