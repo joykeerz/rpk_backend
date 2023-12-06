@@ -141,7 +141,7 @@ class DatabaseSeeder extends Seeder
         //satuan unit
         DB::table('satuan_unit')->insert([
             'nama_satuan' => 'none',
-            'satuan_unit_produk ' => 'none',
+            'satuan_unit_produk' => 'none',
             'keterangan' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
@@ -149,7 +149,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('satuan_unit')->insert([
             'nama_satuan' => 'Kilogram',
-            'satuan_unit_produk ' => 'Kg',
+            'satuan_unit_produk' => 'Kg',
             'keterangan' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
