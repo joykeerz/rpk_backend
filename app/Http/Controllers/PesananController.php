@@ -266,7 +266,7 @@ class PesananController extends Controller
     {
         // dd('bjir');
         $transaksi = Transaksi::find($id);
-        $transaksi->tipe_pembayaran = $request->cb_status_pembayaran;
+        $transaksi->tipe_pembayaran = $request->cb_tipe_pembayaran;
         $transaksi->status_pembayaran = $request->cb_status_pembayaran;
         $transaksi->subtotal_pengiriman = $request->tb_biaya_kirim;
         $transaksi->diskon = $request->tb_diskon;
