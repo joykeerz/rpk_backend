@@ -278,7 +278,7 @@ class PesananController extends Controller
         $pesanan->kurir_id = $request->cb_kurir;
         $pesanan->save();
 
-        return redirect()->route('pesanan.index')->with('message', 'Transaksi berhasil diupdate');
+        return redirect()->route('pesanan.index', ['id' => $pesanan->gudang_id])->with('message', 'Transaksi berhasil diupdate');
     }
 
     public function transaksiByGudangSelector()
