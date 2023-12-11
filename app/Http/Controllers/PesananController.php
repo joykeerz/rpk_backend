@@ -37,7 +37,7 @@ class PesananController extends Controller
     { ///ini tampilin detail transaksi pesanan
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
-            // ->join('users', 'users.id', '=', 'pesanan.user_id')
+            ->join('users', 'users.id', '=', 'pesanan.user_id')
             // ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
             // ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
             ->where('transaksi.id', '=', $id)
