@@ -43,6 +43,7 @@ class PesananController extends Controller
             ->where('transaksi.id', '=', $id)
             ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
             ->first();
+            dd($transaksi->pesanan_id);
 
         $detailPesanan = DB::table('detail_pesanan')
             ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
