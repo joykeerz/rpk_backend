@@ -36,12 +36,12 @@ class PesananController extends Controller
     public function show($id)
     { ///ini tampilin detail transaksi pesanan
         $transaksi = DB::table('transaksi')
-            ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
-            ->join('users', 'users.id', '=', 'pesanan.user_id')
-            ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
-            ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
+            // ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
+            // ->join('users', 'users.id', '=', 'pesanan.user_id')
+            // ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
+            // ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
             ->where('transaksi.id', '=', $id)
-            ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
+            // ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
             ->first();
             dd($transaksi);
 
