@@ -54,9 +54,23 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="6" class="pt-2 border-t border-gray-500">Subtotal</td>
-                        <td class="pt-2 border-t border-gray-500">{{ $transaksi->total_qty }}</td>
+                        <td colspan="2" class="pt-2 border-t border-gray-500">Subtotal</td>
+                        <td colspan="3" class="pt-2 border-t border-gray-500">{{ $transaksi->total_qty }}</td>
+                        <td class="pt-2 border-t border-gray-500">{{ $transaksi->total_dpp }}</td>
+                        <td class="pt-2 border-t border-gray-500">{{ $transaksi->total_ppn }}</td>
                         <td class="pt-2 border-t border-gray-500">Rp {{ number_format($transaksi->subtotal_produk) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="pt-2 border-t border-gray-500">DPP Terutang</td>
+                        <td colspan="3" class="pt-2 border-t border-gray-500">Rp {{ number_format($transaksi->dpp_terutang) }}</td>
+                        <td colspan="2" class="pt-2 border-t border-gray-500">DPP Dibebaskan</td>
+                        <td colspan="2" class="pt-2 border-t border-gray-500">Rp {{ number_format($transaksi->dpp_dibebaskan) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="pt-2 border-t border-gray-500">PPN Terutang</td>
+                        <td colspan="3" class="pt-2 border-t border-gray-500">Rp {{ number_format($transaksi->ppn_terutang) }}</td>
+                        <td colspan="2" class="pt-2 border-t border-gray-500">PPN Dibebaskan</td>
+                        <td colspan="2" class="pt-2 border-t border-gray-500">Rp {{ number_format($transaksi->ppn_dibebaskan) }}</td>
                     </tr>
             </table>
             <div class="p-2 m-2  border rounded-sm">
@@ -64,7 +78,7 @@
                     {{ number_format($transaksi->subtotal_pengiriman) }}</span>
             </div>
             <div class="p-2 m-2  border rounded-sm">
-                <i class="fa-solid fa-tag mr-2 text-gray-500"></i>Diskon : <span>Rp
+                <i class="fa-solid fa-tag mr-2 text-gray-500"></i>Diskon/Voucher : <span>Rp
                     {{ number_format($transaksi->diskon) }}</span>
             </div>
             <div class="p-2 m-2  border rounded-sm">

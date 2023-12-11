@@ -133,6 +133,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/storeTransaksi', [PesananController::class, 'storeTransaksi'])->name('pesanan.storeTransaksi');
         Route::get('/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
         Route::post('/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
+        Route::get('/verify/{id}', [PesananController::class, 'verify'])->name('pesanan.verify');
     });
 
     ///customer

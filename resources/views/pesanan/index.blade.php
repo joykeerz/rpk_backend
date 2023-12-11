@@ -46,6 +46,10 @@
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
                         <td class="subtotal_produk px-4 py-2">Rp {{ number_format($item->subtotal_produk) }}</td>
                         <td>
+                            <a class="btn btn-sm btn-outline m-2" href="{{ route('pesanan.verify', ['id' => $item->tid]) }}">
+                                <i class="fa-solid fa-check"></i>
+                                Verify
+                            </a>
                             <a class="btn btn-sm btn-primary" href="{{ route('pesanan.show', ['id' => $item->tid]) }}">
                                 <i class="fa-solid fa-search"></i>
                                 open

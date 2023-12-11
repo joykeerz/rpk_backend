@@ -291,4 +291,11 @@ class PesananController extends Controller
 
         return view('pesanan.transaksiByGudang', ['gudang' => $gudang]);
     }
+
+    public function verify($id){
+        $pesanan = Pesanan::find($id);
+        $pesanan->status_pemesanan = 'diproses';
+        $pesanan->save();
+        return redirect()->route('pesanan.index', ['id' => $pesanan->gudang_id])->with('message', 'Transaksi berhasil diproses');
+    }
 }
