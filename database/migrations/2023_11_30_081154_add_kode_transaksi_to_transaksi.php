@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('transaksi', function (Blueprint $table) {
             //
-            $table->string('kode_transaksi');
+            $table->string('kode_transaksi')->nullable()->default('none');
         });
     }
 

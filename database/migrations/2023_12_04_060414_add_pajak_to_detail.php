@@ -15,8 +15,8 @@ return new class extends Migration
             //
             $table->float('dpp')->default(0);
             $table->float('ppn')->default(0);
-            $table->string('jenis_pajak')->nullable();
-            $table->float('persentase_pajak')->default(0);
+            $table->string('jenis_pajak')->nullable()->default('non');
+            $table->float('persentase_pajak')->default(11);
         });
     }
 
