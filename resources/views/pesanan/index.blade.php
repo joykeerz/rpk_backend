@@ -48,7 +48,7 @@
                         <td>
                             <a class="btn btn-sm btn-outline m-2" href="{{ route('pesanan.verify', ['id' => $item->tid]) }}">
                                 <i class="fa-solid fa-check"></i>
-                                Verify
+                                Proses
                             </a>
                             <a class="btn btn-sm btn-primary" href="{{ route('pesanan.show', ['id' => $item->tid]) }}">
                                 <i class="fa-solid fa-search"></i>
