@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\KategoryController;
 use App\Http\Controllers\ManageUserController;
+use App\Http\Controllers\MobileHandlerController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('mobile')->group(function(){
+    Route::post('/receive-ktp-image', [MobileHandlerController::class, 'receiveKtpImage']);
+});
 
 Route::middleware(['auth'])->group(function(){
 
