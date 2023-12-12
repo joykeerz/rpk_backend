@@ -21,6 +21,12 @@ class CustomerController extends Controller
 
     public function index()
     {
+        $currentKanwil = DB::table('company')
+        ->join('users', 'users.id', '=', 'company.user_id')
+        ->join('alamat', 'alamat.id', '=', 'company.alamat_id')
+        ->select('alamat.provinsi')
+        ->where('users.id', '=', Auth::user()->id)
+        ->first();
 
         // if(Auth::user()->wilayah != "kosong" || Auth::user()->wilayah != null){
             // $customer = DB::table('biodata')
@@ -37,6 +43,7 @@ class CustomerController extends Controller
                 ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
                 ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
                 ->where('users.role_id', '=', 5)
+                ->where('alamat.provinsi', '=', $currentKanwil->provinsi)
                 ->orderby('biodata.created_at', 'desc')
                 ->paginate(15);
         // }
