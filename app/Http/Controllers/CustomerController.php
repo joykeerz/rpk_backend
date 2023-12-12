@@ -49,7 +49,7 @@ class CustomerController extends Controller
                 ->paginate(15);
         // }
 
-        return view('customer.index', ['customer' => $customer]);
+        return view('customer.index', ['customer' => $customer, 'currentKanwil' => $currentKanwil]);
     }
 
     public function show($id)

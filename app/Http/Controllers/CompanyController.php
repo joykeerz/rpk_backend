@@ -56,7 +56,7 @@ class CompanyController extends Controller
             'tb_kota' => 'required',
             'tb_kecamatan' => 'required',
             'tb_kodepos' => 'required',
-            'tb_user_id' => 'required'
+            'tb_user_id' => 'required|unique:companies,user_id'
         ], [
             'tb_kode_company.required' => 'Kode Company harus diisi',
             'tb_kode_company.unique' => 'Kode Company sudah terdaftar',
@@ -68,8 +68,8 @@ class CompanyController extends Controller
             'tb_kota.required' => 'Kota harus diisi',
             'tb_kecamatan.required' => 'Kecamatan harus diisi',
             'tb_kodepos.required' => 'Kode Pos harus diisi',
-            'tb_user_id.required' => 'User harus diisi'
-
+            'tb_user_id.required' => 'User harus diisi',
+            'tb_user_id.unique' => 'User sudah terdaftar'
         ]);
 
         $alamat = new Alamat;
