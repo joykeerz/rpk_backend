@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('mobile')->group(function(){
-    Route::post('/receive-ktp-image', [MobileHandlerController::class, 'receiveKtpImage']);
+    Route::post('/receive-ktp-image', [MobileHandlerController::class, 'uploadImage']);
 });
 
 Route::middleware(['auth'])->group(function(){
