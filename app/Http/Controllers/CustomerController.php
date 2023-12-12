@@ -21,9 +21,9 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $currentKanwil = DB::table('company')
-        ->join('users', 'users.id', '=', 'company.user_id')
-        ->join('alamat', 'alamat.id', '=', 'company.alamat_id')
+        $currentKanwil = DB::table('companies')
+        ->join('users', 'users.id', '=', 'companies.user_id')
+        ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
         ->select('alamat.provinsi')
         ->where('users.id', '=', Auth::user()->id)
         ->first();
