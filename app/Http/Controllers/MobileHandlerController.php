@@ -11,11 +11,11 @@ class MobileHandlerController extends Controller
         if(!request()->hasFile('ktp_image')){
             return response()->json([
                 'message' => 'no file'
-            ],400);
+            ],200);
         }
 
         $file = request()->file('ktp_image');
-        $file->storeAs('images/ktp', request()->image_name, 'public');
+        $file->storeAs('images/ktp', request()->image_name,['disk' => 'public']);
 
         return response()->json([
             'message' => 'success'
