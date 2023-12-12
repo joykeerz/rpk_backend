@@ -22,24 +22,24 @@ class CustomerController extends Controller
     public function index()
     {
 
-        if(Auth::user()->wilayah != "kosong" || Auth::user()->wilayah != null){
+        // if(Auth::user()->wilayah != "kosong" || Auth::user()->wilayah != null){
+            // $customer = DB::table('biodata')
+            //     ->join('users', 'users.id', '=', 'biodata.user_id')
+            //     ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
+            //     ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
+            //     ->where('users.role_id', '=', 5)
+            //     ->where('alamat.kota_kabupaten', '=', Auth::user()->wilayah)
+            //     ->orderby('biodata.created_at', 'desc')
+            //     ->paginate(15);
+        // }else{
             $customer = DB::table('biodata')
                 ->join('users', 'users.id', '=', 'biodata.user_id')
                 ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
                 ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
                 ->where('users.role_id', '=', 5)
-                ->where('alamat.kota_kabupaten', '=', Auth::user()->wilayah)
                 ->orderby('biodata.created_at', 'desc')
                 ->paginate(15);
-        }else{
-            $customer = DB::table('biodata')
-                ->join('users', 'users.id', '=', 'biodata.user_id')
-                ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
-                ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
-                ->where('users.role_id', '=', 5)
-                ->orderby('biodata.created_at', 'desc')
-                ->paginate(15);
-        }
+        // }
 
         return view('customer.index', ['customer' => $customer]);
     }
