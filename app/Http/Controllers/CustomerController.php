@@ -27,7 +27,7 @@ class CustomerController extends Controller
         ->select('alamat.provinsi')
         ->where('users.id', '=', Auth::user()->id)
         ->first();
-        dd($currentKanwil);
+        // dd($currentKanwil);
 
         // if(Auth::user()->wilayah != "kosong" || Auth::user()->wilayah != null){
             // $customer = DB::table('biodata')
