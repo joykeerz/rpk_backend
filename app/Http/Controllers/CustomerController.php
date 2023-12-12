@@ -22,32 +22,24 @@ class CustomerController extends Controller
     public function index()
     {
         $currentKanwil = DB::table('companies')
-        ->join('users', 'users.id', '=', 'companies.user_id')
-        ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
-        ->select('alamat.provinsi')
-        ->where('users.id', '=', Auth::user()->id)
-        ->first();
-        // dd($currentKanwil);
+            ->join('users', 'users.id', '=', 'companies.user_id')
+            ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
+            ->select('alamat.provinsi')
+            ->where('users.id', '=', Auth::user()->id)
+            ->first();
 
-        // if(Auth::user()->wilayah != "kosong" || Auth::user()->wilayah != null){
-            // $customer = DB::table('biodata')
-            //     ->join('users', 'users.id', '=', 'biodata.user_id')
-            //     ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
-            //     ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
-            //     ->where('users.role_id', '=', 5)
-            //     ->where('alamat.kota_kabupaten', '=', Auth::user()->wilayah)
-            //     ->orderby('biodata.created_at', 'desc')
-            //     ->paginate(15);
-        // }else{
-            $customer = DB::table('biodata')
-                ->join('users', 'users.id', '=', 'biodata.user_id')
-                ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
-                ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
-                ->where('users.role_id', '=', 5)
-                ->where('alamat.provinsi', '=', $currentKanwil->provinsi)
-                ->orderby('biodata.created_at', 'desc')
-                ->paginate(15);
-        // }
+        if (empty($currentKanwil)) {
+            abort(404);
+        }
+
+        $customer = DB::table('biodata')
+            ->join('users', 'users.id', '=', 'biodata.user_id')
+            ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
+            ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
+            ->where('users.role_id', '=', 5)
+            ->where('alamat.provinsi', '=', $currentKanwil->provinsi)
+            ->orderby('biodata.created_at', 'desc')
+            ->paginate(15);
 
         return view('customer.index', ['customer' => $customer, 'currentKanwil' => $currentKanwil]);
     }
