@@ -295,7 +295,6 @@ class PesananController extends Controller
 
     public function verify($id){
         $pesanan = Pesanan::find($id);
-        dd($pesanan->gudang_id);
         $pesanan->status_pemesanan = 'diproses';
         $pesanan->save();
         return redirect()->route('pesanan.index', ['id' => $pesanan->gudang_id])->with('message', 'Transaksi berhasil diproses');
