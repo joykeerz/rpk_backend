@@ -48,14 +48,13 @@
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
-                <div class="tb_partner_company flex flex-col">
-                    <label for="tb_partner_company">Partner</label>
-                    <input value="{{ old('tb_partner_company') }}" type="text" name="tb_partner_company"
+
+                    <input value="kosong" type="hidden" name="tb_partner_company"
                         id="tb_partner_company">
                     @error('tb_partner_company')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
-                </div>
+
                 <div class="tb_tagline_company flex flex-col">
                     <label for="tb_tagline_company">Tagline</label>
                     <input value="{{ old('tb_tagline_company') }}" type="text" name="tb_tagline_company"
