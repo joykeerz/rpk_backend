@@ -14,6 +14,9 @@
             Homepage
         </h2>
     </header>
+
+    @include('layouts.alert')
+
     <div class="container mx-auto my-5 rounded">
         <div class="flex justify-center">
             <div class="bg-white shadow-md rounded-lg">

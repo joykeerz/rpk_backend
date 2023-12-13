@@ -24,7 +24,15 @@
     <link rel="stylesheet" href="{{ asset('svg.css') }}">
     <header class="bg-gray-200 p-3">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Customer') }} (Wilayah :{{ $currentKanwil->provinsi }})
+            {{ __('Manage Customer') }}
+            @if (empty($currentEntity))
+                Selindo
+            @else
+                (Provinsi
+                {{ $currentEntity->provinsi }}
+                )
+            @endif
+
         </h2>
 
     </header>
