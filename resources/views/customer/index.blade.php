@@ -23,23 +23,45 @@
 
     <link rel="stylesheet" href="{{ asset('svg.css') }}">
     <header class="bg-gray-200 p-3">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Customer') }}
-            @if (empty($currentEntity))
-                Selindo
-            @else
-                (Provinsi
-                {{ $currentEntity->provinsi }}
-                )
-            @endif
-
-        </h2>
-
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Manage Customer') }}
+                @if (empty($currentEntity))
+                    Selindo
+                @else
+                    @if ($isProvinsi)
+                        {{ $currentEntity->provinsi }}
+                    @else
+                        {{ $currentEntity->kota_kabupaten }}
+                    @endif
+                @endif
+            </h2>
+            <div class="button">
+                <a class="btn btn-sm btn-primary" href="{{ route('customer.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    New Customer
+                </a>
+            </div>
+        </div>
     </header>
 
     @include('layouts.searchbar')
-
     <div class="table-responsive m-3">
+        @if (!empty($currentEntity))
+            @if (!$isProvinsi)
+                <div
+                    class="flex justify-between items-center w-full p-2 rounded border border-opacity-30 border-slate-500 bg-blue-950 text-white">
+                    <h1 class="font-medium">CUSTOMER SE-{{ $currentEntity->provinsi }}</h1>
+                    <form action="{{ route('customer.index') }}">
+                        <input type="hidden" name="provinsi" value="{{ $currentEntity->provinsi }}">
+                        <button type="submit" class="btn btn-sm btn-outline text-white">
+                            Lihat
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </form>
+                </div>
+            @endif
+        @endif
         <table id="myTable" class="min-w-full divide-y divide-gray-200 text-center">
             <thead class="text-center">
                 <tr>
@@ -48,14 +70,15 @@
                     <th scope="col">Nama RPK</th>
                     <th scope="col">Email</th>
                     <th scope="col">No.Hp</th>
-                    <th scope="col">Actions</th>
+                    @if (!$isProvinsi)
+                        <th scope="col">Actions</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
                 @forelse ($customer as $item=>$ud)
                     <tr class="hover:bg-gray-50">
                         <td>{{ $loop->iteration }}</td>
-                        {{-- <td>{{ $item + 1 }}</td> --}}
                         <td>{{ $ud->name }}</td>
                         <td>
                             <span class="truncate">
@@ -64,23 +87,21 @@
                         </td>
                         <td>{{ $ud->email }}</td>
                         <td>{{ $ud->no_hp }}</td>
-                        <td class="flex justify-evenly p-2">
-                            <a href="{{ route('customer.delete', ['id' => $ud->bid]) }}"
-                                class="bg-red-500 text-white py-1 px-3 rounded-lg" onclick="return deleteConfirmation()">
-                                <svg class="deleteIcon"></svg>
-                            </a>
-                            <a href="{{ route('customer.show', ['id' => $ud->bid]) }}"
-                                class="bg-blue-500 text-white py-1 px-3 rounded-lg">
-                                <svg class="showIcon"></svg>
-                            </a>
-                        </td>
+                        @if (!$isProvinsi)
+                            <td class="flex justify-evenly p-2">
+                                <a href="{{ route('customer.show', ['id' => $ud->bid]) }}" class="btn btn-sm btn-primary">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+
+                                <a href="{{ route('customer.delete', ['id' => $ud->bid]) }}" class="btn btn-sm btn-error"
+                                    onclick="return deleteConfirmation()">
+                                    <i class="fa-solid fa-trash text-white"></i>
+                                </a>
+                            </td>
+                        @endif
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="6" class="text-center">No Data</td>
-                    </tr>
                 @endforelse
-
             </tbody>
         </table>
         {{ $customer->links('pagination::tailwind') }}

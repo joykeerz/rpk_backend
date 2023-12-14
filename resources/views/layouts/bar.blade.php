@@ -19,8 +19,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piechart-outlabels"></script> --}}
     <style>
         .active {
-            background-color: #4a5568; /* Change this color to match your design */
-            color: #ffffff; /* Change this color to match your design */
+            background-color: #4a5568;
+            /* Change this color to match your design */
+            color: #ffffff;
+            /* Change this color to match your design */
         }
     </style>
 </head>
@@ -41,7 +43,7 @@
             {{-- @yield('searchBar') --}}
         </div>
     </div>
-@yield('script')
+    @yield('script')
 </body>
 
 </html>

@@ -30,13 +30,13 @@
     @include('layouts.searchbar')
 
     <div class="overflow-y-auto m-3">
-        <table id="myTable" class="min-w-full table-auto border ">
-            <thead class="text-center border-b-1 border">
+        <table id="myTable" class="table table-sm table-zebra hover">
+            <thead class="border border-b-1">
                 <tr>
                     <th class="px-4 py-2">#</th>
                     <th class="px-4 py-2">Kode Kantor</th>
                     <th class="px-4 py-2">Nama Kantor</th>
-                    <th class="px-4 py-2">Partner</th>
+                    <th class="px-4 py-2">PIC</th>
                     <th class="px-4 py-2">Tagline</th>
                     <th class="px-4 py-2">Provinsi</th>
                     <th class="px-4 py-2">Detail</th>
@@ -53,12 +53,12 @@
                         <td class=" px-4 py-2">{{ $item->provinsi }}</td>
                         <td class=" px-4 py-2 flex justify-center">
                             <a href="{{ route('company.show', ['id' => $item->cid]) }}"
-                                class="bg-blue-500 m-3 hover:bg-blue-700 text-white py-1 px-2 rounded">
-                                <svg class="showIcon"> </svg>
+                                class="btn btn-sm btn-primary mr-1">
+                                <i class="fa-solid fa-eye"></i>
                             </a>
                             <a href="{{ route('company.delete', ['id' => $item->cid]) }}" onclick="return confirmDelete()"
-                                class="bg-red-500 m-3 hover:bg-red-700 text-white py-1 px-2 rounded">
-                                <svg class="deleteIcon"></svg></a>
+                                class="btn btn-sm btn-error text-white">
+                                <i class="fa-solid fa-trash"></i>
                         </td>
                     </tr>
                 @empty

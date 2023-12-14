@@ -19,12 +19,14 @@ class CustomerController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $currentEntity = [];
         $customer = '';
+        $isProvinsi = false;
 
-        if (Auth::user()->role_id == 2) {
+        // if the user is penjual pusat or super admin, get customer selindo
+        if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3) {
             $customer = DB::table('biodata')
                 ->join('users', 'users.id', '=', 'biodata.user_id')
                 ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
@@ -41,20 +43,35 @@ class CustomerController extends Controller
                 ->first();
 
             if (empty($currentEntity) && Auth::user()->role_id == 4) {
-                return redirect()->route('home')->with('error', 'Anda belum terdaftar di company manapun, harap hubungi admin');
+                return redirect()->route('home')->with('error', 'Anda belum terdaftar di entitas/company manapun, harap hubungi admin');
             }
 
-            $customer = DB::table('biodata')
-                ->join('users', 'users.id', '=', 'biodata.user_id')
-                ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
-                ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
-                ->where('users.role_id', '=', 5)
-                ->where('alamat.provinsi', '=', $currentEntity->kota_kabupaten)
-                ->orderby('biodata.created_at', 'desc')
-                ->paginate(15);
+            if ($request->has('provinsi')) {
+                // if page has request of provinsi,
+                $isProvinsi = true;
+                $customer = DB::table('biodata')
+                    ->join('users', 'users.id', '=', 'biodata.user_id')
+                    ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
+                    ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
+                    ->where('users.role_id', '=', 5)
+                    ->where('alamat.provinsi', '=', $request->provinsi)
+                    ->orderby('biodata.created_at', 'desc')
+                    ->paginate(15);
+
+                return view('customer.index', ['customer' => $customer, 'currentEntity' => $currentEntity, 'isProvinsi' => $isProvinsi, 'provinsi' => $request->provinsi]);
+            } else {
+                $customer = DB::table('biodata')
+                    ->join('users', 'users.id', '=', 'biodata.user_id')
+                    ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
+                    ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
+                    ->where('users.role_id', '=', 5)
+                    ->where('alamat.provinsi', '=', $currentEntity->kota_kabupaten)
+                    ->orderby('biodata.created_at', 'desc')
+                    ->paginate(15);
+            }
         }
 
-        return view('customer.index', ['customer' => $customer, 'currentEntity' => $currentEntity]);
+        return view('customer.index', ['customer' => $customer, 'currentEntity' => $currentEntity, 'isProvinsi' => $isProvinsi]);
     }
 
     public function show($id)

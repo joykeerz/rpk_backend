@@ -14,7 +14,7 @@
 @section('content')
     <header class="bg-gray-200 p-3">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Input Kantor Wilayah') }}
+            {{ __('Input Company(Entitas)') }}
         </h2>
     </header>
 
@@ -23,7 +23,7 @@
             @csrf
             <div class="inputLabelContainer grid grid-cols-2 gap-0.5">
                 <div class="tb_nama_company flex flex-col">
-                    <label for="tb_nama_company">Nama Kantor</label>
+                    <label for="tb_nama_company">Nama Entitas</label>
                     <input value="{{ old('tb_nama_company') }}" type="text" name="tb_nama_company" id="tb_nama_company">
                     @error('tb_nama_company')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -42,7 +42,7 @@
                     @enderror
                 </div>
                 <div class="tb_kode_company flex flex-col">
-                    <label for="tb_kode_company">Kode Kantor</label>
+                    <label for="tb_kode_company">Kode Entitas</label>
                     <input value="{{ old('tb_kode_company') }}" type="text" name="tb_kode_company" id="tb_kode_company">
                     @error('tb_kode_company')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
