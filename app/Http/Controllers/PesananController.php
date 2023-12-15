@@ -309,15 +309,41 @@ class PesananController extends Controller
         return redirect()->route('pesanan.index', ['id' => $pesanan->gudang_id])->with('message', 'Transaksi berhasil diupdate');
     }
 
-    public function transaksiByGudangSelector()
+    public function transaksiByGudangSelector(Request $request)
     {
-        $gudang = DB::table('gudang')
-            ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
-            ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
-            ->orderBy('cat', 'desc')
-            ->get();
+        $currentEntity = [];
+        $gudang = [];
+        $isProvinsi = false;
 
-        return view('pesanan.transaksiByGudang', ['gudang' => $gudang]);
+        $currentEntity = DB::table('companies')
+            ->join('users', 'users.id', '=', 'companies.user_id')
+            ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
+            ->select('alamat.provinsi', 'alamat.kota_kabupaten')
+            ->where('users.id', '=', Auth::user()->id)
+            ->first();
+
+        if (empty($currentEntity)) {
+            return redirect()->route('home')->with('error', 'Anda belum terdaftar di entitas/company manapun, harap hubungi admin');
+        }
+
+        if ($request->has('provinsi')) {
+            $isProvinsi = true;
+            $gudang = DB::table('gudang')
+                ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
+                ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
+                ->where('alamat.provinsi', '=', $currentEntity->provinsi)
+                ->orderBy('cat', 'desc')
+                ->get();
+        } else {
+            $gudang = DB::table('gudang')
+                ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
+                ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
+                ->where('alamat.kota_kabupaten', '=', $currentEntity->kota_kabupaten)
+                ->orderBy('cat', 'desc')
+                ->get();
+        }
+
+        return view('pesanan.transaksiByGudang', ['gudang' => $gudang, 'currentEntity' => $currentEntity, 'isProvinsi' => $isProvinsi]);
     }
 
     public function verify($id)

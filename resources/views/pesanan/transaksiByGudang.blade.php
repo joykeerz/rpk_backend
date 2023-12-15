@@ -17,6 +17,15 @@
     <header class="bg-gray-200 p-4">
         <h2>
             Transaksi By Gudang
+            @if (empty($currentEntity))
+                Selindo
+            @else
+                @if ($isProvinsi)
+                    {{ $currentEntity->provinsi }}
+                @else
+                    {{ $currentEntity->kota_kabupaten }}
+                @endif
+            @endif
         </h2>
     </header>
     <script>
@@ -26,9 +35,21 @@
     </script>
 
     <div class="overflow-auto m-3">
-        <input type="text" id="searchInput"
-            class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            placeholder="Search...">
+        @if (!empty($currentEntity))
+            @if (!$isProvinsi)
+                <div
+                    class="flex justify-between items-center w-100 p-2 rounded border border-opacity-30 border-slate-500 bg-blue-950 text-white">
+                    <h1 class="font-medium">GUDANG SE-{{ $currentEntity->provinsi }}</h1>
+                    <form action="{{ route('pesanan.selectTransaksi') }}">
+                        <input type="hidden" name="provinsi" value="{{ $currentEntity->provinsi }}">
+                        <button type="submit" class="btn btn-sm btn-outline text-white">
+                            Lihat
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </form>
+                </div>
+            @endif
+        @endif
         <table id="myTable" class="min-w-full bg-white text-center">
             <thead>
                 <tr class="text-center">
