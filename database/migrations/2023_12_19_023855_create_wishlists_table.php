@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('stok_id');
+            $table->unsignedBigInteger('gudang_id');
             $table->string('wishlist_group')->default('none');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('stok_id')->references('id')->on('stok')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('stok_id')->references('id')->on('stok')->onDelete('cascade');
+            // $table->foreign('gudang_id')->references('id')->on('gudang')->onDelete('cascade');
             $table->timestamps();
         });
     }

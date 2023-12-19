@@ -20,9 +20,9 @@ return new class extends Migration
             $table->double('dpp')->default(0);
             $table->double('ppn')->default(0);
             $table->double('subtotal_detail')->default(0);
-            $table->foreign('stok_id')->references('id')->on('stok')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('gudang_id')->references('id')->on('gudang')->onDelete('cascade');
+            // $table->foreign('stok_id')->references('id')->on('stok')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('gudang_id')->references('id')->on('gudang')->onDelete('cascade');
             $table->timestamps();
         });
     }
