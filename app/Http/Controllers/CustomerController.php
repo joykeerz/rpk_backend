@@ -54,7 +54,7 @@ class CustomerController extends Controller
                     ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
                     ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
                     ->where('users.role_id', '=', 5)
-                    ->where('alamat.provinsi', '=', $request->provinsi)
+                    ->where('alamat.provinsi', '=', $currentEntity->provinsi)
                     ->orderby('biodata.created_at', 'desc')
                     ->paginate(15);
 
@@ -65,7 +65,7 @@ class CustomerController extends Controller
                     ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
                     ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
                     ->where('users.role_id', '=', 5)
-                    ->where('alamat.provinsi', '=', $currentEntity->kota_kabupaten)
+                    ->where('alamat.kota_kabupaten', '=', $currentEntity->kota_kabupaten)
                     ->orderby('biodata.created_at', 'desc')
                     ->paginate(15);
             }
