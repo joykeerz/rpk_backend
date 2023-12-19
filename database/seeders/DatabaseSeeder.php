@@ -132,8 +132,8 @@ class DatabaseSeeder extends Seeder
         //pajak
         DB::table('pajak')->insert([
             'nama_pajak' => 'Non Pajak',
-            'jenis_pajak' => 'Non',
-            'persentase_pajak' => 0,
+            'jenis_pajak' => 'dibebaskan',
+            'persentase_pajak' => 11,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -224,8 +224,8 @@ class DatabaseSeeder extends Seeder
         DB::table('companies')->insert([
             'alamat_id' => 1,
             'user_id' => 1,
-            'kode_company' => 'none',
-            'nama_company' => 'none',
+            'kode_company' => 'D0001',
+            'nama_company' => 'Kanwil Testing',
             'partner_company' => 'none',
             'tagline_company' => 'none',
             'created_at' => now(),
@@ -237,7 +237,7 @@ class DatabaseSeeder extends Seeder
             'alamat_id' => 1,
             'company_id' => 1,
             'user_id' => 1,
-            'nama_gudang' => 'none',
+            'nama_gudang' => 'Gudang Testing',
             'no_telp' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
@@ -246,7 +246,7 @@ class DatabaseSeeder extends Seeder
         // Branch Seed
         DB::table('branches')->insert([
             'company_id' => 1,
-            'nama_branch' => 'none',
+            'nama_branch' => 'Kancab Testing',
             'no_telp_branch' => 'none',
             'alamat_branch' => 'none',
             'created_at' => now(),

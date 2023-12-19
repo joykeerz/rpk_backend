@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('berita', function (Blueprint $table) {
+        Schema::create('wishlists', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('external_berita_id')->nullable();
-            $table->string('judul_berita');
-            $table->text('deskripsi_berita');
-            $table->string('gambar_berita');
-            $table->string('slug_berita');
-            $table->string('penulis_berita');
-            $table->string('kategori_berita');
+            $table->unsignedBigInteger('stok_id');
+            $table->string('wishlist_group')->default('none');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('stok_id')->references('id')->on('stok')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('berita');
+        Schema::dropIfExists('wishlists');
     }
 };
