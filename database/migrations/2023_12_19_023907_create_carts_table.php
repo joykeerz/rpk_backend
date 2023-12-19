@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('stok_id');
+            $table->unsignedBigInteger('gudang_id');
             $table->integer('quantity')->default(0);
             $table->double('dpp')->default(0);
             $table->double('ppn')->default(0);
             $table->double('subtotal_detail')->default(0);
             $table->foreign('stok_id')->references('id')->on('stok')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('gudang_id')->references('id')->on('gudang')->onDelete('cascade');
             $table->timestamps();
         });
     }
