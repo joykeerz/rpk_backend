@@ -144,6 +144,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store', [CustomerController::class, 'store'])->name('customer.store');
         Route::post('/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
         Route::get('/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+        Route::get('/verify/{id}', [CustomerController::class, 'verify'])->name('customer.verify');
+        Route::get('/reject/{id}', [CustomerController::class, 'reject'])->name('customer.reject');
     });
 
     ///reporting (Laporan) route

@@ -71,6 +71,7 @@ class CustomerController extends Controller
             }
         }
 
+
         return view('customer.index', ['customer' => $customer, 'currentEntity' => $currentEntity, 'isProvinsi' => $isProvinsi]);
     }
 
@@ -270,5 +271,21 @@ class CustomerController extends Controller
         $user->delete();
 
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil dihapus');
+    }
+
+    public function verify($id)
+    {
+        $userData = User::find($id);
+        $userData->isVerified = 1;
+        $userData->save();
+        return redirect()->back()->with('success', "Akun {$userData->name} berhasil diverifikasi");
+    }
+
+    public function reject($id)
+    {
+        $userData = User::find($id);
+        $userData->isVerified = 2;
+        $userData->save();
+        return redirect()->back()->with('success', "Akun {$userData->name} berhasil diverifikasi");
     }
 }

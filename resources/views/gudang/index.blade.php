@@ -21,9 +21,17 @@
     </script>
 
     <header class="bg-gray-200 p-3">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Gudang') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Gudang') }}
+            </h2>
+            <div class="button">
+                <a class="btn btn-sm btn-primary" href="{{ route('gudang.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    New Gudang
+                </a>
+            </div>
+        </div>
     </header>
 
     @include('layouts.searchbar')
@@ -53,8 +61,8 @@
                                 class="btn btn-sm btn-primary mr-2">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
-                            <a href="{{ route('gudang.delete', ['id' => $gudang->gid]) }}" onclick="return confirmDelete();"
-                                class="btn btn-sm btn-error text-white">
+                            <a href="{{ route('gudang.delete', ['id' => $gudang->gid]) }}"
+                                onclick="return confirmDelete();" class="btn btn-sm btn-error text-white">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
 

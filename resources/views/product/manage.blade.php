@@ -15,9 +15,17 @@
 
 @section('content')
     <header class="bg-gray-200 p-4">
-        <h2>
-            Manage Product
-        </h2>
+        <div class="flex justify-between">
+            <h2>
+                Manage Product
+            </h2>
+            <div class="button">
+                <a class="btn btn-sm btn-primary" href="{{ route('product.index') }}">
+                    <i class="fa-solid fa-add"></i>
+                    New Product
+                </a>
+            </div>
+        </div>
     </header>
 
     @include('layouts.alert')

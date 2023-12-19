@@ -16,9 +16,17 @@
 
 @section('content')
     <header class="bg-gray-200 p-3">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Home > {{ __('Pajak') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2>
+                Manage {{ __('Pajak') }}
+            </h2>
+            <div class="button">
+                <a class="btn btn-sm btn-primary" href="{{ route('pajak.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    New Pajak
+                </a>
+            </div>
+        </div>
     </header>
 
     @include('layouts.alert')

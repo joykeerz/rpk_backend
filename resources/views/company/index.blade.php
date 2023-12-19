@@ -21,9 +21,17 @@
         }
     </script>
     <header class="bg-gray-200 p-3">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kantor Wilayah (Company)') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Company (Entitas)') }}
+            </h2>
+            <div class="button">
+                <a class="btn btn-sm btn-primary" href="{{ route('company.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    New Company
+                </a>
+            </div>
+        </div>
     </header>
 
     @include('layouts.alert')

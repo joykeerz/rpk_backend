@@ -16,9 +16,17 @@
 
 @section('content')
     <header class="bg-gray-200 p-3">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kantor Cabang (Branch)') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Kantor Cabang (Branch)') }}
+            </h2>
+            <div class="button">
+                <a class="btn btn-sm btn-primary" href="{{ route('branch.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    New Branch
+                </a>
+            </div>
+        </div>
     </header>
 
     @include('layouts.alert')
@@ -50,8 +58,7 @@
                         <td class=" px-4 py-2">{{ $item->no_telp_branch }}</td>
                         <td class=" px-4 py-2">{{ $item->alamat_branch }}</td>
                         <td class=" px-4 py-2 flex justify-center">
-                            <a href="{{ route('branch.show', ['id' => $item->bid]) }}"
-                                class="btn btn-sm btn-primary mr-1">
+                            <a href="{{ route('branch.show', ['id' => $item->bid]) }}" class="btn btn-sm btn-primary mr-1">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
                             <a href="{{ route('branch.delete', ['id' => $item->bid]) }}" onclick="return confirmDelete();"
@@ -74,15 +81,15 @@
 @endsection
 
 @section('script')
-        <script>
-            $(document).ready(function() {
-                $('#myTable').DataTable({
-                    responsive: true,
-                    searching: false,
-                    ordering: true,
-                    paging: false,
-                    info: false,
-                });
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                responsive: true,
+                searching: false,
+                ordering: true,
+                paging: false,
+                info: false,
             });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection

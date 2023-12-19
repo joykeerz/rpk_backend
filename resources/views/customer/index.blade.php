@@ -62,7 +62,7 @@
                 </div>
             @endif
         @endif
-        <table id="myTable" class="min-w-full divide-y divide-gray-200 text-center">
+        <table id="myTable" class="table table-sm table-zebra hover">
             <thead class="text-center">
                 <tr>
                     <th scope="col">No</th>
@@ -70,6 +70,7 @@
                     <th scope="col">Nama RPK</th>
                     <th scope="col">Email</th>
                     <th scope="col">No.Hp</th>
+                    <th scope="col">Status</th>
                     @if (!$isProvinsi)
                         <th scope="col">Actions</th>
                     @endif
@@ -87,8 +88,37 @@
                         </td>
                         <td>{{ $ud->email }}</td>
                         <td>{{ $ud->no_hp }}</td>
+                        <td>
+                            @switch($ud->isVerified)
+                                @case(0)
+                                    Belum Terverifikasi
+                                @break
+
+                                @case(1)
+                                    Terverifikasi
+                                @break
+
+                                @case(2)
+                                    Rejected
+                                @break
+                            @endswitch
+                        </td>
                         @if (!$isProvinsi)
-                            <td class="flex justify-evenly p-2">
+                            <td class="grid grid-cols-2 gap-2">
+                                @if ($ud->isVerified == 0)
+                                    <a href="{{ route('customer.verify', ['id' => $ud->uid]) }}"
+                                        class="btn btn-sm primary mr-1">
+                                        <i class="fa-solid fa-check"></i>
+                                        Verify
+                                    </a>
+
+                                    <a href="{{ route('customer.reject', ['id' => $ud->uid]) }}"
+                                        class="btn btn-sm btn-outline mr-1">
+                                        <i class="fa-solid fa-xmark"></i>
+                                        Reject
+                                    </a>
+                                @endif
+
                                 <a href="{{ route('customer.show', ['id' => $ud->bid]) }}" class="btn btn-sm btn-primary">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
@@ -100,31 +130,31 @@
                             </td>
                         @endif
                     </tr>
-                @empty
-                @endforelse
-            </tbody>
-        </table>
-        {{ $customer->links('pagination::tailwind') }}
+                    @empty
+                    @endforelse
+                </tbody>
+            </table>
+            {{ $customer->links('pagination::tailwind') }}
 
-    </div>
+        </div>
 
-    <style>
-        td {
-            text-overflow: ellipsis;
-        }
-    </style>
-@endsection
+        <style>
+            td {
+                text-overflow: ellipsis;
+            }
+        </style>
+    @endsection
 
-@section('script')
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable({
-                responsive: true,
-                searching: false,
-                ordering: true,
-                paging: false,
-                info: false,
+    @section('script')
+        <script>
+            $(document).ready(function() {
+                $('#myTable').DataTable({
+                    responsive: true,
+                    searching: false,
+                    ordering: true,
+                    paging: false,
+                    info: false,
+                });
             });
-        });
-    </script>
-@endsection
+        </script>
+    @endsection

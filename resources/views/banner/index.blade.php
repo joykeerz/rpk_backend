@@ -20,9 +20,17 @@
         }
     </script>
     <header class="bg-gray-200 p-4">
-        <h2>
-            Manage Banner
-        </h2>
+        <div class="flex justify-between">
+            <h2>
+                Manage Banner
+            </h2>
+            <div class="button">
+                <a class="btn btn-sm btn-primary" href="{{ route('banner.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    New Banner
+                </a>
+            </div>
+        </div>
     </header>
 
     @include('layouts.alert')
@@ -64,7 +72,6 @@
                         </td>
                     </tr>
                 @empty
-
                 @endforelse
             </tbody>
         </table>
@@ -75,15 +82,15 @@
 @endsection
 
 @section('script')
-        <script>
-            $(document).ready(function() {
-                $('#myTable').DataTable({
-                    responsive: true,
-                    searching: false,
-                    ordering: true,
-                    paging: false,
-                    info: false,
-                });
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                responsive: true,
+                searching: false,
+                ordering: true,
+                paging: false,
+                info: false,
             });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection

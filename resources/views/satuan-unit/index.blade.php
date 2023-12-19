@@ -16,9 +16,17 @@
 
 @section('content')
     <header class="bg-gray-200 p-3">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Home > {{ __('Satuan Unit') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2>
+                Manage {{ __('Satuan Unit') }}
+            </h2>
+            <div class="button">
+                <a class="btn btn-sm btn-primary" href="{{ route('satuan-unit.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    New Satuan Unite
+                </a>
+            </div>
+        </div>
     </header>
 
     @include('layouts.alert')
@@ -52,7 +60,8 @@
                                 class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
                                 <svg class="showIcon"> </svg>
                             </a>
-                            <a href="{{ route('satuan-unit.delete', ['id' => $st->id]) }}" onclick="return confirmDelete();"
+                            <a href="{{ route('satuan-unit.delete', ['id' => $st->id]) }}"
+                                onclick="return confirmDelete();"
                                 class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
                                 <svg class="deleteIcon"></svg>
                             </a>
