@@ -33,7 +33,7 @@
                     <select name="jenisPajak" id="jenisPajak" class="w-full max-w-xs">
                         <option disabled>Pilih jenis pajak...</option>
                         <option selected>{{$pajak->jenis_pajak}}</option>
-                        <option>Non</option>
+                        <option>Dibebaskan</option>
                         <option>Include</option>
                         <option>Exclude</option>
                     </select>
