@@ -131,8 +131,8 @@ class DatabaseSeeder extends Seeder
 
         //pajak
         DB::table('pajak')->insert([
-            'nama_pajak' => 'Non Pajak',
-            'jenis_pajak' => 'dibebaskan',
+            'nama_pajak' => 'Dibebaskan',
+            'jenis_pajak' => 'Dibebaskan',
             'persentase_pajak' => 11,
             'created_at' => now(),
             'updated_at' => now(),
