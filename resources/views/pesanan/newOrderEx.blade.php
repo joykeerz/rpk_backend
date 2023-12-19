@@ -190,7 +190,7 @@
                     dpp = subtotal;
                     pajak = dpp * (persentase / 100);
                     subtotal = dpp + pajak;
-                } else if (jenis_pajak.toLowerCase() === 'non') {
+                } else if (jenis_pajak.toLowerCase() === 'dibebaskan') {
                     dpp = subtotal;
                     pajak = subtotal * (persentase / 100);
                     subtotal = dpp;

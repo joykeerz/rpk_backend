@@ -32,7 +32,7 @@
                     <label for="jenisPajak">Jenis pajak</label>
                     <select name="jenisPajak" id="jenisPajak" class="w-full max-w-xs">
                         <option disabled selected>Pilih jenis pajak...</option>
-                        <option>Non</option>
+                        <option>Dibebaskan</option>
                         <option>Include</option>
                         <option>Exclude</option>
                     </select>
