@@ -90,6 +90,32 @@
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                                 @enderror
                                             </div>
+
+                                            <div class="mb-4">
+                                                <label for="cb_kode_company"
+                                                    class="leading-7 block text-sm font-medium text-gray-700"> Entitas
+                                                </label>
+                                                <select name="cb_kode_company" id="cb_kode_company"
+                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
+                                                    @forelse ($entitas as $company)
+                                                        <option value="{{ $company->kode_company }}"
+                                                            @if ($customer->kode_company == $company->kode_company) selected  @endif>
+                                                            {{ $company->nama_company }}
+                                                        </option>
+                                                    @empty
+                                                        <option value="" disabled>
+                                                            No data
+                                                        </option>
+                                                    @endforelse
+                                                </select>
+                                                @error('cb_kode_company')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
+                                                <p class="text-gray-400 text-sm">
+                                                    Mendaftarkan customer ke cabang (bisa dikosongkan)
+                                                </p>
+                                            </div>
+
                                             <div class="mb-4">
                                                 <label for="tb_ktp_rpk"
                                                     class="leading-7 block text-sm font-medium text-gray-700">KTP
@@ -126,8 +152,8 @@
                                         <div class="mb-4">
                                             <label for="tb_jalan"
                                                 class="block text-sm font-medium text-gray-700">Jalan</label>
-                                            <input type="text" class="border rounded-md py-2 px-3 w-full" name="tb_jalan"
-                                                value="{{ $customer->jalan }}" placeholder="">
+                                            <input type="text" class="border rounded-md py-2 px-3 w-full"
+                                                name="tb_jalan" value="{{ $customer->jalan }}" placeholder="">
                                             @error('tb_jalan')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror

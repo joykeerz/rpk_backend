@@ -55,14 +55,14 @@
                         <td class="px-4 py-2">{{ $pjk->nama_pajak }}</td>
                         <td class="px-4 py-2">{{ $pjk->jenis_pajak }}</td>
                         <td class="px-4 py-2">{{ $pjk->persentase_pajak }}%</td>
-                        <td class="px-4 py-2 flex justify-center">
+                        <td class="px-4 py-2 flex justify-center gap-1">
                             <a href="{{ route('pajak.show', ['id' => $pjk->id]) }}"
-                                class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                                <svg class="showIcon"> </svg>
+                                class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-eye"></i>
                             </a>
                             <a href="{{ route('pajak.delete', ['id' => $pjk->id]) }}" onclick="return confirmDelete();"
-                                class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
-                                <svg class="deleteIcon"></svg>
+                                class="btn btn-sm btn-error">
+                                <i class="fa-solid fa-trash text-white"></i>
                             </a>
                         </td>
                     </tr>

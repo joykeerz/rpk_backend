@@ -16,27 +16,32 @@
         </h2>
     </header>
 
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 m-4 rounded relative" role="alert">
+        <strong class="font-bold">Perhatian!</strong>
+        <span class="block sm:inline">Pastikan semua data bersimbol * terisi dengan benar</span>
+    </div>
+
     <div class="formContainer m-3 border rounded p-3">
 
         <form action="{{ route('satuan-unit.store') }}" method="post">
             @csrf
             <div class="inputLabelContainer grid grid-cols-2 gap-0.5">
                 <div class="namaSatuan flex flex-col">
-                    <label for="namaSatuan">Nama Satuan</label>
+                    <label for="namaSatuan">Nama Satuan*</label>
                     <input type="text" name="namaSatuan" id="namaSatuan">
                     @error('namaSatuan')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="simbolSatuan flex flex-col">
-                    <label for="simbolSatuan">Simbol Satuan</label>
+                    <label for="simbolSatuan">Simbol Satuan*</label>
                     <input type="text" name="simbolSatuan" id="simbolSatuan">
                     @error('simbolSatuan')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="keteranganSatuan flex flex-col">
-                    <label for="keteranganSatuan">Keterangan</label>
+                    <label for="keteranganSatuan">Keterangan*</label>
                     <input type="text" name="keteranganSatuan" id="keteranganSatuan">
                     @error('keteranganSatuan')
                         <p class="text-red-500 text-sm">{{ $message }}</p>

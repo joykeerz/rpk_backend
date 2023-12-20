@@ -18,13 +18,19 @@
             <div class="bg-gray-200 p-4">
                 New Article/Berita
             </div>
+
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 m-4 rounded relative" role="alert">
+                <strong class="font-bold">Perhatian!</strong>
+                <span class="block sm:inline">Pastikan semua data bersimbol * terisi dengan benar</span>
+            </div>
+
             <div class="formContainer m-3 border rounded p-3">
                 <form enctype="multipart/form-data" action="{{ Route('berita.store') }}" method="post">
                     @csrf
                     <div>
                         <div class="p-4 grid grid-cols-2 gap-1">
                             <div id="judulBerita" class="mb-3">
-                                <label for="" class="block text-sm font-medium text-gray-700">Judul Berita</label>
+                                <label for="" class="block text-sm font-medium text-gray-700">Judul Berita*</label>
                                 <input type="text"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
                                     name="judul_berita" id="judul_berita" placeholder="">
@@ -34,7 +40,8 @@
                             </div>
 
                             <div id="penulisBerita" class="mb-3">
-                                <label for="" class="block text-sm font-medium text-gray-700">Penulis Berita</label>
+                                <label for="" class="block text-sm font-medium text-gray-700">Penulis
+                                    Berita*</label>
                                 <input type="text"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
                                     name="penulis_berita" id="penulis_berita" placeholder="">
@@ -44,7 +51,9 @@
                             </div>
 
                             <div id="kategoriBerita" class="mb-3">
-                                <label for="" class="block text-sm font-medium text-gray-700">Kategori Berita</label>
+                                <label for="" class="block text-sm font-medium text-gray-700">Kategori
+                                    Berita*
+                                </label>
                                 <select
                                     class=" block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
                                     name="kategori_berita" id="kategori_berita">
@@ -60,7 +69,8 @@
 
                             <div id="externalId" class="mb-3">
                                 <label for="ExternalId" class="block text-sm font-medium text-gray-700">ID
-                                    Eksternal</label>
+                                    Eksternal
+                                </label>
                                 <input type="text" name="external_id" id="external_id"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border p-1"
                                     name="external_id" id="external_id">
@@ -71,7 +81,8 @@
                             </div>
                             <div id="imageBerita" class="mb-3">
                                 <label for="imageBerita" class="block text-sm font-medium text-gray-700">Gambar
-                                    Banner</label>
+                                    Banner*
+                                </label>
                                 <img id="preview_img" class="h-fit w-full object-cover">
                                 <input onchange="loadFile(event)" value="0" type="file" name="gambar_berita"
                                     id="gambar_berita"
@@ -86,7 +97,9 @@
                             </div>
 
                             <div id="deksripsiBerita" class="mb-3">
-                                <label for="deskripsi_berita" class="block text-sm font-medium text-gray-700">Isi Berita</label>
+                                <label for="deskripsi_berita" class="block text-sm font-medium text-gray-700">Isi
+                                    Berita*
+                                </label>
                                 <textarea
                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
                                     name="deskripsi_berita" id="deskripsi_berita" cols="30" rows="2"></textarea>
@@ -96,8 +109,6 @@
                                 @enderror
                             </div>
                         </div>
-
-
 
                         <div class="buttonContainer flex justify-center">
                             <button type="submit"

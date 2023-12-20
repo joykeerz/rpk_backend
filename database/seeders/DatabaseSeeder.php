@@ -85,17 +85,17 @@ class DatabaseSeeder extends Seeder
 
         // Alamat Seed
         DB::table('alamat')->insert([
-            'jalan' => 'none',
-            'jalan_ext' => 'none',
-            'blok' => 'none',
-            'rt' => 'none',
-            'rw' => 'none',
-            'provinsi' => 'none',
-            'kota_kabupaten' => 'none',
-            'kecamatan' => 'none',
-            'kelurahan' => 'none',
-            'negara' => 'none',
-            'kode_pos' => 'none',
+            'jalan' => 'Jl Sukrawetan',
+            'jalan_ext' => 'Gg Batuan Satu',
+            'blok' => 'Blok JA No.3',
+            'rt' => '1',
+            'rw' => '1',
+            'provinsi' => 'DKI JAKARTA',
+            'kota_kabupaten' => 'KOTA JAKARTA SELATAN',
+            'kecamatan' => 'KEBAYORAN LAMA',
+            'kelurahan' => 'KEBAYORAN LAMA SELATAN',
+            'negara' => 'Indonesia',
+            'kode_pos' => '15318',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

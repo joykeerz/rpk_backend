@@ -111,6 +111,29 @@
                                                 @enderror
                                             </div>
                                             <div class="mb-4">
+                                                <label for="cb_kode_company"
+                                                    class="leading-7 block text-sm font-medium text-gray-700"> Entitas
+                                                </label>
+                                                <select name="cb_kode_company" id="cb_kode_company"
+                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
+                                                    @forelse ($entitas as $company)
+                                                        <option value="{{ $company->kode_company }}">
+                                                            {{ $company->nama_company }}
+                                                        </option>
+                                                    @empty
+                                                        <option value="" disabled>
+                                                            No data
+                                                        </option>
+                                                    @endforelse
+                                                </select>
+                                                @error('cb_kode_company')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
+                                                <p class="text-gray-400 text-sm">
+                                                    Mendaftarkan customer ke cabang (bisa dikosongkan)
+                                                </p>
+                                            </div>
+                                            <div class="mb-4">
                                                 <label for="tb_ktp_rpk"
                                                     class="leading-7 block text-sm font-medium text-gray-700">KTP
                                                     RPK*</label>

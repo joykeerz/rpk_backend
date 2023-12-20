@@ -29,44 +29,35 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="flex flex-col text-center gap-4">
-                        <h1 class="text-3xl uppercase">Dashboard RPK</h1>
-                        <div class="flex gap-4">
-                            <div class="card w-96 bg-base-100 shadow-md">
-                                <div class="card-body">
-                                    <div class="flex items-center p-4 bg-white rounded-lg shadow-xs">
-                                        <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full">
-                                            <i class="fa-solid fa-cubes text-2xl"></i>
-                                        </div>
-                                        <div>
-                                            <p class="mb-2 text-sm font-medium text-gray-600">
-                                                Total Stok
-                                            </p>
-                                            <p class="text-lg font-semibold text-gray-700">
-                                                {{$stockCountByMonth}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="stats shadow">
 
-                            <div class="card w-96 bg-base-100 shadow-md">
-                                <div class="card-body">
-                                    <div class="flex items-center p-4 bg-white rounded-lg shadow-xs">
-                                        <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full">
-                                            <i class="fa-solid fa-receipt text-2xl"></i>
-                                        </div>
-                                        <div>
-                                            <p class="mb-2 text-sm font-medium text-gray-600">
-                                                Total Transaksi
-                                            </p>
-                                            <p class="text-lg font-semibold text-gray-700">
-                                                {{$transaksiCountByMonth}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="stat">
+                            <div class="stat-figure text-secondary">
+                                <i class="fa-solid fa-receipt text-4xl"></i>
                             </div>
+                            <div class="stat-title">Transaksi Bulan ini</div>
+                            <div class="stat-value">{{ $transaksiCountByMonth }}</div>
+                            <div class="stat-desc">{{ now()->month()->format('F') }} - {{ now()->month()->addMonth()->format('F') }}</div>
+                        </div>
+
+                        <div class="stat">
+                            <div class="stat-figure text-secondary">
+                                <i class="fa-solid fa-cube text-4xl"></i>
+                            </div>
+                            <div class="stat-title">Total Stok</div>
+                            <div class="stat-value">{{$stockCountByMonth}}</div>
+                            {{-- <div class="stat-desc">↗︎ 400 (22%)</div> --}}
+                            <div class="stat-desc">selindo</div>
+                        </div>
+
+                        <div class="stat">
+                            <div class="stat-figure text-secondary">
+                                <i class="fa-solid fa-user text-4xl"></i>
+                            </div>
+                            <div class="stat-title">Total Customer</div>
+                            <div class="stat-value">{{$totalCustomer}}</div>
+                            {{-- <div class="stat-desc">↘︎ 90 (14%)</div> --}}
+                            <div class="stat-desc">selindo</div>
                         </div>
 
                     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alamat;
 use App\Models\Biodata;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +78,8 @@ class CustomerController extends Controller
 
     public function show($id)
     {
+        $entitas = DB::table('companies')->get();
+
         $customer = DB::table('biodata')
             ->join('users', 'users.id', '=', 'biodata.user_id')
             ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
@@ -88,12 +91,13 @@ class CustomerController extends Controller
             abort(404);
         }
 
-        return view('customer.show', ['customer' => $customer]);
+        return view('customer.show', ['customer' => $customer, 'entitas' => $entitas]);
     }
 
     public function create()
     {
-        return view('customer.create');
+        $entitas = DB::table('companies')->get();
+        return view('customer.create', ['entitas' => $entitas]);
     }
 
     public function store(Request $request)
@@ -162,6 +166,9 @@ class CustomerController extends Controller
         $customer->kode_customer = $request->tb_kode_customer;
         $customer->nama_rpk = $request->tb_nama_rpk;
         $customer->no_ktp = $request->tb_ktp_rpk;
+        if ($request->has('cb_kode_company')) {
+            $customer->kode_company = $request->cb_kode_company;
+        }
 
         if ($request->hasFile('tb_img_ktp')) {
             $filePath = $request->file('tb_img_ktp')->store('images/ktp', 'public');
@@ -214,6 +221,8 @@ class CustomerController extends Controller
         $customer->kode_customer = $request->tb_kode_customer;
         $customer->nama_rpk = $request->tb_nama_rpk;
         $customer->no_ktp = $request->tb_ktp_rpk;
+        $customer->kode_company = $request->cb_kode_company;
+
         if ($request->hasFile('tb_img_ktp')) {
             $filePath = $request->file('tb_img_ktp')->store('images/ktp', 'public');
             $validatedData['tb_img_ktp'] = $filePath;

@@ -18,9 +18,15 @@
         </h2>
     </header>
 
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 m-4 rounded relative" role="alert">
+        <strong class="font-bold">Perhatian!</strong>
+        <span class="block sm:inline">Pastikan semua data bersimbol * terisi dengan benar</span>
+    </div>
+
     <div class="formContainer m-3 border rounded p-3">
         <form action="{{ route('gudang.store') }}" method="POST" class="">
             @csrf
+
             <div class="inputLabelContainer grid grid-cols-2 gap-0.5">
                 <div class="tb_nama_gudang flex flex-col">
                     <label for="tb_nama_gudang">Nama Gudang*</label>

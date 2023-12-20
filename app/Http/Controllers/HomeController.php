@@ -26,13 +26,19 @@ class HomeController extends Controller
     public function index()
     {
         $stockCountByMonth = DB::table('stok')
-        ->select('stock.*')
-        ->whereBetween('created_at', [now()->startOfMonth(), now()])
-        ->count();
+            ->whereBetween('created_at', [now()->startOfMonth(), now()])
+            ->count();
+
         $transaksiCountByMonth  = DB::table('transaksi')
-        ->select('transaksi.*')
-        ->whereBetween('created_at', [now()->startOfMonth(), now()])
-        ->count();
-        return view('home', ['stockCountByMonth' => $stockCountByMonth, 'transaksiCountByMonth' => $transaksiCountByMonth]);
+            ->whereBetween('created_at', [now()->startOfMonth(), now()])
+            ->count();
+
+        $totalCustomer = DB::table('biodata')->count();
+
+        return view('home', [
+            'stockCountByMonth' => $stockCountByMonth,
+            'transaksiCountByMonth' => $transaksiCountByMonth,
+            'totalCustomer' => $totalCustomer
+        ]);
     }
 }

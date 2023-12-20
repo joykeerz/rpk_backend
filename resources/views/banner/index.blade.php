@@ -60,14 +60,14 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $banner->judul_banner }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $banner->deskripsi_banner }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap flex justify-center">
+                        <td class="px-6 py-4 whitespace-nowrap flex justify-center items-center gap-1">
                             <a href="{{ route('banner.show', ['id' => $banner->id]) }}"
-                                class="m-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                                <svg class="showIcon"> </svg>
+                                class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-eye"></i>
                             </a>
                             <a href="{{ route('banner.delete', ['id' => $banner->id]) }}" onclick="return confirmDelete();"
-                                class="m-2 bg-red-500 text-white rounded-md px-3 py-1 flex items-center justify-center">
-                                <svg class="deleteIcon"></svg>
+                                class="btn btn-sm btn-error">
+                                <i class="fa-solid fa-trash text-white"></i>
                             </a>
                         </td>
                     </tr>

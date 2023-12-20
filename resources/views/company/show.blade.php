@@ -144,7 +144,7 @@
 
                 <div class="kodepos">
                     <label for="" class="block text-sm font-medium text-gray-700">Kode Pos</label>
-                    <input type="number"
+                    <input type="text"
                         class="mt-1 block w-full rounded-md shadow-sm focus:border-indigo-300
                     focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                         name="tb_kodepos" id="tb_kodepos" placeholder="" value="{{ $company->kode_pos }}">

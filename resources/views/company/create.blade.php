@@ -18,19 +18,24 @@
         </h2>
     </header>
 
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 m-4 rounded relative" role="alert">
+        <strong class="font-bold">Perhatian!</strong>
+        <span class="block sm:inline">Pastikan semua data bersimbol * terisi dengan benar</span>
+    </div>
+
     <div class="formContainer m-3 border rounded p-3">
         <form action="{{ route('company.store') }}" method="post">
             @csrf
             <div class="inputLabelContainer grid grid-cols-2 gap-0.5">
                 <div class="tb_nama_company flex flex-col">
-                    <label for="tb_nama_company">Nama Entitas</label>
+                    <label for="tb_nama_company">Nama Entitas*</label>
                     <input value="{{ old('tb_nama_company') }}" type="text" name="tb_nama_company" id="tb_nama_company">
                     @error('tb_nama_company')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="tb_user_id flex flex-col">
-                    <label for="tb_user_id">Penanggung Jawab</label>
+                    <label for="tb_user_id">Penanggung Jawab*</label>
                     <select name="tb_user_id" id="tb_user_id">
                         @foreach ($usersData as $user)
                             <option value="{{ $user->id }}" {{ old('tb_user_id') == $user->id ? 'selected' : '' }}>
@@ -42,7 +47,7 @@
                     @enderror
                 </div>
                 <div class="tb_kode_company flex flex-col">
-                    <label for="tb_kode_company">Kode Entitas</label>
+                    <label for="tb_kode_company">Kode Entitas*</label>
                     <input value="{{ old('tb_kode_company') }}" type="text" name="tb_kode_company" id="tb_kode_company">
                     @error('tb_kode_company')
                         <p class="text-red-500 text-sm">{{ $message }}</p>

@@ -159,7 +159,7 @@ class CompanyController extends Controller
         $alamat->kode_pos = $request->tb_kodepos;
         $alamat->save();
 
-        return redirect()->route('company.index')->with('message', 'Company berhasil diupdate');
+        return redirect()->route('company.index')->with('message', 'Entitas berhasil diupdate');
     }
 
     /**
