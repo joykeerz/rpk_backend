@@ -121,7 +121,7 @@
 
             <div class="tb_user_id flex flex-col">
                 <label for="tb_user_id">Pilih Customer</label>
-                <select name="tb_user_id" id="tb_user_id">
+                <select name="tb_user_id" id="tb_user_id" class="input input-bordered input-sm">
                     <option selected disabled aria-placeholder="pilih user">Pilih User</option>
                     @forelse ($users as $item)
                         <option id="tb_user_id" value="{{ $item->uid }}">{{ $item->name }}</option>
@@ -132,12 +132,12 @@
             </div>
             <div class="tb_alamat_id flex flex-col">
                 <label for="tb_alamat_id">Alamat</label>
-                <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="form-control" placeholder="Detail Alamat"
+                <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="input input-bordered input-sm" placeholder="Detail Alamat"
                     disabled>
             </div>
             <div class="tb_kurir_id flex flex-col">
                 <label for="tb_kurir_id">Kurir</label>
-                <select name="tb_kurir_id" id="tb_kurir_id">
+                <select name="tb_kurir_id" id="tb_kurir_id" class="input input-bordered input-sm">
                     <option selected disabled aria-placeholder="pilih user">Pilih Kurir</option>
                     @foreach ($kurir as $kurir)
                         <option id="tb_kurir_id" value="{{ $kurir->id }}">{{ $kurir->nama_kurir }}</option>
@@ -145,6 +145,10 @@
                 </select>
                 <input type="hidden" name="tb_gudang_id" id="tb_gudang_id" value="{{ $gudang_id }}">
                 <input type="hidden" name="tb_kode_company" id="tb_kode_company" value="{{ $kodeCompany }}">
+            </div>
+            <div class="tb_nama_penerima flex flex-col">
+                <label for="tb_nama_penerima">Nama Penerima</label>
+                <input type="text" name="tb_nama_penerima" id="tb_nama_penerima" class="input input-bordered input-sm">
             </div>
         </div>
         <button
@@ -292,6 +296,7 @@
                 tb_ppn_terutang: $('#ppnTerutang').text(),
                 tb_dpp_dibebaskan: $('#dppDibebaskan').text(),
                 tb_ppn_dibebaskan: $('#ppnDibebaskan').text(),
+                tb_nama_penerima: $('#tb_nama_penerima').val(),
             };
 
             $('tbody tr:not(:last-child)').each(function() {
@@ -337,6 +342,7 @@
                     tb_ppn_terutang = userDataWithAddressID.tb_ppn_terutang,
                     tb_dpp_dibebaskan = userDataWithAddressID.tb_dpp_dibebaskan,
                     tb_ppn_dibebaskan = userDataWithAddressID.tb_ppn_dibebaskan,
+                    tb_nama_penerima = userDataWithAddressID.tb_nama_penerima,
                 ]
             };
 

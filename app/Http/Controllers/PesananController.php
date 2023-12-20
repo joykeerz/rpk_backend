@@ -157,6 +157,7 @@ class PesananController extends Controller
         $pesanan->kurir_id = $request->data['userData'][2];
         $pesanan->gudang_id = $request->data['userData'][3];
         $pesanan->status_pemesanan = 'menunggu verifikasi';
+        $pesanan->nama_penerima = $request->data['userData'][11];
         $pesanan->save();
 
         $listDetailPesanan = [];
