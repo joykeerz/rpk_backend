@@ -15,12 +15,14 @@
 @section('content')
     <header class="bg-gray-200 p-3">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Detail Customer : {{ $customer->name }}
+            Detail Alamat
             @foreach ($errors->all() as $error)
                 {{ $error }}
             @endforeach
         </h2>
     </header>
+
+    @include('layouts.alert')
 
     <div class="container">
         <div class="flex flex-col w-full">
@@ -28,141 +30,19 @@
                 <div class="bg-white rounded-lg shadow-md">
                     <div class="p-4 w-full mx-3">
                         <form enctype="multipart/form-data" method="POST"
-                            action="{{ route('customer.update', ['id' => $customer->bid]) }}">
+                            action="{{ route('daftar-alamat.customer.update', ['id' => $alamat->id]) }}">
                             <div class="flex w-full justify-between">
                                 @csrf
+                                @method('put')
                                 <div class="w-full md:w-1/2">
                                     <div class="border border-gray-300 rounded p-4 mx-3">
-                                        <h4 class="text-lg font-semibold">Account</h4>
-                                        <hr class="my-4">
-                                        <div class="mb-4">
-                                            <label for="tb_nama_user"
-                                                class="block text-sm font-medium text-gray-700">Name</label>
-                                            <input required id="tb_nama_user" type="text"
-                                                class="border rounded-md py-2 px-3 w-full" name="tb_nama_user"
-                                                placeholder="" value="{{ $customer->name }}">
-                                            @error('tb_nama_user')
-                                                <p class="text-red-500 text-sm">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-
-                                        <div class="mb-4">
-                                            <label for="tb_email_user"
-                                                class="block text-sm font-medium text-gray-700">Email</label>
-                                            <input required id="tb_email_user" type="text"
-                                                class="border rounded-md py-2 px-3 w-full" name="tb_email_user"
-                                                placeholder="" value="{{ $customer->email }}">
-                                            @error('tb_email_user')
-                                                <p class="text-red-500 text-sm">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="tb_hp_user" class="block text-sm font-medium text-gray-700">No.
-                                                Handphone</label>
-                                            <input required id="tb_hp_user" type="text"
-                                                class="border rounded-md py-2 px-3 w-full" name="tb_hp_user" placeholder=""
-                                                value="{{ $customer->no_hp }}">
-                                            @error('tb_hp_user')
-                                                <p class="text-red-500 text-sm">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-
-                                        <div>
-                                            <h4 class="text-lg font-semibold">RPK Info</h4>
-                                            <hr class="my-4">
-                                            <div class="mb-4">
-                                                <label for="tb_nama_rpk"
-                                                    class="leading-7 block text-sm font-medium text-gray-700">Nama
-                                                    RPK</label>
-                                                <input required type="text" id="tb_nama_rpk" name="tb_nama_rpk"
-                                                    value="{{ $customer->nama_rpk }}"
-                                                    class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
-                                            </div>
-                                            <div class="mb-4">
-
-                                                <label for="tb_kode_customer"
-                                                    class="leading-7 block text-sm font-medium text-gray-700"> Kode RPK
-                                                </label>
-                                                <input type="text" name="tb_kode_customer" id=""
-                                                    value="{{ $customer->kode_customer }}"
-                                                    class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
-                                                @error('tb_kode_customer')
-                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <label for="cb_kode_company"
-                                                    class="leading-7 block text-sm font-medium text-gray-700"> Entitas
-                                                </label>
-                                                <select name="cb_kode_company" id="cb_kode_company"
-                                                    class="mt-1 block w-full rounded-md  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
-                                                    @forelse ($entitas as $company)
-                                                        <option value="{{ $company->kode_company }}"
-                                                            @if ($customer->kode_company == $company->kode_company) selected @endif>
-                                                            {{ $company->nama_company }}
-                                                        </option>
-                                                    @empty
-                                                        <option value="" disabled>
-                                                            No data
-                                                        </option>
-                                                    @endforelse
-                                                </select>
-                                                @error('cb_kode_company')
-                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
-                                                @enderror
-                                                <p class="text-gray-400 text-sm">
-                                                    Mendaftarkan customer ke cabang (bisa dikosongkan)
-                                                </p>
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <label for="tb_ktp_rpk"
-                                                    class="leading-7 block text-sm font-medium text-gray-700">KTP
-                                                    RPK</label>
-                                                <input required type="text" id="tb_ktp_rpk" name="tb_ktp_rpk"
-                                                    value="{{ $customer->no_ktp }}"
-                                                    class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
-                                                @error('tb_ktp_rpk')
-                                                    @if ($message == 'The tb_ktp_rpk has already been taken.')
-                                                        <p class="text-red-500 text-sm">KTP sudah terdaftar</p>
-                                                    @else
-                                                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                                                    @endif
-                                                @enderror
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="tb_img_ktp"
-                                                    class="leading-7 block text-sm font-medium text-gray-700">KTP
-                                                    IMG</label>
-                                                <img src="{{ asset('storage/' . $customer->ktp_img) }}" alt="gambar"
-                                                    class="h-56 w-full object-cover">
-                                                <input type="file" id="tb_img_ktp" name="tb_img_ktp"
-                                                    class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="w-full md:w-1/2">
-                                    <div class="border border-gray-300 rounded p-4 mx-3">
-                                        <div class="flex justify-between">
-                                            <h4 class="text-lg font-semibold">Alamat Aktif</h4>
-                                            <div class="button">
-                                                <a class="btn btn-sm btn-primary"
-                                                    href="{{ route('daftar-alamat.customer.index', ['id' => $customer->uid]) }}">
-                                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                                    Daftar Alamat
-                                                </a>
-                                            </div>
-                                        </div>
+                                        <h4 class="text-lg font-semibold">Form Alamat</h4>
                                         <hr class="my-4">
                                         <div class="mb-4">
                                             <label for="tb_jalan"
                                                 class="block text-sm font-medium text-gray-700">Jalan</label>
-                                            <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                name="tb_jalan" value="{{ $customer->jalan }}" placeholder="">
+                                            <input type="text" class="border rounded-md py-2 px-3 w-full" name="tb_jalan"
+                                                value="{{ $alamat->jalan }}" placeholder="">
                                             @error('tb_jalan')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
@@ -172,13 +52,13 @@
                                             <label for="tb_jalan_2" class="block text-sm font-medium text-gray-700">Jalan
                                                 2</label>
                                             <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                value="{{ $customer->jalan_ext }}" name="tb_jalan_2" placeholder="">
+                                                value="{{ $alamat->jalan_ext }}" name="tb_jalan_2" placeholder="">
                                         </div>
                                         <div class="mb-4">
                                             <label for="tb_blok"
                                                 class="block text-sm font-medium text-gray-700">Blok</label>
-                                            <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                name="tb_blok" value="{{ $customer->blok }}" placeholder="">
+                                            <input type="text" class="border rounded-md py-2 px-3 w-full" name="tb_blok"
+                                                value="{{ $alamat->blok }}" placeholder="">
                                             @error('tb_blok')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
@@ -188,7 +68,7 @@
                                                 <label for="tb_rt"
                                                     class="block text-sm font-medium text-gray-700">RT</label>
                                                 <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    value="{{ $customer->rt }}" name="tb_rt" placeholder="">
+                                                    value="{{ $alamat->rt }}" name="tb_rt" placeholder="">
                                                 @error('tb_rt')
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                                 @enderror
@@ -197,7 +77,7 @@
                                                 <label for="tb_rw"
                                                     class="block text-sm font-medium text-gray-700">RW</label>
                                                 <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                    value="{{ $customer->rw }}" name="tb_rw" placeholder="">
+                                                    value="{{ $alamat->rw }}" name="tb_rw" placeholder="">
                                                 @error('tb_rw')
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                                 @enderror
@@ -210,8 +90,8 @@
 
                                                 <select onchange="loadKota(event);" name="tb_prov" id="tb_prov"
                                                     class="border rounded-md py-2 px-3 w-full">
-                                                    {{-- <option class="bg-slate-400 text-white" selected value="{{ $customer->provinsi }}">
-                                                        {{ $customer->provinsi }}</option> --}}
+                                                    {{-- <option class="bg-slate-400 text-white" selected value="{{ $alamat->provinsi }}">
+                                                        {{ $alamat->provinsi }}</option> --}}
                                                 </select>
 
                                                 @error('tb_prov')
@@ -225,8 +105,8 @@
                                                 <select onchange="loadKecamatan(event);" name="tb_kota" id="tb_kota"
                                                     class="border rounded-md py-2 px-3 w-full">
                                                     <option class="bg-slate-400 text-white" selected
-                                                        value="{{ $customer->kota_kabupaten }}">
-                                                        {{ $customer->kota_kabupaten }}</option>
+                                                        value="{{ $alamat->kota_kabupaten }}">
+                                                        {{ $alamat->kota_kabupaten }}</option>
                                                 </select>
 
                                                 @error('tb_kota')
@@ -241,8 +121,8 @@
                                                 <select onchange="loadKelurahan(event);" name="tb_kecamatan"
                                                     id="tb_kecamatan" class="border rounded-md py-2 px-3 w-full">
                                                     <option class="bg-slate-400 text-white" selected
-                                                        value="{{ $customer->kecamatan }}">
-                                                        {{ $customer->kecamatan }}</option>
+                                                        value="{{ $alamat->kecamatan }}">
+                                                        {{ $alamat->kecamatan }}</option>
                                                 </select>
                                                 @error('tb_kecamatan')
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -254,8 +134,8 @@
                                                 <select name="tb_kelurahan" id="tb_kelurahan"
                                                     class="border rounded-md py-2 px-3 w-full">
                                                     <option class="bg-slate-400 text-white" selected
-                                                        value="{{ $customer->kelurahan }}">
-                                                        {{ $customer->kelurahan }}</option>
+                                                        value="{{ $alamat->kelurahan }}">
+                                                        {{ $alamat->kelurahan }}</option>
                                                 </select>
                                                 @error('tb_kelurahan')
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -266,7 +146,7 @@
                                             <label for="tb_kodepos" class="block text-sm font-medium text-gray-700">Kode
                                                 Pos</label>
                                             <input type="text" class="border rounded-md py-2 px-3 w-full"
-                                                value="{{ $customer->kode_pos }}" name="tb_kodepos" placeholder="">
+                                                value="{{ $alamat->kode_pos }}" name="tb_kodepos" placeholder="">
                                             @error('tb_kodepos')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
@@ -303,7 +183,7 @@
                 dataType: "json",
                 success: function(result) {
                     $.each(result, function(key, value) {
-                        if (value.name == '{{ $customer->provinsi }}') {
+                        if (value.name == '{{ $alamat->provinsi }}') {
                             $('#tb_prov').append('<option selected data-id="' + value.id +
                                 '">' + value
                                 .name + '</option>');
@@ -322,7 +202,7 @@
                     dataType: "json",
                     success: function(result) {
                         $.each(result, function(key, value) {
-                            if (value.name == '{{ $customer->kota_kabupaten }}') {
+                            if (value.name == '{{ $alamat->kota_kabupaten }}') {
                                 $('#tb_kota').append('<option selected data-id="' +
                                     value.id +
                                     '">' + value
@@ -344,7 +224,7 @@
                         success: function(result) {
                             $.each(result, function(key, value) {
                                 if (value.name ==
-                                    '{{ $customer->kecamatan }}') {
+                                    '{{ $alamat->kecamatan }}') {
                                     $('#tb_kecamatan').append(
                                         '<option selected data-id="' +
                                         value.id +
@@ -368,7 +248,7 @@
                             success: function(result) {
                                 $.each(result, function(key, value) {
                                     if (value.name ==
-                                        '{{ $customer->kelurahan }}') {
+                                        '{{ $alamat->kelurahan }}') {
                                         $('#tb_kelurahan').append(
                                             '<option selected data-id="' +
                                             value.id +

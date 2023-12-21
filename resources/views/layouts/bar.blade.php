@@ -10,13 +10,6 @@
     <link rel="stylesheet" href="../../css/svg.css">
     <script src="https://kit.fontawesome.com/545d382107.js" crossorigin="anonymous"></script>
     @yield('plugins')
-    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piechart-outlabels"></script> --}}
     <style>
         .active {
             background-color: #4a5568;
@@ -24,13 +17,28 @@
             color: #ffffff;
             /* Change this color to match your design */
         }
+
+        #loader {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.75) url("") no-repeat center center;
+            z-index: 99999;
+        }
     </style>
 </head>
 
 <body>
+    <div id='loader'>
+        <img class="" src="{{ asset('images/dashboard/Circle-Loader.gif') }}" alt="loading...">
+    </div>
     @yield('navbar')
-
-
     <div class="flex">
         <div>
             @yield('sidebar')
@@ -40,10 +48,18 @@
             <div class="my-14">
                 @yield('content')
             </div>
-            {{-- @yield('searchBar') --}}
         </div>
     </div>
     @yield('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loader').style.display = 'none';
+        });
+
+        window.onbeforeunload = function(event) {
+            document.getElementById('loader').style.display = 'flex';
+        }
+    </script>
 </body>
 
 </html>

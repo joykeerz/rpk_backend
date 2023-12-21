@@ -1,4 +1,9 @@
 @extends('layouts.bar')
+
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+@endsection
+
 @section('navbar')
     @include('layouts.navbar')
 @endsection
@@ -133,8 +138,10 @@
 
                 <div id="imageProduk" class="mb-3 mt-2">
                     <label for="imageProduk" class="block text-sm font-medium text-gray-700">Gambar Produk</label>
-                    <img src="{{ asset('storage/' . $product->produk_file_path) }}" id="preview_img" class="h-fit w-full object-cover">
-                    <input onchange="loadFile(event)"  value="" type="file" name="file_image_produk" id="file_image_produk"
+                    <img src="{{ asset('storage/' . $product->produk_file_path) }}" id="preview_img"
+                        class="h-fit w-full object-cover">
+                    <input onchange="loadFile(event)" value="" type="file" name="file_image_produk"
+                        id="file_image_produk"
                         class="mt-1 block w-full
                         rounded-md shadow-sm focus:border-indigo-300 focus:ring
                         focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
@@ -147,8 +154,7 @@
             </div>
 
             <div class="buttonContainer flex justify-center p-4">
-                <button type="submit"
-                    class="btn btn-sm btn-primary">
+                <button type="submit" class="btn btn-sm btn-primary">
                     <i class="fa-solid fa-floppy-disk"></i>
                     Save
                 </button>
@@ -173,5 +179,12 @@
                 URL.revokeObjectURL(output.src) // free memory
             }
         };
+    </script>
+    <script>
+        $(function() {
+            $("form").submit(function() {
+                $('#loader').show();
+            });
+        });
     </script>
 @endsection

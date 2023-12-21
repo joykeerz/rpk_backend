@@ -14,6 +14,7 @@ use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DaftarAlamatController;
 use App\Http\Controllers\PajakController;
 use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\SatuanUnitController;
@@ -146,6 +147,17 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
         Route::get('/verify/{id}', [CustomerController::class, 'verify'])->name('customer.verify');
         Route::get('/reject/{id}', [CustomerController::class, 'reject'])->name('customer.reject');
+    });
+
+    ///Daftar Alamat
+    Route::prefix('daftar-alamat')->middleware('restrictRole:2,3,4')->group(function () {
+        Route::get('/customer/{id}', [DaftarAlamatController::class, 'index'])->name('daftar-alamat.customer.index');
+        Route::get('/customer/create/{id}', [DaftarAlamatController::class, 'create'])->name('daftar-alamat.customer.create');
+        Route::post('/customer/insert/{id}', [DaftarAlamatController::class, 'insert'])->name('daftar-alamat.customer.insert');
+        Route::get('/customer/detail/{id}', [DaftarAlamatController::class, 'show'])->name('daftar-alamat.customer.show');
+        Route::put('/customer/update/{id}', [DaftarAlamatController::class, 'update'])->name('daftar-alamat.customer.update');
+        Route::get('/customer/delete/{id}', [DaftarAlamatController::class, 'delete'])->name('daftar-alamat.customer.delete');
+        Route::get('/customer/toggle/{id}', [DaftarAlamatController::class, 'toggle'])->name('daftar-alamat.customer.toggle');
     });
 
     ///reporting (Laporan) route

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alamat;
 use App\Models\Biodata;
 use App\Models\Company;
+use App\Models\DaftarAlamat;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -175,8 +176,13 @@ class CustomerController extends Controller
             $validatedData['tb_img_ktp'] = $filePath;
             $customer->ktp_img = $filePath;
         }
-
         $customer->save();
+
+        $daftarAlamat = DaftarAlamat::create([
+            'user_id' => $user->id,
+            'alamat_id' => $alamat->id,
+            'isActive' => true
+        ]);
 
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil ditambahkan');
     }
@@ -275,9 +281,11 @@ class CustomerController extends Controller
         }
 
         $user = User::where('id', '=', $customer->user_id)->first();
+        $daftarAlamat = DaftarAlamat::where('user_id', $customer->user_id)->delete();
         $customer->delete();
         $alamat->delete();
         $user->delete();
+
 
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil dihapus');
     }

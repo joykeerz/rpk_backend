@@ -1,6 +1,7 @@
 @extends('layouts.bar')
 
 @section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 @endsection
 
 @section('navbar')
@@ -62,7 +63,9 @@
                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                     <option disabled selected>Open this select menu</option>
                                     @forelse ($kategoriData as $item)
-                                        <option value="{{ $item->id }}" {{ (old("cb_kategori") == $item->id ? "selected":"") }}>{{ $item->nama_kategori }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ old('cb_kategori') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->nama_kategori }}</option>
                                     @empty
                                         <option value="">Tidak ada data</option>
                                     @endforelse
@@ -95,7 +98,9 @@
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                     <option disabled selected>Open this select menu</option>
                                     @forelse ($satuanData as $satuan)
-                                        <option value="{{ $satuan->id }}" {{ (old("tb_satuan") == $satuan->id ? "selected":"") }}>{{ $satuan->nama_satuan }}</option>
+                                        <option value="{{ $satuan->id }}"
+                                            {{ old('tb_satuan') == $satuan->id ? 'selected' : '' }}>
+                                            {{ $satuan->nama_satuan }}</option>
 
                                     @empty
                                         <option disabled>No Data</option>
@@ -114,7 +119,9 @@
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                     <option disabled selected>Open this select menu</option>
                                     @forelse ($pajakData as $pajak)
-                                        <option value="{{ $pajak->id }}" {{ (old("tb_pajak") == $pajak->id ? "selected":"") }}>{{ $pajak->nama_pajak }}</option>
+                                        <option value="{{ $pajak->id }}"
+                                            {{ old('tb_pajak') == $pajak->id ? 'selected' : '' }}>{{ $pajak->nama_pajak }}
+                                        </option>
                                     @empty
                                         <option disabled>No Data</option>
                                     @endforelse
@@ -127,7 +134,8 @@
                             <div id="externalIdProduk" class="mb-3">
                                 <label for="externalIdProduk" class="block text-sm font-medium text-gray-700">ID
                                     Eksternal</label>
-                                <input value="{{old('tb_external_id')}}" type="text" name="tb_external_id" id="tb_external_id"
+                                <input value="{{ old('tb_external_id') }}" type="text" name="tb_external_id"
+                                    id="tb_external_id"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
                                     name="tb_external_id" id="tb_external_id">
                                 @error('tb_external_id')
@@ -140,8 +148,8 @@
                                 <label for="imageProduk" class="block text-sm font-medium text-gray-700">Gambar
                                     Produk</label>
                                 <img id="preview_img" class="h-56 w-full object-cover">
-                                <input onchange="loadFile(event)" value="{{old('file_image_produk')}}" type="file" name="file_image_produk"
-                                    id="file_image_produk"
+                                <input onchange="loadFile(event)" value="{{ old('file_image_produk') }}" type="file"
+                                    name="file_image_produk" id="file_image_produk"
                                     class="mt-1 block w-full
                                     rounded-md shadow-sm focus:border-indigo-300 focus:ring
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
@@ -202,5 +210,12 @@
                 URL.revokeObjectURL(output.src) // free memory
             }
         };
+    </script>
+    <script>
+        $(function() {
+            $("form").submit(function() {
+                $('#loader').show();
+            });
+        });
     </script>
 @endsection
