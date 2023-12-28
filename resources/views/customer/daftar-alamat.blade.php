@@ -63,23 +63,33 @@
                                 Non-Aktif
                             @endif
                         </td>
-                        <td class="grid grid-cols-2 gap-2">
+                        <td class="grid grid-cols-2 gap-2 items-center">
                             @if (!$alamat->isActive)
                                 <a href="{{ route('daftar-alamat.customer.toggle', ['id' => $alamat->alamat_id]) }}"
                                     class="btn btn-sm btn-outline">
                                     <i class="fa-solid fa-check"></i>
                                 </a>
                             @endif
-
-                            <a href="{{ route('daftar-alamat.customer.show', ['id' => $alamat->alamat_id]) }}"
-                                class="btn btn-sm btn-primary">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-
-                            <a href="{{ route('daftar-alamat.customer.delete', ['id' => $alamat->alamat_id]) }}"
-                                class="btn btn-sm btn-error" onclick="return deleteConfirmation()">
-                                <i class="fa-solid fa-trash text-white"></i>
-                            </a>
+                            <div class="dropdown dropdown-bottom dropdown-end">
+                                <div tabindex="0" role="button" class="btn m-1">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
+                                <ul tabindex="0"
+                                    class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 gap-2">
+                                    <li>
+                                        <a href="{{ route('daftar-alamat.customer.show', ['id' => $alamat->alamat_id]) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="fa-solid fa-eye"></i> Lihat
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('daftar-alamat.customer.delete', ['id' => $alamat->alamat_id]) }}"
+                                            class="btn btn-sm btn-error text-white" onclick="return deleteConfirmation()">
+                                            <i class="fa-solid fa-trash "></i> Hapus
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </td>
                     </tr>
                 @empty
@@ -87,7 +97,6 @@
             </tbody>
         </table>
         {{ $alamatList->links('pagination::tailwind') }}
-
     </div>
 
     <style>

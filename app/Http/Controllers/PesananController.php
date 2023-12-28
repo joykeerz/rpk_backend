@@ -204,6 +204,7 @@ class PesananController extends Controller
         $transaksi->ppn_terutang = $request->data['userData'][8];
         $transaksi->dpp_dibebaskan = $request->data['userData'][9];
         $transaksi->ppn_dibebaskan = $request->data['userData'][10];
+        $transaksi->nomor_pembayaran = $request->data['userData'][12];
         $transaksi->save();
 
         return response()->json([

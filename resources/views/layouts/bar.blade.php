@@ -46,6 +46,9 @@
 
         <div class="w-full h-screen overflow-y-auto">
             <div class="my-14">
+                {{-- <a class="btn btn-sm btn-ghost m-1" href="{{ URL::previous() }}">
+                    <i class="fa-solid fa-arrow-left"></i>Back
+                </a> --}}
                 @yield('content')
             </div>
         </div>

@@ -150,6 +150,10 @@
                 <label for="tb_nama_penerima">Nama Penerima</label>
                 <input type="text" name="tb_nama_penerima" id="tb_nama_penerima" class="input input-bordered input-sm">
             </div>
+            <div class="tb_nomor_pembayaran flex flex-col">
+                <label for="tb_nomor_pembayaran">No. Rekening</label>
+                <input type="text" name="tb_nomor_pembayaran" id="tb_nomor_pembayaran" class="input input-bordered input-sm">
+            </div>
         </div>
         <button
             class="flex justify-center px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200"
@@ -297,6 +301,7 @@
                 tb_dpp_dibebaskan: $('#dppDibebaskan').text(),
                 tb_ppn_dibebaskan: $('#ppnDibebaskan').text(),
                 tb_nama_penerima: $('#tb_nama_penerima').val(),
+                tb_nomor_pembayaran: $('#tb_nomor_pembayaran').val(),
             };
 
             $('tbody tr:not(:last-child)').each(function() {
@@ -343,6 +348,7 @@
                     tb_dpp_dibebaskan = userDataWithAddressID.tb_dpp_dibebaskan,
                     tb_ppn_dibebaskan = userDataWithAddressID.tb_ppn_dibebaskan,
                     tb_nama_penerima = userDataWithAddressID.tb_nama_penerima,
+                    tb_nomor_pembayaran = userDataWithAddressID.tb_nomor_pembayaran,
                 ]
             };
 

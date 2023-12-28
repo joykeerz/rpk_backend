@@ -33,7 +33,7 @@ class ReportingController extends Controller
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->join('satuan_unit', 'produk.satuan_unit_id', '=', 'satuan_unit.id')
-            ->select('stok.*', 'satuan_unit.simbol_satuan',  'produk.*', 'gudang.*', 'kategori.*', 'alamat.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'kategori.id as kid', 'alamat.id as aid', 'stok.created_at as cat')
+            ->select('stok.*', 'satuan_unit.satuan_unit_produk',  'produk.*', 'gudang.*', 'kategori.*', 'alamat.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'kategori.id as kid', 'alamat.id as aid', 'stok.created_at as cat')
             ->when($request->from, function ($query) use ($request) {
                 $query->whereBetween('stok.created_at', [$request->from, $request->to]);
             })
@@ -70,7 +70,7 @@ class ReportingController extends Controller
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->join('satuan_unit', 'produk.satuan_unit_id', '=', 'satuan_unit.id')
-            ->select('stok.*','satuan_unit.simbol_satuan', 'produk.*', 'gudang.*', 'kategori.*', 'alamat.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'kategori.id as kid', 'alamat.id as aid', 'stok.created_at as cat')
+            ->select('stok.*','satuan_unit.satuan_unit_produk', 'produk.*', 'gudang.*', 'kategori.*', 'alamat.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'kategori.id as kid', 'alamat.id as aid', 'stok.created_at as cat')
             ->when($request->from, function ($query) use ($request) {
                 $query->whereBetween('stok.created_at', [$request->from, $request->to]);
             })
