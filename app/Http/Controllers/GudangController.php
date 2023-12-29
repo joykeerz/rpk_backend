@@ -18,12 +18,16 @@ class GudangController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
         $gudang = DB::table('gudang')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->join('companies', 'gudang.company_id', '=', 'companies.id')
             ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'companies.id as cid')
+            ->when($search, function ($query, $search) {
+                $query->where('nama_gudang', 'ilike', '%' . $search . '%');
+            })
             ->paginate(15);
 
         $res =  response()->json([
@@ -35,14 +39,14 @@ class GudangController extends Controller
         // }
         //return $res;
         return view('gudang.index', ['gudangData' => $gudang]);
-
     }
 
-    public function create(){
+    public function create()
+    {
         $usersData = User::all();
         $companyData = Company::all();
 
-        return view('gudang.create', ['usersData' => $usersData , 'companyData' => $companyData]);
+        return view('gudang.create', ['usersData' => $usersData, 'companyData' => $companyData]);
     }
 
     public function store(Request $request)
@@ -57,7 +61,7 @@ class GudangController extends Controller
             'tb_kodepos' => 'required',
             'cb_company_id' => 'required',
             'cb_user_id' => 'required',
-        ],[
+        ], [
             'tb_nama_gudang.required' => 'Nama Gudang tidak boleh kosong!',
             'tb_no_telp.required' => 'No Telepon tidak boleh kosong!',
             'tb_jalan.required' => 'Jalan tidak boleh kosong!',

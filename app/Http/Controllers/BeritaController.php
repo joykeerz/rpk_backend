@@ -15,9 +15,12 @@ class BeritaController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $berita = Berita::paginate(15);
+        $search = $request->search;
+        $berita = DB::table('berita')->when($search,function($query,$search){
+            $query->where('judul_berita', 'ilike', '%' . $search . '%');
+        })->paginate(15);
         return view('berita.index', compact('berita'));
     }
 

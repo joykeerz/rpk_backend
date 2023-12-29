@@ -30,7 +30,7 @@
     </header>
 
     @include('layouts.alert')
-    @include('layouts.searchbar')
+    @include('layouts.searchbar', ['routeName' => 'branch.index'])
 
     <script>
         function confirmDelete() {

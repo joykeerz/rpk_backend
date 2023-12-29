@@ -34,7 +34,7 @@
         </div>
     </header>
 
-    @include('layouts.searchbar')
+    @include('layouts.searchbar', ['routeName' => 'gudang.index'])
 
     <div class="overflow-y-auto m-3">
         <table id="myTable" class="min-w-full table-auto border">

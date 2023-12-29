@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SatuanUnit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SatuanUnitController extends Controller
 {
@@ -13,13 +14,18 @@ class SatuanUnitController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $satuanUnit = SatuanUnit::paginate(15);
+        $search  = $request->search;
+        $satuanUnit = DB::table('satuan_unit')->when($search, function ($query, $search) {
+            $query->where('nama_satuan', 'ilike', '%' . $search . '%')
+            ->orWhere('satuan_unit_produk', 'ilike', '%' . $search . '%');
+        })->paginate(15);
         return view('satuan-unit.index', compact('satuanUnit'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $satuanUnit = SatuanUnit::find($id);
         return view('satuan-unit.show', compact('satuanUnit'));
     }
@@ -29,7 +35,8 @@ class SatuanUnitController extends Controller
         return view('satuan-unit.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validated = $request->validate([
             'namaSatuan' => 'required',
             'simbolSatuan' => 'required',
@@ -50,7 +57,8 @@ class SatuanUnitController extends Controller
         return redirect()->route('satuan-unit.index')->with('message', 'Satuan unit berhasil ditambahkan');
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $validated = $request->validate([
             'namaSatuan' => 'required',
             'simbolSatuan' => 'required',
@@ -71,7 +79,8 @@ class SatuanUnitController extends Controller
         return redirect()->route('satuan-unit.index')->with('message', 'Satuan unit berhasil diubah');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $satuanUnit = SatuanUnit::findOrFail($id);
         $satuanUnit->delete();
         return redirect()->route('satuan-unit.index')->with('message', 'Satuan unit berhasil dihapus');

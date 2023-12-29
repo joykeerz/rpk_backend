@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
@@ -14,9 +15,12 @@ class BannerController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $banners = Banner::paginate(15);
+        $search = $request->search;
+        $banners = DB::table('banners')->when($search, function ($query, $search) {
+            $query->where('judul_banner', 'ilike', '%' . $search . '%');
+        })->paginate(15);
         return view('banner.index', compact('banners'));
     }
 

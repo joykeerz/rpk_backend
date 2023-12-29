@@ -21,13 +21,17 @@ class CompanyController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->search;
         $companies = DB::table('companies')
             ->join('users', 'users.id', '=', 'companies.user_id')
             ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
             ->select('companies.*', 'alamat.*', 'users.*', 'companies.id as cid', 'alamat.id as aid', 'users.id as uid')
+            ->when($search, function ($query, $search) {
+                $query->where('kode_company', 'ilike', '%' . $search . '%')
+                    ->orWhere('nama_company', 'ilike', '%' . $search . '%');
+            })
             ->paginate(15);
 
         return view('company.index', ['companies' => $companies]);

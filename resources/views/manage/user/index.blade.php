@@ -31,7 +31,7 @@
     </header>
 
     @include('layouts.alert')
-    @include('layouts.searchbar')
+    @include('layouts.searchbar', ['routeName' => 'manage.user.index'])
 
     <div class="table-responsive mx-3">
         <table id="myTable" class="table table-zebra hover">
@@ -93,9 +93,6 @@
                         @endif
                     </tr>
                     @empty
-                        <tr>
-                            <td colspan="6" class="text-center">No Data</td>
-                        </tr>
                     @endforelse
 
                 </tbody>

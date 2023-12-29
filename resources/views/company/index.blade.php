@@ -35,15 +35,15 @@
     </header>
 
     @include('layouts.alert')
-    @include('layouts.searchbar')
+    @include('layouts.searchbar', ['routeName' => 'company.index'])
 
     <div class="overflow-y-auto m-3">
         <table id="myTable" class="table table-sm table-zebra hover">
             <thead class="border border-b-1">
                 <tr>
                     <th class="px-4 py-2">#</th>
-                    <th class="px-4 py-2">Kode Kantor</th>
-                    <th class="px-4 py-2">Nama Kantor</th>
+                    <th class="px-4 py-2">Kode Entitas</th>
+                    <th class="px-4 py-2">Nama Entitas</th>
                     <th class="px-4 py-2">PIC</th>
                     <th class="px-4 py-2">Tagline</th>
                     <th class="px-4 py-2">Provinsi</th>

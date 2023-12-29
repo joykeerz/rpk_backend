@@ -1,4 +1,4 @@
-<script>
+{{-- <script>
     $(document).ready(function() {
         $('#searchInput').on('input', function() {
             var searchValue = $(this).val().toLowerCase();
@@ -12,10 +12,12 @@
             });
         });
     });
-</script>
+</script> --}}
 
 <div class="searchBar flex justify-center m-3">
-    <input type="text" id="searchInput"
-        class="rounded-md border-gray border shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3 py-2 w-1/4"
-        placeholder="Search...">
+    <form action="{{ route($routeName) }}" method="GET">
+        <input type="text" id="searchInput" name="search"
+            class="rounded-md border-gray border shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3 py-2"
+            placeholder="Pencarian">
+    </form>
 </div>

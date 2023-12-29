@@ -29,11 +29,17 @@ class ManageUserController extends Controller
         return view('manage.user.create', ['roles' => $roles]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
         $allUsers = DB::table('users')
             ->join('roles', 'users.role_id', '=', 'roles.id')
             ->select('users.*', 'roles.*', 'roles.id as rid', 'users.id as uid')
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'ilike', '%' . $search . '%')
+                    ->orWhere('email', 'ilike', '%' . $search . '%')
+                    ->orWhere('no_hp', 'ilike', '%' . $search . '%');
+            })
             ->where('users.role_id', '!=', 1)
             ->paginate(15);
         return view('manage.user.index', ['usersData' => $allUsers]);

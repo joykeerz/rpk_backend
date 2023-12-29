@@ -30,7 +30,7 @@
     </header>
 
     @include('layouts.alert')
-    @include('layouts.searchbar')
+    @include('layouts.searchbar', ['routeName' => 'satuan-unit.index'])
 
     <script>
         function confirmDelete() {
@@ -56,13 +56,11 @@
                         <td class="px-4 py-2">{{ $st->satuan_unit_produk }}</td>
                         <td class="px-4 py-2">{{ $st->keterangan }}</td>
                         <td class="px-4 py-2 flex justify-center gap-1">
-                            <a href="{{ route('satuan-unit.show', ['id' => $st->id]) }}"
-                                class="btn btn-sm btn-primary">
+                            <a href="{{ route('satuan-unit.show', ['id' => $st->id]) }}" class="btn btn-sm btn-primary">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
                             <a href="{{ route('satuan-unit.delete', ['id' => $st->id]) }}"
-                                onclick="return confirmDelete();"
-                                class="btn btn-sm btn-error">
+                                onclick="return confirmDelete();" class="btn btn-sm btn-error">
                                 <i class="fa-solid fa-trash text-white"></i>
                             </a>
                         </td>

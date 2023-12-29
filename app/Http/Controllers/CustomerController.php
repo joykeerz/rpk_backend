@@ -26,7 +26,7 @@ class CustomerController extends Controller
         $currentEntity = [];
         $customer = '';
         $isProvinsi = false;
-
+        $search = $request->search;
         // if the user is penjual pusat or super admin, get customer selindo
         if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3) {
             $customer = DB::table('biodata')
@@ -34,6 +34,11 @@ class CustomerController extends Controller
                 ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
                 ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
                 ->where('users.role_id', '=', 5)
+                ->when($search, function ($query, $search) {
+                    $query->where('name', 'ilike', '%' . $search . '%')
+                        ->orWhere('nama_rpk', 'ilike', '%' . $search . '%')
+                        ->orWhere('email', 'ilike', '%' . $search . '%');
+                })
                 ->orderby('biodata.created_at', 'desc')
                 ->paginate(15);
         } elseif (Auth::user()->role_id == 4) {
@@ -57,6 +62,11 @@ class CustomerController extends Controller
                     ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
                     ->where('users.role_id', '=', 5)
                     ->where('alamat.provinsi', '=', $currentEntity->provinsi)
+                    ->when($search, function ($query, $search) {
+                        $query->where('name', 'ilike', '%' . $search . '%')
+                            ->orWhere('nama_rpk', 'ilike', '%' . $search . '%')
+                            ->orWhere('email', 'ilike', '%' . $search . '%');
+                    })
                     ->orderby('biodata.created_at', 'desc')
                     ->paginate(15);
 
@@ -68,6 +78,11 @@ class CustomerController extends Controller
                     ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
                     ->where('users.role_id', '=', 5)
                     ->where('alamat.kota_kabupaten', '=', $currentEntity->kota_kabupaten)
+                    ->when($search, function ($query, $search) {
+                        $query->where('name', 'ilike', '%' . $search . '%')
+                            ->orWhere('nama_rpk', 'ilike', '%' . $search . '%')
+                            ->orWhere('email', 'ilike', '%' . $search . '%');
+                    })
                     ->orderby('biodata.created_at', 'desc')
                     ->paginate(15);
             }

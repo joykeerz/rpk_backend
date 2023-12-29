@@ -45,7 +45,7 @@
         </div>
     </header>
 
-    @include('layouts.searchbar')
+    @include('layouts.searchbar', ['routeName' => 'customer.index'])
     <div class="table-responsive m-3">
         @if (!empty($currentEntity))
             @if (!$isProvinsi)

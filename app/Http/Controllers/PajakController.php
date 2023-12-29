@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pajak;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PajakController extends Controller
 {
@@ -13,9 +14,12 @@ class PajakController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $pajak = Pajak::paginate(15);
+        $search = $request->search;
+        $pajak = DB::table('pajak')->when($search,function($query,$search){
+            $query->where('nama_pajak', 'ilike', '%' . $search . '%');
+        })->paginate(15);
         return view('pajak.index', compact('pajak'));
     }
 

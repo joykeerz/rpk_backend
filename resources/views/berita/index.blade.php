@@ -34,7 +34,7 @@
     </header>
 
     @include('layouts.alert')
-    @include('layouts.searchbar')
+    @include('layouts.searchbar', ['routeName' => 'berita.index'])
 
     <div class="overflow-auto m-3">
         <table id="myTable" class="min-w-full bg-white text-center">
@@ -71,8 +71,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $brt->kategori_berita }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $brt->penulis_berita }}</td>
                         <td class="px-6 py-4 whitespace-nowrap flex justify-center gap-1">
-                            <a href="{{ route('berita.show', ['id' => $brt->id]) }}"
-                                class="btn btn-sm btn-primary">
+                            <a href="{{ route('berita.show', ['id' => $brt->id]) }}" class="btn btn-sm btn-primary">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
                             <a href="{{ route('berita.delete', ['id' => $brt->id]) }}" onclick="return confirmDelete();"
