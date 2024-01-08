@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('wishlists', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('stok_id');
-            $table->unsignedBigInteger('gudang_id');
+            $table->foreignId('user_id');
+            $table->foreignId('stok_id');
+            $table->foreignId('gudang_id');
             $table->string('wishlist_group')->default('none');
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             // $table->foreign('stok_id')->references('id')->on('stok')->onDelete('cascade');

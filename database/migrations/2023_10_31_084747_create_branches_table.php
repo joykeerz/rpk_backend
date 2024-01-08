@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('company_id');
+            $table->foreignId('company_id');
             $table->string('nama_branch');
             $table->string('no_telp_branch');
             $table->string('alamat_branch');

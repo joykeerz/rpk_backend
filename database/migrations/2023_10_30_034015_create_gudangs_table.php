@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('gudang', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('alamat_id');
-            $table->unsignedInteger('company_id');
-            $table->unsignedInteger('user_id');
+            $table->foreignId('alamat_id');
+            $table->foreignId('company_id');
+            $table->foreignId('user_id');
             $table->string('nama_gudang');
             $table->string('no_telp');
             $table->unsignedBigInteger('external_gudang_id')->nullable();

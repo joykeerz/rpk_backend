@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('pesanan_id');
+            $table->foreignId('pesanan_id');
             $table->string('tipe_pembayaran')->default('transfer bank');
             $table->string('status_pembayaran')->default('belum dibayar');
             $table->float('diskon')->default(0);

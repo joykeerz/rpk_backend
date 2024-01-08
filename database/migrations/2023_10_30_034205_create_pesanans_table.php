@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('pesanan', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('alamat_id');
-            $table->unsignedInteger('kurir_id');
+            $table->foreignId('user_id');
+            $table->foreignId('alamat_id');
+            $table->foreignId('kurir_id');
             $table->string('status_pemesanan')->default('diproses');
             $table->unsignedBigInteger('external_pesanan_id')->nullable();
             $table->timestamps();

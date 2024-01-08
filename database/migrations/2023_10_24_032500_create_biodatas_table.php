@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('biodata', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('alamat_id')->default(1);
+            $table->foreignId('user_id');
+            $table->foreignId('alamat_id')->default(1);
             $table->string('kode_customer')->nullable();
             $table->string('nama_rpk')->default('none');
             $table->string('no_ktp')->default('none');

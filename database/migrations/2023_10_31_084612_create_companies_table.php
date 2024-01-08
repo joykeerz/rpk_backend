@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('alamat_id');
-            $table->unsignedInteger('user_id');
+            $table->foreignId('alamat_id');
+            $table->foreignId('user_id');
             $table->string('kode_company')->unique();
             $table->string('nama_company');
             $table->string('partner_company');

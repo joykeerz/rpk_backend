@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('stok', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('produk_id');
-            $table->unsignedInteger('gudang_id');
+            $table->foreignId('produk_id');
+            $table->foreignId('gudang_id');
             $table->float('jumlah_stok');
             $table->float('harga_stok');
             $table->unsignedBigInteger('external_stok_id')->nullable();

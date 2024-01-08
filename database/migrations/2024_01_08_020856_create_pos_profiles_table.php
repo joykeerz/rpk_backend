@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('berita', function (Blueprint $table) {
+        Schema::create('pos_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->unsignedBigInteger('external_berita_id')->nullable();
-            $table->string('judul_berita');
-            $table->text('deskripsi_berita');
-            $table->string('gambar_berita');
-            $table->string('slug_berita');
-            $table->string('penulis_berita');
-            $table->string('kategori_berita');
+            $table->string('pos_name', 30);
+            $table->string('pin',6)->nullable()->default('000000');
             $table->timestamps();
         });
     }
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('berita');
+        Schema::dropIfExists('pos_profiles');
     }
 };

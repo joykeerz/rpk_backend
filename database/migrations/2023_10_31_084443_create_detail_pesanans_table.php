@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('detail_pesanan', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('pesanan_id');
-            $table->unsignedInteger('produk_id');
+            $table->foreignId('pesanan_id');
+            $table->foreignId('produk_id');
             $table->float('qty');
             $table->float('harga');
             $table->unsignedBigInteger('external_detail_pesanan_id')->nullable();

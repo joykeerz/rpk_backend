@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('stok_id');
-            $table->unsignedBigInteger('gudang_id');
+            $table->foreignId('user_id');
+            $table->foreignId('stok_id');
+            $table->foreignId('gudang_id');
             $table->integer('quantity')->default(0);
             $table->double('dpp')->default(0);
             $table->double('ppn')->default(0);
