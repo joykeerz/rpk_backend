@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        /*
         // Roles Seed
         DB::table('roles')->insert([
             'nama_role' => 'none',
@@ -264,6 +265,11 @@ class DatabaseSeeder extends Seeder
             'nama_kurir' => 'JNE',
             'created_at' => now(),
             'updated_at' => now(),
+        ]);
+        */
+
+        $this->call([
+            PosSeeder::class,
         ]);
     }
 }

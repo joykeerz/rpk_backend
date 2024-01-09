@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pos_inventory');
             $table->string('kode_transaksi', 120)->unique();
-            $table->integer('quantity', 5);
+            $table->integer('quantity');
             $table->string('io_status', 15);
             $table->timestamp('io_date');
             $table->timestamps();

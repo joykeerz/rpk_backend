@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('pos_sessions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id');
-            $table->double('balance', 10);
-            $table->double('opening_cash', 10);
-            $table->double('closing_cash', 10);
+            $table->double('balance');
+            $table->double('opening_cash');
+            $table->double('closing_cash');
             $table->timestamp('session_start');
             $table->timestamp('session_end');
             $table->string('session_notes',180);

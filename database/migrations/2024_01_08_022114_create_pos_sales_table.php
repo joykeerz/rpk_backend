@@ -17,11 +17,11 @@ return new class extends Migration
             $table->foreignId('payment_method_id');
             $table->string('transaction_code', 30);
             $table->string('payment_status', 10);
-            $table->float('discount', 3)->nullable()->default(0);
-            $table->float('discount_value', 10)->nullable()->default(0);
-            $table->double('grand_total', 10);
-            $table->double('paid_amount', 10);
-            $table->double('change_amount', 10);
+            $table->float('discount')->nullable()->default(0);
+            $table->float('discount_value')->nullable()->default(0);
+            $table->double('grand_total');
+            $table->double('paid_amount');
+            $table->double('change_amount');
             $table->timestamp('paid_date');
             $table->timestamps();
         });

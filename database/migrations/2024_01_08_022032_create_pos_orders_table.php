@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('profile_id');
             $table->string('order_code', 30)->unique();
             $table->string('order_status', 10);
-            $table->integer('total_item_qty', 5);
-            $table->double('order_subtotal', 10);
+            $table->integer('total_item_qty');
+            $table->double('order_subtotal');
             $table->string('extra_note', 180);
             $table->timestamps();
         });

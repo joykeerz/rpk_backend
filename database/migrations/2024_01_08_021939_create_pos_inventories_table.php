@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pos_inventories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
-            $table->integer('quantity', 5)->default(0);
+            $table->integer('quantity')->default(0);
             $table->double('price', 10);
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pos_employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('profile_id');
-            $table->integer('pin', 6)->unique();
+            $table->integer('pin')->unique();
             $table->string('employee_email', 180)->unique();
             $table->string('employee_name', 30);
             $table->timestamps();

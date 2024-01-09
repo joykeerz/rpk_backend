@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id');
             $table->foreignId('product_id');
-            $table->integer('basket_quantity', 5);
-            $table->double('basket_subtotal', 10);
+            $table->integer('basket_quantity');
+            $table->double('basket_subtotal');
             $table->string('basket_extra_note', 180);
             $table->timestamps();
         });

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc6501282ce44003a67ba2c289862601",
+    "content-hash": "fbfaaca0440b8135dd0b80a870978a96",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -2654,6 +2654,64 @@
                 }
             ],
             "time": "2023-02-08T01:06:31+00:00"
+        },
+        {
+            "name": "obuchmann/odoo-jsonrpc",
+            "version": "v1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/obuchmann/odoo-jsonrpc.git",
+                "reference": "a3f4c855dcaa6e93b1217738da0bb9dd46beb22b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/obuchmann/odoo-jsonrpc/zipball/a3f4c855dcaa6e93b1217738da0bb9dd46beb22b",
+                "reference": "a3f4c855dcaa6e93b1217738da0bb9dd46beb22b",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.2",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Obuchmann\\OdooJsonRpc\\OdooServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Obuchmann\\OdooJsonRpc\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Buchmann",
+                    "email": "o.buchmann@pc-web.at"
+                }
+            ],
+            "description": "PHP Odoo Json-RPC connector, prepared for laravel integration",
+            "homepage": "https://github.com/obuchmann/odoo-jsonrpc",
+            "keywords": [
+                "jsonrpc",
+                "laravel",
+                "odoo",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/obuchmann/odoo-jsonrpc/issues",
+                "source": "https://github.com/obuchmann/odoo-jsonrpc/tree/v1.4.2"
+            },
+            "time": "2023-07-21T07:23:27+00:00"
         },
         {
             "name": "phenx/php-font-lib",

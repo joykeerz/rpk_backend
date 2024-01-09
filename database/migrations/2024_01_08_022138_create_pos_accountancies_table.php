@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('profile_id');
             $table->string('accountancy_name', 30)->nullable()->default();
             $table->string('transaction_type', 10);
-            $table->double('transaction_amount', 10);
+            $table->double('transaction_amount');
             $table->string('extra_note', 180)->nullable()->default('tidak ada catatan');
             $table->text('attachment_image', 180)->nullable()->default('default.png');
             $table->timestamps();
