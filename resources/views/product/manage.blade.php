@@ -35,7 +35,7 @@
 
     @include('layouts.alert')
 
-    @include('layouts.searchbar')
+    @include('layouts.searchbar',['routeName' => 'product.manage'])
     <div class="overflow-auto m-3">
         <table id="myTable" class="min-w-full bg-white text-center">
             <thead>

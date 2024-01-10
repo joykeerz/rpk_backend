@@ -63,11 +63,17 @@ class ProductController extends Controller
 
     function manage(Request $request)
     {
+        $search = $request->search;
         $products = DB::table('produk')
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
             ->join('pajak', 'produk.pajak_id', '=', 'pajak.id')
             ->join('satuan_unit', 'produk.satuan_unit_id', '=', 'satuan_unit.id')
             ->select('produk.*', 'kategori.*', 'kategori.id as kid', 'produk.id as pid', 'produk.created_at as cat')
+            ->when($search, function ($query, $search) {
+                $query->where('nama_produk', 'ilike', '%' . $search . '%')
+                    ->orWhere('kode_produk', 'ilike', '%' . $search . '%')
+                    ->orWhere('nama_kategori', 'ilike', '%' . $search . '%');
+            })
             ->orderBy('cat', 'desc')
             ->paginate(15);
 
