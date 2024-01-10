@@ -15,6 +15,7 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DaftarAlamatController;
+use App\Http\Controllers\Odoo\CategoryController;
 use App\Http\Controllers\Odoo\ProductController as OdooProductController;
 use App\Http\Controllers\PajakController;
 use App\Http\Controllers\ReportingController;
@@ -41,6 +42,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::prefix('odoo')->group(function () {
     Route::prefix('product')->group(function () {
         Route::get('/import', [OdooProductController::class, 'importFromErp']);
+    });
+    Route::prefix('category')->group(function () {
+        Route::get('/import', [CategoryController::class, 'importFromErp']);
     });
 });
 
