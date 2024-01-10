@@ -19,20 +19,22 @@ class ProductController extends Controller
         $currentSatuanUnits = SatuanUnit::all();
         $currentProducts = Produk::all();
 
-        $newListProduct = [];
-        $newListCategory = [];
-        $newListSatuanUnit = [];
+        $newProductList = [];
+        $newCategoryList = [];
+        $newSatuanUnitList = [];
+
+        // dd($erpProducts[0]);
 
         foreach ($erpProducts as $key => $value) {
-            if (!$currentCategories->contains('external_kategori_id', $erpProducts[$key]->categ_id[0]) && !collect($newListCategory)->contains('external_kategori_id', $erpProducts[$key]->categ_id[0])) {
-                array_push($newListCategory, [
+            if (!$currentCategories->contains('external_kategori_id', $erpProducts[$key]->categ_id[0]) && !collect($newCategoryList)->contains('external_kategori_id', $erpProducts[$key]->categ_id[0])) {
+                array_push($newCategoryList, [
                     'external_kategori_id' => $erpProducts[$key]->categ_id[0],
                     'nama_kategori' => $erpProducts[$key]->categ_id[1],
                     'deskripsi_kategori' => $erpProducts[$key]->categ_id[1],
                 ]);
             }
-            if (!$currentSatuanUnits->contains('external_satuan_unit_id', $erpProducts[$key]->uom_id[0]) && !collect($newListSatuanUnit)->contains('external_satuan_unit_id', $erpProducts[$key]->uom_id[0])) {
-                array_push($newListSatuanUnit, [
+            if (!$currentSatuanUnits->contains('external_satuan_unit_id', $erpProducts[$key]->uom_id[0]) && !collect($newSatuanUnitList)->contains('external_satuan_unit_id', $erpProducts[$key]->uom_id[0])) {
+                array_push($newSatuanUnitList, [
                     'external_satuan_unit_id' => $erpProducts[$key]->uom_id[0],
                     'nama_satuan' => $erpProducts[$key]->uom_id[1],
                     'satuan_unit_produk' => $erpProducts[$key]->uom_id[1],
@@ -40,23 +42,44 @@ class ProductController extends Controller
                 ]);
             }
         }
-        $insertedCategory = DB::table('kategori')->insert($newListCategory);
-        $insertedSatuanUnit = DB::table('satuan_unit')->insert($newListSatuanUnit);
-        dd($insertedCategory);
-        // foreach ($erpProducts as $key => $value) {
-        //     if (!$currentProducts->contains('external_produk_id', $erpProducts[$key]->id) && !$currentProducts->contains('kode_produk', $erpProducts[$key]->default_code) && !collect($newListProduct)->contains('external_produk_id', $erpProducts[$key]->id)) {
-        //         array_push($newListProduct, [
-        //             'kategori_id' => $erpProducts[$key]->uom_id[0],
-        //             'pajak_id' => $erpProducts[$key]->uom_id[1],
-        //             'satuan_unit_id' => $erpProducts[$key]->uom_id[1],
-        //             'kode_produk' => 'none',
-        //             'nama_produk' => 'none',
-        //             'desk_produk' => 'none',
-        //             'diskon_produk' => 'none',
-        //             'external_produk_id' => 'none',
-        //         ]);
-        //     }
-        // }
+
+        if ($newCategoryList != null && $newSatuanUnitList != null) {
+            DB::table('kategori')->insert($newCategoryList);
+            DB::table('satuan_unit')->insert($newSatuanUnitList);
+        }
+
+        $currentCategories = Kategori::all();
+        $currentSatuanUnits = SatuanUnit::all();
+
+        foreach ($erpProducts as $key => $value) {
+            $tempCategory = 1;
+            $tempSatuanUnit = 1;
+            if (!$currentProducts->contains('external_produk_id', $erpProducts[$key]->id) && !$currentProducts->contains('kode_produk', $erpProducts[$key]->default_code) && !collect($newProductList)->contains('external_produk_id', $erpProducts[$key]->id)) {
+                if ($currentCategories->contains('external_kategori_id', $erpProducts[$key]->categ_id[0])) {
+                    $tempCategory = $currentCategories->where('external_kategori_id', $erpProducts[$key]->categ_id[0])->first()->id;
+                }
+
+                if ($currentSatuanUnits->contains('external_satuan_unit_id', $erpProducts[$key]->uom_id[0])) {
+                    $tempSatuanUnit = $currentSatuanUnits->where('external_satuan_unit_id', $erpProducts[$key]->uom_id[0])->first()->id;
+                }
+
+                array_push($newProductList, [
+                    'kategori_id' => $tempCategory,
+                    'pajak_id' => 1,
+                    'satuan_unit_id' => $tempSatuanUnit,
+                    'kode_produk' => $erpProducts[$key]->default_code,
+                    'nama_produk' => $erpProducts[$key]->name,
+                    'desk_produk' => $erpProducts[$key]->name,
+                    'diskon_produk' => 0,
+                    'external_produk_id' => $erpProducts[$key]->id,
+                ]);
+            }
+        }
+
+        if ($newProductList != null) {
+            DB::table('produk')->insert($newProductList);
+        }
+
         $allDataQty = count($erpProducts);
         echo "updated: $allDataQty Data ";
         return 'success';
