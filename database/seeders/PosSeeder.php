@@ -15,15 +15,15 @@ class PosSeeder extends Seeder
     public function run(): void
     {
 
-        DB::table('users')->insert([
-            'name' => 'Customer RPK Test',
-            'email' => 'customerTest777@mail.com',
-            'role_id' => '5',
-            'password' => Hash::make('admin123'),
-            'no_hp' => '084206769',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // DB::table('users')->insert([
+        //     'name' => 'Customer RPK Test',
+        //     'email' => 'customerTest777@mail.com',
+        //     'role_id' => '5',
+        //     'password' => Hash::make('admin123'),
+        //     'no_hp' => '084206769',
+        //     'created_at' => now(),
+        //     'updated_at' => now(),
+        // ]);
 
         DB::table('pos_profiles')->insert([
             'user_id' => 4,
