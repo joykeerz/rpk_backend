@@ -17,6 +17,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DaftarAlamatController;
 use App\Http\Controllers\Odoo\CategoryController;
 use App\Http\Controllers\Odoo\ProductController as OdooProductController;
+use App\Http\Controllers\Odoo\SatuanUnitController as OdooSatuanUnitController;
 use App\Http\Controllers\PajakController;
 use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\SatuanUnitController;
@@ -45,6 +46,12 @@ Route::prefix('odoo')->group(function () {
     });
     Route::prefix('category')->group(function () {
         Route::get('/import', [CategoryController::class, 'importFromErp']);
+    });
+    Route::prefix('user')->group(function () {
+        Route::get('/import', [CategoryController::class, 'importUserFromErp']);
+    });
+    Route::prefix('satuan-unit')->group(function () {
+        Route::get('/import', [OdooSatuanUnitController::class, 'importFromErp']);
     });
 });
 

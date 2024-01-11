@@ -14,7 +14,7 @@ class PosSeeder extends Seeder
      */
     public function run(): void
     {
-        /*
+
         DB::table('users')->insert([
             'name' => 'Customer RPK Test',
             'email' => 'customerTest777@mail.com',
@@ -54,7 +54,7 @@ class PosSeeder extends Seeder
             'category_id' => 1,
             'product_code' => 'BPW01',
             'product_name' => 'Beras Pandan Wangi 1',
-            'product_image' => 'images/product/BNQYGmaZFWtpXKXCl9v6zc1eBt56fuQdPmrCrr8Z.jpg',
+            'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -72,7 +72,7 @@ class PosSeeder extends Seeder
             'category_id' => 2,
             'product_code' => 'KB01',
             'product_name' => 'Kecap Bangau 1',
-            'product_image' => 'images/product/BNQYGmaZFWtpXKXCl9v6zc1eBt56fuQdPmrCrr8Z.jpg',
+            'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -84,14 +84,14 @@ class PosSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        */
+
 
         DB::table('pos_products')->insert([
             'profile_id' => 1,
             'category_id' => 2,
             'product_code' => 'KBU01',
             'product_name' => 'Kecap Kerbau 1',
-            'product_image' => 'images/product/BNQYGmaZFWtpXKXCl9v6zc1eBt56fuQdPmrCrr8Z.jpg',
+            'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -109,7 +109,7 @@ class PosSeeder extends Seeder
             'category_id' => 1,
             'product_code' => 'BM01',
             'product_name' => 'Beras Merah 1',
-            'product_image' => 'images/product/BNQYGmaZFWtpXKXCl9v6zc1eBt56fuQdPmrCrr8Z.jpg',
+            'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -127,7 +127,7 @@ class PosSeeder extends Seeder
             'category_id' => 1,
             'product_code' => 'BU01',
             'product_name' => 'Beras Ungu 1',
-            'product_image' => 'images/product/BNQYGmaZFWtpXKXCl9v6zc1eBt56fuQdPmrCrr8Z.jpg',
+            'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

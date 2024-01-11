@@ -23,8 +23,6 @@ class ProductController extends Controller
         $newCategoryList = [];
         $newSatuanUnitList = [];
 
-        // dd($erpProducts[0]);
-
         foreach ($erpProducts as $key => $value) {
             if (!$currentCategories->contains('external_kategori_id', $erpProducts[$key]->categ_id[0]) && !collect($newCategoryList)->contains('external_kategori_id', $erpProducts[$key]->categ_id[0])) {
                 array_push($newCategoryList, [
