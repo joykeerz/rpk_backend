@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('product_code', 15);
             $table->string('product_name', 30);
             $table->string('product_desc', 180);
-            $table->text('product_image');
+            $table->text('product_image')->nullable()->default('default.png');
             $table->timestamps();
         });
     }
