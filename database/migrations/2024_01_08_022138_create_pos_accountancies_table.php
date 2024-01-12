@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pos_accountancies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('profile_id');
-            $table->string('accountancy_name', 30)->nullable()->default();
+            $table->string('accountancy_name', 30)->nullable()->default('Pembukuan');
             $table->string('transaction_type', 10);
             $table->double('transaction_amount');
             $table->string('extra_note', 180)->nullable()->default('tidak ada catatan');

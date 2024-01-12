@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id');
             $table->string('product_code', 15);
             $table->string('product_name', 30);
+            $table->string('product_desc', 180);
             $table->text('product_image');
             $table->timestamps();
         });

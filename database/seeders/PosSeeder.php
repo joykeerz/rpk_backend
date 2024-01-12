@@ -15,15 +15,15 @@ class PosSeeder extends Seeder
     public function run(): void
     {
 
-        // DB::table('users')->insert([
-        //     'name' => 'Customer RPK Test',
-        //     'email' => 'customerTest777@mail.com',
-        //     'role_id' => '5',
-        //     'password' => Hash::make('admin123'),
-        //     'no_hp' => '084206769',
-        //     'created_at' => now(),
-        //     'updated_at' => now(),
-        // ]);
+        DB::table('users')->insert([
+            'name' => 'Customer RPK Test',
+            'email' => 'customerTest777@mail.com',
+            'role_id' => '5',
+            'password' => Hash::make('admin123'),
+            'no_hp' => '084206769',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         DB::table('pos_profiles')->insert([
             'user_id' => 4,
@@ -55,6 +55,7 @@ class PosSeeder extends Seeder
             'product_code' => 'BPW01',
             'product_name' => 'Beras Pandan Wangi 1',
             'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
+            'product_desc' => 'note:  beras ini dijual per 5kg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -73,6 +74,7 @@ class PosSeeder extends Seeder
             'product_code' => 'KB01',
             'product_name' => 'Kecap Bangau 1',
             'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
+            'product_desc' => 'note:  jangan dijual ke anak balita',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -92,6 +94,7 @@ class PosSeeder extends Seeder
             'product_code' => 'KBU01',
             'product_name' => 'Kecap Kerbau 1',
             'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
+            'product_desc' => 'note:  kerbau tidak memproduksi kecap',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -110,6 +113,7 @@ class PosSeeder extends Seeder
             'product_code' => 'BM01',
             'product_name' => 'Beras Merah 1',
             'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
+            'product_desc' => 'note: beras merah tidak merah aslinya',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -128,6 +132,7 @@ class PosSeeder extends Seeder
             'product_code' => 'BU01',
             'product_name' => 'Beras Ungu 1',
             'product_image' => 'images/product/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
+            'product_desc' => 'tidak ada catatan',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

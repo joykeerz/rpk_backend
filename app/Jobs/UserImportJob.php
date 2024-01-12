@@ -58,6 +58,7 @@ class UserImportJob implements ShouldQueue
         */
 
         //method 2
+
         log::info('User Import Job Running');
         $erpUsers = $odoo->model('res.users')->fields(['id', 'name', 'email', 'phone'])->get();
         log::info('user data retrieved from erp');

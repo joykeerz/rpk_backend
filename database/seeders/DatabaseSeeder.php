@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        /*
+
         // Roles Seed
         DB::table('roles')->insert([
             'nama_role' => 'none',
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => 'Manajer Sales',
+            'name' => 'Manajer Sales Jakarta Selatan',
             'email' => 'manajer@mail.com',
             'role_id' => '4',
             'password' => Hash::make('admin123'),
@@ -224,9 +224,9 @@ class DatabaseSeeder extends Seeder
         // Companies Seed
         DB::table('companies')->insert([
             'alamat_id' => 1,
-            'user_id' => 1,
-            'kode_company' => 'D0001',
-            'nama_company' => 'Kanwil Testing',
+            'user_id' => 3,
+            'kode_company' => 'J0001',
+            'nama_company' => 'Kanwil Jakarta Selatan',
             'partner_company' => 'none',
             'tagline_company' => 'none',
             'created_at' => now(),
@@ -237,8 +237,8 @@ class DatabaseSeeder extends Seeder
         DB::table('gudang')->insert([
             'alamat_id' => 1,
             'company_id' => 1,
-            'user_id' => 1,
-            'nama_gudang' => 'Gudang Testing',
+            'user_id' => 3,
+            'nama_gudang' => 'Gudang Jakarta Selatan',
             'no_telp' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
@@ -247,7 +247,7 @@ class DatabaseSeeder extends Seeder
         // Branch Seed
         DB::table('branches')->insert([
             'company_id' => 1,
-            'nama_branch' => 'Kancab Testing',
+            'nama_branch' => 'Kancab Jakarta Selatan',
             'no_telp_branch' => 'none',
             'alamat_branch' => 'none',
             'created_at' => now(),
@@ -266,10 +266,11 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        */
+
 
         $this->call([
             PosSeeder::class,
+            CustomerSeeder::class,
         ]);
     }
 }

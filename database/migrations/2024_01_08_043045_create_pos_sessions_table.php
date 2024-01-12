@@ -19,7 +19,7 @@ return new class extends Migration
             $table->double('closing_cash');
             $table->timestamp('session_start');
             $table->timestamp('session_end');
-            $table->string('session_notes',180);
+            $table->string('session_notes',180)->nullable()->default('tidak ada catatan');
             $table->timestamps();
         });
     }

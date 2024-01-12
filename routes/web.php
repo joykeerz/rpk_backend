@@ -16,8 +16,10 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DaftarAlamatController;
 use App\Http\Controllers\Odoo\CategoryController;
+use App\Http\Controllers\Odoo\CompanyController as OdooCompanyController;
 use App\Http\Controllers\Odoo\ProductController as OdooProductController;
 use App\Http\Controllers\Odoo\SatuanUnitController as OdooSatuanUnitController;
+use App\Http\Controllers\Odoo\UserController;
 use App\Http\Controllers\PajakController;
 use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\SatuanUnitController;
@@ -40,7 +42,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('odoo')->group(function () {
+Route::prefix('odoo')-> group(function () {
     Route::prefix('product')->group(function () {
         Route::get('/import', [OdooProductController::class, 'importFromErp']);
     });
@@ -48,11 +50,15 @@ Route::prefix('odoo')->group(function () {
         Route::get('/import', [CategoryController::class, 'importFromErp']);
     });
     Route::prefix('user')->group(function () {
-        Route::get('/import', [CategoryController::class, 'importUserFromErp']);
+        Route::get('/import', [UserController::class, 'importUserFromErp']);
     });
     Route::prefix('satuan-unit')->group(function () {
         Route::get('/import', [OdooSatuanUnitController::class, 'importFromErp']);
     });
+    Route::prefix('company')->group(function () {
+        Route::get('/import', [OdooCompanyController::class, 'importFromErp']);
+    });
+
 });
 
 Route::middleware(['auth'])->group(function () {
