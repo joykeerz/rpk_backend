@@ -58,11 +58,10 @@ Route::prefix('odoo')-> group(function () {
     Route::prefix('company')->group(function () {
         Route::get('/import', [OdooCompanyController::class, 'importFromErp']);
     });
-
 });
 
 Route::middleware(['auth'])->group(function () {
-
+    Route::get('user-data-select2',[CompanyController::class,'getUserDataSelect2']);
     ///Manage
     Route::prefix('manage')->group(function () {
         ///user

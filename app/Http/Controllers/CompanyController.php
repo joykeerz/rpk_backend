@@ -9,6 +9,7 @@ use App\Models\Gudang;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class CompanyController extends Controller
 {
@@ -37,11 +38,11 @@ class CompanyController extends Controller
         return view('company.index', ['companies' => $companies]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $usersData = User::all();
-
-        return view('company.create', ['usersData' => $usersData]);
+        // $usersData = User::where('role_id', 4)->paginate(10);
+        
+        return view('company.create');
         ///user data untuk dropdown pilih user(Contact Person Cabang)
     }
 
@@ -50,6 +51,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->input());
         $validated = $request->validate([
             'tb_kode_company' => 'required|unique:companies,kode_company',
             'tb_nama_company' => 'required',
@@ -115,7 +117,7 @@ class CompanyController extends Controller
             ->where('companies.id', '=', $id)
             ->first();
 
-        $usersData = User::all();
+        $usersData = User::where('role_id', 4);
 
         if ($company == null) {
             return response()->json([
@@ -174,7 +176,6 @@ class CompanyController extends Controller
         Branch::where('company_id', $id)
             ->update(['company_id' => 1]);
 
-
         Gudang::where('company_id', $id)
             ->update(['company_id' => 1]);
 
@@ -182,5 +183,24 @@ class CompanyController extends Controller
         $company->delete();
 
         return redirect()->route('company.index')->with('message', 'Company berhasil dihapus');
+    }
+
+    public function getUserDataSelect2(Request $request){
+        if ($request->ajax()) {
+            $term = trim($request->term);
+            $usersData = DB::table('users')->select('id', 'name as text')
+                ->where('name', 'ilike', '%' . $term . '%')
+                ->orderBy('name', 'desc')->simplePaginate(10);
+            $morePages = true;
+            $pagination_Obj = json_encode($usersData);
+            if (empty($usersData->nextPageUrl())) {
+                $morePages = false;
+            }
+            $result = array(
+                "results" => $usersData->items(),
+                "pagination" =>array("more"=>$morePages),
+            );
+        }
+        return Response::json($result);
     }
 }
