@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gudang', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->foreignId('alamat_id');
             $table->foreignId('company_id');
             $table->foreignId('user_id');

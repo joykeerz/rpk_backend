@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('produk', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->foreignId('kategori_id');
             $table->foreignId('pajak_id')->default(0);
             $table->foreignId('satuan_unit_id')->default(0);

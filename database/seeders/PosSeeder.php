@@ -16,6 +16,7 @@ class PosSeeder extends Seeder
     {
 
         DB::table('users')->insert([
+            'id' => 4,
             'name' => 'Customer RPK Test',
             'email' => 'customerTest777@mail.com',
             'role_id' => '5',
@@ -26,6 +27,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_profiles')->insert([
+            'id' => 1,
             'user_id' => 4,
             'pos_name' => 'POS CUSTOMER JOY',
             'pin' => '010620',
@@ -34,6 +36,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_categories')->insert([
+            'id' => 1,
             'profile_id' => 1,
             'category_name' => 'Beras',
             'category_desc' => 'beras asli dengan kualitas tinggi',
@@ -42,6 +45,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_categories')->insert([
+            'id' => 2,
             'profile_id' => 1,
             'category_name' => 'Kecap',
             'category_desc' => 'Kecap asli dengan kualitas tinggi',
@@ -50,6 +54,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_products')->insert([
+            'id' => 1,
             'profile_id' => 1,
             'category_id' => 1,
             'product_code' => 'BPW01',
@@ -61,6 +66,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_inventories')->insert([
+            'id' => 1,
             'product_id' => 1,
             'quantity' => 30,
             'price' => 19500,
@@ -69,6 +75,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_products')->insert([
+            'id' => 2,
             'profile_id' => 1,
             'category_id' => 2,
             'product_code' => 'KB01',
@@ -80,6 +87,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_inventories')->insert([
+            'id' => 2,
             'product_id' => 2,
             'quantity' => 40,
             'price' => 15000,
@@ -89,6 +97,7 @@ class PosSeeder extends Seeder
 
 
         DB::table('pos_products')->insert([
+            'id' => 3,
             'profile_id' => 1,
             'category_id' => 2,
             'product_code' => 'KBU01',
@@ -100,6 +109,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_inventories')->insert([
+            'id' => 3,
             'product_id' => 3,
             'quantity' => 40,
             'price' => 12000,
@@ -108,6 +118,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_products')->insert([
+            'id' => 4,
             'profile_id' => 1,
             'category_id' => 1,
             'product_code' => 'BM01',
@@ -119,6 +130,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_inventories')->insert([
+            'id' => 4,
             'product_id' => 4,
             'quantity' => 40,
             'price' => 15000,
@@ -127,6 +139,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_products')->insert([
+            'id' => 5,
             'profile_id' => 1,
             'category_id' => 1,
             'product_code' => 'BU01',
@@ -138,6 +151,7 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_inventories')->insert([
+            'id' => 5,
             'product_id' => 5,
             'quantity' => 40,
             'price' => 19000,

@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kategori', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->string('nama_kategori');
             $table->string('deskripsi_kategori');
             $table->unsignedBigInteger('external_kategori_id')->nullable();

@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->foreignId('alamat_id');
             $table->foreignId('user_id');
             $table->string('kode_company')->unique();

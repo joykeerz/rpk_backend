@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('satuan_unit', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('external_satuan_unit_id')->nullable();
             $table->string('nama_satuan');
             $table->string('satuan_unit_produk');
