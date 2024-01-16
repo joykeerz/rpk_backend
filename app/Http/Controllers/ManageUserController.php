@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alamat;
 use App\Models\Biodata;
+use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,7 +27,8 @@ class ManageUserController extends Controller
     public function newUser()
     {
         $roles = Role::all();
-        return view('manage.user.create', ['roles' => $roles]);
+        $companies = Company::all();
+        return view('manage.user.create', ['roles' => $roles, 'companies' => $companies]);
     }
 
     public function index(Request $request)
@@ -121,6 +123,7 @@ class ManageUserController extends Controller
 
         $user = new User;
         $user->role_id = $request->cb_role;
+        $user->company_id = $request->cb_company;
         $user->name = $request->tb_nama_user;
         $user->email = $request->tb_email_user;
         $user->password = Hash::make($request->tb_password_user);

@@ -15,6 +15,7 @@ return new class extends Migration
             // $table->id();
             $table->unsignedBigInteger('id')->primary();
             $table->foreignId('role_id')->default(0);
+            $table->foreignId('company_id')->nullable()->default(1);
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

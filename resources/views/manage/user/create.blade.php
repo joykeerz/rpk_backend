@@ -79,6 +79,21 @@
                                         </div>
 
                                         <div class="mb-4">
+                                            <label for="cb_company"
+                                                class="block text-sm font-medium text-gray-700">Role*</label>
+                                            <select class="border rounded-md py-2 px-3 w-full" name="cb_company"
+                                                id="cb_company">
+                                                @forelse ($companies as $company)
+                                                    <option value="{{ $company->id }}"
+                                                        {{ old('cb_company') == $company->id ? 'selected' : '' }}>
+                                                        {{ $company->nama_company }}</option>
+                                                @empty
+                                                    <option value="">Company Kosong</option>
+                                                @endforelse
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-4">
                                             <label for="tb_nama_user"
                                                 class="block text-sm font-medium text-gray-700">Name*</label>
                                             <input value="{{ old('tb_nama_user') }}" required id="tb_nama_user"
