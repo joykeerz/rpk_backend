@@ -54,12 +54,25 @@
                                     @csrf
 
                                     <div class="mb-4">
-                                        <label for="tb_nama_user"
+                                        <label for="cb_role"
                                             class="block text-sm font-medium text-gray-700">Role</label>
                                         <select class="border rounded-md py-2 px-3 w-full" name="cb_role"
                                             id="cb_role">
                                             @forelse ($roles as $role)
                                                 <option value="{{ $role->id }}" @if($role->id == $userData->role_id) selected @endif>{{ $role->nama_role }}</option>
+                                            @empty
+                                                <option value="">Role Kosong</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="cb_company"
+                                            class="block text-sm font-medium text-gray-700">Assign Entitas</label>
+                                        <select class="border rounded-md py-2 px-3 w-full" name="cb_company"
+                                            id="cb_company">
+                                            @forelse ($companies as $company)
+                                                <option value="{{ $company->id }}" @if($company->id == $userData->company_id) selected @endif>{{ $company->nama_company }}</option>
                                             @empty
                                                 <option value="">Role Kosong</option>
                                             @endforelse

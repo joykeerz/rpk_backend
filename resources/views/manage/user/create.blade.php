@@ -80,7 +80,7 @@
 
                                         <div class="mb-4">
                                             <label for="cb_company"
-                                                class="block text-sm font-medium text-gray-700">Role*</label>
+                                                class="block text-sm font-medium text-gray-700">Assign Entitas*</label>
                                             <select class="border rounded-md py-2 px-3 w-full" name="cb_company"
                                                 id="cb_company">
                                                 @forelse ($companies as $company)

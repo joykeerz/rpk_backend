@@ -70,8 +70,9 @@ class ManageUserController extends Controller
             ->where('users.id', '=', $id)
             ->first();
         $roles = Role::all();
+        $companies = Company::all();
         // return view('manage.user.details', ['userData' => $userData, 'userProfile' => $userProfile, 'userAlamat' => $userAlamat]);
-        return view('manage.user.details', ['userData' => $userData, 'roles' => $roles]);
+        return view('manage.user.details', ['userData' => $userData, 'roles' => $roles, 'companies' => $companies]);
     }
 
     public function update(Request $request, $id)
@@ -84,6 +85,7 @@ class ManageUserController extends Controller
 
         $userData = User::find($id);
         $userData->role_id = $request->cb_role;
+        $userData->company_id = $request->cb_company;
         $userData->name = $request->tb_nama_user;
         $userData->email = $request->tb_email_user;
         $userData->no_hp = $request->tb_hp_user;
@@ -120,8 +122,9 @@ class ManageUserController extends Controller
             'tb_hp_user.unique' => 'Nomor HP sudah terdaftar',
             'tb_hp_user.numeric' => 'Nomor HP harus numeric',
         ]);
-
+        $allUsersCount = User::all()->count();
         $user = new User;
+        $user->id = $allUsersCount + 1;
         $user->role_id = $request->cb_role;
         $user->company_id = $request->cb_company;
         $user->name = $request->tb_nama_user;
