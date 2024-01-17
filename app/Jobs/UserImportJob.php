@@ -58,7 +58,7 @@ class UserImportJob implements ShouldQueue
         */
 
         //method 2
-
+        /*
         log::info('User Import Job Running');
         $erpUsers = $odoo->model('res.users')->fields(['id', 'name', 'email', 'phone'])->get();
         log::info('user data retrieved from erp');
@@ -78,5 +78,36 @@ class UserImportJob implements ShouldQueue
         }
         $allDataQty = count($erpUsers);
         Log::info("Updated: $allDataQty Data");
+        */
+
+        //method 3
+        log::info('User Import Job Running');
+        $erpUsers = $odoo->model('res.users')->fields(['id', 'name', 'email', 'phone'])->get();
+        $newUserList = [];
+        log::info('user data retrieved from erp');
+        log::info('looping through user data');
+        foreach ($erpUsers as $user) {
+            $existingUser = User::where('external_user_id', $user->id)->select('id')->first();
+            if (!$existingUser) {
+                $newUserList[] = [
+                    'external_user_id' => $user->id,
+                    'role_id' => 4,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'password' => Hash::make('default123'),
+                    'no_hp' => $user->phone,
+                ];
+            }
+        }
+
+        if (!empty($newUserList)) {
+            DB::table('users')->insert($newUserList);
+            $allDataQty = count($erpUsers);
+            Log::info("Updated: $allDataQty Data");
+        }
+
+        $allDataQty = count($erpUsers);
+        Log::info("Updated: $allDataQty Data");
+
     }
 }

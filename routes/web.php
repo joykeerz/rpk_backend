@@ -15,8 +15,10 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DaftarAlamatController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\Odoo\CategoryController;
 use App\Http\Controllers\Odoo\CompanyController as OdooCompanyController;
+use App\Http\Controllers\Odoo\GudangController as OdooGudangController;
 use App\Http\Controllers\Odoo\ProductController as OdooProductController;
 use App\Http\Controllers\Odoo\SatuanUnitController as OdooSatuanUnitController;
 use App\Http\Controllers\Odoo\UserController;
@@ -42,7 +44,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('odoo')-> group(function () {
+Route::prefix('odoo')->group(function () {
     Route::prefix('product')->group(function () {
         Route::get('/import', [OdooProductController::class, 'importFromErp']);
     });
@@ -58,7 +60,9 @@ Route::prefix('odoo')-> group(function () {
     Route::prefix('company')->group(function () {
         Route::get('/import', [OdooCompanyController::class, 'importFromErp']);
     });
-
+    Route::prefix('gudang')->group(function () {
+        Route::get('/import', [OdooGudangController::class, 'importFromErp']);
+    });
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -231,5 +235,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/show/{id}', [SatuanUnitController::class, 'show'])->name('satuan-unit.show');
         Route::post('/update/{id}', [SatuanUnitController::class, 'update'])->name('satuan-unit.update');
         Route::get('/delete/{id}', [SatuanUnitController::class, 'destroy'])->name('satuan-unit.delete');
+    });
+
+    ///satuan unit route
+    Route::prefix('gudang/location')->middleware('restrictRole:2,3,4')->group(function () {
+        Route::get('/list/{id}', [LocationController::class, 'index'])->name('location.index');
+        Route::get('/create/{id}', [LocationController::class, 'create'])->name('location.create');
+        Route::post('/store', [LocationController::class, 'store'])->name('location.store');
+        Route::get('/show/{id}', [LocationController::class, 'show'])->name('location.show');
+        Route::post('/update/{id}', [LocationController::class, 'update'])->name('location.update');
+        Route::get('/delete/{id}', [LocationController::class, 'destroy'])->name('location.delete');
     });
 });

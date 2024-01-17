@@ -23,8 +23,8 @@ class GudangController extends Controller
         $search = $request->search;
         $gudang = DB::table('gudang')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
-            ->join('companies', 'gudang.company_id', '=', 'companies.id')
-            ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'companies.id as cid')
+            // ->join('companies', 'gudang.company_id', '=', 'companies.id')
+            ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid')
             ->when($search, function ($query, $search) {
                 $query->where('nama_gudang', 'ilike', '%' . $search . '%');
             })
@@ -43,7 +43,7 @@ class GudangController extends Controller
 
     public function create()
     {
-        $usersData = User::all();
+        $usersData = User::where('role_id', 4)->get();
         $companyData = Company::all();
 
         return view('gudang.create', ['usersData' => $usersData, 'companyData' => $companyData]);
@@ -101,7 +101,7 @@ class GudangController extends Controller
 
     public function show($id)
     {
-        $usersData = User::all();
+        $usersData = User::where('role_id', 4)->get();
         $companyData = Company::all();
         $gudang = DB::table('gudang')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
@@ -109,13 +109,14 @@ class GudangController extends Controller
             ->select('gudang.*', 'alamat.*', 'companies.*', 'gudang.id as gid', 'alamat.id as aid', 'companies.id as cid')
             ->where('gudang.id', '=', $id)
             ->first();
-
+        if (!$gudang) {
+            return redirect()->route('gudang.index')->with('message', 'Data Gudang Tidak Ditemukan atau belum lengkap. harap hubungi admin');
+        }
         $data = [
             'gudang' => $gudang,
             'usersData' => $usersData,
             'companyData' => $companyData
         ];
-
 
         $res = response()->json([
             'data' => $gudang,
@@ -128,7 +129,7 @@ class GudangController extends Controller
     {
 
         $gudang = Gudang::findOrFail($id);
-        // $gudang->company_id = $request->cb_alamat_id;
+        $gudang->company_id = $request->cb_alamat_id;
         $gudang->user_id = $request->cb_user_id;
         $gudang->nama_gudang = $request->tb_nama_gudang;
         $gudang->no_telp = $request->tb_no_telp;

@@ -15,6 +15,7 @@ class CustomerSeeder extends Seeder
     {
         //
         DB::table('users')->insert([
+            'id' => 5,
             'name' => 'RPK Jhon Doe',
             'email' => 'RpkJhonDoe@mail.com',
             'role_id' => '5',
@@ -41,6 +42,7 @@ class CustomerSeeder extends Seeder
         ]);
 
         DB::table('biodata')->insert([
+            'id' => 1,
             'user_id' => 5,
             'alamat_id' => 2,
             'kode_customer' => 'C0001',

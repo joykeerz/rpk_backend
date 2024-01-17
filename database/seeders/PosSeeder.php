@@ -16,6 +16,7 @@ class PosSeeder extends Seeder
     {
 
         DB::table('users')->insert([
+            'id' => 4,
             'name' => 'Customer RPK Test',
             'email' => 'customerTest777@mail.com',
             'role_id' => '5',

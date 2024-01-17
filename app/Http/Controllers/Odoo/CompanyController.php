@@ -13,9 +13,8 @@ class CompanyController extends Controller
 {
     public function importFromErp(Odoo $odoo)
     {
-        // try {
+        try {
             $erpCompany = $odoo->model('res.company')->fields(['id', 'code', 'name', 'partner_id', 'user_id', 'street'])->offset(1)->get();
-            // dd($erpCompany[1]->partner_id[0]);
             $currentCompany = Company::select('external_company_id')->get();
             $newCompany = [];
 
@@ -23,7 +22,7 @@ class CompanyController extends Controller
             foreach (array_chunk($erpCompany, 1000) as $chunk) {
                 foreach ($chunk as $company) {
                     if (!$currentCompany->contains('external_company_id', $company->id) && !collect($newCompany)->contains('external_company_id', $company->id)) {
-                        if(!$company->partner_id){
+                        if (!$company->partner_id) {
                             $company->partner_id[0] = 1;
                         }
 
@@ -53,8 +52,8 @@ class CompanyController extends Controller
                 echo "updated: $allDataQty Data ";
                 return 'success';
             }
-        // } catch (Exception $e) {
-            // return $e->getMessage();
-        // }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

@@ -39,7 +39,7 @@ class CompanyController extends Controller
 
     public function create()
     {
-        $usersData = User::all();
+        $usersData = User::where('role_id', 4)->get();
 
         return view('company.create', ['usersData' => $usersData]);
         ///user data untuk dropdown pilih user(Contact Person Cabang)

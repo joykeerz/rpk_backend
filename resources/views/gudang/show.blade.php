@@ -14,13 +14,21 @@
 
 @section('content')
     <header class="bg-gray-200 p-4">
-        <h2>
-            {{ $data['gudang']->nama_gudang }}
-        </h2>
+        <div class="flex justify-between">
+            <h2>
+                {{ $data['gudang']->nama_gudang }}
+            </h2>
+            <div class="button">
+                <a class="btn btn-sm btn-primary" href="{{ route('location.index', ['id' => $data['gudang']->gid]) }}">
+                    Lihat Location
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
     </header>
 
 
-    <form action="{{ route('gudang.update', ['id' => $data['gudang']->id]) }}" method="post">
+    <form action="{{ route('gudang.update', ['id' => $data['gudang']->gid]) }}" method="post">
         @csrf
         <div class="formContainer p-4 flex flex-wrap">
             <div class="namaGudang w-1/2 p-2">
@@ -141,9 +149,9 @@
                 <input type="text"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                 focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
-                    name="tb_external_id" id="tb_external_id" placeholder="" value="{{ $data['gudang']->no_telp }}">
+                    name="tb_external_id" id="tb_external_id" placeholder=""
+                    value="{{ $data['gudang']->external_gudang_id }}">
             </div>
-
         </div>
 
         <div class="buttonContainer flex justify-center p-4">
@@ -187,7 +195,8 @@
                     dataType: "json",
                     success: function(result) {
                         $.each(result, function(key, value) {
-                            if (value.name == "{{ $data['gudang']->kota_kabupaten }}") {
+                            if (value.name ==
+                                "{{ $data['gudang']->kota_kabupaten }}") {
                                 $('#tb_kota').append('<option selected data-id="' +
                                     value.id +
                                     '">' + value
@@ -209,7 +218,7 @@
                         success: function(result) {
                             $.each(result, function(key, value) {
                                 if (value.name ==
-                                "{{ $data['gudang']->kecamatan }}") {
+                                    "{{ $data['gudang']->kecamatan }}") {
                                     $('#tb_kecamatan').append(
                                         '<option selected data-id="' +
                                         value.id +
@@ -233,7 +242,8 @@
                             success: function(result) {
                                 $.each(result, function(key, value) {
                                     if (value.name ==
-                                    "{{ $data['gudang']->kelurahan }}") {
+                                        "{{ $data['gudang']->kelurahan }}"
+                                        ) {
                                         $('#tb_kelurahan').append(
                                             '<option selected data-id="' +
                                             value.id +

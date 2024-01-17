@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('branches', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->foreignId('company_id');
             $table->string('nama_branch');
             $table->string('no_telp_branch');

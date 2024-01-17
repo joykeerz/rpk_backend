@@ -55,6 +55,7 @@ class DatabaseSeeder extends Seeder
 
         // Admin User Seed
         DB::table('users')->insert([
+            'id' => 1,
             'name' => 'Super Admin',
             'email' => 'admin@mail.com',
             'role_id' => '2',
@@ -65,6 +66,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'id' => 2,
             'name' => 'Penjual Pusat',
             'email' => 'penjual@mail.com',
             'role_id' => '3',
@@ -75,6 +77,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'id' => 3,
             'name' => 'Manajer Sales Jakarta Selatan',
             'email' => 'manajer@mail.com',
             'role_id' => '4',
@@ -103,6 +106,7 @@ class DatabaseSeeder extends Seeder
 
         // Kategori Seed
         DB::table('kategori')->insert([
+            'id' => 1,
             'nama_kategori' => 'none',
             'deskripsi_kategori' => 'none',
             'created_at' => now(),
@@ -110,6 +114,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('kategori')->insert([
+            'id' => 2,
             'nama_kategori' => 'Beras Khusus',
             'deskripsi_kategori' => 'Beras asli',
             'created_at' => now(),
@@ -117,6 +122,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('kategori')->insert([
+            'id' => 3,
             'nama_kategori' => 'Minyak Goreng',
             'deskripsi_kategori' => 'Minyak sawit',
             'created_at' => now(),
@@ -124,6 +130,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('kategori')->insert([
+            'id' => 4,
             'nama_kategori' => 'Daging',
             'deskripsi_kategori' => 'Daging asli',
             'created_at' => now(),
@@ -141,6 +148,7 @@ class DatabaseSeeder extends Seeder
 
         //satuan unit
         DB::table('satuan_unit')->insert([
+            'id' => 1,
             'nama_satuan' => 'none',
             'satuan_unit_produk' => 'none',
             'keterangan' => 'none',
@@ -149,6 +157,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('satuan_unit')->insert([
+            'id' => 2,
             'nama_satuan' => 'Kilogram',
             'satuan_unit_produk' => 'Kg',
             'keterangan' => 'none',
@@ -158,6 +167,7 @@ class DatabaseSeeder extends Seeder
 
         //produk
         DB::table('produk')->insert([
+            'id' => 1,
             'kategori_id' => 2,
             'pajak_id' => 1,
             'satuan_unit_id' => 2,
@@ -170,6 +180,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('produk')->insert([
+            'id' => 2,
             'kategori_id' => 3,
             'pajak_id' => 1,
             'satuan_unit_id' => 2,
@@ -182,6 +193,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('produk')->insert([
+            'id' => 3,
             'kategori_id' => 4,
             'pajak_id' => 1,
             'satuan_unit_id' => 2,
@@ -223,6 +235,7 @@ class DatabaseSeeder extends Seeder
 
         // Companies Seed
         DB::table('companies')->insert([
+            'id' => 1,
             'alamat_id' => 1,
             'user_id' => 3,
             'kode_company' => 'J0001',
@@ -235,6 +248,7 @@ class DatabaseSeeder extends Seeder
 
         // Gudang Seed
         DB::table('gudang')->insert([
+            'id' => 1,
             'alamat_id' => 1,
             'company_id' => 1,
             'user_id' => 3,
@@ -246,6 +260,7 @@ class DatabaseSeeder extends Seeder
 
         // Branch Seed
         DB::table('branches')->insert([
+            'id' => 1,
             'company_id' => 1,
             'nama_branch' => 'Kancab Jakarta Selatan',
             'no_telp_branch' => 'none',

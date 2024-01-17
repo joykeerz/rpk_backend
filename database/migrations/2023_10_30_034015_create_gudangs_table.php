@@ -12,18 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gudang', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->foreignId('alamat_id');
             $table->foreignId('company_id');
             $table->foreignId('user_id');
             $table->string('nama_gudang');
             $table->string('no_telp');
             $table->unsignedBigInteger('external_gudang_id')->nullable();
-            $table->unsignedBigInteger('external_location_id')->nullable();
             $table->timestamps();
-            // $table->foreign('alamat_id')->references('id)->on('alamat')->onDelete('cascade');
-            // $table->foreign('company_id')->references('id)->on('companies')->onDelete('cascade');
-            // $table->foreign('user_id')->references('id)->on('users')->onDelete('cascade'
         });
     }
 
