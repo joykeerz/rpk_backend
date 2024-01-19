@@ -95,7 +95,7 @@ class PartnerImportJob implements ShouldQueue
                         'kode_company' => $user->company_id[0],
                     ]
                 );
-            }else{
+            } else {
                 if ($user->company_id == false) {
                     $user->company_id[0] = 1;
                 }
@@ -116,9 +116,18 @@ class PartnerImportJob implements ShouldQueue
                     $user->kelurahan_id[1] = 'KARET KUNINGAN';
                 }
 
+                $insertBiodata = DB::table('biodata')->where('user_id', $user->id)->first();
+                $insertBiodata->update(
+                    [
+                        'kode_customer' => $user->id . '-' . $user->name,
+                        'nama_rpk' => $user->name,
+                        'no_ktp' => $user->ktp,
+                        'kode_company' => $user->company_id[0],
+                    ]
+                );
+
                 $insertUserGetId = DB::table('users')->where('id', $user->id)->update(
                     [
-                        'id' => $user->id,
                         'role_id' => 5,
                         'name' => $user->name,
                         'email' => $user->email,
@@ -128,7 +137,7 @@ class PartnerImportJob implements ShouldQueue
                     ]
                 );
 
-                $insertAlamatGetId = DB::table('alamat')->where('id', $user->id)->update([
+                $insertAlamatGetId = DB::table('alamat')->where('id', $insertBiodata->alamat_id)->update([
                     'jalan' => $user->street,
                     'jalan_ext' => $user->street2,
                     'blok' => $user->blok,
@@ -141,17 +150,6 @@ class PartnerImportJob implements ShouldQueue
                     'kelurahan' => Str::Upper($user->kelurahan_id[1]),
                     'negara' => 'Indonesia',
                 ]);
-
-                DB::table('biodata')->where('user_id', $user->id)->update(
-                    [
-                        'user_id' => $insertUserGetId,
-                        'alamat_id' => $insertAlamatGetId,
-                        'kode_customer' => $user->id . '-' . $user->name,
-                        'nama_rpk' => $user->name,
-                        'no_ktp' => $user->ktp,
-                        'kode_company' => $user->company_id[0],
-                    ]
-                );
             }
         }
 
