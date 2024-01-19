@@ -4,20 +4,49 @@ namespace App\Http\Controllers\Odoo;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\UserImportJob;
+use App\Jobs\CustomerImportJob;
+use App\Jobs\PartnerImportJob;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Obuchmann\OdooJsonRpc\Odoo;
+use Illuminate\Support\Stringable;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function importUserFromErp(Odoo $odoo)
+    public function importManagerSalesUsers(Odoo $odoo)
     {
         try {
             // UserImportJob::dispatch()->onQueue('imports');
             dispatch(new UserImportJob($odoo));
-            Log::info('User Import Job Dispatched Successfully');
-            return 'Job dispatched successfully';
+            Log::info('Manager Sales Import Job Dispatched Successfully');
+            return 'manager sales Job dispatched successfully';
+        } catch (Exception $e) {
+            Log::error('Failed to dispatch User Import Job: ' . $e->getMessage());
+            return 'Failed to dispatch User Import Job';
+        }
+    }
+
+    public function importCustomerUsers(Odoo $odoo)
+    {
+        try {
+            dispatch(new CustomerImportJob($odoo));
+            Log::info('Customer Import Job Dispatched Successfully');
+            return 'customer Job dispatched successfully';
+        } catch (Exception $e) {
+            Log::error('Failed to dispatch User Import Job: ' . $e->getMessage());
+            return 'Failed to dispatch User Import Job';
+        }
+    }
+
+    public function importPartnerUsers(Odoo $odoo)
+    {
+        try {
+            dispatch(new PartnerImportJob($odoo));
+            Log::info('Partner Import Job Dispatched Successfully');
+            return 'partner Job dispatched successfully';
         } catch (Exception $e) {
             Log::error('Failed to dispatch User Import Job: ' . $e->getMessage());
             return 'Failed to dispatch User Import Job';

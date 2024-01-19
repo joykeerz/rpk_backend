@@ -9,7 +9,22 @@ class Alamat extends Model
 {
     use HasFactory;
     protected $table = 'alamat';
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'id',
+        'jalan',
+        'jalan_ext',
+        'blok',
+        'rt',
+        'rw',
+        'provinsi',
+        'kota_kabupaten',
+        'kecamatan',
+        'kelurahan',
+        'negara',
+        'kode_pos',
+        'external_alamat_id',
+    ];
+    // protected $guarded = ['id'];
 
     // public function biodata()
     // {

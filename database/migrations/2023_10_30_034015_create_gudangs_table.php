@@ -16,8 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->foreignId('alamat_id');
             $table->foreignId('company_id');
+            $table->foreignId('branch_id');
             $table->foreignId('user_id');
             $table->string('nama_gudang');
+            $table->string('nama_gudang_erp');
             $table->string('no_telp');
             $table->unsignedBigInteger('external_gudang_id')->nullable();
             $table->timestamps();

@@ -3,17 +3,30 @@
 namespace App\Http\Controllers\Odoo;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ProductImportJob;
 use App\Models\Kategori;
 use App\Models\Produk;
 use App\Models\SatuanUnit;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Obuchmann\OdooJsonRpc\Odoo;
 
 class ProductController extends Controller
 {
     public function importFromErp(Odoo $odoo)
     {
+        try {
+            dispatch(new ProductImportJob($odoo));
+            Log::info('Product Import Job Dispatched Successfully');
+            return 'Product Import Job dispatched successfully';
+        } catch (Exception $e) {
+            Log::error('Failed to dispatch Product Import Job: ' . $e->getMessage());
+            return 'Failed to dispatch Product Import Job';
+        }
+
+        /*
         $erpProducts = $odoo->model('product.product')->fields(['name', 'categ_id', 'uom_id', 'default_code'])->get();
         $currentCategories = Kategori::all();
         $currentSatuanUnits = SatuanUnit::all();
@@ -81,15 +94,7 @@ class ProductController extends Controller
         $allDataQty = count($erpProducts);
         echo "updated: $allDataQty Data ";
         return 'success';
-    }
-
-    public function exportFromErp()
-    {
-    }
-
-    public function synchronizeErp()
-    {
-        return 'sync';
+        */
     }
 
     public function examples()

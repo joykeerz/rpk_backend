@@ -3,18 +3,33 @@
 namespace App\Http\Controllers\Odoo;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\GudangImportJob;
 use App\Models\Gudang;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Obuchmann\OdooJsonRpc\Odoo;
 
 class GudangController extends Controller
 {
     public function importFromErp(Odoo $odoo)
     {
-        $warehouse = $odoo->model('stock.warehouse')->fields(['id', 'name', 'code', 'mobile', 'company_id', 'kepala_gudang'])->limit(50)->offset(1)->get();
+        try {
+            dispatch(new GudangImportJob($odoo));
+            Log::info('gudang Import Job Dispatched Successfully');
+            return 'gudang Import Job dispatched successfully';
+        } catch (Exception $e) {
+            Log::error('Failed to dispatch gudang Import Job: ' . $e->getMessage());
+            return 'Failed to dispatch gudang Import Job';
+        }
+        /*
+        $warehouse = $odoo->model('stock.warehouse')
+            ->fields(['id', 'name', 'code', 'mobile', 'company_id', 'branch_id', 'kepala_gudang', 'published_name'])
+            ->where('is_published', '=', true)
+            ->get();
+        dd($warehouse);
         $newWarehouse = [];
-        // dd($warehouse);
 
         foreach ($warehouse as $data) {
             $externalId = $data->id;
@@ -61,5 +76,6 @@ class GudangController extends Controller
             return 'success';
         }
         return 'already imported';
+        */
     }
 }

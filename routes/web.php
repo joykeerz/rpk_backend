@@ -16,6 +16,7 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DaftarAlamatController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\Odoo\BranchController as OdooBranchController;
 use App\Http\Controllers\Odoo\CategoryController;
 use App\Http\Controllers\Odoo\CompanyController as OdooCompanyController;
 use App\Http\Controllers\Odoo\GudangController as OdooGudangController;
@@ -52,7 +53,9 @@ Route::prefix('odoo')->group(function () {
         Route::get('/import', [CategoryController::class, 'importFromErp']);
     });
     Route::prefix('user')->group(function () {
-        Route::get('/import', [UserController::class, 'importUserFromErp']);
+        Route::get('/import/manager-sales', [UserController::class, 'importManagerSalesUsers']);
+        Route::get('/import/customer', [UserController::class, 'importCustomerUsers']);
+        Route::get('/import/partner', [UserController::class, 'importPartnerUsers']);
     });
     Route::prefix('satuan-unit')->group(function () {
         Route::get('/import', [OdooSatuanUnitController::class, 'importFromErp']);
@@ -62,6 +65,9 @@ Route::prefix('odoo')->group(function () {
     });
     Route::prefix('gudang')->group(function () {
         Route::get('/import', [OdooGudangController::class, 'importFromErp']);
+    });
+    Route::prefix('branch')->group(function () {
+        Route::get('/import', [OdooBranchController::class, 'importFromErp']);
     });
 });
 

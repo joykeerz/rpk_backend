@@ -59,17 +59,19 @@ class DatabaseSeeder extends Seeder
             'name' => 'Super Admin',
             'email' => 'admin@mail.com',
             'role_id' => '2',
+            'company_id' => '1',
             'password' => Hash::make('admin123'),
             'no_hp' => '08123456789',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        /*
         DB::table('users')->insert([
             'id' => 2,
             'name' => 'Penjual Pusat',
             'email' => 'penjual@mail.com',
             'role_id' => '3',
+            'company_id' => '1',
             'password' => Hash::make('admin123'),
             'no_hp' => '084206969',
             'created_at' => now(),
@@ -81,6 +83,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Manajer Sales Jakarta Selatan',
             'email' => 'manajer@mail.com',
             'role_id' => '4',
+            'company_id' => '1',
             'password' => Hash::make('admin123'),
             'no_hp' => '084206960',
             'created_at' => now(),
@@ -136,7 +139,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        */
         //pajak
         DB::table('pajak')->insert([
             'nama_pajak' => 'Dibebaskan',
@@ -145,7 +148,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        /*
         //satuan unit
         DB::table('satuan_unit')->insert([
             'id' => 1,
@@ -251,8 +254,10 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'alamat_id' => 1,
             'company_id' => 1,
+            'branch_id' => 1,
             'user_id' => 3,
             'nama_gudang' => 'Gudang Jakarta Selatan',
+            'nama_gudang_erp' => 'KOMPLEKS PERGUDANGAN SUNTER TIMUR I',
             'no_telp' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
@@ -287,5 +292,6 @@ class DatabaseSeeder extends Seeder
             PosSeeder::class,
             CustomerSeeder::class,
         ]);
+        */
     }
 }
