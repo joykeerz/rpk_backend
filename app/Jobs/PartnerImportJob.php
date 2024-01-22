@@ -116,8 +116,7 @@ class PartnerImportJob implements ShouldQueue
                     $user->kelurahan_id[1] = 'KARET KUNINGAN';
                 }
 
-                $insertBiodata = DB::table('biodata')->where('user_id', $user->id)->first();
-                $insertBiodata->update(
+                $insertBiodata = DB::table('biodata')->where('user_id', $user->id)->update(
                     [
                         'kode_customer' => $user->id . '-' . $user->name,
                         'nama_rpk' => $user->name,
@@ -136,8 +135,8 @@ class PartnerImportJob implements ShouldQueue
                         'company_id' => $user->company_id[0],
                     ]
                 );
-
-                $insertAlamatGetId = DB::table('alamat')->where('id', $insertBiodata->alamat_id)->update([
+                $alamatId = DB::table('biodata')->where('user_id', $user->id)->value('alamat_id');
+                $insertAlamatGetId = DB::table('alamat')->where('id', $alamatId)->update([
                     'jalan' => $user->street,
                     'jalan_ext' => $user->street2,
                     'blok' => $user->blok,

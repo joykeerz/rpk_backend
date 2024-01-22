@@ -20,12 +20,15 @@ class ProductController extends Controller
         try {
             dispatch(new ProductImportJob($odoo));
             Log::info('Product Import Job Dispatched Successfully');
-            return 'Product Import Job dispatched successfully';
+            return redirect()->route('product.manage')->with('success', 'Product Import Job Dispatched Successfully');
         } catch (Exception $e) {
             Log::error('Failed to dispatch Product Import Job: ' . $e->getMessage());
             return 'Failed to dispatch Product Import Job';
         }
+    }
 
+    public function oldImportFromErp(Odoo $odoo)
+    {
         /*
         $erpProducts = $odoo->model('product.product')->fields(['name', 'categ_id', 'uom_id', 'default_code'])->get();
         $currentCategories = Kategori::all();
@@ -96,7 +99,6 @@ class ProductController extends Controller
         return 'success';
         */
     }
-
     public function examples()
     {
         /* Examples 1

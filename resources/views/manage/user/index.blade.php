@@ -14,19 +14,32 @@
 @endsection
 
 @section('content')
-    <header class="bg-gray-200 py-1">
-        <div class="title flex m-5 justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <header class="bg-gray-200 p-4">
+        <div class="flex justify-between items-center">
+            <h2>
                 {{ __('Manage User') }}
             </h2>
-            @if (Auth::user()->role_id != 3)
-                <div class="button">
-                    <a class="btn btn-sm btn-primary" href="{{ route('manage.user.new') }}">
-                        <i class="fa-solid fa-add"></i>
-                        New User
-                    </a>
-                </div>
-            @endif
+            <div class="flex items-center">
+                @if (Auth::user()->role_id != 4 || Auth::user()->role_id != 5)
+                    <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                        <div tabindex="0" role="button" class="btn btn-sm m-1">
+                            Sync Users
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </div>
+                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                            <li><a href="{{ route('odoo.user.import.manager-sales') }}">Import Manager Sales</a></li>
+                            <li><a>Export User RPK</a></li>
+                            <li><a>Sync All</a></li>
+                        </ul>
+                    </div>
+                    <div class="button">
+                        <a class="btn btn-sm btn-primary" href="{{ route('manage.user.new') }}">
+                            <i class="fa-solid fa-add"></i>
+                            New User
+                        </a>
+                    </div>
+                @endif
+            </div>
         </div>
     </header>
 

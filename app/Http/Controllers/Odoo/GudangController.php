@@ -18,7 +18,7 @@ class GudangController extends Controller
         try {
             dispatch(new GudangImportJob($odoo));
             Log::info('gudang Import Job Dispatched Successfully');
-            return 'gudang Import Job dispatched successfully';
+            return redirect()->route('gudang.index')->with('message', 'gudang Import Job Dispatched Successfully');
         } catch (Exception $e) {
             Log::error('Failed to dispatch gudang Import Job: ' . $e->getMessage());
             return 'Failed to dispatch gudang Import Job';

@@ -43,10 +43,7 @@ class GudangImportJob implements ShouldQueue
                 $warehouse->mobile = '-';
             }
 
-
             if (!DB::table('gudang')->where('id', $warehouse->id)->exists()) {
-                // Log::info('Gudang already exists');
-                // continue;
                 $alamatID = DB::table('alamat')->insertGetId([
                     'jalan' => $warehouse->alamat_gudang,
                     'jalan_ext' => '(blank)',

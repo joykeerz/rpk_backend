@@ -47,27 +47,27 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('odoo')->group(function () {
     Route::prefix('product')->group(function () {
-        Route::get('/import', [OdooProductController::class, 'importFromErp']);
+        Route::get('/import', [OdooProductController::class, 'importFromErp'])->name('odoo.product.import');
     });
     Route::prefix('category')->group(function () {
-        Route::get('/import', [CategoryController::class, 'importFromErp']);
+        Route::get('/import', [CategoryController::class, 'importFromErp'])->name('odoo.category.import');
     });
     Route::prefix('user')->group(function () {
-        Route::get('/import/manager-sales', [UserController::class, 'importManagerSalesUsers']);
-        Route::get('/import/customer', [UserController::class, 'importCustomerUsers']);
-        Route::get('/import/partner', [UserController::class, 'importPartnerUsers']);
+        Route::get('/import/manager-sales', [UserController::class, 'importManagerSalesUsers'])->name('odoo.user.import.manager-sales');
+        Route::get('/import/customer', [UserController::class, 'importCustomerUsers'])->name('odoo.user.import.customer');
+        Route::get('/import/partner', [UserController::class, 'importPartnerUsers'])->name('odoo.user.import.partner');
     });
     Route::prefix('satuan-unit')->group(function () {
-        Route::get('/import', [OdooSatuanUnitController::class, 'importFromErp']);
+        Route::get('/import', [OdooSatuanUnitController::class, 'importFromErp'])->name('odoo.satuan-unit.import');
     });
     Route::prefix('company')->group(function () {
-        Route::get('/import', [OdooCompanyController::class, 'importFromErp']);
+        Route::get('/import', [OdooCompanyController::class, 'importFromErp'])->name('odoo.company.import');
     });
     Route::prefix('gudang')->group(function () {
-        Route::get('/import', [OdooGudangController::class, 'importFromErp']);
+        Route::get('/import', [OdooGudangController::class, 'importFromErp'])->name('odoo.gudang.import');
     });
     Route::prefix('branch')->group(function () {
-        Route::get('/import', [OdooBranchController::class, 'importFromErp']);
+        Route::get('/import', [OdooBranchController::class, 'importFromErp'])->name('odoo.branch.import');
     });
 });
 

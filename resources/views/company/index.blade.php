@@ -20,16 +20,29 @@
             return confirm("Are you sure you want to delete this company?");
         }
     </script>
-    <header class="bg-gray-200 p-3">
-        <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <header class="bg-gray-200 p-4">
+        <div class="flex justify-between items-center">
+            <h2 class="">
                 {{ __('Company (Entitas)') }}
             </h2>
-            <div class="button">
-                <a class="btn btn-sm btn-primary" href="{{ route('company.create') }}">
-                    <i class="fa-solid fa-add"></i>
-                    New Company
-                </a>
+            <div class="flex items-center">
+                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                        Sync Entitas
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a href="{{ route('odoo.company.import') }}">Import Entitas & Branch</a></li>
+                        <li><a>Export Entitas & Branch RPK</a></li>
+                        <li><a>Sync All</a></li>
+                    </ul>
+                </div>
+                <div class="button">
+                    <a class="btn btn-sm btn-primary" href="{{ route('company.create') }}">
+                        <i class="fa-solid fa-add"></i>
+                        New Company
+                    </a>
+                </div>
             </div>
         </div>
     </header>
@@ -70,9 +83,6 @@
                         </td>
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="6" class="border text-center py-4">No data available</td>
-                    </tr>
                 @endforelse
             </tbody>
         </table>

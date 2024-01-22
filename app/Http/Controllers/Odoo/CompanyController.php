@@ -20,7 +20,7 @@ class CompanyController extends Controller
         try {
             dispatch(new CompanyBranchImportJob($odoo));
             Log::info('Company Import Job Dispatched Successfully');
-            return 'Company Import Job dispatched successfully';
+            return redirect()->route('company.index')->with('message', 'Company Import Job Dispatched Successfully');
         } catch (Exception $e) {
             Log::error('Failed to dispatch Company Import Job: ' . $e->getMessage());
             return 'Failed to dispatch Company Import Job';

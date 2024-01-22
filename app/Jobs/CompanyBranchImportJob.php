@@ -34,29 +34,32 @@ class CompanyBranchImportJob implements ShouldQueue
 
         Log::info('Looping through company data...');
         foreach ($erpCompany as $company) {
-            $insertAlamatGetId = DB::table('alamat')->insertGetId([
-                'jalan' => $company->street,
-                'provinsi' =>   'DKI JAKARTA',
-                'kota_kabupaten' => 'KOTA JAKARTA SELATAN',
-                'kecamatan' => 'SETIA BUDI',
-                'negara' => 'Indonesia',
-                'kode_pos' => $company->zip,
-            ]);
+            if (!DB::table('companies')->where('id', $company->id)->exists()) {
+                $insertAlamatGetId = DB::table('alamat')->insertGetId([
+                    'jalan' => $company->street,
+                    'provinsi' =>   'DKI JAKARTA',
+                    'kota_kabupaten' => 'KOTA JAKARTA SELATAN',
+                    'kecamatan' => 'SETIA BUDI',
+                    'negara' => 'Indonesia',
+                    'kode_pos' => $company->zip,
+                ]);
+            } else {
+                $insertAlamatGetId = DB::table('companies')->where('id', $company->id)->value('alamat_id');
+            }
 
             if ($company->user_id === false) {
                 $company->user_id = [$company->user_id];
                 $company->user_id[0] = 1;
             }
 
-
-            $insertCompanyGetId = DB::table('companies')->insertGetId([
+            $insertCompanyGetId = DB::table('companies')->updateOrInsert(['id' => $company->id], [
                 'id' => $company->id,
                 'user_id' => $company->user_id[0],
                 'alamat_id' => $insertAlamatGetId,
                 'kode_company' => $company->code,
                 'nama_company' => $company->name,
-                'partner_company' => '(blank)',
-                'tagline_company' => '(blank)',
+                'partner_company' => 'none',
+                'tagline_company' => 'none',
             ]);
         }
     }

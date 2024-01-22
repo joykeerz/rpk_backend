@@ -20,22 +20,35 @@
         }
     </script>
 
-    <header class="bg-gray-200 p-3">
-        <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <header class="bg-gray-200 p-4">
+        <div class="flex justify-between items-center">
+            <h2 class="">
                 {{ __('Gudang') }}
             </h2>
-            <div class="button">
-                <a class="btn btn-sm btn-primary" href="{{ route('gudang.create') }}">
-                    <i class="fa-solid fa-add"></i>
-                    New Gudang
-                </a>
+            <div class="flex items-center">
+                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                        Sync Gudang
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a href="{{ route('odoo.gudang.import') }}">Import Gudang</a></li>
+                        <li><a>Export Gudang RPK</a></li>
+                        <li><a>Sync All</a></li>
+                    </ul>
+                </div>
+                <div class="button">
+                    <a class="btn btn-sm btn-primary" href="{{ route('gudang.create') }}">
+                        <i class="fa-solid fa-add"></i>
+                        New Gudang
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
-    @include('layouts.searchbar', ['routeName' => 'gudang.index'])
     @include('layouts.alert')
+    @include('layouts.searchbar', ['routeName' => 'gudang.index'])
     <div class="overflow-y-auto m-3">
         <table id="myTable" class="min-w-full table-auto border">
             <thead class="border text-center">
@@ -69,9 +82,6 @@
                         </td>
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="3" class="p-3">No data available</td>
-                    </tr>
                 @endforelse
             </tbody>
         </table>

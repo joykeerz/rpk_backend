@@ -22,7 +22,7 @@ class UserController extends Controller
             // UserImportJob::dispatch()->onQueue('imports');
             dispatch(new UserImportJob($odoo));
             Log::info('Manager Sales Import Job Dispatched Successfully');
-            return 'manager sales Job dispatched successfully';
+            return redirect()->route('manage.user.index')->with('message', 'Manager Sales Import Job Dispatched Successfully');
         } catch (Exception $e) {
             Log::error('Failed to dispatch User Import Job: ' . $e->getMessage());
             return 'Failed to dispatch User Import Job';
@@ -46,7 +46,7 @@ class UserController extends Controller
         try {
             dispatch(new PartnerImportJob($odoo));
             Log::info('Partner Import Job Dispatched Successfully');
-            return 'partner Job dispatched successfully';
+            return redirect()->route('customer.index')->with('message', 'Partner Import Job Dispatched Successfully');
         } catch (Exception $e) {
             Log::error('Failed to dispatch User Import Job: ' . $e->getMessage());
             return 'Failed to dispatch User Import Job';

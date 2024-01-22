@@ -22,20 +22,33 @@
     <header class="bg-gray-200 p-4">
         <div class="flex justify-between">
             <h2>
-                Manage Product
+                {{ __('Manage Product') }}
             </h2>
-            <div class="button">
-                <a class="btn btn-sm btn-primary" href="{{ route('product.index') }}">
-                    <i class="fa-solid fa-add"></i>
-                    New Product
-                </a>
+            <div class="flex items-center">
+                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                        Sync Products
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a href="{{ route('odoo.product.import') }}">Import Product ERP</a></li>
+                        <li><a>Export Product RPK</a></li>
+                        <li><a>Sync All</a></li>
+                    </ul>
+                </div>
+                <div class="button">
+                    <a class="btn btn-sm btn-primary" href="{{ route('product.index') }}">
+                        <i class="fa-solid fa-add"></i>
+                        New Product
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
     @include('layouts.alert')
 
-    @include('layouts.searchbar',['routeName' => 'product.manage'])
+    @include('layouts.searchbar', ['routeName' => 'product.manage'])
     <div class="overflow-auto m-3">
         <table id="myTable" class="min-w-full bg-white text-center">
             <thead>
@@ -74,9 +87,6 @@
                         </td>
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="6" class="text-center">No Data</td>
-                    </tr>
                 @endforelse
             </tbody>
         </table>
