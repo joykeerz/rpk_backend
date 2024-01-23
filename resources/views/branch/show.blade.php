@@ -27,9 +27,8 @@
                     <div class="cb_company_id flex flex-col">
                         <label for="cb_company_id">Nama Kantor Wilayah</label>
                         <select name="cb_company_id" id="cb_company_id">
-                            <option disabled value="{{ $branch->company_id }}">Current: {{ $branch->nama_company }}</option>
                             @foreach ($companyData as $company)
-                                <option value="{{ $company->id }}">{{ $company->nama_company }}</option>
+                                <option value="{{ $company->id }}" @if ($company->id == $branch->company_id) selected @endif>{{ $company->nama_company }}</option>
                             @endforeach
                         </select>
                     </div>

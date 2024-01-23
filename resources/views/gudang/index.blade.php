@@ -16,7 +16,7 @@
 @section('content')
     <script>
         function confirmDelete() {
-            return confirm("Are you sure you want to delete this product?");
+            return confirm("Are you sure you want to delete this gudang?");
         }
     </script>
 

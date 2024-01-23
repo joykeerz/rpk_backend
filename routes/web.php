@@ -22,6 +22,8 @@ use App\Http\Controllers\Odoo\CompanyController as OdooCompanyController;
 use App\Http\Controllers\Odoo\GudangController as OdooGudangController;
 use App\Http\Controllers\Odoo\ProductController as OdooProductController;
 use App\Http\Controllers\Odoo\SatuanUnitController as OdooSatuanUnitController;
+use App\Http\Controllers\Odoo\StockController;
+use App\Http\Controllers\Odoo\SynchronizeController;
 use App\Http\Controllers\Odoo\UserController;
 use App\Http\Controllers\PajakController;
 use App\Http\Controllers\ReportingController;
@@ -46,6 +48,9 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('odoo')->group(function () {
+    Route::prefix('sync')->group(function () {
+        Route::get('/import', [SynchronizeController::class, 'synchronizeAll'])->name('odoo.sync.import');
+    });
     Route::prefix('product')->group(function () {
         Route::get('/import', [OdooProductController::class, 'importFromErp'])->name('odoo.product.import');
     });
@@ -68,6 +73,9 @@ Route::prefix('odoo')->group(function () {
     });
     Route::prefix('branch')->group(function () {
         Route::get('/import', [OdooBranchController::class, 'importFromErp'])->name('odoo.branch.import');
+    });
+    Route::prefix('stock')->group(function () {
+        Route::get('/import', [StockController::class, 'importStock'])->name('odoo.stock.import');
     });
 });
 

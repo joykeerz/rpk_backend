@@ -35,8 +35,16 @@
 </head>
 
 <body>
+    @php
+        $jobCount = DB::table('jobs')->count();
+    @endphp
     <div id='loader'>
         <img class="" src="{{ asset('images/dashboard/Circle-Loader.gif') }}" alt="loading...">
+        @if ($jobCount > 0)
+            <h1 class="text-white">
+                Syncing data with erp database...
+            </h1>
+        @endif
     </div>
     @yield('navbar')
     <div class="flex">
@@ -61,6 +69,25 @@
 
         window.onbeforeunload = function(event) {
             document.getElementById('loader').style.display = 'flex';
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let jobCount = {{ $jobCount }};
+            if (jobCount > 0) {
+                document.getElementById('loader').style.display = 'flex';
+            } else {
+                document.getElementById('loader').style.display = 'none';
+            }
+        });
+
+        window.onbeforeunload = function(event) {
+            let jobCount = {{ $jobCount }};
+            if (jobCount > 0) {
+                document.getElementById('loader').style.display = 'flex';
+            } else {
+                document.getElementById('loader').style.display = 'none';
+            }
         }
     </script>
 </body>

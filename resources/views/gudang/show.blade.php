@@ -32,20 +32,44 @@
         @csrf
         <div class="formContainer p-4 flex flex-wrap">
             <div class="namaGudang w-1/2 p-2">
-                <label for="" class="block text-sm font-medium text-gray-700">Nama Gudang</label>
+                <label for="" class="block text-sm font-medium text-gray-700">Nama Gudang <b>(Mobile)</b></label>
                 <input type="text"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
                     name="tb_nama_gudang" id="tb_nama_gudang" placeholder="" value="{{ $data['gudang']->nama_gudang }}">
             </div>
 
+            <div class="namaGudangErp w-1/2 p-2">
+                <label for="" class="block text-sm font-medium text-gray-700">Nama Gudang <b>(ERP)</b></label>
+                <input readonly type="text"
+                    class="mt-1 block w-full rounded-md border-gray-300 bg-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
+                    name="tb_nama_gudang_erp" id="tb_nama_gudang_erp" placeholder=""
+                    value="{{ $data['gudang']->nama_gudang_erp }}">
+            </div>
+
             <div class="company_id w-1/2 p-2">
-                <label for="" class="block text-sm font-medium text-gray-700">Company ID</label>
+                <label for="" class="block text-sm font-medium text-gray-700">Company/Entitas</label>
                 <select name="cb_company_id" id="cb_company_id"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
                 focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                     @foreach ($data['companyData'] as $company)
-                        <option value="{{ $company->id }}" @if ($company->id == $data['gudang']->company_id) selected @endif>
-                            {{ $company->nama_company }}</option>
+                        @if ($company->id == $data['gudang']->company_id)
+                            <option value="{{ $company->id }}" selected>
+                                {{ $company->nama_company }}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="branch_id w-1/2 p-2">
+                <label for="" class="block text-sm font-medium text-gray-700">Bussines Unit (Branch)</label>
+                <select name="cb_branch_id" id="cb_branch_id"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring
+                focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
+                    @foreach ($data['branchData'] as $branch)
+                        @if ($branch->id == $data['gudang']->branch_id)
+                            <option value="{{ $branch->id }}" selected>
+                                {{ $branch->nama_branch }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
@@ -64,8 +88,8 @@
 
             <div class="jalan w-1/2 p-2">
                 <label for="" class="block text-sm font-medium text-gray-700">Jalan</label>
-                <input type="text"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
+                <input readonly type="text"
+                    class="mt-1 block w-full rounded-md border-gray-300  bg-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border border-gray-300 p-1"
                     name="tb_jalan" id="tb_jalan" placeholder="" value="{{ $data['gudang']->jalan }}">
             </div>
 
@@ -243,7 +267,7 @@
                                 $.each(result, function(key, value) {
                                     if (value.name ==
                                         "{{ $data['gudang']->kelurahan }}"
-                                        ) {
+                                    ) {
                                         $('#tb_kelurahan').append(
                                             '<option selected data-id="' +
                                             value.id +

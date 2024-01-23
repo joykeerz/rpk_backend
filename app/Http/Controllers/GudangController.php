@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alamat;
+use App\Models\Branch;
 use App\Models\Company;
 use App\Models\Gudang;
 use App\Models\Produk;
@@ -45,8 +46,9 @@ class GudangController extends Controller
     {
         $usersData = User::where('role_id', 4)->get();
         $companyData = Company::all();
+        $branchData = Branch::all();
 
-        return view('gudang.create', ['usersData' => $usersData, 'companyData' => $companyData]);
+        return view('gudang.create', ['usersData' => $usersData, 'companyData' => $companyData, 'branchData' => $branchData]);
     }
 
     public function store(Request $request)
@@ -103,6 +105,7 @@ class GudangController extends Controller
     {
         $usersData = User::where('role_id', 4)->get();
         $companyData = Company::all();
+        $branchData = Branch::all();
         $gudang = DB::table('gudang')
             ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
             ->join('companies', 'gudang.company_id', '=', 'companies.id')
@@ -115,7 +118,8 @@ class GudangController extends Controller
         $data = [
             'gudang' => $gudang,
             'usersData' => $usersData,
-            'companyData' => $companyData
+            'companyData' => $companyData,
+            'branchData' => $branchData,
         ];
 
         $res = response()->json([
@@ -127,11 +131,14 @@ class GudangController extends Controller
 
     public function update(Request $request, $id)
     {
-
+        // dd($request->input());
         $gudang = Gudang::findOrFail($id);
-        $gudang->company_id = $request->cb_alamat_id;
+        $gudang->company_id = $request->cb_company_id;
+        $gudang->alamat_id = $gudang->alamat_id;
         $gudang->user_id = $request->cb_user_id;
+        $gudang->branch_id = $request->cb_branch_id;
         $gudang->nama_gudang = $request->tb_nama_gudang;
+        $gudang->nama_gudang_erp = $request->tb_nama_gudang_erp;
         $gudang->no_telp = $request->tb_no_telp;
         $gudang->external_gudang_id = $request->tb_external_id;
         $gudang->save();
