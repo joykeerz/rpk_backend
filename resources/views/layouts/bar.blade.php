@@ -38,7 +38,7 @@
     @php
         $jobCount = DB::table('jobs')->count();
     @endphp
-    <div id='loader'>
+    <div id='loader' class="flex-col">
         <img class="" src="{{ asset('images/dashboard/Circle-Loader.gif') }}" alt="loading...">
         @if ($jobCount > 0)
             <h1 class="text-white">
@@ -76,6 +76,9 @@
             let jobCount = {{ $jobCount }};
             if (jobCount > 0) {
                 document.getElementById('loader').style.display = 'flex';
+                setTimeout(function() {
+                    location.reload();
+                }, 30000); // 300,000 milliseconds = 5 minutes
             } else {
                 document.getElementById('loader').style.display = 'none';
             }

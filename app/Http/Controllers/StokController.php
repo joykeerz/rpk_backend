@@ -27,6 +27,7 @@ class StokController extends Controller
             ->select('alamat.provinsi', 'alamat.kota_kabupaten')
             ->where('users.id', '=', Auth::user()->id)
             ->first();
+        dd(Auth::user()->id);
 
         if (empty($currentEntity)) {
             return redirect()->route('home')->with('error', 'Anda belum terdaftar di entitas/company manapun, harap hubungi admin');

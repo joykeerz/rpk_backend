@@ -23,16 +23,15 @@ class StockController extends Controller
             Log::error('Failed to dispatch Stock Import Job: ' . $e->getMessage());
             return 'Failed to dispatch Stock Import Job';
         }
-
         // $pageSize = 100; // Set the desired chunk size
 
         // $stocks = $odoo->model('stock.quant', 'product.product', 'product.template')
         //     ->fields(['id', 'product_id', 'warehouse_id', 'location_id', 'quantity'])
         //     ->where('location_id', '!=', 5)
-        // ->where('warehouse_id', '=', 1)
-        // ->where('quantity', '>', 0)
-        // ->limit(1000)
-        // ->get();
+        //     ->where('usage', '=', 'internal')
+        //     ->where('warehouse_id', '=', 1)
+        //     ->where('quantity', '>', 0)
+        //     ->get();
         // dd($stocks);
         // $chunkedStocks = array_chunk($stocks, $pageSize);
 
