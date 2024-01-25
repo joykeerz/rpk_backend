@@ -112,7 +112,33 @@
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                                 @enderror
                                                 <p class="text-gray-400 text-sm">
-                                                    Mendaftarkan customer ke cabang (bisa dikosongkan)
+                                                    Mendaftarkan customer ke Kanwil
+                                                </p>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="cb_branch_id"
+                                                    class="leading-7 block text-sm font-medium text-gray-700"> Cabang
+                                                    Terdaftar
+                                                </label>
+                                                <select name="cb_branch_id" id="cb_branch_id"
+                                                    class="mt-1 block w-full rounded-md  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
+                                                    @forelse ($cabang as $branch)
+                                                        <option value="{{ $branch->id }}"
+                                                            @if ($customer->branch_id == $branch->id) selected @endif>
+                                                            {{ $branch->nama_branch }}
+                                                        </option>
+                                                    @empty
+                                                        <option value="" disabled>
+                                                            No data
+                                                        </option>
+                                                    @endforelse
+                                                </select>
+                                                @error('cb_branch_id')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
+                                                <p class="text-gray-400 text-sm">
+                                                    Mendaftarkan customer ke Cabang
                                                 </p>
                                             </div>
 
@@ -210,8 +236,9 @@
 
                                                 <select onchange="loadKota(event);" name="tb_prov" id="tb_prov"
                                                     class="border rounded-md py-2 px-3 w-full">
-                                                    {{-- <option class="bg-slate-400 text-white" selected value="{{ $customer->provinsi }}">
-                                                        {{ $customer->provinsi }}</option> --}}
+                                                    <option class="bg-slate-400 text-white" selected
+                                                        value="{{ $customer->provinsi }}">
+                                                        {{ preg_replace('/^\d+\.\s/', '', $customer->provinsi) }}</option>
                                                 </select>
 
                                                 @error('tb_prov')

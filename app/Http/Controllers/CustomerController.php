@@ -43,9 +43,10 @@ class CustomerController extends Controller
                 ->paginate(15);
         } elseif (Auth::user()->role_id == 4) {
             $currentEntity = DB::table('companies')
+                ->join('branches', 'branches.company_id', '=', 'companies.id')
                 ->join('users', 'users.id', '=', 'companies.user_id')
                 ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
-                ->select('alamat.provinsi', 'alamat.kota_kabupaten')
+                ->select('alamat.provinsi', 'alamat.kota_kabupaten', 'branches.nama_branch', 'companies.nama_company', 'companies.id as cid', 'branches.id as bid')
                 ->where('users.id', '=', Auth::user()->id)
                 ->first();
 
@@ -61,7 +62,7 @@ class CustomerController extends Controller
                     ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
                     ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
                     ->where('users.role_id', '=', 5)
-                    ->where('alamat.provinsi', '=', $currentEntity->provinsi)
+                    ->where('users.company_id', '=', $currentEntity->cid)
                     ->when($search, function ($query, $search) {
                         $query->where('name', 'ilike', '%' . $search . '%')
                             ->orWhere('nama_rpk', 'ilike', '%' . $search . '%')
@@ -77,13 +78,16 @@ class CustomerController extends Controller
                     ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
                     ->select('users.*', 'biodata.*', 'alamat.*', 'biodata.id as bid', 'users.id as uid', 'alamat.id as aid', 'biodata.created_at as cat')
                     ->where('users.role_id', '=', 5)
-                    ->where('alamat.kota_kabupaten', '=', $currentEntity->kota_kabupaten)
+                    ->where('biodata.branch_id', '=', $currentEntity->bid)
                     ->when($search, function ($query, $search) {
-                        $query->where('name', 'ilike', '%' . $search . '%')
-                            ->orWhere('nama_rpk', 'ilike', '%' . $search . '%')
-                            ->orWhere('email', 'ilike', '%' . $search . '%');
+                        $query->where(function ($subquery) use ($search) {
+                            $subquery->where('name', 'ilike', '%' . $search . '%')
+                                ->orWhere('nama_rpk', 'ilike', '%' . $search . '%')
+                                ->orWhere('email', 'ilike', '%' . $search . '%')
+                                ->orWhere('kota_kabupaten', 'ilike', '%' . $search . '%');
+                        });
                     })
-                    ->orderby('biodata.created_at', 'desc')
+                    ->orderByDesc('biodata.created_at')
                     ->paginate(15);
             }
         }
@@ -95,6 +99,7 @@ class CustomerController extends Controller
     public function show($id)
     {
         $entitas = DB::table('companies')->get();
+        $cabang = DB::table('branches')->get();
 
         $customer = DB::table('biodata')
             ->join('users', 'users.id', '=', 'biodata.user_id')
@@ -107,13 +112,14 @@ class CustomerController extends Controller
             abort(404);
         }
 
-        return view('customer.show', ['customer' => $customer, 'entitas' => $entitas]);
+        return view('customer.show', ['customer' => $customer, 'entitas' => $entitas, 'cabang' => $cabang]);
     }
 
     public function create()
     {
         $entitas = DB::table('companies')->get();
-        return view('customer.create', ['entitas' => $entitas]);
+        $cabang = DB::table('branches')->get();
+        return view('customer.create', ['entitas' => $entitas, 'cabang' => $cabang]);
     }
 
     public function store(Request $request)
@@ -180,6 +186,7 @@ class CustomerController extends Controller
         $customer->user_id = $user->id;
         $customer->alamat_id = $alamat->id;
         $customer->kode_customer = $request->tb_kode_customer;
+        $customer->branch_id = $request->cb_branch_id;
         $customer->nama_rpk = $request->tb_nama_rpk;
         $customer->no_ktp = $request->tb_ktp_rpk;
         if ($request->has('cb_kode_company')) {
@@ -243,6 +250,7 @@ class CustomerController extends Controller
         $customer->nama_rpk = $request->tb_nama_rpk;
         $customer->no_ktp = $request->tb_ktp_rpk;
         $customer->kode_company = $request->cb_kode_company;
+        $customer->branch_id = $request->cb_branch_id;
 
         if ($request->hasFile('tb_img_ktp')) {
             $filePath = $request->file('tb_img_ktp')->store('images/ktp', 'public');
@@ -280,7 +288,7 @@ class CustomerController extends Controller
         $user->no_hp = $request->tb_hp_user;
         $user->save();
 
-        return redirect()->route('customer.index')->with('success', 'Data customer berhasil diubah');
+        return redirect()->route('customer.index')->with('message', 'Data customer berhasil diubah');
     }
 
     public function delete($id)

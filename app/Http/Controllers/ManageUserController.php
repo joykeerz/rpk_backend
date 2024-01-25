@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alamat;
 use App\Models\Biodata;
+use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,7 +27,8 @@ class ManageUserController extends Controller
     public function newUser()
     {
         $roles = Role::all();
-        return view('manage.user.create', ['roles' => $roles]);
+        $company = Company::all();
+        return view('manage.user.create', ['roles' => $roles, 'companies' => $company]);
     }
 
     public function index(Request $request)
@@ -35,12 +37,13 @@ class ManageUserController extends Controller
         $allUsers = DB::table('users')
             ->join('roles', 'users.role_id', '=', 'roles.id')
             ->select('users.*', 'roles.*', 'roles.id as rid', 'users.id as uid')
+            ->where('users.role_id', '!=', 1)
             ->when($search, function ($query, $search) {
                 $query->where('name', 'ilike', '%' . $search . '%')
                     ->orWhere('email', 'ilike', '%' . $search . '%')
                     ->orWhere('no_hp', 'ilike', '%' . $search . '%');
             })
-            ->where('users.role_id', '!=', 1)
+            ->orderByDesc('users.created_at')
             ->paginate(15);
         return view('manage.user.index', ['usersData' => $allUsers]);
     }
@@ -68,8 +71,9 @@ class ManageUserController extends Controller
             ->where('users.id', '=', $id)
             ->first();
         $roles = Role::all();
+        $companies = Company::all();
         // return view('manage.user.details', ['userData' => $userData, 'userProfile' => $userProfile, 'userAlamat' => $userAlamat]);
-        return view('manage.user.details', ['userData' => $userData, 'roles' => $roles]);
+        return view('manage.user.details', ['userData' => $userData, 'roles' => $roles, 'companies' => $companies]);
     }
 
     public function update(Request $request, $id)
@@ -82,6 +86,7 @@ class ManageUserController extends Controller
 
         $userData = User::find($id);
         $userData->role_id = $request->cb_role;
+        $userData->company_id = $request->cb_company;
         $userData->name = $request->tb_nama_user;
         $userData->email = $request->tb_email_user;
         $userData->no_hp = $request->tb_hp_user;
@@ -103,6 +108,7 @@ class ManageUserController extends Controller
 
     public function StoreNewAccount(Request $request)
     {
+        // dd($request->input());
         $request->validate([
             'tb_nama_user' => 'required',
             'tb_email_user' => 'required|email|unique:users,email',
@@ -120,7 +126,9 @@ class ManageUserController extends Controller
         ]);
 
         $user = new User;
+        $user->id = User::max('id') + 1;
         $user->role_id = $request->cb_role;
+        $user->company_id = $request->cb_company;
         $user->name = $request->tb_nama_user;
         $user->email = $request->tb_email_user;
         $user->password = Hash::make($request->tb_password_user);

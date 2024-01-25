@@ -31,7 +31,7 @@ class PartnerImportJob implements ShouldQueue
         Log::info('Partner Import Job Running');
 
         $erpPartner = $odoo->model('res.partner')
-            ->fields(['id', 'name', 'phone', 'email', 'login', 'company_id', 'street', 'street2', 'blok', 'nomor', 'rt', 'rw', 'city_id', 'state_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'zip', 'ktp'])
+            ->fields(['id', 'name', 'phone', 'email', 'login', 'company_id', 'street', 'street2', 'blok', 'nomor', 'rt', 'rw', 'city_id', 'state_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'zip', 'ktp', 'cabang_terdaftar'])
             ->where('is_rpk_partner', '=', true)
             ->get();
 
@@ -43,16 +43,17 @@ class PartnerImportJob implements ShouldQueue
         try {
             foreach ($erpPartner as $user) {
                 $company_id = $user->company_id[0] ?? 1;
-                $city_id = $user->city_id[1] ?? 'KOTA JAKARTA SELATAN';
-                $state_id = $user->state_id[1] ?? 'DKI JAKARTA';
-                $kecamatan_id = $user->kecamatan_id[1] ?? 'SETIA BUDI';
-                $kelurahan_id = $user->kelurahan_id[1] ?? 'KARET KUNINGAN';
+                $branch_id = $user->cabang_terdaftar[0] ?? 1;
+                $city_id = $user->city_id[1] ?? '(blank)';
+                $state_id = $user->state_id[1] ?? '(blank)';
+                $kecamatan_id = $user->kecamatan_id[1] ?? '(blank)';
+                $kelurahan_id = $user->kelurahan_id[1] ?? '(blank)';
 
                 $data = [
                     'role_id' => 5,
                     'name' => $user->name,
                     'email' => $user->email,
-                    'password' => bcrypt('default123'),
+                    'password' => bcrypt('bulog123'),
                     'no_hp' => $user->phone,
                     'company_id' => $company_id,
                 ];
@@ -82,6 +83,7 @@ class PartnerImportJob implements ShouldQueue
                         'nama_rpk' => $user->name,
                         'no_ktp' => $user->ktp,
                         'kode_company' => $company_id,
+                        'branch_id' => $branch_id,
                     ]);
                 } else {
                     $alamatId = DB::table('biodata')->where('user_id', $user->id)->value('alamat_id');
@@ -93,6 +95,7 @@ class PartnerImportJob implements ShouldQueue
                         'nama_rpk' => $user->name,
                         'no_ktp' => $user->ktp,
                         'kode_company' => $company_id,
+                        'branch_id' => $branch_id,
                     ]);
 
                     DB::table('alamat')->where('id', $alamatId)->update([

@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('biodata', function (Blueprint $table) {
-            $table->string('kode_company', 7)->default('kosong')->after('alamat_id');
+        Schema::create('prices', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('produk_id');
+            $table->foreignId('company_id');
+            $table->double('price_value');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('biodata', function (Blueprint $table) {
-            $table->dropColumn('kode_company');
-        });
+        Schema::dropIfExists('prices');
     }
 };

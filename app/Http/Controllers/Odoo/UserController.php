@@ -43,6 +43,12 @@ class UserController extends Controller
 
     public function importPartnerUsers(Odoo $odoo)
     {
+        $erpPartner = $odoo->model('res.partner')
+            ->fields(['id', 'name', 'phone', 'email', 'login', 'company_id', 'street', 'street2', 'blok', 'nomor', 'rt', 'rw', 'city_id', 'state_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'zip', 'ktp', 'cabang_terdaftar'])
+            ->where('is_rpk_partner', '=', true)
+            ->limit(100)
+            ->get();
+        dd($erpPartner);
         try {
             dispatch(new PartnerImportJob($odoo));
             Log::info('Partner Import Job Dispatched Successfully');

@@ -37,10 +37,10 @@ class CompanyBranchImportJob implements ShouldQueue
             if (!DB::table('companies')->where('id', $company->id)->exists()) {
                 $insertAlamatGetId = DB::table('alamat')->insertGetId([
                     'jalan' => $company->street,
-                    'provinsi' =>   'DKI JAKARTA',
-                    'kota_kabupaten' => 'KOTA JAKARTA SELATAN',
-                    'kecamatan' => 'SETIA BUDI',
-                    'negara' => 'Indonesia',
+                    'provinsi' =>   '(blank)',
+                    'kota_kabupaten' => '(blank)',
+                    'kecamatan' => '(blank)',
+                    'negara' => '(blank)',
                     'kode_pos' => $company->zip,
                 ]);
             } else {

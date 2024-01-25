@@ -27,7 +27,8 @@ class GudangController extends Controller
             // ->join('companies', 'gudang.company_id', '=', 'companies.id')
             ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid')
             ->when($search, function ($query, $search) {
-                $query->where('nama_gudang', 'ilike', '%' . $search . '%');
+                $query->where('nama_gudang', 'ilike', '%' . $search . '%')
+                    ->orWhere('nama_gudang_erp', 'ilike', '%' . $search . '%');
             })
             ->paginate(15);
 

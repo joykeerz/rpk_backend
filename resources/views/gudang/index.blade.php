@@ -63,7 +63,7 @@
                 @forelse ($gudangData as $gudang)
                     <tr class="border {{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
                         <td class="p-3">{{ $loop->iteration }}</td>
-                        <td class="p-3">{{ $gudang->nama_gudang }}</td>
+                        <td class="p-3">{{ $gudang->nama_gudang_erp }}</td>
                         <td class="p-3">
                             Provinsi: {{ $gudang->provinsi }}
                             <br>

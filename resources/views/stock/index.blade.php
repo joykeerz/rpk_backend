@@ -10,15 +10,15 @@
 @section('content')
     <header class="bg-gray-200 p-4">
         <h2>
-            Manage Stocks By Gudang in
+            Manage Stocks in
             @if (empty($currentEntity))
                 Selindo
             @else
-                @if ($isProvinsi)
+                {{-- @if ($isProvinsi)
                     {{ $currentEntity->provinsi }}
-                @else
-                    {{ $currentEntity->kota_kabupaten }}
-                @endif
+                @else --}}
+                    {{ $currentEntity->nama_company }}
+                {{-- @endif --}}
             @endif
         </h2>
     </header>
@@ -33,14 +33,14 @@
             @if (!$isProvinsi)
                 <div
                     class="flex justify-between items-center w-100 p-2 rounded border border-opacity-30 border-slate-500 bg-blue-950 text-white">
-                    <h1 class="font-medium">GUDANG SE-{{ $currentEntity->provinsi }}</h1>
-                    <form action="{{ route('stok.index') }}">
+                    <h1 class="font-medium">GUDANG IN {{ $currentEntity->nama_company }}</h1>
+                    {{-- <form action="{{ route('stok.index') }}">
                         <input type="hidden" name="provinsi" value="{{ $currentEntity->provinsi }}">
                         <button type="submit" class="btn btn-sm btn-outline text-white">
                             Lihat
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
-                    </form>
+                    </form> --}}
                 </div>
             @endif
         @endif
@@ -65,7 +65,7 @@
                 @forelse ($gudang as $key => $gd)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $gd->nama_gudang }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $gd->nama_gudang_erp }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $gd->no_telp }}</td>
                         <td class="px-6 py-4 whitespace-normal">
                             <p class="line-clamp-1">

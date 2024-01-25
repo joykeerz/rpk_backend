@@ -14,11 +14,12 @@
             @if (empty($currentEntity))
                 Selindo
             @else
-                @if ($isProvinsi)
+                {{-- @if ($isProvinsi)
                     {{ $currentEntity->provinsi }}
                 @else
                     {{ $currentEntity->kota_kabupaten }}
-                @endif
+                @endif --}}
+                {{ $currentEntity->nama_company }}
             @endif
         </h2>
     </header>
@@ -33,14 +34,14 @@
             @if (!$isProvinsi)
                 <div
                     class="flex justify-between items-center w-100 p-2 rounded border border-opacity-30 border-slate-500 bg-blue-950 text-white">
-                    <h1 class="font-medium">GUDANG SE-{{ $currentEntity->provinsi }}</h1>
-                    <form action="{{ route('pesanan.selectGudang') }}">
+                    <h1 class="font-medium">Gudang in {{ $currentEntity->nama_company }}</h1>
+                    {{-- <form action="{{ route('pesanan.selectGudang') }}">
                         <input type="hidden" name="provinsi" value="{{ $currentEntity->provinsi }}">
                         <button type="submit" class="btn btn-sm btn-outline text-white">
                             Lihat
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
-                    </form>
+                    </form> --}}
                 </div>
             @endif
         @endif
@@ -65,7 +66,7 @@
                 @forelse ($gudang as $key => $gd)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $gd->nama_gudang }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $gd->nama_gudang_erp }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $gd->no_telp }}</td>
                         <td class="px-6 py-4 whitespace-normal">
                             <p class="line-clamp-1">
@@ -89,7 +90,6 @@
                         @endif
                     </tr>
                 @empty
-
                 @endforelse
             </tbody>
         </table>

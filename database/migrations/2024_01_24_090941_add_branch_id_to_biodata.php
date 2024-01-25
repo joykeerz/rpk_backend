@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('biodata', function (Blueprint $table) {
-            $table->string('kode_company', 7)->default('kosong')->after('alamat_id');
+            $table->foreignId('branch_id')->after('kode_company')->nullable()->default(1);
+            $table->timestamp('verified_at')->after('branch_id')->nullable();
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('biodata', function (Blueprint $table) {
-            $table->dropColumn('kode_company');
+            $table->dropColumn('branch_id');
+            $table->dropColumn('verified_at');
         });
     }
 };

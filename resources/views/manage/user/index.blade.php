@@ -64,7 +64,7 @@
             <tbody>
                 @forelse ($usersData as $ud)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $usersData->firstItem()+$loop->index }}</td>
                         <td>{{ $ud->name }}</td>
                         <td>{{ $ud->email }}</td>
                         <td>{{ $ud->no_hp }}</td>
@@ -85,23 +85,36 @@
                         </td>
                         <td>{{ $ud->nama_role }}</td>
                         @if (Auth::user()->role_id != 3)
-                            <td class="flex justify-evenly p-2">
-                                <a href="{{ route('manage.user.verify', ['id' => $ud->uid]) }}"
-                                    class="btn btn-sm primary mr-1">
-                                    <i class="fa-solid fa-check"></i>
-                                    Verify
-                                </a>
+                            <td class="flex justify-evenly items-center p-2">
+                                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </div>
+                                    <ul tabindex="0"
+                                        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li>
+                                            <a href="{{ route('manage.user.edit', ['id' => $ud->uid]) }}">
+                                                <i class="fa-solid fa-eye"></i>
+                                                Detail
+                                            </a>
+                                        </li>
+                                        @if ($ud->isVerified == 0)
+                                            <li>
+                                                <a href="{{ route('manage.user.verify', ['id' => $ud->uid]) }}">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Verify
+                                                </a>
 
-                                <a href="{{ route('manage.user.reject', ['id' => $ud->uid]) }}"
-                                    class="btn btn-sm btn-outline mr-1">
-                                    <i class="fa-solid fa-xmark"></i>
-                                    Reject
-                                </a>
-
-                                <a href="{{ route('manage.user.edit', ['id' => $ud->uid]) }}"
-                                    class="btn btn-sm btn-primary">
-                                    <i class="fa-solid fa-eye"></i>
-                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('manage.user.reject', ['id' => $ud->uid]) }}">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                    Reject
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
                             </td>
                         @endif
                     </tr>

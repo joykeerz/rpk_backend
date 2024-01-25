@@ -16,7 +16,7 @@
     <header class="bg-gray-200 p-4">
         <div class="flex justify-between">
             <h2>
-                {{ $data['gudang']->nama_gudang }}
+                {{ $data['gudang']->nama_gudang_erp }}
             </h2>
             <div class="button">
                 <a class="btn btn-sm btn-primary" href="{{ route('location.index', ['id' => $data['gudang']->gid]) }}">
@@ -26,7 +26,6 @@
             </div>
         </div>
     </header>
-
 
     <form action="{{ route('gudang.update', ['id' => $data['gudang']->gid]) }}" method="post">
         @csrf

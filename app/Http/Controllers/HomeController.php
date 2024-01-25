@@ -25,7 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $jobCount = DB::table('jobs')->count();
         $stockCountByMonth = DB::table('stok')
             ->whereBetween('created_at', [now()->startOfMonth(), now()])
             ->count();
@@ -40,7 +39,6 @@ class HomeController extends Controller
             'stockCountByMonth' => $stockCountByMonth,
             'transaksiCountByMonth' => $transaksiCountByMonth,
             'totalCustomer' => $totalCustomer,
-            'jobCount' => $jobCount
         ]);
     }
 }

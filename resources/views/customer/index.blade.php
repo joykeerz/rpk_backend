@@ -25,15 +25,16 @@
     <header class="bg-gray-200 p-4">
         <div class="flex justify-between items-center">
             <h2>
-                {{ __('Manage Customer') }}
+                {{ __('Manage Customer in') }}
                 @if (empty($currentEntity))
                     Selindo
                 @else
-                    @if ($isProvinsi)
+                    {{-- @if ($isProvinsi)
                         {{ $currentEntity->provinsi }}
                     @else
                         {{ $currentEntity->kota_kabupaten }}
-                    @endif
+                    @endif --}}
+                    {{ $currentEntity->nama_company }}
                 @endif
             </h2>
             <div class="flex items-center">
@@ -66,14 +67,14 @@
             @if (!$isProvinsi)
                 <div
                     class="flex justify-between items-center w-full p-2 rounded border border-opacity-30 border-slate-500 bg-blue-950 text-white">
-                    <h1 class="font-medium">CUSTOMER SE-{{ $currentEntity->provinsi }}</h1>
-                    <form action="{{ route('customer.index') }}">
+                    <h1 class="font-medium">Customers in {{ $currentEntity->nama_company }}</h1>
+                    {{-- <form action="{{ route('customer.index') }}">
                         <input type="hidden" name="provinsi" value="{{ $currentEntity->provinsi }}">
                         <button type="submit" class="btn btn-sm btn-outline text-white">
                             Lihat
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
-                    </form>
+                    </form> --}}
                 </div>
             @endif
         @endif
@@ -119,29 +120,36 @@
                             @endswitch
                         </td>
                         @if (!$isProvinsi)
-                            <td class="grid grid-cols-2 gap-2">
-                                @if ($ud->isVerified == 0)
-                                    <a href="{{ route('customer.verify', ['id' => $ud->uid]) }}"
-                                        class="btn btn-sm primary mr-1">
-                                        <i class="fa-solid fa-check"></i>
-                                        Verify
-                                    </a>
-
-                                    <a href="{{ route('customer.reject', ['id' => $ud->uid]) }}"
-                                        class="btn btn-sm btn-outline mr-1">
-                                        <i class="fa-solid fa-xmark"></i>
-                                        Reject
-                                    </a>
-                                @endif
-
+                            <td class="grid grid-cols-2 gap-2 items-center">
                                 <a href="{{ route('customer.show', ['id' => $ud->bid]) }}" class="btn btn-sm btn-primary">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-
-                                <a href="{{ route('customer.delete', ['id' => $ud->bid]) }}" class="btn btn-sm btn-error"
-                                    onclick="return deleteConfirmation()">
-                                    <i class="fa-solid fa-trash text-white"></i>
-                                </a>
+                                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </div>
+                                    <ul tabindex="0"
+                                        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        @if ($ud->isVerified == 0)
+                                            <li><a href="{{ route('customer.verify', ['id' => $ud->uid]) }}">
+                                                    <i class="fa-solid fa-check"></i>Verify
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('customer.reject', ['id' => $ud->uid]) }}">
+                                                    <i class="fa-solid fa-xmark"></i>Reject
+                                                </a>
+                                            </li>
+                                        @endif
+                                        <hr class="my-2 border-gray-200">
+                                        <li>
+                                            <a href="{{ route('customer.delete', ['id' => $ud->bid]) }}"
+                                                class="btn btn-sm btn-error" onclick="return deleteConfirmation()">
+                                                <i class="fa-solid fa-trash text-white"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </td>
                         @endif
                     </tr>

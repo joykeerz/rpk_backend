@@ -161,11 +161,11 @@ class UserImportJob implements ShouldQueue
             DB::table('users')->updateOrInsert(['id' => $user->id], [
                 'id' => $user->id,
                 'role_id' => 4,
+                'company_id' => $user->company_id[0],
                 'name' => $user->name,
                 'email' => $user->login . '@gmail.com',
                 'password' => bcrypt('default123'),
                 'no_hp' => $user->phone,
-                'company_id' => $user->company_id[0],
             ]);
         }
     }
