@@ -32,10 +32,13 @@ class ImportStockJob implements ShouldQueue
         $offset = 0;
 
         do {
-            $stocks = $odoo->model('stock.quant', 'product.product', 'product.template')
+            $stocks = $odoo->model('stock.quant')
                 ->fields(['id', 'product_id', 'warehouse_id', 'quantity'])
                 ->where('location_id', '!=', 5)
+                // ->where('warehouse_id', '!=', false)
                 ->where('quantity', '>', 0)
+                ->where('product_id.type', '=', 'product')
+                ->where('location_id.usage', '=', 'internal')
                 ->offset($offset)
                 ->limit($pageSize)
                 ->get();
@@ -45,9 +48,8 @@ class ImportStockJob implements ShouldQueue
 
             Log::info('looping through stock data');
             foreach ($stocks as $stock) {
-                $produkId = is_array($stock->product_id) ? $stock->product_id[0] : 1;
-                $gudangId = is_array($stock->warehouse_id) ? $stock->warehouse_id[0] : 1;
-
+                $produkId = is_array($stock->product_id) ? $stock->product_id[0] : $stock->product_id[0];
+                $gudangId = is_array($stock->warehouse_id) ? $stock->warehouse_id[0] : $stock->warehouse_id[0];
                 $dataToInsert[] = [
                     'id' => $stock->id,
                     'produk_id' => $produkId,

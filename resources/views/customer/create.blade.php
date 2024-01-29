@@ -115,7 +115,7 @@
                                                     class="leading-7 block text-sm font-medium text-gray-700"> Entitas*
                                                 </label>
                                                 <select name="cb_kode_company" id="cb_kode_company"
-                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
+                                                    class="mt-1 block w-full rounded-md  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                                     @forelse ($entitas as $company)
                                                         <option value="{{ $company->kode_company }}">
                                                             {{ $company->nama_company }}
@@ -138,7 +138,7 @@
                                                     class="leading-7 block text-sm font-medium text-gray-700"> Cabang*
                                                 </label>
                                                 <select name="cb_branch_id" id="cb_branch_id"
-                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
+                                                    class="mt-1 block w-full rounded-md  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1">
                                                     @forelse ($cabang as $branch)
                                                         <option value="{{ $branch->id }}">
                                                             {{ $branch->nama_branch }}
