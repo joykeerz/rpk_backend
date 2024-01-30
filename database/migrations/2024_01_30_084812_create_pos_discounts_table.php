@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pos_inventories', function (Blueprint $table) {
+        Schema::create('pos_discounts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id');
-            $table->foreignId('discount_id');
-            $table->integer('quantity')->default(0);
-            $table->double('price');
+            $table->string('discount_name');
+            $table->string('discount_type');
+            $table->double('discount_value');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pos_inventories');
+        Schema::dropIfExists('pos_discounts');
     }
 };

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('pos_name', 30);
-            $table->string('pin',6)->nullable()->default('000000');
+            $table->string('pin')->nullable()->default(Hash::make('000000'));
             $table->timestamps();
         });
     }

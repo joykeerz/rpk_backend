@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('profile_id');
             $table->string('payment_method', 180);
+            $table->text('payment_info');
             $table->timestamps();
         });
     }

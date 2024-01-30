@@ -61,6 +61,12 @@ class PosSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        DB::table('pos_discounts')->insert([
+            'discount_name' => 'Tidak ada',
+            'discount_type' => 'none',
+            'discount_value' => 0,
+        ]);
+
         DB::table('pos_categories')->insert([
             'profile_id' => 1,
             'category_name' => 'Beras',
@@ -90,6 +96,7 @@ class PosSeeder extends Seeder
 
         DB::table('pos_inventories')->insert([
             'product_id' => 1,
+            'discount_id' => 1, // 'Tidak ada
             'quantity' => 30,
             'price' => 19500,
             'created_at' => now(),
@@ -109,6 +116,7 @@ class PosSeeder extends Seeder
 
         DB::table('pos_inventories')->insert([
             'product_id' => 2,
+            'discount_id' => 1, // 'Tidak ada
             'quantity' => 40,
             'price' => 15000,
             'created_at' => now(),
@@ -129,6 +137,7 @@ class PosSeeder extends Seeder
 
         DB::table('pos_inventories')->insert([
             'product_id' => 3,
+            'discount_id' => 1, // 'Tidak ada
             'quantity' => 40,
             'price' => 12000,
             'created_at' => now(),
@@ -148,6 +157,7 @@ class PosSeeder extends Seeder
 
         DB::table('pos_inventories')->insert([
             'product_id' => 4,
+            'discount_id' => 1, // 'Tidak ada
             'quantity' => 40,
             'price' => 15000,
             'created_at' => now(),
@@ -167,6 +177,7 @@ class PosSeeder extends Seeder
 
         DB::table('pos_inventories')->insert([
             'product_id' => 5,
+            'discount_id' => 1, // 'Tidak ada
             'quantity' => 40,
             'price' => 19000,
             'created_at' => now(),

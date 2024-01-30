@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id');
             $table->foreignId('payment_method_id');
+            $table->foreignId('promo_id');
             $table->string('transaction_code', 30);
             $table->string('payment_status', 10);
-            $table->float('discount')->nullable()->default(0);
-            $table->float('discount_value')->nullable()->default(0);
             $table->double('grand_total');
             $table->double('paid_amount');
             $table->double('change_amount');

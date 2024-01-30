@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pos_inventories', function (Blueprint $table) {
+        Schema::create('pos_promos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id');
-            $table->foreignId('discount_id');
-            $table->integer('quantity')->default(0);
-            $table->double('price');
+            $table->string('promo_name');
+            $table->string('promo_type');
+            $table->string('promo_category');
+            $table->double('promo_value');
+            $table->dateTime('promo_start');
+            $table->dateTime('promo_end');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pos_inventories');
+        Schema::dropIfExists('pos_promos');
     }
 };
