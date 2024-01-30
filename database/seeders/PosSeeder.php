@@ -26,6 +26,33 @@ class PosSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        DB::table('alamat')->insert([
+            'jalan' => 'Jl Bintang Lima',
+            'jalan_ext' => 'Gg Satuan Timah',
+            'blok' => 'Blok JA No.15',
+            'rt' => '1',
+            'rw' => '1',
+            'provinsi' => 'DKI JAKARTA',
+            'kota_kabupaten' => 'KOTA JAKARTA SELATAN',
+            'kecamatan' => 'KEBAYORAN LAMA',
+            'kelurahan' => 'KEBAYORAN LAMA SELATAN',
+            'negara' => 'Indonesia',
+            'kode_pos' => '15318',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('biodata')->insert([
+            'id' => 1,
+            'user_id' => 4  ,
+            'alamat_id' => 2,
+            'kode_customer' => 'C0001',
+            'nama_rpk' => 'RPK Jhon Doe',
+            'no_ktp' => '1234567890',
+            'kode_company' => 'J0001',
+            'ktp_img' => 'images/ktp/CErQ8mg3hkdl0wjutiCGnalzkKWHj6aifISPbJ6K.jpg',
+        ]);
+
         DB::table('pos_profiles')->insert([
             'user_id' => 4,
             'pos_name' => 'POS CUSTOMER JOY',

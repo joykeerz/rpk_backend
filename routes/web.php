@@ -20,12 +20,14 @@ use App\Http\Controllers\Odoo\BranchController as OdooBranchController;
 use App\Http\Controllers\Odoo\CategoryController;
 use App\Http\Controllers\Odoo\CompanyController as OdooCompanyController;
 use App\Http\Controllers\Odoo\GudangController as OdooGudangController;
+use App\Http\Controllers\Odoo\PriceController;
 use App\Http\Controllers\Odoo\ProductController as OdooProductController;
 use App\Http\Controllers\Odoo\SatuanUnitController as OdooSatuanUnitController;
 use App\Http\Controllers\Odoo\StockController;
 use App\Http\Controllers\Odoo\SynchronizeController;
 use App\Http\Controllers\Odoo\UserController;
 use App\Http\Controllers\PajakController;
+use App\Http\Controllers\PriceController as ControllersPriceController;
 use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\SatuanUnitController;
 
@@ -76,6 +78,9 @@ Route::prefix('odoo')->group(function () {
     });
     Route::prefix('stock')->group(function () {
         Route::get('/import', [StockController::class, 'importStock'])->name('odoo.stock.import');
+    });
+    Route::prefix('price')->group(function () {
+        Route::get('/import', [PriceController::class, 'importPrice'])->name('odoo.price.import');
     });
 });
 
@@ -259,5 +264,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/show/{id}', [LocationController::class, 'show'])->name('location.show');
         Route::post('/update/{id}', [LocationController::class, 'update'])->name('location.update');
         Route::get('/delete/{id}', [LocationController::class, 'destroy'])->name('location.delete');
+    });
+
+    Route::prefix('prices')->middleware('restrictRole:4')->group(function () {
+        Route::get('/', [ControllersPriceController::class, 'index'])->name('prices.index');
+        Route::post('/store', [ControllersPriceController::class, 'store'])->name('prices.store');
+        Route::get('/show/{id}', [ControllersPriceController::class, 'show'])->name('prices.show');
+        Route::post('/update/{id}', [ControllersPriceController::class, 'update'])->name('prices.update');
+        Route::get('/delete/{id}', [ControllersPriceController::class, 'destroy'])->name('prices.delete');
     });
 });

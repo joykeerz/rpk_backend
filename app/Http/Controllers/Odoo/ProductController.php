@@ -17,9 +17,6 @@ class ProductController extends Controller
 {
     public function importFromErp(Odoo $odoo)
     {
-        $erProduct = $odoo->model('product.product')->fields(['name', 'categ_id', 'uom_id', 'default_code', 'lst_price'])->limit(5)->get();
-
-        dd($erProduct);
         try {
             dispatch(new ProductImportJob($odoo));
             Log::info('Product Import Job Dispatched Successfully');

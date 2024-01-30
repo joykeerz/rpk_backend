@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prices', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->foreignId('produk_id');
             $table->foreignId('company_id');
             $table->double('price_value');

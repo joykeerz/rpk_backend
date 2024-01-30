@@ -15,16 +15,30 @@
 @endsection
 
 @section('content')
-    <header class="bg-gray-200 p-3">
-        <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Kantor Cabang (Branch)') }}
+    <header class="bg-gray-200 p-4">
+        <div class="flex justify-between items-center">
+            <h2 class="">
+                {{ __('Branch (Kancab)') }}
             </h2>
-            <div class="button">
-                <a class="btn btn-sm btn-primary" href="{{ route('branch.create') }}">
-                    <i class="fa-solid fa-add"></i>
-                    New Branch
-                </a>
+            <div class="flex items-center">
+                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                        Sync Branch
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a href="{{ route('odoo.branch.import') }}">Import Branch</a></li>
+                        <li><a>Export Branch RPK</a></li>
+                        <li><a>Sync All</a></li>
+                    </ul>
+                </div>
+
+                <div class="button">
+                    <a class="btn btn-sm btn-primary" href="{{ route('branch.create') }}">
+                        <i class="fa-solid fa-add"></i>
+                        New Branch
+                    </a>
+                </div>
             </div>
         </div>
     </header>

@@ -42,9 +42,9 @@ class CustomerSeeder extends Seeder
         ]);
 
         DB::table('biodata')->insert([
-            'id' => 1,
+            'id' => 2,
             'user_id' => 5,
-            'alamat_id' => 2,
+            'alamat_id' => 3,
             'kode_customer' => 'C0001',
             'nama_rpk' => 'RPK Jhon Doe',
             'no_ktp' => '1234567890',
