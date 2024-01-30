@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pos_promos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('profile_id');
             $table->string('promo_name');
             $table->string('promo_type');
             $table->string('promo_category');

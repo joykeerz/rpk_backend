@@ -44,7 +44,7 @@ class PosSeeder extends Seeder
 
         DB::table('biodata')->insert([
             'id' => 1,
-            'user_id' => 4  ,
+            'user_id' => 4,
             'alamat_id' => 2,
             'kode_customer' => 'C0001',
             'nama_rpk' => 'RPK Jhon Doe',
@@ -62,9 +62,20 @@ class PosSeeder extends Seeder
         ]);
 
         DB::table('pos_discounts')->insert([
-            'discount_name' => 'Tidak ada',
+            'profile_id' => 1,
+            'discount_name' => 'No Discount',
             'discount_type' => 'none',
             'discount_value' => 0,
+        ]);
+
+        DB::table('pos_promos')->insert([
+            'profile_id' => 1,
+            'promo_name' => 'No Promo',
+            'promo_type' => 'none',
+            'promo_category' => 'none',
+            'promo_value' => 0,
+            'promo_start' => now(),
+            'promo_end' => now(),
         ]);
 
         DB::table('pos_categories')->insert([

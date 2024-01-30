@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pos_discounts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('profile_id');
             $table->string('discount_name');
             $table->string('discount_type');
             $table->double('discount_value');
