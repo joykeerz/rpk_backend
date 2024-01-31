@@ -184,6 +184,7 @@ class CustomerController extends Controller
         $alamat->save();
 
         $customer = new Biodata;
+        $customer->id = DB::table('biodata')->max('id') + 1;
         $customer->user_id = $user->id;
         $customer->alamat_id = $alamat->id;
         $customer->kode_customer = $request->tb_kode_customer;
