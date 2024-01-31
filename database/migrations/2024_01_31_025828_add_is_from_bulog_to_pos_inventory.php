@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pos_categories', function (Blueprint $table) {
+        Schema::table('pos_inventories', function (Blueprint $table) {
             //
             $table->boolean('is_from_bulog')->default(false)->after('pos_id');
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pos_categories', function (Blueprint $table) {
+        Schema::table('pos_inventories', function (Blueprint $table) {
             //
             $table->dropColumn('is_from_bulog');
         });
