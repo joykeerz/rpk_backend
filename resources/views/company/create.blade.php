@@ -34,7 +34,7 @@
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
-                <div class="tb_user_id flex flex-col">
+                {{-- <div class="tb_user_id flex flex-col">
                     <label for="tb_user_id">Penanggung Jawab*</label>
                     <select name="tb_user_id" id="tb_user_id">
                         @foreach ($usersData as $user)
@@ -45,7 +45,7 @@
                     @error('tb_user_id')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
                 <div class="tb_kode_company flex flex-col">
                     <label for="tb_kode_company">Kode Entitas*</label>
                     <input value="{{ old('tb_kode_company') }}" type="text" name="tb_kode_company" id="tb_kode_company">
@@ -54,11 +54,10 @@
                     @enderror
                 </div>
 
-                    <input value="kosong" type="hidden" name="tb_partner_company"
-                        id="tb_partner_company">
-                    @error('tb_partner_company')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
+                <input value="kosong" type="hidden" name="tb_partner_company" id="tb_partner_company">
+                @error('tb_partner_company')
+                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
 
                 <div class="tb_tagline_company flex flex-col">
                     <label for="tb_tagline_company">Tagline</label>

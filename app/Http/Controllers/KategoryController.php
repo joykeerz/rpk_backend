@@ -29,12 +29,13 @@ class KategoryController extends Controller
         $request->validate([
             'tb_nama_kategori' => 'required',
             'tb_desk_kategori' => 'required',
-        ],[
+        ], [
             'tb_nama_kategori.required' => 'Nama Kategori Harus Diisi!',
             'tb_desk_kategori.required' => 'Deskripsi Kategori Harus Diisi!',
         ]);
 
         $category = new Kategori;
+        $category->id = Kategori::max('id') + 1;
         $category->nama_kategori = $request->tb_nama_kategori;
         $category->deskripsi_kategori = $request->tb_desk_kategori;
         $category->external_kategori_id = $request->tb_external_id;
@@ -43,7 +44,6 @@ class KategoryController extends Controller
         //     'data' => $category,
         // ], '200');
         return redirect()->route('category.index')->with('message', 'Data Kategori Berhasil Ditambahkan!');
-
     }
 
     public function show($id)

@@ -15,7 +15,7 @@ return new class extends Migration
             // $table->id();
             $table->unsignedBigInteger('id')->primary();
             $table->foreignId('alamat_id');
-            $table->foreignId('user_id');
+            // $table->foreignId('user_id');
             $table->string('kode_company')->unique();
             $table->string('nama_company');
             $table->string('partner_company');

@@ -91,10 +91,13 @@ class GudangController extends Controller
         $alamat->save();
 
         $gudang = new Gudang;
+        $gudang->id = Gudang::max('id') + 1;
         $gudang->alamat_id = $alamat->id;
         $gudang->company_id = $request->cb_company_id;
+        $gudang->branch_id = $request->cb_branch_id;
         $gudang->user_id = $request->cb_user_id;
         $gudang->nama_gudang = $request->tb_nama_gudang;
+        $gudang->nama_gudang_erp = $request->tb_nama_gudang_erp;
         $gudang->no_telp = $request->tb_no_telp;
         $gudang->external_gudang_id = $request->tb_external_id;
         $gudang->save();
@@ -165,7 +168,7 @@ class GudangController extends Controller
     {
         $gudang = Gudang::findOrFail($id);
         $gudang->delete();
-        $alamat = Alamat::where('id', $gudang->alamat_id); //wkwkw ini kedelete duluan
+        $alamat = Alamat::where('id', $gudang->alamat_id);
         $alamat->delete();
         $stok = Stok::where('gudang_id', $id);
         $stok->delete();

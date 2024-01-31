@@ -25,9 +25,9 @@ class CompanyController extends Controller
     {
         $search = $request->search;
         $companies = DB::table('companies')
-            ->join('users', 'users.id', '=', 'companies.user_id')
+            // ->join('users', 'users.id', '=', 'companies.user_id')
             ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
-            ->select('companies.*', 'alamat.*', 'users.*', 'companies.id as cid', 'alamat.id as aid', 'users.id as uid')
+            ->select('companies.*', 'alamat.*', 'companies.id as cid', 'alamat.id as aid')
             ->when($search, function ($query, $search) {
                 $query->where('kode_company', 'ilike', '%' . $search . '%')
                     ->orWhere('nama_company', 'ilike', '%' . $search . '%');
@@ -39,10 +39,7 @@ class CompanyController extends Controller
 
     public function create()
     {
-        $usersData = User::where('role_id', 4)->get();
-
-        return view('company.create', ['usersData' => $usersData]);
-        ///user data untuk dropdown pilih user(Contact Person Cabang)
+        return view('company.create');
     }
 
     /**
@@ -60,7 +57,7 @@ class CompanyController extends Controller
             'tb_kota' => 'required',
             'tb_kecamatan' => 'required',
             'tb_kodepos' => 'required',
-            'tb_user_id' => 'required|unique:companies,user_id'
+            // 'tb_user_id' => 'required|unique:companies,user_id'
         ], [
             'tb_kode_company.required' => 'Kode Company harus diisi',
             'tb_kode_company.unique' => 'Kode Company sudah terdaftar',
@@ -73,7 +70,7 @@ class CompanyController extends Controller
             'tb_kecamatan.required' => 'Kecamatan harus diisi',
             'tb_kodepos.required' => 'Kode Pos harus diisi',
             'tb_user_id.required' => 'User harus diisi',
-            'tb_user_id.unique' => 'User sudah terdaftar'
+            // 'tb_user_id.unique' => 'User sudah terdaftar'
         ]);
 
         $alamat = new Alamat;
@@ -91,8 +88,9 @@ class CompanyController extends Controller
         $alamat->save();
 
         $company = new Company;
+        $company->id = Company::max('id') + 1;
         $company->alamat_id = $alamat->id;
-        $company->user_id = $request->tb_user_id;
+        // $company->user_id = $request->tb_user_id;
         $company->kode_company = $request->tb_kode_company;
         $company->nama_company = $request->tb_nama_company;
         $company->partner_company = $request->tb_partner_company;
@@ -109,9 +107,9 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = DB::table('companies')
-            ->join('users', 'companies.user_id', '=', 'users.id')
+            // ->join('users', 'companies.user_id', '=', 'users.id')
             ->join('alamat', 'companies.alamat_id', '=', 'alamat.id')
-            ->select('companies.*', 'alamat.*', 'users.*', 'companies.id as cid', 'alamat.id as aid', 'users.id as uid')
+            ->select('companies.*', 'alamat.*', 'companies.id as cid', 'alamat.id as aid')
             ->where('companies.id', '=', $id)
             ->first();
 
@@ -141,7 +139,7 @@ class CompanyController extends Controller
         // ]);
 
         $company = Company::findOrFail($id);
-        $company->user_id = $request->tb_user_id;
+        // $company->user_id = $request->tb_user_id;
         $company->kode_company = $request->tb_kode_company;
         $company->nama_company = $request->tb_nama_company;
         $company->partner_company = $request->tb_partner_company;

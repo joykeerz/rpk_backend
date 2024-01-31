@@ -30,7 +30,7 @@
                         name="tb_nama_company" id="tb_nama_company" placeholder="" value="{{ $company->nama_company }}">
                 </div>
 
-                <div class="penanggungJawab">
+                {{-- <div class="penanggungJawab">
                     <div class="penanggungJawab">
                         <label for="tb_user_id" class="block text-sm font-medium text-gray-700">Penanggung Jawab</label>
                         <select name="tb_user_id" id="tb_user_id"
@@ -42,7 +42,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="kodeCompany">
                     <label for="" class="block text-sm font-medium text-gray-700">Kode Company</label>

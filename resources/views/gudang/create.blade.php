@@ -29,9 +29,16 @@
 
             <div class="inputLabelContainer grid grid-cols-2 gap-0.5">
                 <div class="tb_nama_gudang flex flex-col">
-                    <label for="tb_nama_gudang">Nama Gudang*</label>
+                    <label for="tb_nama_gudang">Nama Gudang (Mobile)*</label>
                     <input value="{{ old('tb_nama_gudang') }}" type="text" name="tb_nama_gudang" id="tb_nama_gudang">
                     @error('tb_nama_gudang')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="tb_nama_gudang_erp flex flex-col">
+                    <label for="tb_nama_gudang_erp">Nama Gudang (Erp)*</label>
+                    <input value="{{ old('tb_nama_gudang_erp') }}" type="text" name="tb_nama_gudang_erp" id="tb_nama_gudang_erp">
+                    @error('tb_nama_gudang_erp')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
@@ -47,6 +54,16 @@
                     @error('cb_company_id')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
+                </div>
+                <div class="cb_branch_id flex flex-col">
+                    <label for="cb_branch_id">Bussines Unit (Branch)*</label>
+                    <select name="cb_branch_id" id="cb_branch_id">
+                        @foreach ($branchData as $branch)
+                            <option value="{{ $branch->id }}" {{ old('cb_branch_id') == $branch->id ? 'selected' : '' }}>
+                                {{ $branch->nama_branch }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="cb_user_id flex flex-col">
                     <label for="cb_user_id">User Penanggung Jawab*</label>

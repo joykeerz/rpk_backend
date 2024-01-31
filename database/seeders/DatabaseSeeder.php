@@ -240,7 +240,7 @@ class DatabaseSeeder extends Seeder
         DB::table('companies')->insert([
             'id' => 1,
             'alamat_id' => 1,
-            'user_id' => 3,
+            // 'user_id' => 3,
             'kode_company' => 'J0001',
             'nama_company' => 'Kanwil Jakarta Selatan',
             'partner_company' => 'none',

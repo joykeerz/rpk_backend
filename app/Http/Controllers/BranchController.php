@@ -47,6 +47,7 @@ class BranchController extends Controller
         ]);
 
         $branch = new Branch;
+        $branch->id = Branch::count() + 1;
         $branch->company_id = $request->cb_company_id;
         $branch->nama_branch = $request->tb_nama_branch;
         $branch->no_telp_branch = $request->tb_no_telp_branch;
