@@ -161,6 +161,7 @@ class CustomerController extends Controller
         ]);
 
         $user = new User;
+        $user->id = DB::table('users')->max('id') + 1;
         $user->role_id = 5;
         $user->name = $request->tb_nama_user;
         $user->email = $request->tb_email_user;
