@@ -117,11 +117,13 @@ class PesananController extends Controller
             ->join('stok', 'stok.produk_id', '=', 'produk.id')
             ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
             ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
-            ->select('pajak.persentase_pajak', 'pajak.jenis_pajak', 'prices.price_value', 'satuan_unit.satuan_unit_produk', 'stok.jumlah_stok', 'produk.nama_produk', 'stok.id as sid', 'satuan_unit.id as suid', 'produk.id as pid')
+            // ->select('pajak.persentase_pajak', 'pajak.jenis_pajak', 'prices.price_value', 'satuan_unit.satuan_unit_produk', 'stok.jumlah_stok', 'produk.nama_produk', 'stok.id as sid', 'satuan_unit.id as suid', 'produk.id as pid')
+            ->select('prices.price_value', 'stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
+
             ->where('stok.jumlah_stok', '>', 0)
             ->where('stok.gudang_id', '=', $id)
             ->orderBy('stok.id', 'desc')
-            ->paginate(15);
+            ->get();
 
         $kodeCompany = DB::table('gudang')
             ->join('companies', 'companies.id', '=', 'gudang.company_id')

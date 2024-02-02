@@ -290,7 +290,6 @@
             let selectedUser = {!! json_encode($users) !!}.find(user => user.uid == userData.tb_user_id);
             let alamatID = selectedUser.alamat_id ? selectedUser.alamat_id : userData.tb_alamat_id;
 
-
             let userDataWithAddressID = {
                 tb_user_id: userData.tb_user_id,
                 tb_alamat_id: alamatID,
@@ -311,6 +310,7 @@
                 let stokId = $(this).find('.stock_id').text();
                 let productName = $(this).find('td:first').text();
                 let productId = {!! json_encode($product) !!}.find(product => product.nama_produk === productName);
+                console.log(productId);
                 let price = parseFloat($(this).find('.harga_produk').text());
                 let quantity = parseInt($(this).find('.jumlah_pesanan').val());
                 let subtotal = parseFloat($(this).find('.subtotal').text());
