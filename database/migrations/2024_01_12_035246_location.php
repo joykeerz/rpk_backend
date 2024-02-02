@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('locations', function (Blueprint $table) {
             // $table->id();
             $table->unsignedBigInteger('id')->primary();
-            $table->foreignId('gudang_id')->references('id')->on('gudang')->cascadeOnDelete();
+            $table->foreignId('gudang_id');
             $table->string('location_name', 180);
             $table->string('parent_location', 180)->nullable()->default('(blank)');
             $table->string('unique_or_many', 180)->default('many_product');

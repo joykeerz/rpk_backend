@@ -54,7 +54,7 @@ class CompanyBranchImportJob implements ShouldQueue
 
             $insertCompanyGetId = DB::table('companies')->updateOrInsert(['id' => $company->id], [
                 'id' => $company->id,
-                'user_id' => $company->user_id[0],
+                // 'user_id' => $company->user_id[0],
                 'alamat_id' => $insertAlamatGetId,
                 'kode_company' => $company->code,
                 'nama_company' => $company->name,

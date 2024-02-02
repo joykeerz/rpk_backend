@@ -19,7 +19,7 @@ class SatuanUnitController extends Controller
         $search  = $request->search;
         $satuanUnit = DB::table('satuan_unit')->when($search, function ($query, $search) {
             $query->where('nama_satuan', 'ilike', '%' . $search . '%')
-            ->orWhere('satuan_unit_produk', 'ilike', '%' . $search . '%');
+                ->orWhere('satuan_unit_produk', 'ilike', '%' . $search . '%');
         })->paginate(15);
         return view('satuan-unit.index', compact('satuanUnit'));
     }
@@ -48,6 +48,7 @@ class SatuanUnitController extends Controller
         ]);
 
         $satuanUnit = new SatuanUnit();
+        $satuanUnit->id = SatuanUnit::count('id') + 1;
         $satuanUnit->nama_satuan = $request->namaSatuan;
         $satuanUnit->satuan_unit_produk = $request->simbolSatuan;
         $satuanUnit->keterangan = $request->keteranganSatuan;

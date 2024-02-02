@@ -20,6 +20,7 @@ use App\Http\Controllers\Odoo\BranchController as OdooBranchController;
 use App\Http\Controllers\Odoo\CategoryController;
 use App\Http\Controllers\Odoo\CompanyController as OdooCompanyController;
 use App\Http\Controllers\Odoo\GudangController as OdooGudangController;
+use App\Http\Controllers\Odoo\LocationController as OdooLocationController;
 use App\Http\Controllers\Odoo\PriceController;
 use App\Http\Controllers\Odoo\ProductController as OdooProductController;
 use App\Http\Controllers\Odoo\SatuanUnitController as OdooSatuanUnitController;
@@ -81,6 +82,9 @@ Route::prefix('odoo')->group(function () {
     });
     Route::prefix('price')->group(function () {
         Route::get('/import', [PriceController::class, 'importPrice'])->name('odoo.price.import');
+    });
+    Route::prefix('location')->group(function () {
+        Route::get('/import', [OdooLocationController::class, 'importLocation'])->name('odoo.location.import');
     });
 });
 

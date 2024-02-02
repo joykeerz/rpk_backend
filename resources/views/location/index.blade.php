@@ -20,16 +20,32 @@
         }
     </script>
 
-    <header class="bg-gray-200 p-3">
-        <div class="flex justify-between">
+    <header class="bg-gray-200 p-4">
+        <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Locations') }}
             </h2>
-            <div class="button">
-                <a class="btn btn-sm btn-primary" href="{{ route('location.create', ['id' => $gudangID]) }}">
-                    <i class="fa-solid fa-add"></i>
-                    New Location
-                </a>
+
+            <div class="flex items-center">
+                {{-- @if (Auth::user()->role_id != 4 || Auth::user()->role_id != 5) --}}
+                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                        Sync Locations
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a href="{{ route('odoo.location.import') }}">Import Locations</a></li>
+                        <li><a>Export Location RPK</a></li>
+                        <li><a>Sync All</a></li>
+                    </ul>
+                </div>
+                <div class="button">
+                    <a class="btn btn-sm btn-primary" href="{{ route('location.create', ['id' => $gudangID]) }}">
+                        <i class="fa-solid fa-add"></i>
+                        New Location
+                    </a>
+                </div>
+                {{-- @endif --}}
             </div>
         </div>
     </header>
