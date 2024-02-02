@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Price;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,7 @@ class PriceController extends Controller
 
         $currentEntity = DB::table('companies')
             ->join('branches', 'branches.company_id', '=', 'companies.id')
-            ->join('users', 'users.id', '=', 'companies.user_id')
+            ->join('users', 'users.company_id', '=', 'companies.id')
             ->select('companies.nama_company', 'branches.nama_branch', 'branches.id as bid', 'companies.id as cid')
             ->where('users.id', '=', Auth::user()->id)
             ->first();
@@ -47,20 +48,42 @@ class PriceController extends Controller
 
     public function store(Request $request)
     {
-        $incrementId = DB::table('prices')->max('id') + 1;
         $request->validate([
             'tb_price' => 'required',
         ], [
             'tb_price.required' => 'Harga harus diisi',
         ]);
 
+        $checkProduct = Price::where('produk_id', '=', $request->cb_produk)->first();
+        if ($checkProduct) {
+            return redirect()->back()->with('error', 'Produk sudah memiliki harga');
+        }
         DB::table('prices')->insert([
-            'id' => $incrementId,
+            'id' => Price::count() + 1,
             'price_value' => $request->tb_price,
             'produk_id' => $request->cb_produk,
             'company_id' => Auth::user()->company_id,
         ]);
 
         return redirect()->back()->with('message', 'price created successfully.');
+    }
+
+    public function ajaxEdit(Request $request, $id)
+    {
+        $price = Price::find($id);
+
+        if (!$price) {
+            return response()->json(['error' => 'Price not found'], 404);
+        }
+
+        // Validate and update the fields as needed
+        $request->validate([
+            'price_value' => 'required|numeric',
+        ]);
+
+        $price->price_value = $request->price_value;
+        $price->save();
+
+        return response()->json(['message' => 'Price updated successfully']);
     }
 }

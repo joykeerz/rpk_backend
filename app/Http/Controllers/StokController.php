@@ -23,7 +23,7 @@ class StokController extends Controller
 
         $currentEntity = DB::table('companies')
             ->join('branches', 'branches.company_id', '=', 'companies.id')
-            ->join('users', 'users.id', '=', 'companies.user_id')
+            ->join('users', 'users.company_id', '=', 'companies.id')
             ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
             ->select('alamat.provinsi', 'alamat.kota_kabupaten', 'companies.nama_company', 'branches.nama_branch', 'branches.id as bid', 'companies.id as cid', 'alamat.id as aid')
             ->where('users.id', '=', Auth::user()->id)
@@ -56,11 +56,12 @@ class StokController extends Controller
     public function stockByGudang($id)
     {
         $gudang = Gudang::findOrFail($id);
-        $stocks = DB::table('stok')
-            ->join('produk', 'stok.produk_id', '=', 'produk.id')
-            ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
+        $stocks = DB::table('prices')
+            ->join('produk', 'prices.produk_id', '=', 'produk.id')
+            ->join('gudang', 'prices.company_id', '=', 'gudang.company_id')
+            ->join('stok', 'stok.produk_id', '=', 'produk.id')
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
-            ->select('stok.*', 'kategori.nama_kategori', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
+            ->select('prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
             ->where('stok.gudang_id', '=', $id)
             ->orderBy('stok.id', 'desc')
             ->paginate(15);
@@ -73,7 +74,8 @@ class StokController extends Controller
         $stock = DB::table('stok')
             ->join('produk', 'stok.produk_id', '=', 'produk.id')
             ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
-            ->select('stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
+            ->join('prices', 'prices.produk_id', '=', 'produk.id')
+            ->select('prices.price_value','stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
             ->where('stok.id', '=', $id)
             ->first();
 

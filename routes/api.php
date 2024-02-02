@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\KategoryController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\MobileHandlerController;
+use App\Http\Controllers\PriceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('mobile')->group(function(){
     Route::post('/receive-ktp-image', [MobileHandlerController::class, 'uploadImage']);
+});
+
+Route::prefix('ajax')->group(function(){
+    Route::put('/prices/{id}', [PriceController::class, 'ajaxEdit']);
 });
 
 Route::middleware(['auth'])->group(function(){

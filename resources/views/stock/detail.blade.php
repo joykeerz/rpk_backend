@@ -29,7 +29,7 @@
                 <input value="{{ $stock->jumlah_stok }}" id="tb_jumlah_produk" type="number"
                     class="border rounded-md py-2 px-3 w-full" name="tb_jumlah_produk" placeholder="">
                 <label class="block text-sm font-medium text-gray-700" for="tb_harga_stok">Harga Stok:</label>
-                <input value="{{ $stock->harga_stok }}" id="tb_harga_stok" type="number"
+                <input value="{{ $stock->price_value }}" id="tb_harga_stok" type="number"
                     class="border rounded-md py-2 px-3 w-full" name="tb_harga_stok" placeholder="">
 
                 <input type="hidden" name="tb_gudang_id" value="{{ $stock->gid }}">

@@ -44,7 +44,7 @@ class CustomerController extends Controller
         } elseif (Auth::user()->role_id == 4) {
             $currentEntity = DB::table('companies')
                 ->join('branches', 'branches.company_id', '=', 'companies.id')
-                ->join('users', 'users.id', '=', 'companies.user_id')
+                ->join('users', 'users.company_id', '=', 'companies.id')
                 ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
                 ->select('alamat.provinsi', 'alamat.kota_kabupaten', 'branches.nama_branch', 'companies.nama_company', 'companies.id as cid', 'branches.id as bid')
                 ->where('users.id', '=', Auth::user()->id)

@@ -319,7 +319,7 @@ class PesananController extends Controller
         $isProvinsi = false;
 
         $currentEntity = DB::table('companies')
-            ->join('users', 'users.id', '=', 'companies.user_id')
+            ->join('users', 'users.company_id', '=', 'companies.id')
             ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
             ->select('alamat.provinsi', 'alamat.kota_kabupaten')
             ->where('users.id', '=', Auth::user()->id)

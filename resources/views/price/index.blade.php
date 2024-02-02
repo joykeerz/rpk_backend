@@ -97,17 +97,33 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $price->kode_produk }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $price->nama_produk }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $price->price_value }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap price-value">{{ $price->price_value }}</td>
                         <td class="px-6 py-4 whitespace-nowrap flex justify-center">
-                            <a href="{{ route('prices.show', ['id' => $price->id]) }}" class="btn btn-sm btn-primary">
+                            <span class="edit-price btn btn-sm btn-primary" data-id="{{ $price->id }}"
+                                style="cursor: pointer;">
                                 <i class="fa-solid fa-pencil"></i>
-                            </a>
+                            </span>
                         </td>
                     </tr>
                 @empty
                 @endforelse
             </tbody>
         </table>
+    </div>
+
+    <div id="editPriceModal" class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 hidden">
+        <div class="relative p-8 mx-auto max-w-md">
+            <div class="bg-white rounded shadow-lg">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold mb-4">Edit Price Value</h2>
+                    <input type="text" class="border p-2 w-full" id="newPriceValue" placeholder="Enter new price value">
+                </div>
+                <div class="flex justify-end p-4">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded" id="savePriceChanges">Save Changes</button>
+                    <button class="ml-2 text-gray-600" id="closeModal">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <link rel="stylesheet" href="{{ asset('svg.css') }}">
@@ -123,6 +139,60 @@
                 paging: false,
                 info: false,
             });
+
+            $('.edit-price').on('click', function() {
+                var priceId = $(this).data('id');
+                var currentPrice = $(this).closest('tr').find('.price-value').text();
+
+                // Set the current price value in the modal input
+                $('#newPriceValue').val(currentPrice);
+
+                // Show the custom modal
+                $('#editPriceModal').removeClass('hidden');
+
+                $('#savePriceChanges').on('click', function() {
+                    saveChanges(priceId);
+                });
+
+                $('#closeModal').on('click', function() {
+                    // Hide the custom modal
+                    $('#editPriceModal').addClass('hidden');
+                });
+
+                // Handle Enter key press event
+                $('#newPriceValue').on('keypress', function(e) {
+                    if (e.which === 13) {
+                        saveChanges(priceId);
+                    }
+                });
+            });
+
+            function saveChanges(priceId) {
+                // Get the new price value from the modal input
+                var newPriceValue = $('#newPriceValue').val();
+
+                // Make an AJAX request to update the price
+                $.ajax({
+                    method: 'PUT',
+                    url: 'api/ajax/prices/' + priceId,
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        price_value: newPriceValue,
+                    },
+                    success: function(response) {
+                        console.log(response); // Add this line for debugging
+                        alert(response.message);
+                        // Update the displayed value on success
+                        $(`[data-id=${priceId}]`).closest('tr').find('.price-value').text(
+                        newPriceValue);
+                        // Hide the custom modal
+                        $('#editPriceModal').addClass('hidden');
+                    },
+                    error: function(error) {
+                        alert(error.responseJSON.error);
+                    },
+                });
+            }
         });
     </script>
 @endsection
