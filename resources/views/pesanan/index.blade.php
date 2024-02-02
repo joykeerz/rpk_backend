@@ -22,7 +22,11 @@
         </div>
     </header>
 
-    @include('layouts.searchbar')
+    @include('layouts.searchbar', [
+        'routeName' => 'pesanan.index',
+        'routeParameters' => ['id' => $gudangId],
+    ])
+
     @include('layouts.alert')
 
     <div class="tableContainer m-3">
@@ -46,7 +50,8 @@
                         <td class=" px-4 py-2">{{ $item->status_pemesanan }}</td>
                         <td class="subtotal_produk px-4 py-2">Rp {{ number_format($item->subtotal_produk) }}</td>
                         <td>
-                            <a class="btn btn-sm btn-outline m-2" href="{{ route('pesanan.verify', ['id' => $item->pid]) }}">
+                            <a class="btn btn-sm btn-outline m-2"
+                                href="{{ route('pesanan.verify', ['id' => $item->pid]) }}">
                                 <i class="fa-solid fa-check"></i>
                                 Proses
                             </a>

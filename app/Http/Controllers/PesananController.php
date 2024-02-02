@@ -20,18 +20,23 @@ class PesananController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($id)
+    public function index(Request $request, $id)
     {
-
+        $search = $request->search;
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
             ->join('users', 'users.id', '=', 'pesanan.user_id')
             ->join('gudang', 'gudang.id', '=', 'pesanan.gudang_id')
             ->select('transaksi.*', 'pesanan.*', 'users.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid')
             ->where('pesanan.gudang_id', '=', $id)
+            ->when($search, function ($query, $search) {
+                $query->where('kode_transaksi', 'ilike', '%' . $search . '%')
+                    ->orWhere('name', 'ilike', '%' . $search . '%')
+                    ->orWhere('status_pembayaran', 'ilike', '%' . $search . '%');
+            })
             ->paginate(15);
 
-        return view('pesanan.index', ['transaksi' => $transaksi]);
+        return view('pesanan.index', ['transaksi' => $transaksi, 'gudangId' => $id]);
     }
 
     public function show($id)
