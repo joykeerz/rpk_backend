@@ -47,12 +47,12 @@
                             <td class="py-5 hidden stock_id">{{ $item->sid }}</td>
                             <td class="py-2">{{ $item->jumlah_stok }}</td>
                             <td>{{ $item->satuan_unit_produk }}</td>
-                            <td class="py-2 harga_produk">{{ $item->harga_stok }}</td>
+                            <td class="py-2 harga_produk">{{ $item->price_value }}</td>
                             <td class="py-2" id="jenis_pajak">{{ $item->jenis_pajak }}</td>
                             <td class="py-2" id="persenan_pajak">{{ $item->persentase_pajak }}</td>
                             <td class="py-5 flex items-center justify-center">
                                 <input type="number" name="jumlah_pesanan" class="jumlah_pesanan form-control py-auto"
-                                    data-price="{{ $item->harga_stok }}" data-pajak="{{ $item->jenis_pajak }}"
+                                    data-price="{{ $item->price_value }}" data-pajak="{{ $item->jenis_pajak }}"
                                     data-persen="{{ $item->persentase_pajak }}" placeholder="Jumlah Pesanan">
                                 <button type="button" class="resetButton ml-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -132,8 +132,8 @@
             </div>
             <div class="tb_alamat_id flex flex-col">
                 <label for="tb_alamat_id">Alamat</label>
-                <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="input input-bordered input-sm" placeholder="Detail Alamat"
-                    disabled>
+                <input type="text" name="tb_alamat_id" id="tb_alamat_id" class="input input-bordered input-sm"
+                    placeholder="Detail Alamat" disabled>
             </div>
             <div class="tb_kurir_id flex flex-col">
                 <label for="tb_kurir_id">Kurir</label>
@@ -148,11 +148,13 @@
             </div>
             <div class="tb_nama_penerima flex flex-col">
                 <label for="tb_nama_penerima">Nama Penerima</label>
-                <input type="text" name="tb_nama_penerima" id="tb_nama_penerima" class="input input-bordered input-sm">
+                <input type="text" name="tb_nama_penerima" id="tb_nama_penerima"
+                    class="input input-bordered input-sm">
             </div>
             <div class="tb_nomor_pembayaran flex flex-col">
                 <label for="tb_nomor_pembayaran">No. Rekening</label>
-                <input type="text" name="tb_nomor_pembayaran" id="tb_nomor_pembayaran" class="input input-bordered input-sm">
+                <input type="text" name="tb_nomor_pembayaran" id="tb_nomor_pembayaran"
+                    class="input input-bordered input-sm">
             </div>
         </div>
         <button
@@ -249,7 +251,8 @@
 
             function updateAlamat() {
                 var selectedUserId = $(this).val();
-                var selectedUser = {!! json_encode($users) !!}.find(user => user.uid == selectedUserId);
+                let usersArray = Object.values({!! json_encode($users) !!});
+                let selectedUser = usersArray.find(user => user && user.uid == selectedUserId);
 
                 if (selectedUser) {
                     var alamat = [selectedUser.jalan, selectedUser.kelurahan, selectedUser.kecamatan, selectedUser

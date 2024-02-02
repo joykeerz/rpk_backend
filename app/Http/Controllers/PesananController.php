@@ -103,14 +103,25 @@ class PesananController extends Controller
 
         $kurir = Kurir::all();
 
-        $stok = DB::table('stok')
-            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+        // $stok = DB::table('stok')
+        //     ->join('produk', 'produk.id', '=', 'stok.produk_id')
+        //     ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
+        //     ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
+        //     ->select('stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
+        //     ->where('stok.jumlah_stok', '>', 0)
+        //     ->where('stok.gudang_id', '=', $id)
+        //     ->get();
+
+        $stok = DB::table('prices')
+            ->join('produk', 'prices.produk_id', '=', 'produk.id')
+            ->join('stok', 'stok.produk_id', '=', 'produk.id')
             ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
             ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
-            ->select('stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
+            ->select('pajak.persentase_pajak', 'pajak.jenis_pajak', 'prices.price_value', 'satuan_unit.satuan_unit_produk', 'stok.jumlah_stok', 'produk.nama_produk', 'stok.id as sid', 'satuan_unit.id as suid', 'produk.id as pid')
             ->where('stok.jumlah_stok', '>', 0)
             ->where('stok.gudang_id', '=', $id)
-            ->get();
+            ->orderBy('stok.id', 'desc')
+            ->paginate(15);
 
         $kodeCompany = DB::table('gudang')
             ->join('companies', 'companies.id', '=', 'gudang.company_id')
@@ -263,7 +274,7 @@ class PesananController extends Controller
 
         $currentEntity = DB::table('companies')
             ->join('branches', 'branches.company_id', '=', 'companies.id')
-            ->join('users', 'users.id', '=', 'companies.user_id')
+            ->join('users', 'users.company_id', '=', 'companies.id')
             ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
             ->select('alamat.provinsi', 'alamat.kota_kabupaten', 'companies.nama_company', 'branches.nama_branch', 'branches.id as bid', 'companies.id as cid', 'alamat.id as aid')
             ->where('users.id', '=', Auth::user()->id)
