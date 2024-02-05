@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class MobileHandlerController extends Controller
 {
     //
-    public function uploadImage(Request $request)
+    public function uploadKtpImage(Request $request)
     {
         try {
             // Validate the incoming request
