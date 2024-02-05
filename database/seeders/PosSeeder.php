@@ -56,7 +56,7 @@ class PosSeeder extends Seeder
         DB::table('pos_profiles')->insert([
             'user_id' => 4,
             'pos_name' => 'POS CUSTOMER JOY',
-            'pin' => '010620',
+            'pin' => hash::make('010620'),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
