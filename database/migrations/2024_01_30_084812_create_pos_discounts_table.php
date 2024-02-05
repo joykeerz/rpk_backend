@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('discount_name');
             $table->string('discount_type');
             $table->double('discount_value');
+            $table->boolean('is_from_bulog')->default(false);
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

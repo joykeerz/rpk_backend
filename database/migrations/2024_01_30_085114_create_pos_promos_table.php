@@ -20,6 +20,8 @@ return new class extends Migration
             $table->double('promo_value');
             $table->dateTime('promo_start');
             $table->dateTime('promo_end');
+            $table->boolean('is_active')->default(false);
+            $table->boolean('is_from_bulog')->default(false);
             $table->timestamps();
         });
     }

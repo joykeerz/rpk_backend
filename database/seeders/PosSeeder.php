@@ -63,16 +63,18 @@ class PosSeeder extends Seeder
 
         DB::table('pos_discounts')->insert([
             'profile_id' => 1,
-            'discount_name' => 'No Discount',
-            'discount_type' => 'none',
+            'discount_name' => 'Tidak Diskon',
+            'discount_type' => 'Percent Off',
             'discount_value' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         DB::table('pos_promos')->insert([
             'profile_id' => 1,
-            'promo_name' => 'No Promo',
-            'promo_type' => 'none',
-            'promo_category' => 'none',
+            'promo_name' => 'Tidak Promo',
+            'promo_type' => 'Percent Off',
+            'promo_category' => 'Bulog Promo',
             'promo_value' => 0,
             'promo_start' => now(),
             'promo_end' => now(),
