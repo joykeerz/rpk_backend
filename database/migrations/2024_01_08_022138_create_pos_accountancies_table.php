@@ -16,8 +16,9 @@ return new class extends Migration
             $table->foreignId('profile_id');
             $table->foreignId('session_id');
             $table->string('accountancy_name', 50)->nullable()->default('Pembukuan');
-            $table->string('transaction_type', 10);
-            $table->double('transaction_amount');
+            $table->string('transaction_type', 10)->nullable()->default('pemasukan');
+            $table->double('cash_transaction_amount')->nullable()->default(0);
+            $table->double('digital_transaction_amount')->nullable()->default(0);
             $table->string('extra_note', 180)->nullable()->default('tidak ada catatan');
             $table->text('attachment_image', 180)->nullable()->default('images/pos/pembukuan/default.png');
             $table->timestamps();
