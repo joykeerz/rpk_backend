@@ -56,6 +56,30 @@ class MobileHandlerController extends Controller
         }
     }
 
+    public function uploadAccountancyImage(Request $request){
+        try {
+            // Validate the incoming request
+            $request->validate([
+                'attachment_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10000',
+            ]);
+
+            // Get the uploaded image file
+            $image = $request->file('attachment_image');
+
+            // You can customize the file name and storage location as needed
+            $fileName = 'attachment_image_' . time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('images/pos/accountancies', $fileName, 'public');
+
+            // You can save the image path to a database or perform additional processing
+
+            // Return a response indicating success or the saved image path
+            return response()->json(['message' => 'Image uploaded successfully', 'path' => $path]);
+        } catch (\Exception $e) {
+            // Handle exceptions (e.g., validation errors, file upload issues)
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function receiveKtpImage2(Request $request)
     {
         // Output the request data for debugging purposes

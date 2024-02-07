@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('pos_accountancies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('profile_id');
-            $table->string('accountancy_name', 30)->nullable()->default('Pembukuan');
+            $table->foreignId('session_id');
+            $table->string('accountancy_name', 50)->nullable()->default('Pembukuan');
             $table->string('transaction_type', 10);
             $table->double('transaction_amount');
             $table->string('extra_note', 180)->nullable()->default('tidak ada catatan');
-            $table->text('attachment_image', 180)->nullable()->default('default.png');
+            $table->text('attachment_image', 180)->nullable()->default('images/pos/pembukuan/default.png');
             $table->timestamps();
         });
     }
