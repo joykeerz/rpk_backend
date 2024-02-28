@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('order_id');
             $table->foreignId('payment_method_id');
             $table->foreignId('promo_id');
-            $table->string('transaction_code', 30);
+            $table->string('transaction_code');
             $table->string('payment_status', 10);
             $table->double('grand_total');
             $table->double('paid_amount');

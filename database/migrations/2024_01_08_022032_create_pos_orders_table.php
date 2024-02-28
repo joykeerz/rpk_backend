@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('pos_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('profile_id');
-            $table->string('order_code', 30)->unique();
+            // $table->string('order_code', 30)->unique();
+            $table->string('order_code');
             $table->string('order_status', 10);
             $table->integer('total_item_qty');
             $table->double('order_subtotal');
