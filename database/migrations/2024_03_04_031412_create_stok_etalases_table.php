@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pos_employees', function (Blueprint $table) {
+        Schema::create('stok_etalase', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('profile_id');
-            $table->integer('pin');
-            $table->string('employee_email', 180)->unique();
-            $table->string('employee_name', 30);
+            $table->foreignId('stok_id');
+            $table->integer('jumlah_stok');
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pos_employees');
+        Schema::dropIfExists('stok_etalases');
     }
 };
