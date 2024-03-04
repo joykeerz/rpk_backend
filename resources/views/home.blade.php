@@ -48,6 +48,7 @@
                             <li><a>Export All data</a></li>
                             <li><a>Sync All</a></li>
                             <li><a href="{{ route('odoo.stock.import') }}">Import Stock</a></li>
+                            <li><a href="{{ route('odoo.price.import') }}">Import Price</a></li>
                         </ul>
                     </div>
                     {{-- <a class="btn m-2" href="{{ route('odoo.sync.import') }}" onclick="return confirmSync();">

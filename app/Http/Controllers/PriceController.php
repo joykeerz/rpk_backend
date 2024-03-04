@@ -27,15 +27,16 @@ class PriceController extends Controller
         $prices = DB::table('prices')
             ->join('produk', 'produk.id', '=', 'prices.produk_id')
             ->select('prices.*', 'produk.nama_produk', 'produk.kode_produk')
-            ->where('prices.company_id', '=', $currentEntity->cid)
+            ->where('prices.company_id', '=', Auth::user()->company_id)
             ->when($search, function ($query, $search) {
                 $query->where('prices.kode_produk', 'ilike', '%' . $search . '%')
                     ->orWhere('prices.nama_produk', 'ilike', '%' . $search . '%');
             })
-            ->orderBy('prices.created_at', 'desc')
+            // ->orderBy('prices.created_at', 'desc')
+            ->distinct('prices.produk_id') // ini datanya jadi lebih sedikit. kalo ga dipake bakal ada kode produk duplikat, tapi memang dari import erp banyak data duplikat
             ->get();
-
         // dd($prices);
+
         $stocks = DB::table('stok')
             ->join('produk', 'stok.produk_id', '=', 'produk.id')
             ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
@@ -48,16 +49,18 @@ class PriceController extends Controller
 
     public function store(Request $request)
     {
+        dd(Auth::user()->company_id);
         $request->validate([
             'tb_price' => 'required',
         ], [
             'tb_price.required' => 'Harga harus diisi',
         ]);
 
-        $checkProduct = Price::where('produk_id', '=', $request->cb_produk)->first();
+        $checkProduct = Price::where('company_id', '=', Auth::user()->company_id)->where('produk_id', '=', $request->cb_produk)->first();
         if ($checkProduct) {
             return redirect()->back()->with('error', 'Produk sudah memiliki harga');
         }
+
         DB::table('prices')->insert([
             'id' => Price::count() + 1,
             'price_value' => $request->tb_price,

@@ -25,20 +25,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('mobile')->group(function(){
+Route::prefix('mobile')->group(function () {
     Route::post('/receive-ktp-image', [MobileHandlerController::class, 'uploadKtpImage']);
     Route::post('/receive-product-image', [MobileHandlerController::class, 'uploadProductImage']);
     Route::post('/receive-pembukuan-image', [MobileHandlerController::class, 'uploadAccountancyImage']);
+    Route::post('/receive-payment-method-image', [MobileHandlerController::class, 'uploadPaymentMethodImage']);
 });
 
-Route::prefix('ajax')->group(function(){
+Route::prefix('ajax')->group(function () {
     Route::put('/prices/{id}', [PriceController::class, 'ajaxEdit']);
 });
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function () {
 
     ///Manage
-    Route::prefix('manage')->group(function(){
+    Route::prefix('manage')->group(function () {
 
         ///user
         Route::get('/', [ManageUserController::class, 'index'])->name('manage.user.index');
@@ -54,11 +55,10 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/user/store/{id}/biodata', [ManageUserController::class, 'storeBiodata'])->name('manage.user.storeBiodata');
         Route::post('/user/store/{id}/alamat', [ManageUserController::class, 'storeAlamat'])->name('manage.user.storeAlamat');
         Route::post('/user/store/new', [ManageUserController::class, 'StoreNewAccount'])->name('manage.user.StoreNewAccount');
-
     });
 
     ///Product
-    Route::prefix('product')->group(function(){
+    Route::prefix('product')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('product.index');
         Route::post('/store', [ProductController::class, 'store'])->name('product.store');
         Route::get('/show/{id}', [ProductController::class, 'show'])->name('product.show');
@@ -67,12 +67,11 @@ Route::middleware(['auth'])->group(function(){
     });
 
     ///Category
-    Route::prefix('category')->group(function(){
+    Route::prefix('category')->group(function () {
         Route::get('/', [KategoryController::class, 'index'])->name('category.index');
         Route::post('/store', [KategoryController::class, 'store'])->name('category.store');
         Route::get('/edit/{id}', [KategoryController::class, 'edit'])->name('category.edit');
         Route::post('/update/{id}', [KategoryController::class, 'update'])->name('category.update');
         Route::get('/delete/{id}', [KategoryController::class, 'delete'])->name('category.delete');
     });
-
 });

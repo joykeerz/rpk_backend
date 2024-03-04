@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Odoo;
 use App\Http\Controllers\Controller;
 use App\Jobs\CompanyBranchImportJob;
 use App\Jobs\GudangImportJob;
+use App\Jobs\ImportStockJob;
 use App\Jobs\PartnerImportJob;
+use App\Jobs\PriceImportJob;
 use App\Jobs\ProductImportJob;
 use App\Jobs\UserImportJob;
 use Illuminate\Http\Request;
@@ -31,6 +33,12 @@ class SynchronizeController extends Controller
 
             dispatch(new PartnerImportJob($odoo));
             Log::info('Partner Import Job Dispatched Successfully');
+
+            // dispatch(new ImportStockJob($odoo));
+            // Log::info('Stok Import Job Dispatched Successfully');
+
+            // dispatch(new PriceImportJob($odoo));
+            // Log::info('Price Import Job Dispatched Successfully');
 
             return redirect()->route('home')->with('Message', 'Synchronize All Data Successfuly running in background');
         } catch (\Throwable $th) {

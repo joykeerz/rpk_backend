@@ -124,10 +124,10 @@ class PesananController extends Controller
             ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
             // ->select('pajak.persentase_pajak', 'pajak.jenis_pajak', 'prices.price_value', 'satuan_unit.satuan_unit_produk', 'stok.jumlah_stok', 'produk.nama_produk', 'stok.id as sid', 'satuan_unit.id as suid', 'produk.id as pid')
             ->select('prices.price_value', 'stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
-
             ->where('stok.jumlah_stok', '>', 0)
             ->where('stok.gudang_id', '=', $id)
             ->orderBy('stok.id', 'desc')
+            ->distinct()
             ->get();
 
         $kodeCompany = DB::table('gudang')
@@ -136,7 +136,21 @@ class PesananController extends Controller
             ->where('gudang.id', '=', $id)
             ->first();
 
-        return view('pesanan.newOrderEx', ['product' => $stok, 'users' => $biodata, 'kurir' => $kurir, 'gudang_id' => $id, 'kodeCompany' => $kodeCompany->kode_company]);
+        $stok2 = DB::table('stok')
+            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+            ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
+            ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
+            ->join('prices', 'prices.id', '=', 'stok.id')
+            ->select('prices.price_value', 'stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
+            ->where('prices.company_id', Auth::user()->company_id)
+            ->where('stok.gudang_id', '=', $id)
+            ->where('stok.jumlah_stok', '>', 0)
+            ->distinct('prices.produk_id') // ini datanya jadi lebih sedikit. kalo ga dipake bakal ada kode produk duplikat, tapi memang dari import erp banyak data duplikat
+            ->get();
+
+        // dd($stok2);
+
+        return view('pesanan.newOrderEx', ['product' => $stok2, 'users' => $biodata, 'kurir' => $kurir, 'gudang_id' => $id, 'kodeCompany' => $kodeCompany->kode_company]);
     }
 
     public function storeOrder(Request $request)

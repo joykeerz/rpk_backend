@@ -12,7 +12,7 @@ use function Laravel\Prompts\table;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Untuk Demo POS
      */
     public function run(): void
     {

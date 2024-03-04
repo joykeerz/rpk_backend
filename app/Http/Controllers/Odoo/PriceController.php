@@ -21,7 +21,7 @@ class PriceController extends Controller
         try {
             dispatch(new PriceImportJob($odoo));
             Log::info('Price Import Job Dispatched Successfully');
-            return 'Price Import Job Dispatched Successfully';
+            return redirect()->route('home')->with('message', 'Price Import Job Dispatched Successfully');
         } catch (Exception $e) {
             Log::error('Failed to dispatch price Import Job: ' . $e->getMessage());
             return 'Failed to dispatch price Import Job';

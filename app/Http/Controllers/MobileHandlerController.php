@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Obuchmann\OdooJsonRpc\Odoo\Request\Read;
 
 class MobileHandlerController extends Controller
 {
@@ -32,7 +33,8 @@ class MobileHandlerController extends Controller
         }
     }
 
-    public function uploadProductImage(Request $request){
+    public function uploadProductImage(Request $request)
+    {
         try {
             // Validate the incoming request
             $request->validate([
@@ -56,7 +58,8 @@ class MobileHandlerController extends Controller
         }
     }
 
-    public function uploadAccountancyImage(Request $request){
+    public function uploadAccountancyImage(Request $request)
+    {
         try {
             // Validate the incoming request
             $request->validate([
@@ -104,5 +107,10 @@ class MobileHandlerController extends Controller
         // return response()->json([
         //     'message' => 'success'
         // ],200);
+    }
+
+    public function uploadPaymentMethodImage(Request $request)
+    {
+        //code
     }
 }

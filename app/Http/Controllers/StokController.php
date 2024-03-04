@@ -56,17 +56,26 @@ class StokController extends Controller
     public function stockByGudang($id)
     {
         $gudang = Gudang::findOrFail($id);
-        $stocks = DB::table('prices')
-            ->join('produk', 'prices.produk_id', '=', 'produk.id')
-            ->join('gudang', 'prices.company_id', '=', 'gudang.company_id')
-            ->join('stok', 'stok.produk_id', '=', 'produk.id')
-            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
-            ->select('prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
-            ->where('stok.gudang_id', '=', $id)
-            ->orderBy('stok.id', 'desc')
-            ->paginate(15);
+        // $stocks = DB::table('prices')
+        //     ->join('produk', 'prices.produk_id', '=', 'produk.id')
+        //     ->join('gudang', 'prices.company_id', '=', 'gudang.company_id')
+        //     ->join('stok', 'stok.produk_id', '=', 'produk.id')
+        //     ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+        //     ->select('prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
+        //     ->where('stok.gudang_id', '=', $id)
+        //     ->orderBy('stok.id', 'desc')
+        //     ->paginate(15);
 
-        return view('stock.showByGudang', ['gudang' => $gudang, 'stocks' => $stocks]);
+        $stocks2 = DB::table('stok')
+            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+            ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
+            ->join('prices', 'prices.id', '=', 'stok.id')
+            ->select('prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
+            ->where('prices.company_id', Auth::user()->company_id)
+            ->where('stok.gudang_id', '=', $id)
+            ->paginate(40);
+
+        return view('stock.showByGudang', ['gudang' => $gudang, 'stocks' => $stocks2]);
     }
 
     public function showStock($id)
@@ -75,7 +84,7 @@ class StokController extends Controller
             ->join('produk', 'stok.produk_id', '=', 'produk.id')
             ->join('gudang', 'stok.gudang_id', '=', 'gudang.id')
             ->join('prices', 'prices.produk_id', '=', 'produk.id')
-            ->select('prices.price_value','stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
+            ->select('prices.price_value', 'stok.*', 'produk.*', 'gudang.*', 'stok.id as sid', 'produk.id as pid', 'gudang.id as gid', 'stok.created_at as cat')
             ->where('stok.id', '=', $id)
             ->first();
 
