@@ -88,6 +88,13 @@
                         <span class="flex-1 ml-3 whitespace-nowrap">Stok</span>
                     </a>
                 </li>
+                <li class="etalase">
+                    <a href="{{ route('etalase.index') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ Request::routeIs('etalase.index') ? 'active' : '' }}">
+                        <i class="fa-solid fa-store text-xl text-gray-500"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Etalase</span>
+                    </a>
+                </li>
             @endif
             @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3 || Auth::user()->role_id == 4)
                 <li class="user">

@@ -14,25 +14,13 @@
 @endsection
 
 @section('content')
-    <script>
-        function confirmDelete() {
-            return confirm("Are you sure you want to delete this etalase stok?");
-        }
-    </script>
-
     <livewire:etalase.etalase-index />
 @endsection
 
 @section('script')
     <script>
-        // $(document).ready(function() {
-        //     $('#myTable').DataTable({
-        //         responsive: true,
-        //         searching: false,
-        //         ordering: true,
-        //         paging: false,
-        //         info: false,
-        //     });
-        // });
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this etalase stok?");
+        }
     </script>
 @endsection
