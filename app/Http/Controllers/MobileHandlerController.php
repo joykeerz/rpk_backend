@@ -86,9 +86,9 @@ class MobileHandlerController extends Controller
     public function receiveKtpImage2(Request $request)
     {
         // Output the request data for debugging purposes
-        return response()->json([
-            'data' => $request->ktp_img,
-        ], 200);
+        // return response()->json([
+        //     'data' => $request->ktp_img,
+        // ], 200);
 
         // The code below will not be executed due to the previous return statement
 
@@ -111,6 +111,18 @@ class MobileHandlerController extends Controller
 
     public function uploadPaymentMethodImage(Request $request)
     {
-        //code
+        $request->validate([
+            'payment_file' => 'required|image|mimes:jpeg,png,jpg,gif|max:10000',
+        ]);
+
+        if (!request()->hasFile('payment_file')) {
+            return response()->json([
+                'error' => 'no file'
+            ], 200);
+        }
+
+        $filepath = request()->file('payment_file')->store('images/pos/payment/method', 'public');
+        $filename = pathinfo($filepath, PATHINFO_FILENAME);
+        return response()->json(['message' => 'Image uploaded successfully', 'path' => $filepath]);
     }
 }
