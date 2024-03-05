@@ -66,11 +66,12 @@ class EtalaseIndex extends Component
 
             $this->reset(['stok_id', 'jumlah_stok']);
 
-            $this->dispatch('stockAdded');
 
             session()->flash('message', 'etalase stok berhasil dibuat');
 
             $this->closeModal();
+
+            $this->dispatch('stockAdded');
         }
     }
 

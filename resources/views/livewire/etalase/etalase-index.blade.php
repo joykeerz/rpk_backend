@@ -74,7 +74,8 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $stock->is_active }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $stock->updated_at }}</td>
                         <td class="px-6 py-4 whitespace-nowrap flex justify-center items-center gap-1">
-                            <button onclick="return confirmDelete();" class="btn btn-sm btn-error">
+                            <button href="{{ route('banner.delete', ['id' => $stock->id]) }}"
+                                onclick="return confirmDelete();" class="btn btn-sm btn-error">
                                 <i class="fa-solid fa-trash text-white"></i>
                             </button>
                         </td>
@@ -146,32 +147,34 @@
 </div>
 @script
     <script>
-        $wire.on('stockAdded', () => {
-            console.log('stock added');
+        document.addEventListener('DOMContentLoaded', function() {
+            $wire.on('stockAdded', () => {
+                console.log('stock added');
 
-            var alert = document.getElementById('alertMessage');
+                var alert = document.getElementById('alertMessage');
 
-            if (alert) {
-                setTimeout(function() {
-                    alert.style.display = 'none';
-                }, 5000);
-            }
+                if (alert) {
+                    setTimeout(function() {
+                        alert.style.display = 'none';
+                    }, 5000);
+                }
 
-            var closeButton = alert.querySelector('.close-button');
-            if (closeButton) {
-                closeButton.addEventListener('click', function() {
-                    alert.style.display = 'none';
-                });
-            }
+                var closeButton = alert.querySelector('.close-button');
+                if (closeButton) {
+                    closeButton.addEventListener('click', function() {
+                        alert.style.display = 'none';
+                    });
+                }
 
-            // $('#myTable').DataTable().destroy();
-            // $('#myTable').DataTable({
-            //     responsive: true,
-            //     searching: false,
-            //     ordering: true,
-            //     paging: false,
-            //     info: false,
-            // });
-        });
+                // $('#myTable').DataTable().destroy();
+                // $('#myTable').DataTable({
+                //     responsive: true,
+                //     searching: false,
+                //     ordering: true,
+                //     paging: false,
+                //     info: false,
+                // });
+            });
+        })
     </script>
 @endscript
