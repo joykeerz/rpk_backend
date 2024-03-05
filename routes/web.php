@@ -15,6 +15,7 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DaftarAlamatController;
+use App\Http\Controllers\EtalaseController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\Odoo\BranchController as OdooBranchController;
 use App\Http\Controllers\Odoo\CategoryController;
@@ -276,5 +277,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/show/{id}', [ControllersPriceController::class, 'show'])->name('prices.show');
         Route::post('/update/{id}', [ControllersPriceController::class, 'update'])->name('prices.update');
         Route::get('/delete/{id}', [ControllersPriceController::class, 'destroy'])->name('prices.delete');
+    });
+
+    Route::prefix('etalase')->middleware('restrictRole:4')->group(function () {
+        Route::get('/', [EtalaseController::class, 'index'])->name('etalase.index');
     });
 });

@@ -66,13 +66,22 @@ class StokController extends Controller
         //     ->orderBy('stok.id', 'desc')
         //     ->paginate(15);
 
+        // $stocks2 = DB::table('stok')
+        //     ->join('produk', 'produk.id', '=', 'stok.produk_id')
+        //     ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
+        //     ->join('prices', 'prices.id', '=', 'stok.id')
+        //     ->select('prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
+        //     ->where('prices.company_id', Auth::user()->company_id)
+        //     ->where('stok.gudang_id', '=', $id)
+        //     ->paginate(40);
+
         $stocks2 = DB::table('stok')
             ->join('produk', 'produk.id', '=', 'stok.produk_id')
             ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
+            ->join('gudang', 'gudang.id', 'stok.gudang_id')
             ->join('prices', 'prices.id', '=', 'stok.id')
             ->select('prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
-            ->where('prices.company_id', Auth::user()->company_id)
-            ->where('stok.gudang_id', '=', $id)
+            ->where('gudang.company_id', Auth::user()->company_id)
             ->paginate(40);
 
         return view('stock.showByGudang', ['gudang' => $gudang, 'stocks' => $stocks2]);

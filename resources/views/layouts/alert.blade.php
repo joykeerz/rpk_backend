@@ -12,7 +12,8 @@
         </button>
     </div>
 @elseif (Session::has('error'))
-    <div class="bg-red-700 border-t border-b border-white-500 text-white px-4 py-3 relative" role="alert" id="alertMessage">
+    <div class="bg-red-700 border-t border-b border-white-500 text-white px-4 py-3 relative" role="alert"
+        id="alertMessage">
         <p>{{ Session::get('error') }}.</p>
         <button type="button" data-dismiss="alert" aria-label="Close"
             class="close-button absolute top-0 bottom-0 right-0 px-4 py-3 text-rose">
@@ -34,10 +35,9 @@
         if (alert) {
             setTimeout(function() {
                 alert.style.display = 'none';
-            }, 5000); // 5000 milliseconds = 5 seconds
+            }, 5000);
         }
 
-        // Optionally, you might want to add functionality to close the alert with the close button
         var closeButton = alert.querySelector('.close-button');
         if (closeButton) {
             closeButton.addEventListener('click', function() {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('pin');
             $table->string('employee_email', 180)->unique();
             $table->string('employee_name', 30);
+            $table->string('employee_phone', 30);
             $table->timestamps();
         });
     }

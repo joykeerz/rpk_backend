@@ -7,7 +7,6 @@
     <title>RPK BULOG DASHBOARD</title>
     <link rel="shortcut icon" href="{{ asset('images/dashboard/logo_1.png') }}" type="image/x-icon">
     @vite('resources/css/app.css')
-    <link rel="stylesheet" href="../../css/svg.css">
     <script src="https://kit.fontawesome.com/545d382107.js" crossorigin="anonymous"></script>
     @yield('plugins')
     <style>
