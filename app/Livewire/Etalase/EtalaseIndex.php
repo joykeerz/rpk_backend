@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 
 class EtalaseIndex extends Component
 {
-    use WithPagination, WithoutUrlPagination;
+    use WithPagination;
 
     public $isOpen = false;
     public $stok_id;
@@ -23,6 +23,10 @@ class EtalaseIndex extends Component
 
     public function render()
     {
+        if (!$this->search) {
+            $this->resetPage();
+        }
+
         $stokGudang = DB::table('stok')
             ->join('produk', 'produk.id', 'stok.produk_id')
             ->join('kategori', 'kategori.id', 'produk.kategori_id')
@@ -79,6 +83,8 @@ class EtalaseIndex extends Component
             $this->closeModal();
 
             $this->dispatch('stockAdded');
+
+            $this->resetPage();
         }
     }
 
