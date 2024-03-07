@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('employee_email', 180)->unique();
             $table->string('employee_name', 30);
             $table->string('employee_phone', 30);
+            $table->boolean('is_owner')->default(false);
             $table->timestamps();
         });
     }
