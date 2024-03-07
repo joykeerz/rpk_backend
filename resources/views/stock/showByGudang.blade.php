@@ -60,9 +60,9 @@
                         <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Harga
                         </th>
-                        <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {{-- <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Increase/Decrase
-                        </th>
+                        </th> --}}
 
                         <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Actions
@@ -78,13 +78,13 @@
                             <td class="whitespace-nowrap">{{ $stock->nama_kategori }}</td>
                             <td class="whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
                             <td class="whitespace-nowrap">Rp {{ number_format($stock->price_value) }}</td>
-                            <td class="whitespace-nowrap">
+                            {{-- <td class="whitespace-nowrap">
                                 <form action="{{ route('stok.increase', ['id' => $stock->sid]) }}" method="post">
                                     @csrf
                                     <input class="border rounded-md py-2 px-3 w-full" type="number" name="qty_stock"
                                         id="qty_stock" placeholder="Ex. -1 or 2">
                                 </form>
-                            </td>
+                            </td> --}}
 
                             <td class="px-6 py-4 whitespace-nowrap flex justify-center">
                                 <a href="{{ route('stok.detail', ['id' => $stock->sid]) }}"
