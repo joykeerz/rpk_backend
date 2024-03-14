@@ -33,7 +33,7 @@ class ImportStockJob implements ShouldQueue
 
         do {
             $stocks = $odoo->model('stock.quant')
-                ->fields(['id', 'product_id', 'warehouse_id', 'quantity'])
+                ->fields(['id', 'product_id', 'warehouse_id', 'quantity', 'location_id'])
                 ->where('location_id', '!=', 5)
                 // ->where('warehouse_id', '!=', false)
                 ->where('quantity', '>', 0)
