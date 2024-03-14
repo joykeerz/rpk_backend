@@ -56,6 +56,7 @@
                     <th class="p-3">#</th>
                     <th class="p-3">Nama Gudang</th>
                     <th class="p-3">Alamat</th>
+                    <th class="p-3">Last Synced</th>
                     <th class="p-3">Action</th>
                 </tr>
             </thead>
@@ -69,6 +70,7 @@
                             <br>
                             Kota: {{ $gudang->kota_kabupaten }}
                         </td>
+                        <td class="p-3">{{ $gudang->last_synced_at }}</td>
                         <td class="p-3 flex justify-center">
                             <a href="{{ route('gudang.show', ['id' => $gudang->gid]) }}"
                                 class="btn btn-sm btn-primary mr-2">
