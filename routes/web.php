@@ -270,6 +270,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/show/{id}', [LocationController::class, 'show'])->name('location.show');
         Route::post('/update/{id}', [LocationController::class, 'update'])->name('location.update');
         Route::get('/delete/{id}', [LocationController::class, 'destroy'])->name('location.delete');
+        Route::post('/activate/{id}', [LocationController::class, 'activateLocation'])->name('location.activate');
     });
 
     Route::prefix('prices')->middleware('restrictRole:4')->group(function () {

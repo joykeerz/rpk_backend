@@ -21,7 +21,10 @@ class LocationController extends Controller
                     ->orWhere('unique_or_many', 'ilike', '%' . $search . '%');
             })
             ->paginate(15);
-        return view('location.index', ['locations' => $locations, 'gudangID' => $gudangID]);
+        $activeLocations = $locations->filter(function ($location) {
+            return $location->is_active;
+        });
+        return view('location.index', ['locations' => $locations, 'activeLocations' => $activeLocations, 'gudangID' => $gudangID]);
     }
 
     public function create($gudangID)
@@ -55,7 +58,8 @@ class LocationController extends Controller
         return view('location.show', ['location' => $location]);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'tb_nama_location' => 'required',
         ], [
@@ -81,5 +85,10 @@ class LocationController extends Controller
 
         return redirect()->route('location.index', ['id' => $location->gudang_id])
             ->with('message', 'Location deleted successfully');
+    }
+
+    public function activateLocation(Request $request, $id)
+    {
+        dd($request->input());
     }
 }

@@ -26,6 +26,8 @@
                 {{ __('Locations') }}
             </h2>
 
+
+
             <div class="flex items-center">
                 {{-- @if (Auth::user()->role_id != 4 || Auth::user()->role_id != 5) --}}
                 <div class="dropdown dropdown-bottom dropdown-end mx-1">
@@ -34,9 +36,7 @@
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </div>
                     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a href="{{ route('odoo.location.import') }}">Import Locations</a></li>
-                        <li><a>Export Location RPK</a></li>
-                        <li><a>Sync All</a></li>
+                        <li><a href="{{ route('odoo.location.import') }}">Sync Locations</a></li>
                     </ul>
                 </div>
                 <div class="button">
@@ -52,8 +52,32 @@
 
     @include('layouts.searchbar', ['routeName' => 'gudang.index'])
 
-    <div class="overflow-y-auto m-3">
-        <table id="myTable" class="min-w-full table-auto border">
+    <div class="flex overflow-y-auto m-3 justify-center">
+        <div class="card w-96 mb-7 bg-base-100 shadow-xl">
+            <div class="card-body">
+                @if (count($activeLocations) == 0)
+                    <h2 class="card-title">Pilih Location Gudang</h2>
+                    <form action="{{ route('location.activate', ['id' => $gudangID]) }}" method="post">
+                        @csrf
+                        <div class="join">
+                            <select name="cb_location_id" class="select select-bordered w-full max-w-xs join-item">
+                                @foreach ($locations as $location)
+                                    <option value="{{ $location->id }}">{{ $location->location_name }}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn join-item rounded-r-full">Pilih</button>
+                        </div>
+                    </form>
+                @else
+                    <h2 class="card-title">Location Gudang</h2>
+                @endif
+                {{-- <div class="card-actions justify-end">
+                    <button class="btn btn-primary">Buy Now</button>
+                </div> --}}
+            </div>
+        </div>
+
+        {{-- <table id="myTable" class="min-w-full table-auto border">
             <thead class="border text-center">
                 <tr class="">
                     <th class="p-3">#</th>
@@ -83,9 +107,8 @@
                 @empty
                 @endforelse
             </tbody>
-        </table>
-        {{ $locations->links('pagination::tailwind') }}
-
+        </table> --}}
+        {{-- {{ $locations->links('pagination::tailwind') }} --}}
     </div>
 
 
