@@ -118,7 +118,7 @@ class ProductImportJob implements ShouldQueue
         */
 
         Log::info('Importing Product');
-        $erProduct = $odoo->model('product.product')->fields(['name', 'categ_id', 'uom_id', 'default_code'])->get();
+        $erProduct = $odoo->model('product.product')->fields(['name', 'display_name', 'categ_id', 'uom_id', 'default_code'])->get();
         Log::info('Looping through product data...');
         foreach ($erProduct as $product) {
             DB::table('produk')->updateOrInsert(['id' => $product->id], [
@@ -128,7 +128,8 @@ class ProductImportJob implements ShouldQueue
                 'satuan_unit_id' => $product->uom_id[0],
                 'kode_produk' => $product->default_code,
                 'nama_produk' => $product->name,
-                'desk_produk' => $product->name,
+                'nama_display_produk' => $product->display_name,
+                'desk_produk' => '-',
                 'diskon_produk' => 0,
             ]);
         }

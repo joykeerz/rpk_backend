@@ -170,6 +170,7 @@ class ProductController extends Controller
         $product->satuan_unit_id = $request->tb_satuan;
         $product->kode_produk = $request->tb_kode_produk;
         $product->nama_produk = $request->tb_nama_produk;
+        $product->nama_display_produk = $request->tb_display_nama_produk;
         $product->desk_produk = $request->tb_desk_produk;
         $product->external_produk_id = $request->tb_external_id;
         $product->diskon_produk = $request->tb_diskon_produk;

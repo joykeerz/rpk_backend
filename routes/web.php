@@ -54,6 +54,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::prefix('odoo')->group(function () {
     Route::prefix('sync')->group(function () {
         Route::get('/import', [SynchronizeController::class, 'synchronizeAll'])->name('odoo.sync.import');
+        Route::get('/debug', [SynchronizeController::class, 'syncDebug'])->name('odoo.sync.debug');
     });
     Route::prefix('product')->group(function () {
         Route::get('/import', [OdooProductController::class, 'importFromErp'])->name('odoo.product.import');

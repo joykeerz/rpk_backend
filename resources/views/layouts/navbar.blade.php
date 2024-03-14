@@ -31,10 +31,56 @@
                 <li class="mb-4  lg:mb-0 lg:pr-2" data-te-nav-item-ref>
                     <!-- Dashboard link -->
                     <a class="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-                        href="{{route('home')}}" data-te-nav-link-ref>
+                        href="{{ route('home') }}" data-te-nav-link-ref>
                         <i class="fa-solid fa-home mx-2"></i>
                         Beranda
                     </a>
+                </li>
+                <li class="mb-4  lg:mb-0 lg:pr-2" data-te-nav-item-ref>
+                    <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+                        <!-- Second dropdown trigger -->
+                        <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+                            href="#" id="syncButton" role="button" data-te-dropdown-toggle-ref
+                            aria-expanded="false">
+                            <span class="px-2 ml-2 text-white">Sync ERP</span>
+                        </a>
+                        <!-- Second dropdown menu -->
+                        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                            aria-labelledby="syncButton" data-te-dropdown-menu-ref="syncDropdown" style="right: 0;">
+                            <!-- Dropdown menu items -->
+                            <li>
+                                <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                                    href="{{ route('odoo.sync.import') }}" onclick="return confirmSync();"
+                                    data-te-dropdown-item-ref>
+                                    <i class="fa-solid fa-circle-info px-1"></i>
+                                    Sync All
+                                </a>
+                            </li>
+                            <li>
+                                <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                                    href="{{ route('odoo.stock.import') }}" onclick="return confirmSync();"
+                                    data-te-dropdown-item-ref>
+                                    <i class="fa-solid fa-circle-info px-1"></i>
+                                    Sync Stock
+                                </a>
+                            </li>
+                            <li>
+                                <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                                    href="{{ route('odoo.price.import') }}" onclick="return confirmSync();"
+                                    data-te-dropdown-item-ref>
+                                    <i class="fa-solid fa-circle-info px-1"></i>
+                                    Sync Price
+                                </a>
+                            </li>
+                            <li>
+                                <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                                    href="{{ route('odoo.sync.debug') }}" data-te-dropdown-item-ref>
+                                    <i class="fa-solid fa-circle-info px-1"></i>
+                                    Sync debug
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -58,7 +104,7 @@
                 </a>
                 <!-- First dropdown menu -->
                 <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-                    aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref style="right: 0;">
+                    aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref='notifDropdown' style="right: 0;">
                     <!-- First dropdown menu items -->
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
@@ -88,13 +134,13 @@
                     href="#" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
                     aria-expanded="false">
                     <!-- User avatar -->
-                    <small class="px-2 ml-2 text-white">{{Auth::user()->name}}</small>
+                    <small class="px-2 ml-2 text-white">{{ Auth::user()->name }}</small>
                     <img src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg" class="rounded-full"
                         style="height: 25px; width: 25px" alt="" loading="lazy" />
                 </a>
                 <!-- Second dropdown menu -->
                 <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-                aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref="avatarDropdown" style="right: 0;">
+                    aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref="avatarDropdown" style="right: 0;">
                     <!-- Dropdown menu items -->
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
@@ -139,13 +185,12 @@
         ///notification dropdown
         // Get the notification button and dropdown menu
         var notificationButton = document.getElementById('dropdownMenuButton1');
-        var notificationDropdown = document.querySelector('[data-te-dropdown-menu-ref]');
+        var notificationDropdown = document.querySelector('[data-te-dropdown-menu-ref="notifDropdown"]');
 
         // Add a click event listener to the notification button
         notificationButton.addEventListener('click', function(event) {
             // Prevent the default behavior (e.g., following the link)
             event.preventDefault();
-
             // Toggle the visibility of the notification dropdown
             notificationDropdown.classList.toggle('hidden');
         });
@@ -160,14 +205,33 @@
         var avatarButton = document.getElementById('dropdownMenuButton2');
         var avatarDropdown = document.querySelector('[data-te-dropdown-menu-ref="avatarDropdown"]');
 
-        avatarButton.addEventListener('click', function (event) {
+        avatarButton.addEventListener('click', function(event) {
             event.preventDefault();
             avatarDropdown.classList.toggle('hidden');
         });
 
-        document.addEventListener('click', function (event) {
+        document.addEventListener('click', function(event) {
             if (!avatarButton.contains(event.target) && !avatarDropdown.contains(event.target)) {
                 avatarDropdown.classList.add('hidden');
+            }
+        });
+
+        /// Sync dropdown
+        var syncButton = document.getElementById('syncButton');
+        var syncDropdown = document.querySelector('[data-te-dropdown-menu-ref="syncDropdown"]');
+
+        syncButton.addEventListener('click', function(event) {
+            console.log('pressed sync dropdown');
+            event.preventDefault();
+            event.stopPropagation(); // Stop event propagation
+            syncDropdown.classList.toggle('hidden');
+        });
+
+
+        document.addEventListener('click', function(event) {
+            if (!syncButton.contains(event.target) && !syncDropdown.contains(event.target)) {
+                console.log('pressed sync dropdown 2');
+                syncDropdown.classList.add('hidden');
             }
         });
     });

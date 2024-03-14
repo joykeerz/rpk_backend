@@ -50,10 +50,12 @@ class ImportStockJob implements ShouldQueue
             foreach ($stocks as $stock) {
                 $produkId = is_array($stock->product_id) ? $stock->product_id[0] : $stock->product_id[0];
                 $gudangId = is_array($stock->warehouse_id) ? $stock->warehouse_id[0] : $stock->warehouse_id[0];
+                $locationId = is_array($stock->location_id) ? $stock->location_id[0] : $stock->location_id[0];
                 $dataToInsert[] = [
                     'id' => $stock->id,
                     'produk_id' => $produkId,
                     'gudang_id' => $gudangId,
+                    'location_id' => $locationId,
                     'jumlah_stok' => $stock->quantity,
                     'harga_stok' => '0',
                 ];

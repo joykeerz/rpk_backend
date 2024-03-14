@@ -34,15 +34,30 @@ class SynchronizeController extends Controller
             dispatch(new PartnerImportJob($odoo));
             Log::info('Partner Import Job Dispatched Successfully');
 
-            // dispatch(new ImportStockJob($odoo));
-            // Log::info('Stok Import Job Dispatched Successfully');
+            dispatch(new ImportStockJob($odoo));
+            Log::info('Stok Import Job Dispatched Successfully');
 
-            // dispatch(new PriceImportJob($odoo));
-            // Log::info('Price Import Job Dispatched Successfully');
+            dispatch(new PriceImportJob($odoo));
+            Log::info('Price Import Job Dispatched Successfully');
 
             return redirect()->route('home')->with('Message', 'Synchronize All Data Successfuly running in background');
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function syncDebug(Odoo $odoo)
+    {
+        // $data = $odoo->model('product.product')->fields(['name', 'display_name', 'categ_id', 'uom_id', 'default_code'])->limit(5)->get();
+        $data = $odoo->model('stock.quant')
+            // ->fields(['id', 'product_id', 'warehouse_id', 'quantity'])
+            ->where('location_id', '!=', 5)
+            // ->where('warehouse_id', '!=', false)
+            ->where('quantity', '>', 0)
+            ->where('product_id.type', '=', 'product')
+            ->where('location_id.usage', '=', 'internal')
+            ->limit(1)
+            ->get();
+        dd($data);
     }
 }

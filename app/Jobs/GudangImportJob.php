@@ -59,7 +59,7 @@ class GudangImportJob implements ShouldQueue
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-            }else{
+            } else {
                 $alamatID = DB::table('gudang')->where('id', $warehouse->id)->value('alamat_id');
             }
 
@@ -72,6 +72,7 @@ class GudangImportJob implements ShouldQueue
                 'nama_gudang' => $warehouse->published_name,
                 'nama_gudang_erp' => $warehouse->name,
                 'no_telp' => $warehouse->mobile,
+                'last_synced_at' => now()
             ]);
         }
     }

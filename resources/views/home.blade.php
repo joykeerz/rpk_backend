@@ -34,7 +34,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="dropdown dropdown-bottom mx-1 self-end">
+                    {{-- <div class="dropdown dropdown-bottom mx-1 self-end">
                         <div tabindex="0" role="button" class="btn m-1">
                             Sync Database
                             <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -50,7 +50,7 @@
                             <li><a href="{{ route('odoo.stock.import') }}">Import Stock</a></li>
                             <li><a href="{{ route('odoo.price.import') }}">Import Price</a></li>
                         </ul>
-                    </div>
+                    </div> --}}
                     {{-- <a class="btn m-2" href="{{ route('odoo.sync.import') }}" onclick="return confirmSync();">
                         Sync All
                         <i class="fa-solid fa-rotate"></i>
@@ -62,8 +62,9 @@
                             </div>
                             <div class="stat-title">Transaksi Bulan ini</div>
                             <div class="stat-value">{{ $transaksiCountByMonth }}</div>
-                            <div class="stat-desc">{{ now()->month()->format('F') }} -
-                                {{ now()->month()->addMonth()->format('F') }}</div>
+                            <div class="stat-desc">{{ now()->month()->format('F') }}</div>
+                            {{-- <div class="stat-desc">{{ now()->month()->format('F') }} -
+                                {{ now()->month()->addMonth()->format('F') }}</div> --}}
                         </div>
 
                         <div class="stat">
