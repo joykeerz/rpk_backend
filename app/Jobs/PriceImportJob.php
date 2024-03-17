@@ -51,6 +51,7 @@ class PriceImportJob implements ShouldQueue
                 $produkId = is_array($stock->product_id) ? $stock->product_id[0] : $stock->product_id[0];
                 $companyId = is_array($stock->company_id) ? $stock->company_id[0] : $stock->company_id[0];
                 $Produk = $odoo->model('product.product')->fields(['lst_price'])->where('id', '=', $produkId)->first();
+
                 $dataToInsert[] = [
                     'id' => $stock->id,
                     'produk_id' => $produkId,

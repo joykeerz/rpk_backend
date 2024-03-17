@@ -11,6 +11,8 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
     <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endsection
 
 @section('content')
@@ -50,40 +52,43 @@
         </div>
     </header>
 
-    @include('layouts.searchbar', ['routeName' => 'gudang.index'])
 
-    <div class="flex overflow-y-auto m-3 justify-center">
-        <div class="card w-96 mb-7 bg-base-100 shadow-xl">
-            <div class="card-body">
+    <div class="flex flex-col overflow-y-auto m-3 justify-center">
+        <div class="card w-96 mb-7 bg-base-100 shadow-xl self-center">
+            <div class="card-body items-center">
                 @if (count($activeLocations) == 0)
-                    <h2 class="card-title">Pilih Location Gudang</h2>
+                    <h2 class="card-title">Aktivasi Lokasi Gudang</h2>
                     <form action="{{ route('location.activate', ['id' => $gudangID]) }}" method="post">
                         @csrf
-                        <div class="join">
-                            <select name="cb_location_id" class="select select-bordered w-full max-w-xs join-item">
-                                @foreach ($locations as $location)
-                                    <option value="{{ $location->id }}">{{ $location->location_name }}</option>
-                                @endforeach
-                            </select>
-                            <button class="btn join-item rounded-r-full">Pilih</button>
+                        <div class="flex items-center gap-1">
+                            <label class="form-control">
+                                <select name="cb_location_id" id="cb-location-id"
+                                    class="select select-bordered w-full max-w-xs">
+                                    @foreach ($populateLocation as $location)
+                                        <option value="{{ $location->id }}">{{ $location->location_name }}</option>
+                                    @endforeach
+                                </select>
+
+                            </label>
+                            <button class="btn btn-outline btn-sm">Pilih</button>
                         </div>
                     </form>
                 @else
                     <h2 class="card-title">Location Gudang</h2>
+                    <span class="badge badge-primary">{{ $activeLocations[0]->location_name }}</span>
                 @endif
-                {{-- <div class="card-actions justify-end">
-                    <button class="btn btn-primary">Buy Now</button>
-                </div> --}}
             </div>
         </div>
 
-        {{-- <table id="myTable" class="min-w-full table-auto border">
+        @include('layouts.searchbar', ['routeName' => 'gudang.index'])
+
+        <table id="myTable" class="min-w-full table-auto border">
             <thead class="border text-center">
                 <tr class="">
                     <th class="p-3">#</th>
                     <th class="p-3">Nama Gudang</th>
-                    <th class="p-3">Location</th>
-                    <th class="p-3">Action</th>
+                    <th class="p-3">Lokasi</th>
+                    {{-- <th class="p-3">Action</th> --}}
                 </tr>
             </thead>
             <tbody class="text-center">
@@ -92,7 +97,7 @@
                         <td class="p-3">{{ $loop->iteration }}</td>
                         <td class="p-3">{{ $location->nama_gudang }}</td>
                         <td class="p-3">{{ $location->location_name }}</td>
-                        <td class="p-3 flex justify-center">
+                        {{-- <td class="p-3 flex justify-center">
                             <a href="{{ route('location.show', ['id' => $location->id]) }}"
                                 class="btn btn-sm btn-primary mr-2">
                                 <i class="fa-solid fa-eye"></i>
@@ -101,14 +106,13 @@
                                 onclick="return confirmDelete();" class="btn btn-sm btn-error text-white">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
-
-                        </td>
+                        </td> --}}
                     </tr>
                 @empty
                 @endforelse
             </tbody>
-        </table> --}}
-        {{-- {{ $locations->links('pagination::tailwind') }} --}}
+        </table>
+        {{ $locations->links('pagination::tailwind') }}
     </div>
 
 
@@ -131,6 +135,12 @@
                 paging: false,
                 info: false,
             });
+
+            function initializeSelect2(select) {
+                select.select2();
+            }
+
+            initializeSelect2($('#cb-location-id'));
         });
     </script>
 @endsection

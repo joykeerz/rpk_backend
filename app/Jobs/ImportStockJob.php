@@ -51,14 +51,23 @@ class ImportStockJob implements ShouldQueue
                 $produkId = is_array($stock->product_id) ? $stock->product_id[0] : $stock->product_id[0];
                 $gudangId = is_array($stock->warehouse_id) ? $stock->warehouse_id[0] : $stock->warehouse_id[0];
                 $locationId = is_array($stock->location_id) ? $stock->location_id[0] : $stock->location_id[0];
-                $dataToInsert[] = [
-                    'id' => $stock->id,
-                    'produk_id' => $produkId,
-                    'gudang_id' => $gudangId,
-                    'location_id' => $locationId,
-                    'jumlah_stok' => $stock->quantity,
-                    'harga_stok' => '0',
-                ];
+
+                $checkStock = DB::table('stok')->where('gudang_id', $gudangId)->where('produk_id', $produkId)->first();
+                if ($checkStock) {
+                    DB::table('stok')->where('gudang_id', $gudangId)->where('produk_id', $produkId)->update([
+                        'jumlah_stok' => $checkStock->jumlah_stok + $stock->quantity
+                    ]);
+                } else {
+                    $dataToInsert[] = [
+                        'id' => $stock->id,
+                        'produk_id' => $produkId,
+                        'gudang_id' => $gudangId,
+                        'location_id' => $locationId,
+                        'location_id_before' => $locationId,
+                        'jumlah_stok' => $stock->quantity,
+                        'harga_stok' => '0',
+                    ];
+                }
             }
 
             if (!empty($dataToInsert)) {

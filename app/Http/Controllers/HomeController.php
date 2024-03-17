@@ -26,7 +26,6 @@ class HomeController extends Controller
     public function index()
     {
         $stockCountByMonth = DB::table('stok')
-            ->whereBetween('created_at', [now()->startOfMonth(), now()])
             ->count();
 
         $transaksiCountByMonth  = DB::table('transaksi')

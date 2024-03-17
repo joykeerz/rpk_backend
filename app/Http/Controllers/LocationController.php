@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
+use App\Models\Stok;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,6 +12,7 @@ class LocationController extends Controller
     public function index(Request $request, $gudangID)
     {
         $search = $request->search;
+
         $locations = DB::table('locations')
             ->join('gudang', 'locations.gudang_id', '=', 'gudang.id')
             ->select('locations.*', 'gudang.nama_gudang')
@@ -21,10 +23,30 @@ class LocationController extends Controller
                     ->orWhere('unique_or_many', 'ilike', '%' . $search . '%');
             })
             ->paginate(15);
-        $activeLocations = $locations->filter(function ($location) {
-            return $location->is_active;
-        });
-        return view('location.index', ['locations' => $locations, 'activeLocations' => $activeLocations, 'gudangID' => $gudangID]);
+
+        $locationPopulate = DB::table('locations')
+            ->join('gudang', 'locations.gudang_id', '=', 'gudang.id')
+            ->select('locations.*', 'gudang.nama_gudang')
+            ->where('locations.gudang_id', '=', $gudangID)
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'ilike', '%' . $search . '%')
+                    ->orWhere('parent_location', 'ilike', '%' . $search . '%')
+                    ->orWhere('unique_or_many', 'ilike', '%' . $search . '%');
+            })
+            ->get();
+
+        // $activeLocations = $locations->filter(function ($location) {
+        //     return $location->is_active;
+        // });
+
+        $activeLocations = DB::table('locations')
+            ->join('gudang', 'locations.gudang_id', '=', 'gudang.id')
+            ->select('locations.*', 'gudang.nama_gudang')
+            ->where('locations.gudang_id', '=', $gudangID)
+            ->where('is_active', true)
+            ->get();
+
+        return view('location.index', ['locations' => $locations, 'populateLocation' => $locationPopulate, 'activeLocations' => $activeLocations, 'gudangID' => $gudangID]);
     }
 
     public function create($gudangID)
@@ -89,6 +111,31 @@ class LocationController extends Controller
 
     public function activateLocation(Request $request, $id)
     {
-        dd($request->input());
+        $location = Location::find($request->cb_location_id);
+        $location->is_active = true;
+        $location->save();
+
+        $stocks = DB::table('stok')->where('gudang_id', $location->gudang_id)->update([
+            'location_id' => $request->cb_location_id
+        ]);
+
+        return redirect()->back()->with('message', 'lokasi berhasil diaktivasi');
+    }
+
+    public function deactivateLocation(Request $request, $id)
+    {
+        $location = Location::find($request->cb_location_id);
+        $location->is_active = false;
+        $location->save();
+
+        $stocks = DB::table('stock')->where('gudang_id', $location->gudang_id)->get();
+
+        foreach ($stocks as $key => $stock) {
+            $stok = Stok::find($stock->id);
+            $stok->location_id = $stock->location_id_before;
+            $stok->save();
+        }
+
+        return redirect()->back()->with('message', 'lokasi berhasil dinon-aktifkan');
     }
 }
