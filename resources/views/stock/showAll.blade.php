@@ -16,14 +16,14 @@
 @section('content')
     <header class="bg-gray-200 p-4 flex justify-between">
         <h2>
-            Viewing stocks in {{ $gudang->nama_gudang }}
+            Viewing stocks in {{ $currentEntity->nama_company }}
         </h2>
-        <div class="button">
+        {{-- <div class="button">
             <a class="btn btn-sm btn-primary" href="{{ route('stok.create', ['id' => $gudang->id]) }}">
                 <i class="fa-solid fa-plus"></i>
                 Add Stock
             </a>
-        </div>
+        </div> --}}
     </header>
 
     @if (Session::has('message'))
@@ -58,7 +58,7 @@
                             Stok
                         </th>
                         <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Harga
+                            Gudang
                         </th>
                         {{-- <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Increase/Decrase

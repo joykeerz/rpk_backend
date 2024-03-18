@@ -56,6 +56,7 @@ class StokController extends Controller
     public function stockByGudang($id)
     {
         $gudang = Gudang::findOrFail($id);
+
         // $stocks = DB::table('prices')
         //     ->join('produk', 'prices.produk_id', '=', 'produk.id')
         //     ->join('gudang', 'prices.company_id', '=', 'gudang.company_id')
@@ -80,7 +81,7 @@ class StokController extends Controller
             ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
             ->join('gudang', 'gudang.id', 'stok.gudang_id')
             ->join('prices', 'prices.id', '=', 'stok.id')
-            ->select('prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
+            ->select('gudang.nama_gudang', 'prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
             ->where('gudang.company_id', Auth::user()->company_id)
             ->paginate(40);
 
@@ -195,5 +196,33 @@ class StokController extends Controller
         $stok->delete();
 
         return redirect()->back()->with('message', 'stok berhasil dihapus');
+    }
+
+    public function showAll()
+    {
+        $currentEntity = DB::table('companies')
+            ->join('branches', 'branches.company_id', '=', 'companies.id')
+            ->join('users', 'users.company_id', '=', 'companies.id')
+            ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
+            ->select('alamat.provinsi', 'alamat.kota_kabupaten', 'companies.nama_company', 'branches.nama_branch', 'branches.id as bid', 'companies.id as cid', 'alamat.id as aid')
+            ->where('users.id', '=', Auth::user()->id)
+            ->first();
+
+        if (empty($currentEntity)) {
+            return redirect()->route('home')->with('error', 'Anda belum terdaftar di entitas/company manapun, harap hubungi admin');
+        }
+
+        $gudang = Gudang::where('company_id', Auth::user()->company_id)->get();
+
+        $stocks2 = DB::table('stok')
+            ->join('produk', 'produk.id', '=', 'stok.produk_id')
+            ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
+            ->join('gudang', 'gudang.id', 'stok.gudang_id')
+            ->join('prices', 'prices.id', '=', 'stok.id')
+            ->select('gudang.nama_gudang', 'prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
+            ->where('gudang.company_id', Auth::user()->company_id)
+            ->paginate(20);
+
+        return view('stock.showAll', ['gudang' => $gudang, 'stocks' => $stocks2, 'currentEntity' => $currentEntity]);
     }
 }

@@ -82,11 +82,32 @@
                     </a>
                 </li>
                 <li class="stok">
-                    <a href="{{ route('stok.index') }}"
+                    <a href="#" onclick="toggleSubMenu('stokSubMenu')"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="stockIcon"></svg>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Stok</span>
+                        <svg class="submenuOption">
+                        </svg>
+                    </a>
+                    <ul id="stokSubMenu"
+                        class="hidden overflow-hidden transition-max-height duration-300 ease-in-out bg-gray-500 rounded m-2 ">
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('stok.showAll') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-black dark:text-white dark:hover:text-black{{ Request::routeIs('stok.showAll') ? 'active' : '' }}">
+                                Lihat Semua Stok</a>
+                        </li>
+                        <li class="hover:bg-gray-100">
+                            <a href="{{ route('stok.index') }}"
+                                class="pl-5 block py-2 text-gray-700 hover:text-dark dark:text-white dark:hover:text-black{{ Request::routeIs('stok.index') ? 'active' : '' }}">
+                                Stok Berdasarkan Gudang
+                            </a>
+                        </li>
+                    </ul>
+                    {{-- <a href="{{ route('stok.showAll') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ Request::routeIs('stok.index') ? 'active' : '' }}">
                         <svg class="stockIcon"></svg>
                         <span class="flex-1 ml-3 whitespace-nowrap">Stok</span>
-                    </a>
+                    </a> --}}
                 </li>
                 <li class="etalase">
                     <a href="{{ route('etalase.index') }}"

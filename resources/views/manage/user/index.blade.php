@@ -64,7 +64,7 @@
             <tbody>
                 @forelse ($usersData as $ud)
                     <tr>
-                        <td>{{ $usersData->firstItem()+$loop->index }}</td>
+                        <td>{{ $usersData->firstItem() + $loop->index }}</td>
                         <td>{{ $ud->name }}</td>
                         <td>{{ $ud->email }}</td>
                         <td>{{ $ud->no_hp }}</td>

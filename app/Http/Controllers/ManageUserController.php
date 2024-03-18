@@ -37,14 +37,13 @@ class ManageUserController extends Controller
         $allUsers = DB::table('users')
             ->join('roles', 'users.role_id', '=', 'roles.id')
             ->select('users.*', 'roles.*', 'roles.id as rid', 'users.id as uid')
-            ->where('users.role_id', '!=', 1)
+            ->where('users.role_id', '=', 4)
             ->when($search, function ($query, $search) {
                 $query->where('name', 'ilike', '%' . $search . '%')
                     ->orWhere('email', 'ilike', '%' . $search . '%')
                     ->orWhere('no_hp', 'ilike', '%' . $search . '%');
             })
-            ->orderByDesc('users.created_at')
-            ->paginate(15);
+            ->paginate(20);
         return view('manage.user.index', ['usersData' => $allUsers]);
     }
 
