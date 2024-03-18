@@ -351,9 +351,10 @@ class PesananController extends Controller
         $isProvinsi = false;
 
         $currentEntity = DB::table('companies')
+            ->join('branches', 'branches.company_id', '=', 'companies.id')
             ->join('users', 'users.company_id', '=', 'companies.id')
             ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
-            ->select('alamat.provinsi', 'alamat.kota_kabupaten')
+            ->select('alamat.provinsi', 'alamat.kota_kabupaten', 'companies.nama_company', 'branches.nama_branch', 'branches.id as bid', 'companies.id as cid', 'alamat.id as aid')
             ->where('users.id', '=', Auth::user()->id)
             ->first();
 
@@ -366,14 +367,15 @@ class PesananController extends Controller
             $gudang = DB::table('gudang')
                 ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
                 ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
-                ->where('alamat.provinsi', '=', $currentEntity->provinsi)
+                ->where('gudang.company_id', '=', $currentEntity->cid)
                 ->orderBy('cat', 'desc')
                 ->get();
         } else {
             $gudang = DB::table('gudang')
                 ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
                 ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
-                ->where('alamat.kota_kabupaten', '=', $currentEntity->kota_kabupaten)
+                // ->where('gudang.branch_id', '=', $currentEntity->bid)
+                ->where('gudang.company_id', '=', $currentEntity->cid)
                 ->orderBy('cat', 'desc')
                 ->get();
         }

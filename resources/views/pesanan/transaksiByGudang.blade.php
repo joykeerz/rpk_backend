@@ -68,7 +68,7 @@
                 @forelse ($gudang as $key => $gd)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $gd->nama_gudang }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $gd->nama_gudang_erp }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $gd->no_telp }}</td>
                         <td class="px-6 py-4 whitespace-normal">
                             <p class="line-clamp-1">
@@ -90,9 +90,6 @@
                         </td>
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="6" class="text-center">No Data</td>
-                    </tr>
                 @endforelse
             </tbody>
         </table>
