@@ -45,7 +45,8 @@ class StokController extends Controller
             $gudang = DB::table('gudang')
                 ->join('alamat', 'gudang.alamat_id', '=', 'alamat.id')
                 ->select('gudang.*', 'alamat.*', 'gudang.id as gid', 'alamat.id as aid', 'gudang.created_at as cat')
-                ->where('gudang.branch_id', '=', $currentEntity->bid)
+                // ->where('gudang.branch_id', '=', $currentEntity->bid)
+                ->where('gudang.company_id', '=', $currentEntity->cid)
                 ->orderBy('cat', 'desc')
                 ->get();
         }
@@ -81,8 +82,9 @@ class StokController extends Controller
             ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
             ->join('gudang', 'gudang.id', 'stok.gudang_id')
             ->join('prices', 'prices.id', '=', 'stok.id')
-            ->select('gudang.nama_gudang', 'prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
+            ->select('gudang.nama_gudang_erp', 'prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
             ->where('gudang.company_id', Auth::user()->company_id)
+            ->where('gudang.id', $id)
             ->paginate(40);
 
         return view('stock.showByGudang', ['gudang' => $gudang, 'stocks' => $stocks2]);
@@ -219,7 +221,7 @@ class StokController extends Controller
             ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
             ->join('gudang', 'gudang.id', 'stok.gudang_id')
             ->join('prices', 'prices.id', '=', 'stok.id')
-            ->select('gudang.nama_gudang', 'prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
+            ->select('gudang.nama_gudang_erp', 'prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
             ->where('gudang.company_id', Auth::user()->company_id)
             ->paginate(20);
 

@@ -55,7 +55,8 @@
                 <tr class="">
                     <th class="p-3">#</th>
                     <th class="p-3">Nama Gudang</th>
-                    <th class="p-3">Alamat</th>
+                    {{-- <th class="p-3">Alamat</th> --}}
+                    <th class="p-3">Company/Entitas</th>
                     <th class="p-3">Last Synced</th>
                     <th class="p-3">Action</th>
                 </tr>
@@ -65,11 +66,12 @@
                     <tr class="border {{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
                         <td class="p-3">{{ $loop->iteration }}</td>
                         <td class="p-3">{{ $gudang->nama_gudang_erp }}</td>
-                        <td class="p-3">
+                        {{-- <td class="p-3">
                             Provinsi: {{ $gudang->provinsi }}
                             <br>
                             Kota: {{ $gudang->kota_kabupaten }}
-                        </td>
+                        </td> --}}
+                        <td class="p-3">{{ $gudang->nama_company }}</td>
                         <td class="p-3">{{ $gudang->last_synced_at }}</td>
                         <td class="p-3 flex justify-center">
                             <a href="{{ route('gudang.show', ['id' => $gudang->gid]) }}"

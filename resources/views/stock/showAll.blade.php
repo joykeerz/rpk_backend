@@ -77,7 +77,7 @@
                             <td class="whitespace-nowrap">{{ $stock->nama_produk }}</td>
                             <td class="whitespace-nowrap">{{ $stock->nama_kategori }}</td>
                             <td class="whitespace-nowrap">{{ $stock->jumlah_stok }}</td>
-                            <td class="whitespace-nowrap">{{ $stock->nama_gudang }}</td>
+                            <td class="whitespace-nowrap">{{ $stock->nama_gudang_erp }}</td>
                             {{-- <td class="whitespace-nowrap">Rp {{ number_format($stock->price_value) }}</td> --}}
                             {{-- <td class="whitespace-nowrap">
                                 <form action="{{ route('stok.increase', ['id' => $stock->sid]) }}" method="post">
