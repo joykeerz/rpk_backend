@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('gudang', function (Blueprint $table) {
             //
-            $table->timestamp('last_synced_at')->nullable();
+            $table->timestamp('last_synced_at');
         });
     }
 
