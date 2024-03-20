@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\CompanyBranchImportJob;
 use App\Jobs\GudangImportJob;
 use App\Jobs\ImportStockJob;
+use App\Jobs\LocationImportJob;
 use App\Jobs\PartnerImportJob;
 use App\Jobs\PriceImportJob;
 use App\Jobs\ProductImportJob;
@@ -39,6 +40,9 @@ class SynchronizeController extends Controller
 
             dispatch(new PriceImportJob($odoo));
             Log::info('Price Import Job Dispatched Successfully');
+
+            dispatch(new LocationImportJob($odoo));
+            Log::info('Location Import Job Dispatched Successfully');
 
             return redirect()->route('home')->with('Message', 'Synchronize All Data Successfuly running in background');
         } catch (\Throwable $th) {

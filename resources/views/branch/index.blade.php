@@ -52,7 +52,7 @@
         }
     </script>
     <div class="overflow-y-auto m-3">
-        <table id="myTable" class="min-w-full table-auto border ">
+        <table id="myTable" class="table table-sm table-zebra">
             <thead class="text-center border-b-1 border">
                 <tr>
                     <th class="px-4 py-2">#</th>
@@ -65,7 +65,7 @@
             </thead>
             <tbody class="text-center">
                 @forelse ($branch as $item)
-                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
+                    <tr class="hover">
                         <td class=" px-4 py-2">{{ $loop->iteration }}</td>
                         <td class=" px-4 py-2">{{ $item->nama_branch }}</td>
                         <td class=" px-4 py-2">{{ $item->nama_company }}</td>

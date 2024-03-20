@@ -263,7 +263,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/delete/{id}', [SatuanUnitController::class, 'destroy'])->name('satuan-unit.delete');
     });
 
-    ///satuan unit route
+    ///Location route
     Route::prefix('gudang/location')->middleware('restrictRole:2,3,4')->group(function () {
         Route::get('/list/{id}', [LocationController::class, 'index'])->name('location.index');
         Route::get('/create/{id}', [LocationController::class, 'create'])->name('location.create');

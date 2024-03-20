@@ -50,7 +50,7 @@
     @include('layouts.alert')
     @include('layouts.searchbar', ['routeName' => 'gudang.index'])
     <div class="overflow-y-auto m-3">
-        <table id="myTable" class="min-w-full table-auto border">
+        <table id="myTable" class="table table-sm table-zebra">
             <thead class="border text-center">
                 <tr class="">
                     <th class="p-3">#</th>
@@ -63,7 +63,7 @@
             </thead>
             <tbody class="text-center">
                 @forelse ($gudangData as $gudang)
-                    <tr class="border {{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
+                    <tr class="hover">
                         <td class="p-3">{{ $loop->iteration }}</td>
                         <td class="p-3">{{ $gudang->nama_gudang_erp }}</td>
                         {{-- <td class="p-3">
