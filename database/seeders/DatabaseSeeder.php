@@ -214,6 +214,8 @@ class DatabaseSeeder extends Seeder
             'gudang_id' => 1,
             'jumlah_stok' => 420,
             'harga_stok' => 12000,
+            'location_id' => 1,
+            'location_id_before' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -223,6 +225,8 @@ class DatabaseSeeder extends Seeder
             'gudang_id' => 1,
             'jumlah_stok' => 69,
             'harga_stok' => 30000,
+            'location_id' => 1,
+            'location_id_before' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -232,6 +236,8 @@ class DatabaseSeeder extends Seeder
             'gudang_id' => 1,
             'jumlah_stok' => 86,
             'harga_stok' => 120000,
+            'location_id' => 1,
+            'location_id_before' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
