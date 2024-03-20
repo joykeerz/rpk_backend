@@ -276,7 +276,7 @@ class DatabaseSeeder extends Seeder
             'location_name' => 'Kompleks Pergudangan Jaksel',
             'parent_location' => 'None',
             'unique_or_many' => 'none',
-            'is_active' => 'JNE',
+            'is_active' => true,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
