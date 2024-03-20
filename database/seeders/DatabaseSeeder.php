@@ -272,6 +272,7 @@ class DatabaseSeeder extends Seeder
 
         //location seeder
         DB::table('locations')->insert([
+            'id' => 1,
             'gudang_id' => 1,
             'location_name' => 'Kompleks Pergudangan Jaksel',
             'parent_location' => 'None',
