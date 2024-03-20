@@ -263,6 +263,17 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        //location seeder
+        DB::table('locations')->insert([
+            'gudang_id' => 1,
+            'location_name' => 'Kompleks Pergudangan Jaksel',
+            'parent_location' => 'None',
+            'unique_or_many' => 'none',
+            'is_active' => 'JNE',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         // Branch Seed
         DB::table('branches')->insert([
             'id' => 1,
@@ -291,6 +302,5 @@ class DatabaseSeeder extends Seeder
             PosSeeder::class,
             CustomerSeeder::class,
         ]);
-
     }
 }
