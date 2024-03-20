@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('stok', function (Blueprint $table) {
             //
-            $table->bigInteger('location_id_before');
+            $table->bigInteger('location_id_before')->nullable();
         });
     }
 
