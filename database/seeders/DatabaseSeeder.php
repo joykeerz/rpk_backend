@@ -267,6 +267,7 @@ class DatabaseSeeder extends Seeder
             'no_telp' => 'none',
             'created_at' => now(),
             'updated_at' => now(),
+            'last_synced_at' => now()
         ]);
 
         //location seeder
