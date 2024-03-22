@@ -32,6 +32,8 @@ use App\Http\Controllers\PajakController;
 use App\Http\Controllers\PriceController as ControllersPriceController;
 use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\SatuanUnitController;
+use App\Livewire\DatasTable;
+use App\Livewire\Etalase\EtalaseIndex;
 
 /*
 |--------------------------------------------------------------------------
@@ -283,6 +285,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('etalase')->middleware('restrictRole:4')->group(function () {
-        Route::get('/', [EtalaseController::class, 'index'])->name('etalase.index');
+        // Route::get('/', EtalaseIndex::class)->name('etalase.index');
+        Route::get('/', DatasTable::class)->name('etalase.index');
     });
 });

@@ -1,35 +1,46 @@
 <?php
 
-namespace App\Livewire\Etalase;
+namespace App\Livewire;
 
 use App\Models\Gudang;
 use App\Models\StokEtalase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-#[Layout('etalase.index')]
-class EtalaseIndex extends Component
+#[Layout('layouts.temp')]
+class DatasTable extends Component
 {
     use WithPagination;
 
+    //query filters
+    #[Url(history: true)]
+    public $statusFilter = '';
+
+    #[Url(history: true)]
+    public $search = '';
+
+    #[Url(history: true)]
+    public $perPage = 5;
+
+    #[Url(history: true)]
+    public $sortBy = 'stok_etalase.created_at';
+
+    #[Url(history: true)]
+    public $sortDir = 'DESC';
+
+    //forms
     public $isOpen = false;
     public $stok_id;
     public $jumlah_stok = 1;
-    public $search;
-    public $perPage = 5;
-
     public $editingStockId;
     public $editingJumlahStock;
 
     public function render()
     {
-        // if (!$this->search) {
-        //     $this->resetPage();
-        // }
-
         $gudangId = Gudang::where('company_id', Auth::user()->company_id)->select('id')->first();
 
         $stokGudang = DB::table('stok')
@@ -54,10 +65,14 @@ class EtalaseIndex extends Component
             ->join('gudang', 'gudang.id', 'stok.gudang_id')
             ->select('stok_etalase.id', 'stok_etalase.jumlah_stok', 'stok_etalase.updated_at', 'stok_etalase.is_active', 'stok.jumlah_stok as stok_gudang', 'produk.nama_produk', 'gudang.nama_gudang')
             ->where('gudang.id', $gudangId->id)
+            ->when($this->statusFilter !== '', function ($query) {
+                $query->where('stok_etalase.is_active', $this->statusFilter);
+            })
             ->where('produk.nama_produk', 'ilike', "%{$this->search}%")
+            ->orderBy($this->sortBy, $this->sortDir)
             ->paginate($this->perPage);
 
-        return view('livewire.etalase.etalase-index', [
+        return view('livewire.datas-table', [
             'stokEtalase' => $stokEtalase,
             'stokGudang' => $stokGudangFiltered
         ]);
@@ -83,6 +98,7 @@ class EtalaseIndex extends Component
 
             $this->reset(['stok_id', 'jumlah_stok']);
 
+
             session()->flash('message', 'etalase stok berhasil dibuat');
 
             $this->closeModal();
@@ -96,6 +112,24 @@ class EtalaseIndex extends Component
     public function delete($id)
     {
         DB::table('stok_etalase')->where('id', $id)->delete();
+    }
+
+    public function setSortBy($sortByColumn)
+    {
+        if ($this->sortBy === $sortByColumn) {
+            $this->sortDir = ($this->sortDir == "ASC" ? "DESC" : "ASC");
+            return;
+        }
+
+        $this->sortBy = $sortByColumn;
+        $this->sortDir = "DESC";
+    }
+
+    public function toggleEtalase($id)
+    {
+        $StokEtalase = StokEtalase::find($id);
+        $StokEtalase->is_active = !$StokEtalase->is_active;
+        $StokEtalase->save();
     }
 
     public function changeStock($id)
@@ -116,13 +150,6 @@ class EtalaseIndex extends Component
         $StokEtalase->jumlah_stok = $this->editingJumlahStock;
         $StokEtalase->save();
         $this->cancelChange();
-    }
-
-    public function toggleEtalase($id)
-    {
-        $StokEtalase = StokEtalase::find($id);
-        $StokEtalase->is_active = !$StokEtalase->is_active;
-        $StokEtalase->save();
     }
 
     public function openModal()

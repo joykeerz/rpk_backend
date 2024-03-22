@@ -28,8 +28,6 @@
                 {{ __('Locations') }}
             </h2>
 
-
-
             <div class="flex items-center">
                 {{-- @if (Auth::user()->role_id != 4 || Auth::user()->role_id != 5) --}}
                 <div class="dropdown dropdown-bottom dropdown-end mx-1">

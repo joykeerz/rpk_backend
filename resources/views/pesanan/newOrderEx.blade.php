@@ -14,7 +14,7 @@
     <header class="bg-gray-200 p-4">
         <div class="title flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Buat Pesanan Baru') }} EX
+                {{ __('Buat Pesanan Baru') }} (DEBUG PURPOSE ONLY)
             </h2>
         </div>
     </header>

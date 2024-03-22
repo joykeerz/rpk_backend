@@ -37,48 +37,13 @@
                     </a>
                 </li>
                 <li class="mb-4  lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-                    <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
-                        <!-- Second dropdown trigger -->
-                        <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
-                            href="#" id="syncButton" role="button" data-te-dropdown-toggle-ref
-                            aria-expanded="false">
-                            <span class="px-2 ml-2 text-white">Sync ERP</span>
-                        </a>
-                        <!-- Second dropdown menu -->
-                        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-                            aria-labelledby="syncButton" data-te-dropdown-menu-ref="syncDropdown" style="right: 0;">
-                            <!-- Dropdown menu items -->
-                            <li>
-                                <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                                    href="{{ route('odoo.sync.import') }}" onclick="return confirmSync();"
-                                    data-te-dropdown-item-ref>
-                                    <i class="fa-solid fa-circle-info px-1"></i>
-                                    Sync All
-                                </a>
-                            </li>
-                            <li>
-                                <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                                    href="{{ route('odoo.stock.import') }}" onclick="return confirmSync();"
-                                    data-te-dropdown-item-ref>
-                                    <i class="fa-solid fa-circle-info px-1"></i>
-                                    Sync Stock
-                                </a>
-                            </li>
-                            <li>
-                                <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                                    href="{{ route('odoo.price.import') }}" onclick="return confirmSync();"
-                                    data-te-dropdown-item-ref>
-                                    <i class="fa-solid fa-circle-info px-1"></i>
-                                    Sync Price
-                                </a>
-                            </li>
-                            <li>
-                                <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                                    href="{{ route('odoo.sync.debug') }}" data-te-dropdown-item-ref>
-                                    <i class="fa-solid fa-circle-info px-1"></i>
-                                    Sync debug
-                                </a>
-                            </li>
+                    <div class="dropdown dropdown-bottom">
+                        <div tabindex="0" role="button" class="text-white">Sync ERP</div>
+                        <ul tabindex="0"
+                            class="dropdown-content z-[1] menu p-2 shadow bg-gray-900 text-white rounded-box w-52">
+                            <li><a href="{{ route('odoo.sync.import') }}" class="hover:bg-gray-800">Sync All From
+                                    ERP</a></li>
+                            <li><a href="{{ route('odoo.sync.debug') }}" class="hover:bg-gray-800">Sync Debug</a></li>
                         </ul>
                     </div>
                 </li>
@@ -183,15 +148,12 @@
         });
 
         ///notification dropdown
-        // Get the notification button and dropdown menu
         var notificationButton = document.getElementById('dropdownMenuButton1');
         var notificationDropdown = document.querySelector('[data-te-dropdown-menu-ref="notifDropdown"]');
 
-        // Add a click event listener to the notification button
         notificationButton.addEventListener('click', function(event) {
-            // Prevent the default behavior (e.g., following the link)
             event.preventDefault();
-            // Toggle the visibility of the notification dropdown
+
             notificationDropdown.classList.toggle('hidden');
         });
         document.addEventListener('click', function(event) {
@@ -217,22 +179,22 @@
         });
 
         /// Sync dropdown
-        var syncButton = document.getElementById('syncButton');
-        var syncDropdown = document.querySelector('[data-te-dropdown-menu-ref="syncDropdown"]');
+        // var syncButton = document.getElementById('syncButton');
+        // var syncDropdown = document.querySelector('[data-te-dropdown-menu-ref="syncDropdown"]');
 
-        syncButton.addEventListener('click', function(event) {
-            console.log('pressed sync dropdown');
-            event.preventDefault();
-            event.stopPropagation(); // Stop event propagation
-            syncDropdown.classList.toggle('hidden');
-        });
+        // syncButton.addEventListener('click', function(event) {
+        //     console.log('pressed sync dropdown');
+        //     event.preventDefault();
+        //     event.stopPropagation(); // Stop event propagation
+        //     syncDropdown.classList.toggle('hidden');
+        // });
 
 
-        document.addEventListener('click', function(event) {
-            if (!syncButton.contains(event.target) && !syncDropdown.contains(event.target)) {
-                console.log('pressed sync dropdown 2');
-                syncDropdown.classList.add('hidden');
-            }
-        });
+        // document.addEventListener('click', function(event) {
+        //     if (!syncButton.contains(event.target) && !syncDropdown.contains(event.target)) {
+        //         console.log('pressed sync dropdown 2');
+        //         syncDropdown.classList.add('hidden');
+        //     }
+        // });
     });
 </script>
