@@ -86,26 +86,30 @@ class DatasTable extends Component
         ]);
 
         $checkStock = DB::table('stok_etalase')->where('stok_id', $this->stok_id)->first();
+        $checkStockGudang = DB::table('stok')->where('id', $this->stok_id)->first();
 
         if ($checkStock) {
             session()->flash('error', 'stok sudah ada');
         } else {
-            $addEtalase = StokEtalase::create([
-                'stok_id' => $this->stok_id,
-                'jumlah_stok' => $this->jumlah_stok,
-                'is_active' => true,
-            ]);
+            if ($checkStockGudang->jumlah_stok < $this->jumlah_stok) {
+                session()->flash('error', 'stok etalase tidak bisa melebihi stok gudang!');
+            } else {
+                $addEtalase = StokEtalase::create([
+                    'stok_id' => $this->stok_id,
+                    'jumlah_stok' => $this->jumlah_stok,
+                    'is_active' => true,
+                ]);
 
-            $this->reset(['stok_id', 'jumlah_stok']);
+                $this->reset(['stok_id', 'jumlah_stok']);
 
+                session()->flash('message', 'etalase stok berhasil dibuat!');
 
-            session()->flash('message', 'etalase stok berhasil dibuat');
+                $this->closeModal();
 
-            $this->closeModal();
+                $this->dispatch('stockAdded');
 
-            $this->dispatch('stockAdded');
-
-            $this->resetPage();
+                $this->resetPage();
+            }
         }
     }
 
