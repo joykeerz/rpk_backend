@@ -42,6 +42,9 @@
     @endif
     <div class="overflow-auto m-3">
         <div class="overflow-x-auto">
+
+            @include('layouts.searchbar', ['routeName' => 'stok.showAll'])
+
             <table class="table table-zebra">
                 <thead>
                     <tr class="text-center">

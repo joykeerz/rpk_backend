@@ -200,8 +200,10 @@ class StokController extends Controller
         return redirect()->back()->with('message', 'stok berhasil dihapus');
     }
 
-    public function showAll()
+    public function showAll(Request $request)
     {
+        $search = $request->search;
+
         $currentEntity = DB::table('companies')
             ->join('branches', 'branches.company_id', '=', 'companies.id')
             ->join('users', 'users.company_id', '=', 'companies.id')
@@ -223,6 +225,11 @@ class StokController extends Controller
             ->join('prices', 'prices.id', '=', 'stok.id')
             ->select('gudang.nama_gudang_erp', 'prices.price_value', 'stok.jumlah_stok', 'kategori.nama_kategori', 'produk.nama_produk', 'produk.kode_produk', 'stok.id as sid', 'stok.created_at as cat')
             ->where('gudang.company_id', Auth::user()->company_id)
+            ->when($search, function ($query, $search) {
+                $query->where('produk.kode_produk', 'ilike', '%' . $search . '%')
+                    ->orWhere('produk.nama_produk', 'ilike', '%' . $search . '%')
+                    ->orWhere('kategori.nama_kategori', 'ilike', '%' . $search . '%');
+            })
             ->paginate(20);
 
         return view('stock.showAll', ['gudang' => $gudang, 'stocks' => $stocks2, 'currentEntity' => $currentEntity]);

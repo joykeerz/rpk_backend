@@ -100,6 +100,11 @@
 
         {{-- Column 2 --}}
         <div class="max-w-xl bg-white border rounded-md overflow-hidden shadow-md">
+            @if (session()->has('error'))
+                <div class="alert alert-error">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="p-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">

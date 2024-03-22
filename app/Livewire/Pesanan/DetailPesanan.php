@@ -4,6 +4,7 @@ namespace App\Livewire\Pesanan;
 
 use App\Models\Kurir;
 use App\Models\Pesanan;
+use App\Models\Stok;
 use App\Models\Transaksi;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
@@ -13,6 +14,7 @@ use Livewire\Component;
 class DetailPesanan extends Component
 {
     public $transactionId;
+    public $gudangId;
     public $isEdit = false;
 
     //input variables
@@ -48,6 +50,8 @@ class DetailPesanan extends Component
 
         $kurirOpt = Kurir::all();
 
+        $this->gudangId = $transaksi->gudang_id;
+
         return view('livewire.pesanan.detail-pesanan', [
             'transaksi' => $transaksi,
             'detailPesanan' => $detailPesanan,
@@ -82,6 +86,19 @@ class DetailPesanan extends Component
         $pesanan->status_pemesanan = $this->statusPemesanan;
         $pesanan->kurir_id = $this->kurir;
         $pesanan->save();
+
+        if ($pesanan->status_pemesanan == 'diproses') {
+            $detailPesananList = DB::table('detail_pesanan')->where('pesanan_id', $pesanan->id)->get();
+            foreach ($detailPesananList as $key => $detailPesanan) {
+                $currentStok = Stok::where('gudang_id', $this->gudangId)->where('produk_id', $detailPesanan->produk_id)->first();
+                if ($currentStok->jumlah_stok == 0 || $currentStok->jumlah_stok < $detailPesanan->qty) {
+                    session()->flash('error', 'Pesanan gagal ditambahkan, stok tidak mencukupi');
+                } else {
+                    $currentStok->decrement('jumlah_stok', $detailPesanan->qty);
+                    $currentStok->save();
+                }
+            }
+        }
 
         $this->clearInput();
     }
