@@ -34,6 +34,7 @@ use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\SatuanUnitController;
 use App\Livewire\DatasTable;
 use App\Livewire\Etalase\EtalaseIndex;
+use App\Livewire\Pesanan\DetailPesanan;
 
 /*
 |--------------------------------------------------------------------------
@@ -182,6 +183,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('pesanan')->middleware('restrictRole:2,3,4')->group(function () {
         Route::get('/transaksi/gudang/{id}', [PesananController::class, 'index'])->name('pesanan.index');
         Route::get('/show/{id}', [PesananController::class, 'show'])->name('pesanan.show');
+        Route::get('/detail/{id}', DetailPesanan::class)->name('pesanan.detail');
         Route::get('/order/gudang', [PesananController::class, 'orderByGudangSelector'])->name('pesanan.selectGudang');
         Route::get('/transaksi/gudang', [PesananController::class, 'transaksiByGudangSelector'])->name('pesanan.selectTransaksi');
         Route::get('/newOrder/gudang/{id}', [PesananController::class, 'newOrder'])->name('pesanan.newOrder');

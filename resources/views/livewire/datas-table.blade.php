@@ -8,6 +8,7 @@
 
 @section('plugins')
 @endsection
+
 <div>
     <header class="bg-gray-200 p-4">
         <div class="flex justify-between items-center">

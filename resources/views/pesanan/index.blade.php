@@ -55,7 +55,7 @@
                                 <i class="fa-solid fa-check"></i>
                                 Proses
                             </a>
-                            <a class="btn btn-sm btn-primary" href="{{ route('pesanan.show', ['id' => $item->tid]) }}">
+                            <a class="btn btn-sm btn-primary" href="{{ route('pesanan.detail', ['id' => $item->tid]) }}">
                                 <i class="fa-solid fa-search"></i>
                                 open
                             </a>
