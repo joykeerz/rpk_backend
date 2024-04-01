@@ -9,6 +9,7 @@ use App\Models\Transaksi;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Obuchmann\OdooJsonRpc\Odoo;
 
 #[Layout('layouts.temp')]
 class DetailPesanan extends Component
@@ -22,6 +23,8 @@ class DetailPesanan extends Component
     public $statusPembayaran;
     public $statusPemesanan;
     public $kurir;
+
+    //database variables
 
     public function mount($id)
     {
@@ -106,5 +109,40 @@ class DetailPesanan extends Component
     public function clearInput()
     {
         $this->reset('tipePembayaran', 'statusPembayaran', 'statusPemesanan', 'kurir');
+    }
+
+    public function debugOdoo(Odoo $odoo)
+    {
+        $transaksi = DB::table('transaksi')
+            ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
+            ->join('users', 'users.id', '=', 'pesanan.user_id')
+            ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
+            ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
+            ->where('transaksi.id', '=', $this->transactionId)
+            ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
+            ->first();
+
+        $detailPesanan = DB::table('detail_pesanan')
+            ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
+            ->join('pesanan', 'pesanan.id', '=', 'detail_pesanan.pesanan_id')
+            ->where('pesanan.id', '=', $transaksi->pesanan_id)
+            ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
+            ->get();
+
+        $result = $odoo->model('sale.order')->where('id', '=', 998015)->first();
+        // $result = $odoo->model('sale.order')->where('id', '=', 476598)->first();
+
+        dd($result);
+
+        // $id = $this->odoo
+        //     ->create('sale.order', [
+        //         'partner_id' => '',
+        //         'partner_invoice_id' => '',
+        //         'partner_shipping_id' => '',
+        //         'company_id' => '',
+        //         'sale_type' => 'PSO',
+        //         'Payment_Term_id' => 2,
+        //         'is_from_rpk_mobile' => true,
+        //     ]);
     }
 }

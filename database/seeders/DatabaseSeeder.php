@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        /*
         DB::table('users')->insert([
             'id' => 2,
             'name' => 'Penjual Pusat',
@@ -139,7 +139,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        */
         //pajak
         DB::table('pajak')->insert([
             'nama_pajak' => 'Dibebaskan',
@@ -148,7 +148,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        /*
         //satuan unit
         DB::table('satuan_unit')->insert([
             'id' => 1,
@@ -292,7 +292,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        */
         //kurir seeder
         DB::table('kurir')->insert([
             'nama_kurir' => 'none',
@@ -305,11 +305,11 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        /*
         $this->call([
             PosSeeder::class,
             CustomerSeeder::class,
         ]);
-
+        */
     }
 }

@@ -120,7 +120,7 @@
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><a>Sync from ERP</a></li>
-                                <li><a>Sync to ERP</a></li>
+                                <li><a wire:click.prevent="debugOdoo">Sync to ERP</a></li>
                             </ul>
                         </div>
                     </div>
@@ -255,6 +255,45 @@
                 </div>
 
 
+            </div>
+        </div>
+    </div>
+
+    <div class="container p-2">
+
+        <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-200">
+            <div class="collapse-title text-xl font-medium">
+                Out Documents
+            </div>
+            <div class="collapse-content">
+                <div class="flex items-center justify-between px-4 mb-2">
+                    <span>OUT(name | sale.order)</span>
+                    <span>STATUS(state | stock.picking)</span>
+                </div>
+                <table class="table table-sm table-zebra border bg-white">
+                    <thead>
+                        <th>SHO(product.id | product.product)</th>
+                        <th>Done(quantity_done | stock.picking)</th>
+                        <th>UOM(product_uom | product.uom)</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lorem ipsum</td>
+                            <td>6</td>
+                            <td>Kg</td>
+                        </tr>
+                        <tr>
+                            <td>Dolor Sit</td>
+                            <td>16</td>
+                            <td>BOX</td>
+                        </tr>
+                        <tr>
+                            <td>Amet</td>
+                            <td>20</td>
+                            <td>Gr</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
