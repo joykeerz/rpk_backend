@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Obuchmann\OdooJsonRpc\Odoo;
+use stdClass;
 
 #[Layout('layouts.temp')]
 class DetailPesanan extends Component
@@ -113,14 +114,19 @@ class DetailPesanan extends Component
 
     public function debugOdoo(Odoo $odoo)
     {
+        $detailPesananToPush = [];
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
             ->join('users', 'users.id', '=', 'pesanan.user_id')
+            ->join('biodata', 'biodata.user_id', 'users.id')
             ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
             ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
             ->where('transaksi.id', '=', $this->transactionId)
-            ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
+            ->select('biodata.branch_id', 'biodata.kode_customer', 'transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
             ->first();
+
+        $parts = explode('-', $transaksi->kode_customer);
+        $kodeCustomer = intval($parts[0]);
 
         $detailPesanan = DB::table('detail_pesanan')
             ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
@@ -129,20 +135,32 @@ class DetailPesanan extends Component
             ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
             ->get();
 
-        $result = $odoo->model('sale.order')->where('id', '=', 998015)->first();
+        // $result = $odoo->model('sale.order')->where('id', '=', 998015)->first();
         // $result = $odoo->model('sale.order')->where('id', '=', 476598)->first();
 
-        dd($result);
 
-        // $id = $this->odoo
-        //     ->create('sale.order', [
-        //         'partner_id' => '',
-        //         'partner_invoice_id' => '',
-        //         'partner_shipping_id' => '',
-        //         'company_id' => '',
-        //         'sale_type' => 'PSO',
-        //         'Payment_Term_id' => 2,
-        //         'is_from_rpk_mobile' => true,
-        //     ]);
+        foreach ($detailPesanan as $key => $itemPesanan) {
+            $detail = new stdClass();
+            $detail->product_id = $itemPesanan->pid;
+            $detail->product_uom_qty = intval($itemPesanan->qty);
+            $detail->price_unit = intval($itemPesanan->harga);
+            $detailPesananToPush[] = [0, 0, $detail];
+        }
+
+        // dd($detailPesananToPush);
+
+        $id = $odoo->model('sale.order')->create([
+            'partner_id' => $kodeCustomer,
+            'partner_invoice_id' => $kodeCustomer,
+            'partner_shipping_id' => $kodeCustomer,
+            'branch_id' => intval($transaksi->branch_id),
+            'warehouse_id' => intval($this->gudangId),
+            'Payment_Term_id' => 2,
+            'cara_pembayaran' => $transaksi->tipe_pembayaran,
+            'sale_type' => 'PSO',
+            'is_from_rpk_mobile' => true,
+            'order_line' => $detailPesananToPush,
+            'date_order' => $transaksi->created_at,
+        ]);
     }
 }
