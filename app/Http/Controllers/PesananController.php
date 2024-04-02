@@ -100,10 +100,19 @@ class PesananController extends Controller
 
     public function newOrder($id)
     {
+        $currentEntity = DB::table('companies')
+            ->join('branches', 'branches.company_id', '=', 'companies.id')
+            ->join('users', 'users.company_id', '=', 'companies.id')
+            ->join('alamat', 'alamat.id', '=', 'companies.alamat_id')
+            ->select('alamat.provinsi', 'alamat.kota_kabupaten', 'companies.nama_company', 'branches.nama_branch', 'branches.id as bid', 'companies.id as cid', 'alamat.id as aid')
+            ->where('users.id', '=', Auth::user()->id)
+            ->first();
+
         $biodata = DB::table('biodata')
             ->join('users', 'users.id', '=', 'biodata.user_id')
             ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
             ->select('biodata.*', 'users.*', 'alamat.*', 'users.id as uid', 'biodata.id as bid', 'alamat.id as aid')
+            ->where('biodata.branch_id', '=', $currentEntity->bid)
             ->get();
 
         $kurir = Kurir::all();
@@ -117,18 +126,18 @@ class PesananController extends Controller
         //     ->where('stok.gudang_id', '=', $id)
         //     ->get();
 
-        $stok = DB::table('prices')
-            ->join('produk', 'prices.produk_id', '=', 'produk.id')
-            ->join('stok', 'stok.produk_id', '=', 'produk.id')
-            ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
-            ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
-            // ->select('pajak.persentase_pajak', 'pajak.jenis_pajak', 'prices.price_value', 'satuan_unit.satuan_unit_produk', 'stok.jumlah_stok', 'produk.nama_produk', 'stok.id as sid', 'satuan_unit.id as suid', 'produk.id as pid')
-            ->select('prices.price_value', 'stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
-            ->where('stok.jumlah_stok', '>', 0)
-            ->where('stok.gudang_id', '=', $id)
-            ->orderBy('stok.id', 'desc')
-            ->distinct()
-            ->get();
+        // $stok = DB::table('prices')
+        //     ->join('produk', 'prices.produk_id', '=', 'produk.id')
+        //     ->join('stok', 'stok.produk_id', '=', 'produk.id')
+        //     ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
+        //     ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
+        //     // ->select('pajak.persentase_pajak', 'pajak.jenis_pajak', 'prices.price_value', 'satuan_unit.satuan_unit_produk', 'stok.jumlah_stok', 'produk.nama_produk', 'stok.id as sid', 'satuan_unit.id as suid', 'produk.id as pid')
+        //     ->select('prices.price_value', 'stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
+        //     ->where('stok.jumlah_stok', '>', 0)
+        //     ->where('stok.gudang_id', '=', $id)
+        //     ->orderBy('stok.id', 'desc')
+        //     ->distinct()
+        //     ->get();
 
         $kodeCompany = DB::table('gudang')
             ->join('companies', 'companies.id', '=', 'gudang.company_id')

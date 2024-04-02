@@ -93,7 +93,7 @@
                     {{ number_format($transaksi->diskon) }}</span>
             </div>
             <div class="p-2 m-2  border rounded-sm">
-                <i class="fa-solid fa-money-bill mr-2 text-gray-500"></i>Total : <span>Rp
+                <i class="fa-solid fa-money-bill mr-2 text-gray-500"></i>Grand Total : <span>Rp
                     {{ number_format($transaksi->total_pembayaran) }}</span>
             </div>
         </div>
@@ -114,13 +114,13 @@
                     <div class="flex">
                         <div class="dropdown dropdown-end">
                             <div tabindex="0" role="button" class="btn btn-sm m-1">
-                                Sync
+                                Sync SO
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </div>
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a>Sync from ERP</a></li>
                                 <li><a wire:click.prevent="debugOdoo">Sync to ERP</a></li>
+                                <li><a>Sync from ERP</a></li>
                             </ul>
                         </div>
                     </div>
@@ -266,34 +266,37 @@
                 Out Documents
             </div>
             <div class="collapse-content">
-                <div class="flex items-center justify-between px-4 mb-2">
-                    <span>OUT(name | sale.order)</span>
-                    <span>STATUS(state | stock.picking)</span>
-                </div>
-                <table class="table table-sm table-zebra border bg-white">
-                    <thead>
-                        <th>SHO(product.id | product.product)</th>
-                        <th>Done(quantity_done | stock.picking)</th>
-                        <th>UOM(product_uom | product.uom)</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>6</td>
-                            <td>Kg</td>
-                        </tr>
-                        <tr>
-                            <td>Dolor Sit</td>
-                            <td>16</td>
-                            <td>BOX</td>
-                        </tr>
-                        <tr>
-                            <td>Amet</td>
-                            <td>20</td>
-                            <td>Gr</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @forelse ($salesOrders as $salesOrder)
+                    <div class="flex items-center justify-between px-4 mb-2">
+                        {{-- OUT(name | sale.order) --}}
+                        <span>{{ $salesOrder->sale_order_code }}</span>
+                        {{-- STATUS(state | stock.picking) --}}
+                        <span>{{ $salesOrder->sale_order_status }}</span>
+                    </div>
+
+                    <table class="table table-sm table-zebra border bg-white">
+                        <thead>
+                            <th>SHO(product.id | product.product)</th>
+                            <th>Done(quantity_done | stock.picking)</th>
+                            <th>UOM(product_uom | product.uom)</th>
+                        </thead>
+                        <tbody>
+                            @forelse ($salesOrder->orderLines as $orderLine)
+                                <tr>
+                                    <td>{{ $orderLine->produk_id }}</td>
+                                    <td>{{ $orderLine->qty_done }}</td>
+                                    <td>{{ $orderLine->uom }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3">No Data</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                @empty
+                    no data, please sync to erp first
+                @endforelse
             </div>
         </div>
     </div>

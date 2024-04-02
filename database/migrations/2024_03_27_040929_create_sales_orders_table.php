@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('sales_orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('erp_sale_order_id');
+            $table->foreignId('transaksi_id');
             $table->string('sale_order_code');
             $table->string('sale_order_status');
+            $table->integer('erp_sale_order_id');
             $table->timestamps();
         });
     }
