@@ -115,6 +115,7 @@ class DetailPesanan extends Component
     public function debugOdoo(Odoo $odoo)
     {
         $detailPesananToPush = [];
+
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
             ->join('users', 'users.id', '=', 'pesanan.user_id')
@@ -135,9 +136,17 @@ class DetailPesanan extends Component
             ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
             ->get();
 
+        $customerData = DB::table('users')
+            ->join('biodata', 'biodata.user_id', 'users.id')
+            ->join('alamat', 'alamat.id', 'biodata.alamat_id')
+            ->where('users.id', $transaksi->uid)
+            ->first();
+
+        // $result = $odoo->model('sale.order')->where('id', '=', 998077)->first();
         // $result = $odoo->model('sale.order')->where('id', '=', 998015)->first();
         // $result = $odoo->model('sale.order')->where('id', '=', 476598)->first();
 
+        // dd($result);
 
         foreach ($detailPesanan as $key => $itemPesanan) {
             $detail = new stdClass();
@@ -147,20 +156,22 @@ class DetailPesanan extends Component
             $detailPesananToPush[] = [0, 0, $detail];
         }
 
-        // dd($detailPesananToPush);
-
-        $id = $odoo->model('sale.order')->create([
+        $id = $odoo->create('sale.order', [
             'partner_id' => $kodeCustomer,
-            'partner_invoice_id' => $kodeCustomer,
-            'partner_shipping_id' => $kodeCustomer,
             'branch_id' => intval($transaksi->branch_id),
             'warehouse_id' => intval($this->gudangId),
-            'Payment_Term_id' => 2,
+            // 'Payment_Term_id' => 2,
             'cara_pembayaran' => $transaksi->tipe_pembayaran,
-            'sale_type' => 'PSO',
-            'is_from_rpk_mobile' => true,
+            'sale_type' => 'pso',
+            'pso_type' => 39,
+            // 'is_from_rpk_mobile' => true,
             'order_line' => $detailPesananToPush,
-            'date_order' => $transaksi->created_at,
         ]);
+
+        if ($id) {
+            dump($id);
+            $soFromErp = $odoo->model('sale.order')->where('id', '=', $id)->first();
+
+        }
     }
 }
