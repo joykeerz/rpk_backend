@@ -15,7 +15,6 @@ class checkRole
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
-        // dd($roles);
         $user = $request->user();
 
         if (!$user || !in_array($user->role_id, $roles)) {
