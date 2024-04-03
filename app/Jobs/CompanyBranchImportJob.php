@@ -30,7 +30,7 @@ class CompanyBranchImportJob implements ShouldQueue
     public function importCompany(Odoo $odoo)
     {
         Log::info('Fetching company data from ERP...');
-        $erpCompany = $odoo->model('res.company')->fields(['id', 'code', 'name', 'partner_id', 'user_id', 'street', 'zip'])->get();
+        $erpCompany = $odoo->model('res.company')->fields(['id', 'code', 'name', 'pricelist_id', 'partner_id', 'user_id', 'street', 'zip'])->get();
 
         Log::info('Looping through company data...');
         foreach ($erpCompany as $company) {
@@ -56,6 +56,7 @@ class CompanyBranchImportJob implements ShouldQueue
                 'id' => $company->id,
                 // 'user_id' => $company->user_id[0],
                 'alamat_id' => $insertAlamatGetId,
+                'pricelist_id' => $company->pricelist_id[0],
                 'kode_company' => $company->code,
                 'nama_company' => $company->name,
                 'partner_company' => 'none',

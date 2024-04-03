@@ -8,8 +8,10 @@ use App\Jobs\GudangImportJob;
 use App\Jobs\ImportStockJob;
 use App\Jobs\LocationImportJob;
 use App\Jobs\PartnerImportJob;
+use App\Jobs\PaymentTermImportJob;
 use App\Jobs\PriceImportJob;
 use App\Jobs\ProductImportJob;
+use App\Jobs\RekeningImportJob;
 use App\Jobs\UserImportJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -43,6 +45,12 @@ class SynchronizeController extends Controller
 
             dispatch(new LocationImportJob($odoo));
             Log::info('Location Import Job Dispatched Successfully');
+
+            dispatch(new RekeningImportJob($odoo));
+            Log::info('Rekening Sync Job Dispatched Successfully');
+
+            dispatch(new PaymentTermImportJob($odoo));
+            Log::info('Payment Terms Sync Job Dispatched Successfully');
 
             return redirect()->route('home')->with('Message', 'Synchronize All Data Successfuly running in background');
         } catch (\Throwable $th) {
