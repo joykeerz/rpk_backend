@@ -121,9 +121,12 @@ class DetailPesanan extends Component
 
     public function debugOdoo(Odoo $odoo)
     {
-        // $soFromErp = $odoo->model('sale.order')->where('id', '=', '998091')->first();
+        // $soFromErp = $odoo->model('account.journal')->where('id', '=', '40851')->first();
+        // $soFromErp = $odoo->model('account.payment.term')->where('id', '=', '1')->first();
+        // $soFromErp = $odoo->model('res.company')->where('id', '=', '137')->first();
+        // $soFromErp = $odoo->model('sale.order')->where('id', '=', '998103')->first();
         // $res = $odoo->model('sale.order.line')->where('id', '=', '1153486')->first();
-        // dd($res);
+        // dd($soFromErp);
 
         $detailPesananToPush = [];
 
@@ -159,14 +162,18 @@ class DetailPesanan extends Component
             'partner_id' => $kodeCustomer,
             'branch_id' => intval($transaksi->branch_id),
             'warehouse_id' => intval($this->gudangId),
+            'penjualan_type_id' => 2,
             'pricelist_id' => 291,
+            // 'analytic_account_id' => 2582, //analytic account
+            // 'team_id' => 11, // sub saluran penjualan
             'origin' => "mobile rpk",
             // 'Payment_Term_id' => 2,
             'cara_pembayaran' => $transaksi->tipe_pembayaran,
-            'sale_type' => 'pso',
-            'pso_type' => 39,
+            'sale_type' => 'komersial',
+            'pso_type' => 30,
             // 'is_from_rpk_mobile' => true,
-            'order_line' => $detailPesananToPush,
+            // 'order_line' => $detailPesananToPush,
+            'journal_id' => '', // ini nomor rekening
         ]);
 
         $soFromErp = $odoo->model('sale.order')->where('id', '=', $id)->first();
