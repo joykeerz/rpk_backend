@@ -56,7 +56,7 @@ class CompanyBranchImportJob implements ShouldQueue
                 'id' => $company->id,
                 // 'user_id' => $company->user_id[0],
                 'alamat_id' => $insertAlamatGetId,
-                'pricelist_id' => $company->pricelist_id[0],
+                'pricelist_id' => $company->pricelist_id ? $company->pricelist_id[0] : 291,
                 'kode_company' => $company->code,
                 'nama_company' => $company->name,
                 'partner_company' => 'none',

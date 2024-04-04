@@ -31,8 +31,9 @@ class RekeningImportJob implements ShouldQueue
         $offset = 0;
 
         do {
-            $rekenings = $odoo->model('stock.quant')
-                ->fields(['id', 'branch_id', 'company_id', 'display_name', 'name', 'bank_acc_number'])
+            $rekenings = $odoo->model('account.journal')
+                ->fields(['id', 'branch_owner_id', 'company_id', 'display_name', 'name', 'bank_acc_number'])
+                ->where('is_xendit_payment', '=', true)
                 ->offset($offset)
                 ->limit($pageSize)
                 ->get();
@@ -44,7 +45,7 @@ class RekeningImportJob implements ShouldQueue
             foreach ($rekenings as $rekening) {
                 $dataToInsert[] = [
                     'id' => $rekening->id,
-                    'branch_id' => $rekening->branch_id[0],
+                    'branch_id' => $rekening->branch_owner_id ? $rekening->branch_owner_id[0] : false,
                     'company_id' => $rekening->company_id[0],
                     'display_name' => $rekening->display_name,
                     'name' => $rekening->name,
@@ -54,7 +55,7 @@ class RekeningImportJob implements ShouldQueue
             }
 
             if (!empty($dataToInsert)) {
-                Log::info('inserting Rekening data to database :' . $offset . '-' . $pageSize);
+                Log::info('inserting Rekening data to database :' . $offset);
                 $this->insertData($dataToInsert);
             }
 
@@ -66,7 +67,7 @@ class RekeningImportJob implements ShouldQueue
 
     private function insertData(array $dataToInsert)
     {
-        DB::table('prices')->upsert($dataToInsert, ['id'], ['bank_acc_number']);
+        DB::table('rekening_tujuan')->upsert($dataToInsert, ['id'], ['bank_acc_number']);
     }
 
     /**

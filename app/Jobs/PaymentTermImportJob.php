@@ -32,34 +32,34 @@ class PaymentTermImportJob implements ShouldQueue
         $offset = 0;
 
         do {
-            $paymentTerms = $odoo->model('stock.quant')
-                ->fields(['id', 'company_id', 'name', 'tipe_penjualan'])
+            $paymentTerms = $odoo->model('account.payment.term')
+                ->fields(['id', 'company_id', 'name', 'type_penjualan'])
                 ->offset($offset)
                 ->limit($pageSize)
                 ->get();
-            Log::info('Rekening data retrieved from erp');
+            Log::info('Payment Term retrieved from erp');
 
             $dataToInsert = [];
 
-            Log::info('looping through Rekening data');
+            Log::info('looping through Payment Term data');
             foreach ($paymentTerms as $paymentTerm) {
                 $dataToInsert[] = [
                     'id' => $paymentTerm->id,
                     'company_id' => $paymentTerm->company_id[0],
                     'name' => $paymentTerm->name,
-                    'tipe_penjualan' => $paymentTerm->tipe_penjualan,
+                    'tipe_penjualan' => $paymentTerm->type_penjualan,
                 ];
             }
 
             if (!empty($dataToInsert)) {
-                Log::info('inserting Rekening data to database :' . $offset . '-' . $pageSize);
+                Log::info('inserting Payment Term to database :' . $offset);
                 $this->insertData($dataToInsert);
             }
 
             $offset += $pageSize;
         } while (!empty($rekenings));
 
-        Log::info('Rekening Sync Job Finished');
+        Log::info('Payment Terms Sync Job Finished');
     }
 
     private function insertData(array $dataToInsert)

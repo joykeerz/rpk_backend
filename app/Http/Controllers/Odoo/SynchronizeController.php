@@ -60,6 +60,9 @@ class SynchronizeController extends Controller
 
     public function syncDebug(Odoo $odoo)
     {
+        $data = $odoo->model('sale.order')->fields(['pricelist_id'])->where('id', '=', '998103')->first();
+        dd($data);
+        /*
         // $data = $odoo->model('product.product')->fields(['name', 'display_name', 'categ_id', 'uom_id', 'default_code'])->limit(5)->get();
         $data = $odoo->model('stock.quant')
             // ->fields(['id', 'product_id', 'warehouse_id', 'quantity'])
@@ -71,5 +74,6 @@ class SynchronizeController extends Controller
             ->limit(1)
             ->get();
         dd($data);
+        */
     }
 }
