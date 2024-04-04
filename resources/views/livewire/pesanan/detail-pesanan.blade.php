@@ -116,11 +116,13 @@
                             <div tabindex="0" role="button" class="btn btn-sm m-1">
                                 Sync SO
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
+                                <span wire:loading wire:target="debugOdoo"
+                                    class="loading loading-spinner loading-xs"></span>
                             </div>
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a wire:click.prevent="debugOdoo">Sync to ERP</a></li>
-                                <li><a>Sync from ERP</a></li>
+                                <li><a wire:loading.class="hidden" wire:click.prevent="debugOdoo">Generate SO</a></li>
+                                {{-- <li><a>Sync from ERP</a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -267,22 +269,25 @@
             </div>
             <div class="collapse-content">
                 @forelse ($salesOrders as $salesOrder)
-                    <div class="flex items-center justify-between px-4 mb-2">
+                    <div class="flex items-center justify-between px-4 mb-2 mt-4">
                         {{-- OUT(name | sale.order) --}}
-                        <span>{{ $salesOrder->sale_order_code }}</span>
+                        <span>Code: {{ $salesOrder->sale_order_code }} | {{ $salesOrder->erp_sale_order_id }}</span>
                         {{-- STATUS(state | stock.picking) --}}
-                        <span>{{ $salesOrder->sale_order_status }}</span>
+                        <span>Status: {{ $salesOrder->sale_order_status }}</span>
                     </div>
 
                     <table class="table table-sm table-zebra border bg-white">
                         <thead>
-                            <th>SHO(product.id | product.product)</th>
-                            <th>Done(quantity_done | stock.picking)</th>
-                            <th>UOM(product_uom | product.uom)</th>
+                            {{-- (product.id | product.product) --}}
+                            <th>Produk</th>
+                            {{-- (quantity_done | stock.picking) --}}
+                            <th>Done</th>
+                            {{-- (product_uom | product.uom) --}}
+                            <th>UOM</th>
                         </thead>
                         <tbody>
                             @forelse ($salesOrder->orderLines as $orderLine)
-                                <tr>
+                                <tr class="hover">
                                     <td>{{ $orderLine->produk_id }}</td>
                                     <td>{{ $orderLine->qty_done }}</td>
                                     <td>{{ $orderLine->uom }}</td>

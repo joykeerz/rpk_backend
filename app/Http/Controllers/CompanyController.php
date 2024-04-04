@@ -6,6 +6,7 @@ use App\Models\Alamat;
 use App\Models\Branch;
 use App\Models\Company;
 use App\Models\Gudang;
+use App\Models\RekeningTujuan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -106,6 +107,10 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
+
+        $rekening = RekeningTujuan::where('name', 'NOT ILIKE', '%cod%')->get();
+
+
         $company = DB::table('companies')
             // ->join('users', 'companies.user_id', '=', 'users.id')
             ->join('alamat', 'companies.alamat_id', '=', 'alamat.id')
@@ -121,7 +126,7 @@ class CompanyController extends Controller
             ], '404');
         }
 
-        return view('company.show', ['company' => $company, 'usersData' => $usersData]);
+        return view('company.show', ['company' => $company, 'rekening' => $rekening, 'usersData' => $usersData]);
     }
 
     /**

@@ -34,6 +34,7 @@ use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\SatuanUnitController;
 use App\Livewire\DatasTable;
 use App\Livewire\Etalase\EtalaseIndex;
+use App\Livewire\Payment\PaymentOption;
 use App\Livewire\Pesanan\DetailPesanan;
 
 /*
@@ -289,5 +290,9 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('etalase')->middleware('restrictRole:4')->group(function () {
         // Route::get('/', EtalaseIndex::class)->name('etalase.index');
         Route::get('/', DatasTable::class)->name('etalase.index');
+    });
+
+    Route::prefix('payment')->middleware('restrictRole:4')->group(function () {
+        Route::get('/', PaymentOption::class)->name('payment.option.index');
     });
 });

@@ -158,6 +158,34 @@
                         name="tb_external_id" id="tb_external_id" placeholder=""
                         value="{{ $company->external_company_id }}">
                 </div>
+
+                <div class="pricelist_id">
+                    <label for="pricelist_id" class="block text-sm font-medium text-gray-700">Pricelist ID</label>
+                    <input readonly type="text"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300
+                    focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border p-1"
+                        name="pricelist_id" id="pricelist_id" placeholder="pricelist"
+                        value="{{ $company->pricelist_id }}">
+                </div>
+
+                <div class="rekening_tujuan_id">
+                    <label for="rekening_tujuan_id" class="block text-sm font-medium text-gray-700">Rekening Tujuan
+                        (Aktif)</label>
+                    <select name="rekening_tujuan_id" id="rekening_tujuan_id" class="border rounded-md py-2 px-3 w-full">
+                        <option disabled selected>Pilih Rekening Tujuan</option>
+                        @forelse ($rekening as $rek)
+                            <option value="{{ $rek->id }}"
+                                {{ $rek->company_id == $company->cid ? 'selected' : '' }}>
+                                {{ $rek->name }} - {{ $rek->bank_acc_number }}
+                            </option>
+                        @empty
+                            <option disabled selected>No Data</option>
+                        @endforelse
+                    </select>
+
+                </div>
+
+
             </div>
             <div class="buttonContainer flex justify-center p-4">
                 <button type="submit"

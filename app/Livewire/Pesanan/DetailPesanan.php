@@ -2,13 +2,17 @@
 
 namespace App\Livewire\Pesanan;
 
+use App\Models\Company;
 use App\Models\Kurir;
 use App\Models\OrderLine;
 use App\Models\Pesanan;
+use App\Models\RekeningTujuan;
 use App\Models\SalesOrder;
 use App\Models\Stok;
 use App\Models\Transaksi;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Obuchmann\OdooJsonRpc\Odoo;
@@ -129,6 +133,9 @@ class DetailPesanan extends Component
         // dd($soFromErp);
 
         $detailPesananToPush = [];
+        $companyId = Auth::user()->company_id;
+        $pricelistId = Company::find($companyId)->pluck('pricelist_id')->first();
+        $rekeningTujuan = RekeningTujuan::where('name', 'NOT ILIKE', '%cod%')->where('company_id', $companyId)->pluck('id')->first();
 
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
@@ -163,17 +170,16 @@ class DetailPesanan extends Component
             'branch_id' => intval($transaksi->branch_id),
             'warehouse_id' => intval($this->gudangId),
             'penjualan_type_id' => 2,
-            'pricelist_id' => 291,
-            // 'analytic_account_id' => 2582, //analytic account
-            // 'team_id' => 11, // sub saluran penjualan
+            'pricelist_id' => $pricelistId,
+            'analytic_account_id' => 2582, //analytic account
+            'team_id' => 11, // sub saluran penjualan
             'origin' => "mobile rpk",
-            // 'Payment_Term_id' => 2,
+            'payment_term_id' => 1,
             'cara_pembayaran' => $transaksi->tipe_pembayaran,
             'sale_type' => 'komersial',
             'pso_type' => 30,
-            // 'is_from_rpk_mobile' => true,
-            // 'order_line' => $detailPesananToPush,
-            'journal_id' => '', // ini nomor rekening
+            'order_line' => $detailPesananToPush,
+            'journal_id' => $rekeningTujuan, // ini nomor rekening
         ]);
 
         $soFromErp = $odoo->model('sale.order')->where('id', '=', $id)->first();
@@ -195,6 +201,71 @@ class DetailPesanan extends Component
             $newOrderLine->save();
         }
 
-        dump($id);
+        $isConfirmSo = $this->confirmSalesOrder($id);
+
+        if ($isConfirmSo) {
+            $soFromErp = $odoo->model('sale.order')->where('id', '=', $id)->first();
+            $salesOrder->sale_order_code = $soFromErp->name;
+            $salesOrder->sale_order_status = $soFromErp->state;
+            $salesOrder->save();
+        }
+    }
+
+    public function confirmSalesOrder($id)
+    {
+        $odooUrl = 'http://10.254.222.80:8069/web/session/authenticate';
+
+        $database = 'beras_erp_dev';
+        $username = 'admin';
+        $password = 'admin';
+
+        $loginPayload = [
+            'jsonrpc' => '2.0',
+            'method' => 'call',
+            'params' => [
+                'login' => $username,
+                'password' => $password,
+                'db' => $database,
+            ],
+            'id' => 1,
+        ];
+
+        $loginResponse = Http::post($odooUrl, $loginPayload);
+
+        if ($loginResponse->successful()) {
+            $odooUrl = 'http://10.254.222.80:8069/web/dataset/call_kw';
+
+            $sessionId = $loginResponse->json()['result']['session_id'];
+
+            $executePayload = [
+                'jsonrpc' => '2.0',
+                'method' => 'call',
+                'id' => 2,
+                'params' => [
+                    'context' => [],
+                    'model' => 'sale.order',
+                    'method' => 'action_confirm',
+                    'args' => [$id],
+                    'kwargs' => [
+                        'context' => []
+                    ]
+                ]
+            ];
+
+            $executeResponse = Http::withHeaders(['Cookie' => 'session_id=' . $sessionId])->post($odooUrl, $executePayload);
+
+            if ($executeResponse->successful()) {
+                $result = $executeResponse->json()['result'];
+                return $result;
+            } else {
+                $errorMessage = $executeResponse->json()['error']['message'];
+                dump($id);
+                dump($errorMessage);
+            }
+        } else {
+            $errorMessage = $loginResponse->json()['error']['message'];
+            dump($id);
+            dump($errorMessage);
+        }
     }
 }
