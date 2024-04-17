@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "htmx.org": "^1.9.9",
-        "sweetalert2": "^11.9.0"
+        "sweetalert2": "^11.9.0",
+        "toastr": "^2.1.4"
     }
 }
