@@ -69,6 +69,8 @@
 
     @include('livewire.payment.payment-option-modal')
 
+    @include('livewire.payment.payment-option-edit')
+
 </div>
 
 @section('script')

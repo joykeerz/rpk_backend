@@ -19,12 +19,19 @@ class PaymentOption extends Component
     /// Ui Variables
     public $search;
     public $isOpen = false;
+    public $isEdit = false;
     public $perPage = 5;
 
     /// Input Variables
     public $rekeningTujuanId;
     public $paymentTermId;
     public $paymentType;
+
+    // EditingVariable
+    public $paymentOptionIdEdit;
+    public $rekeningTujuanIdEdit;
+    public $paymentTermIdEdit;
+    public $paymentTypeEdit;
 
     /// Database Variables
     public $companyId;
@@ -102,5 +109,42 @@ class PaymentOption extends Component
     public function closeModal()
     {
         $this->isOpen = false;
+    }
+
+    public function openEdit($id)
+    {
+        $paymentOption = ModelsPaymentOption::find($id);
+        $this->paymentOptionIdEdit = $id;
+        $this->rekeningTujuanIdEdit = $paymentOption->rekening_tujuan_id;
+        $this->paymentTermIdEdit = $paymentOption->payment_term_id;
+        $this->paymentTypeEdit= $paymentOption->payment_type;
+        $this->isEdit = true;
+    }
+
+    public function saveEdit()
+    {
+        $this->validate([
+            'rekeningTujuanIdEdit' => 'required',
+            'paymentTermIdEdit' => 'required',
+            'paymentTypeEdit' => 'required'
+        ], [
+            'rekeningTujuanIdEdit.required' => 'rekening tujuan tidak boleh kosong',
+            'paymentTermIdEdit.required' => 'payment term tidak boleh kosong',
+            'paymentTypeEdit.required' => 'tipe payment tidak boleh kosong',
+        ]);
+
+        $paymentOption = ModelsPaymentOption::find($this->paymentOptionIdEdit);
+        $paymentOption->rekening_tujuan_id = $this->rekeningTujuanIdEdit;
+        $paymentOption->payment_term_id = $this->paymentTermIdEdit;
+        $paymentOption->payment_type = $this->paymentTypeEdit;
+        $paymentOption->save();
+        $this->reset(['paymentOptionIdEdit', 'rekeningTujuanIdEdit', 'paymentTermIdEdit', 'paymentTypeEdit']);
+        $this->closeEdit();
+    }
+
+    public function closeEdit()
+    {
+        $this->reset(['rekeningTujuanIdEdit', 'paymentTermIdEdit', 'paymentTypeEdit']);
+        $this->isEdit = false;
     }
 }
