@@ -8,6 +8,7 @@ use App\Models\RekeningTujuan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -21,10 +22,19 @@ class PaymentOption extends Component
     public $isEdit = false;
 
     //query filters
+    #[Url(history: true)]
     public $search;
+
+    #[Url(history: true)]
     public $perPage = 5;
+
+    #[Url(history: true)]
     public $statusFilter = '';
+
+    #[Url(history: true)]
     public $sortBy = 'payment_options.created_at';
+
+    #[Url(history: true)]
     public $sortDir = 'DESC';
 
     /// Input Variables
