@@ -17,10 +17,15 @@ class PaymentOption extends Component
     use WithPagination;
 
     /// Ui Variables
-    public $search;
     public $isOpen = false;
     public $isEdit = false;
+
+    //query filters
+    public $search;
     public $perPage = 5;
+    public $statusFilter = '';
+    public $sortBy = 'payment_options.created_at';
+    public $sortDir = 'DESC';
 
     /// Input Variables
     public $rekeningTujuanId;
@@ -55,6 +60,7 @@ class PaymentOption extends Component
             )
             ->where('payment_options.company_id', $this->companyId)
             ->where('rekening_tujuan.bank_acc_number', 'ilike', "%{$this->search}%")
+            ->orderBy($this->sortBy, $this->sortDir)
             ->paginate($this->perPage);
 
         $rekeningTujuanList = RekeningTujuan::all();
@@ -111,13 +117,24 @@ class PaymentOption extends Component
         $this->isOpen = false;
     }
 
+    public function setSortBy($sortByColumn)
+    {
+        if ($this->sortBy === $sortByColumn) {
+            $this->sortDir = ($this->sortDir == "ASC" ? "DESC" : "ASC");
+            return;
+        }
+
+        $this->sortBy = $sortByColumn;
+        $this->sortDir = "DESC";
+    }
+
     public function openEdit($id)
     {
         $paymentOption = ModelsPaymentOption::find($id);
         $this->paymentOptionIdEdit = $id;
         $this->rekeningTujuanIdEdit = $paymentOption->rekening_tujuan_id;
         $this->paymentTermIdEdit = $paymentOption->payment_term_id;
-        $this->paymentTypeEdit= $paymentOption->payment_type;
+        $this->paymentTypeEdit = $paymentOption->payment_type;
         $this->isEdit = true;
     }
 

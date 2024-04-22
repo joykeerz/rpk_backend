@@ -29,16 +29,60 @@
         <table id="myTable" class="table table-sm table-zebra min-w-full">
             <thead>
                 <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
-                    Rek.
+                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    wire:click="setSortBy('rekening_tujuan.name')">
+                    <button class="flex items-center">
+                        @if ($sortBy !== 'rekening_tujuan.name')
+                            <i class="fa-solid fa-sort mr-1"></i>
+                        @elseif ($sortDir === 'ASC')
+                            <i class="fa-solid fa-sort-up mr-1"></i>
+                        @else
+                            <i class="fa-solid fa-sort-down mr-1"></i>
+                        @endif
+                        Nama Rek.
+                    </button>
                 </th>
-                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">No. Rek.
+                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    wire:click="setSortBy('rekening_tujuan.bank_acc_number')">
+                    <button class="flex items-center">
+                        @if ($sortBy !== 'rekening_tujuan.bank_acc_number')
+                            <i class="fa-solid fa-sort mr-1"></i>
+                        @elseif ($sortDir === 'ASC')
+                            <i class="fa-solid fa-sort-up mr-1"></i>
+                        @else
+                            <i class="fa-solid fa-sort-down mr-1"></i>
+                        @endif
+                        No. Rek.
+                    </button>
                 </th>
-                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Payment
-                    Term</th>
-                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe
+                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    wire:click="setSortBy('payment_terms.name')">
+                    <button class="flex items-center">
+                        @if ($sortBy !== 'payment_terms.name')
+                            <i class="fa-solid fa-sort mr-1"></i>
+                        @elseif ($sortDir === 'ASC')
+                            <i class="fa-solid fa-sort-up mr-1"></i>
+                        @else
+                            <i class="fa-solid fa-sort-down mr-1"></i>
+                        @endif
+                        Payment Term
+                    </button>
                 </th>
-                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions
+                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    wire:click="setSortBy('payment_options.payment_type')">
+                    <button class="flex items-center">
+                        @if ($sortBy !== 'payment_options.payment_type')
+                            <i class="fa-solid fa-sort mr-1"></i>
+                        @elseif ($sortDir === 'ASC')
+                            <i class="fa-solid fa-sort-up mr-1"></i>
+                        @else
+                            <i class="fa-solid fa-sort-down mr-1"></i>
+                        @endif
+                        Tipe
+                    </button>
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
                 </th>
             </thead>
             <tbody>
