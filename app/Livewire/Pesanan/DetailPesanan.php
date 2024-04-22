@@ -24,6 +24,7 @@ class DetailPesanan extends Component
     public $transactionId;
     public $gudangId;
     public $isEdit = false;
+    public $isDocumentOut = true;
 
     //input variables
     public $tipePembayaran;
@@ -36,10 +37,16 @@ class DetailPesanan extends Component
     public function mount($id)
     {
         $this->transactionId = $id;
+
+
+        if (SalesOrder::where('transaksi_id', $this->transactionId)->first()) {
+            $this->isDocumentOut = false;
+        }
     }
 
     public function render()
     {
+        // dd($this->isDocumentOut);
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
             ->join('users', 'users.id', '=', 'pesanan.user_id')
@@ -56,6 +63,19 @@ class DetailPesanan extends Component
             ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
             ->get();
 
+        $paymentOptionInfo = DB::table('payment_options')
+            ->join('rekening_tujuan', 'rekening_tujuan.id', 'payment_options.rekening_tujuan_id')
+            ->join('payment_terms', 'payment_terms.id', 'payment_options.payment_term_id')
+            ->where('payment_options.id', $transaksi->payment_option_id)
+            ->select(
+                'payment_options.id as payment_options_id',
+                'payment_options.payment_type',
+                'rekening_tujuan.display_name',
+                'rekening_tujuan.bank_acc_number',
+                'payment_terms.name'
+            )
+            ->first();
+
         $salesOrders = SalesOrder::where('transaksi_id', $this->transactionId)->get();
         foreach ($salesOrders as $salesOrder) {
             $salesOrder->load('orderLines');
@@ -71,7 +91,8 @@ class DetailPesanan extends Component
             'detailPesanan' => $detailPesanan,
             'statusPemesananOpt' => $statusPemesananOpt,
             'kurirOpt' => $kurirOpt,
-            'salesOrders' => $salesOrders
+            'salesOrders' => $salesOrders,
+            'paymentOptionInfo' => $paymentOptionInfo
         ]);
     }
 
@@ -135,7 +156,6 @@ class DetailPesanan extends Component
         $detailPesananToPush = [];
         $companyId = Auth::user()->company_id;
         $pricelistId = Company::find($companyId)->pluck('pricelist_id')->first();
-        $rekeningTujuan = RekeningTujuan::where('name', 'NOT ILIKE', '%cod%')->where('company_id', $companyId)->pluck('id')->first();
 
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
@@ -145,6 +165,17 @@ class DetailPesanan extends Component
             ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
             ->where('transaksi.id', '=', $this->transactionId)
             ->select('biodata.branch_id', 'biodata.kode_customer', 'transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
+            ->first();
+
+        $paymentOptionData = DB::table('payment_options')
+            ->join('rekening_tujuan', 'rekening_tujuan.id', 'payment_options.rekening_tujuan_id')
+            ->join('payment_terms', 'payment_terms.id', 'payment_options.payment_term_id')
+            ->where('payment_options.id', $transaksi->payment_option_id)
+            ->select(
+                'payment_options.id as payment_options_id',
+                'rekening_tujuan.id as rekening_tujuan_id',
+                'payment_terms.id as payment_terms_id'
+            )
             ->first();
 
         $parts = explode('-', $transaksi->kode_customer);
@@ -174,12 +205,12 @@ class DetailPesanan extends Component
             'analytic_account_id' => 2582, //analytic account
             'team_id' => 11, // sub saluran penjualan
             'origin' => "mobile rpk",
-            'payment_term_id' => 1,
+            'payment_term_id' => $paymentOptionData->payment_terms_id,
             'cara_pembayaran' => $transaksi->tipe_pembayaran,
             'sale_type' => 'komersial',
             'pso_type' => 30,
             'order_line' => $detailPesananToPush,
-            'journal_id' => $rekeningTujuan, // ini nomor rekening
+            'journal_id' => $paymentOptionData->rekening_tujuan_id, // ini nomor rekening
         ]);
 
         $soFromErp = $odoo->model('sale.order')->where('id', '=', $id)->first();
@@ -196,7 +227,8 @@ class DetailPesanan extends Component
             $newOrderLine = new OrderLine;
             $newOrderLine->sales_order_id = $salesOrder->id;
             $newOrderLine->produk_id = $orderLineDetail->product_id[0];
-            $newOrderLine->qty_done = $orderLineDetail->product_uom_qty;
+            // $newOrderLine->qty_done = $orderLineDetail->product_uom_qty;
+            $newOrderLine->qty_done = 0;
             $newOrderLine->uom = $orderLineDetail->sh_sec_uom[1];
             $newOrderLine->save();
         }
@@ -209,6 +241,8 @@ class DetailPesanan extends Component
             $salesOrder->sale_order_status = $soFromErp->state;
             $salesOrder->save();
         }
+
+        $this->isDocumentOut = true;
     }
 
     public function confirmSalesOrder($id)

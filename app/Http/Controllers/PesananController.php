@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailPesanan;
 use App\Models\Kurir;
+use App\Models\PaymentOption;
 use App\Models\Pesanan;
 use App\Models\Stok;
 use App\Models\Transaksi;
@@ -100,6 +101,7 @@ class PesananController extends Controller
 
     public function newOrder($id)
     {
+
         $currentEntity = DB::table('companies')
             ->join('branches', 'branches.company_id', '=', 'companies.id')
             ->join('users', 'users.company_id', '=', 'companies.id')
@@ -116,6 +118,12 @@ class PesananController extends Controller
             ->get();
 
         $kurir = Kurir::all();
+
+        $paymentOptions = DB::table('payment_options')
+            ->join('rekening_tujuan', 'rekening_tujuan.id', 'payment_options.rekening_tujuan_id')
+            ->select('payment_options.id', 'payment_options.payment_type', 'rekening_tujuan.bank_acc_number', 'rekening_tujuan.name', 'rekening_tujuan.display_name')
+            ->where('payment_options.company_id', Auth::user()->company_id)
+            ->get();
 
         // $stok = DB::table('stok')
         //     ->join('produk', 'produk.id', '=', 'stok.produk_id')
@@ -159,7 +167,7 @@ class PesananController extends Controller
 
         // dd($stok2);
 
-        return view('pesanan.newOrderEx', ['product' => $stok2, 'users' => $biodata, 'kurir' => $kurir, 'gudang_id' => $id, 'kodeCompany' => $kodeCompany->kode_company]);
+        return view('pesanan.newOrderEx', ['product' => $stok2, 'users' => $biodata, 'kurir' => $kurir, 'gudang_id' => $id, 'kodeCompany' => $kodeCompany->kode_company, 'paymentOptions' => $paymentOptions]);
     }
 
     public function storeOrder(Request $request)
@@ -246,6 +254,7 @@ class PesananController extends Controller
         $transaksi->dpp_dibebaskan = $request->data['userData'][9];
         $transaksi->ppn_dibebaskan = $request->data['userData'][10];
         $transaksi->nomor_pembayaran = $request->data['userData'][12];
+        $transaksi->payment_option_id = $request->data['userData'][13];
         $transaksi->save();
 
         return response()->json([

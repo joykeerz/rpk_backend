@@ -156,6 +156,16 @@
                 <input type="text" name="tb_nomor_pembayaran" id="tb_nomor_pembayaran"
                     class="input input-bordered input-sm">
             </div>
+            <div class="tb_payment_option flex flex-col">
+                <label for="tb_payment_option">Payment To</label>
+                <select name="tb_payment_option" id="tb_payment_option" class="input input-bordered input-sm">
+                    <option selected disabled aria-placeholder="pilih Payment">Pilih Payment</option>
+                    @foreach ($paymentOptions as $paymentOption)
+                        <option id="tb_payment_option" value="{{ $paymentOption->id }}">
+                            {{ $paymentOption->display_name }} - {{ $paymentOption->payment_type }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
         <button
             class="flex justify-center px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200"
@@ -284,6 +294,7 @@
                 tb_alamat_id: $('#tb_alamat_id').val(),
                 tb_kurir_id: $('#tb_kurir_id').val(),
                 tb_gudang_id: $('#tb_gudang_id').val(),
+                tb_payment_option: $('#tb_payment_option').val(),
                 tb_kode_company: $('#tb_kode_company').val(),
             };
 
@@ -304,6 +315,7 @@
                 tb_ppn_dibebaskan: $('#ppnDibebaskan').text(),
                 tb_nama_penerima: $('#tb_nama_penerima').val(),
                 tb_nomor_pembayaran: $('#tb_nomor_pembayaran').val(),
+                tb_payment_option: userData.tb_payment_option,
             };
 
             $('tbody tr:not(:last-child)').each(function() {
@@ -352,6 +364,7 @@
                     tb_ppn_dibebaskan = userDataWithAddressID.tb_ppn_dibebaskan,
                     tb_nama_penerima = userDataWithAddressID.tb_nama_penerima,
                     tb_nomor_pembayaran = userDataWithAddressID.tb_nomor_pembayaran,
+                    tb_payment_option = userDataWithAddressID.tb_payment_option,
                 ]
             };
 

@@ -58,7 +58,7 @@
                         <select wire:model.defer="paymentType" class="select select-bordered">
                             <option disrebled selected>Pilih satu</option>
                             <option value="transfer">Transfer</option>
-                            <option value="cod">COD</option>
+                            <option value="tunai">COD (Tunai)</option>
                         </select>
                         @error('paymentType')
                             <div class="label">

@@ -62,7 +62,7 @@
                             <option selected value="{{ $paymentTypeEdit }}">{{ $paymentTypeEdit }}
                             </option>
                             <option value="transfer">Transfer</option>
-                            <option value="cod">COD</option>
+                            <option value="tunai">COD (Tunai)</option>
                         </select>
                         @error('paymentTypeEdit')
                             <div class="label">

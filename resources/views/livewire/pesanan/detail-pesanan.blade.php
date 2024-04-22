@@ -121,8 +121,13 @@
                             </div>
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a wire:loading.class="hidden" wire:click.prevent="generateSalesOrder">Generate SO</a></li>
-                                {{-- <li><a>Sync from ERP</a></li> --}}
+                                @if ($isDocumentOut)
+                                    <li><a wire:loading.class="hidden" wire:click.prevent="generateSalesOrder">Generate
+                                            SO</a></li>
+                                    {{-- <li><a>Sync from ERP</a></li> --}}
+                                @else
+                                    <li><a>So Already Generated!</a></li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -255,8 +260,41 @@
 
                     </dl>
                 </div>
+            </div>
 
+            <div class="p-4">
+                <div class="flex items-center">
+                    <i class="fa-solid fa-credit-card text-gray-500 mr-2 text-xl"></i>
+                    <h2 class="text-xl font-semibold text-gray-800">Payment Info</h2>
+                </div>
+                <p class="text-gray-600 mt-2">
+                    Informasi Tujuan Pembayaran (Bulog)
+                <p>
+                <div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
+                    <dl class="-my-3 divide-y divide-gray-100 text-sm">
+                        <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                            <dt class="font-medium text-gray-900">Tujuan</dt>
+                            <dd class="text-gray-700 sm:col-span-2">
+                                {{ $paymentOptionInfo->display_name }}
+                            </dd>
+                        </div>
 
+                        <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                            <dt class="font-medium text-gray-900">No. Rek.</dt>
+                            <dd class="text-gray-700 sm:col-span-2">{{ $paymentOptionInfo->bank_acc_number }}</dd>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                            <dt class="font-medium text-gray-900">Tipe Payment</dt>
+                            <dd class="text-gray-700 sm:col-span-2">{{ $paymentOptionInfo->payment_type }}</dd>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                            <dt class="font-medium text-gray-900">Payment Term</dt>
+                            <dd class="text-gray-700 sm:col-span-2">{{ $paymentOptionInfo->name }}</dd>
+                        </div>
+                    </dl>
+                </div>
             </div>
         </div>
     </div>
@@ -271,7 +309,10 @@
                 @forelse ($salesOrders as $salesOrder)
                     <div class="flex items-center justify-between px-4 mb-2 mt-4">
                         {{-- OUT(name | sale.order) --}}
-                        <span>Code: {{ $salesOrder->sale_order_code }} | {{ $salesOrder->erp_sale_order_id }}</span>
+                        <span>
+                            <div class="badge badge-neutral">Code: {{ $salesOrder->sale_order_code }}</div> |
+                            ID{{ $salesOrder->erp_sale_order_id }}
+                        </span>
                         {{-- STATUS(state | stock.picking) --}}
                         <span>Status: {{ $salesOrder->sale_order_status }}</span>
                     </div>
