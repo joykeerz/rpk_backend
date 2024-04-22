@@ -116,12 +116,12 @@
                             <div tabindex="0" role="button" class="btn btn-sm m-1">
                                 Sync SO
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
-                                <span wire:loading wire:target="debugOdoo"
+                                <span wire:loading wire:target="generateSalesOrder"
                                     class="loading loading-spinner loading-xs"></span>
                             </div>
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a wire:loading.class="hidden" wire:click.prevent="debugOdoo">Generate SO</a></li>
+                                <li><a wire:loading.class="hidden" wire:click.prevent="generateSalesOrder">Generate SO</a></li>
                                 {{-- <li><a>Sync from ERP</a></li> --}}
                             </ul>
                         </div>

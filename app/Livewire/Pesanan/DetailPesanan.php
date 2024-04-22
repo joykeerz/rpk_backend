@@ -123,7 +123,7 @@ class DetailPesanan extends Component
         $this->reset('tipePembayaran', 'statusPembayaran', 'statusPemesanan', 'kurir');
     }
 
-    public function debugOdoo(Odoo $odoo)
+    public function generateSalesOrder(Odoo $odoo)
     {
         // $soFromErp = $odoo->model('account.journal')->where('id', '=', '40851')->first();
         // $soFromErp = $odoo->model('account.payment.term')->where('id', '=', '1')->first();

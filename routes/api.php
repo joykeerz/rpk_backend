@@ -38,5 +38,5 @@ Route::prefix('ajax')->group(function () {
 });
 
 Route::prefix('rpk')->group(function () {
-    Route::post('/so/create/order-line', [SalesOrderController::class, 'createOrderLine']);
+    Route::post('/so/create/order-line/{id}', [SalesOrderController::class, 'createOrderLine']);
 });
