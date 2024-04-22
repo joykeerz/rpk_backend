@@ -38,7 +38,6 @@ class DetailPesanan extends Component
     {
         $this->transactionId = $id;
 
-
         if (SalesOrder::where('transaksi_id', $this->transactionId)->first()) {
             $this->isDocumentOut = false;
         }
@@ -146,13 +145,6 @@ class DetailPesanan extends Component
 
     public function generateSalesOrder(Odoo $odoo)
     {
-        // $soFromErp = $odoo->model('account.journal')->where('id', '=', '40851')->first();
-        // $soFromErp = $odoo->model('account.payment.term')->where('id', '=', '1')->first();
-        // $soFromErp = $odoo->model('res.company')->where('id', '=', '137')->first();
-        // $soFromErp = $odoo->model('sale.order')->where('id', '=', '998103')->first();
-        // $res = $odoo->model('sale.order.line')->where('id', '=', '1153486')->first();
-        // dd($soFromErp);
-
         $detailPesananToPush = [];
         $companyId = Auth::user()->company_id;
         $pricelistId = Company::find($companyId)->pluck('pricelist_id')->first();
