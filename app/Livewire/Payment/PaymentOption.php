@@ -42,7 +42,7 @@ class PaymentOption extends Component
     public $paymentTermId;
     public $paymentType;
 
-    // EditingVariable
+    /// Editing Variable
     public $paymentOptionIdEdit;
     public $rekeningTujuanIdEdit;
     public $paymentTermIdEdit;

@@ -219,7 +219,6 @@ class DetailPesanan extends Component
             $newOrderLine = new OrderLine;
             $newOrderLine->sales_order_id = $salesOrder->id;
             $newOrderLine->produk_id = $orderLineDetail->product_id[0];
-            // $newOrderLine->qty_done = $orderLineDetail->product_uom_qty;
             $newOrderLine->qty_done = 0;
             $newOrderLine->uom = $orderLineDetail->sh_sec_uom[1];
             $newOrderLine->save();
