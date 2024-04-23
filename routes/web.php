@@ -35,6 +35,7 @@ use App\Http\Controllers\SatuanUnitController;
 use App\Livewire\DatasTable;
 use App\Livewire\Etalase\EtalaseIndex;
 use App\Livewire\Payment\PaymentOption;
+use App\Livewire\Payment\PaymentType;
 use App\Livewire\Pesanan\DetailPesanan;
 
 /*
@@ -294,5 +295,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('payment')->middleware('restrictRole:4')->group(function () {
         Route::get('/', PaymentOption::class)->name('payment.option.index');
+        Route::get('/type', PaymentType::class)->name('payment.type.index');
     });
 });

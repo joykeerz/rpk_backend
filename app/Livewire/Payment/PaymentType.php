@@ -19,7 +19,11 @@ class PaymentType extends Component
     {
         $paymentTypes = ModelsPaymentType::all();
         return view('livewire.payment.payment-type', [
-            'paymentOptions' => $paymentTypes
+            'paymentTypes' => $paymentTypes
         ]);
+    }
+
+    public function createType()
+    {
     }
 }
