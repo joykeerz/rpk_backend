@@ -49,7 +49,7 @@ use App\Livewire\Pesanan\DetailPesanan;
 */
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index']);
 
 Auth::routes();
 
