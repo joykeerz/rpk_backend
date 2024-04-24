@@ -13,7 +13,7 @@
                         </button>
                     </li>
                     <li>
-                        <button wire:click="delete({{ $paymentType->id }})" onclick="return confirmDelete();"
+                        <button wire:click="deleteType({{ $paymentType->id }})" onclick="return confirmDelete();"
                             class="btn btn-sm btn-outline">
                             <i class="fa-solid fa-trash"></i>Delete
                         </button>

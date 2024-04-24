@@ -17,9 +17,10 @@
                 Manage Payment Type
             </h2>
             <div class="button">
-                <button class="btn btn-sm btn-primary" wire:click="openModal">
+                <button class="btn btn-sm btn-primary" wire:click="openInsert">
                     <i class="fa-solid fa-add"></i>
                     New Type
+                    <span wire:loading wire:target="openInsert" class="loading loading-spinner loading-xs"></span>
                 </button>
             </div>
         </div>
@@ -64,10 +65,9 @@
         {{ $paymentOptions->links('pagination::tailwind') }}
     </div> --}}
 
-    {{-- @include('livewire.payment.payment-option-modal') --}}
+    @include('livewire.payment.payment-type-modal')
 
-    {{-- @include('livewire.payment.payment-option-edit') --}}
-
+    @include('livewire.payment.payment-type-edit')
 </div>
 
 @section('script')

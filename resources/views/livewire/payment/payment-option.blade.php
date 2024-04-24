@@ -16,11 +16,20 @@
             <h2>
                 Manage Payment Options
             </h2>
-            <div class="button">
-                <button class="btn btn-sm btn-primary" wire:click="openModal">
-                    <i class="fa-solid fa-add"></i>
-                    New Payment
-                </button>
+            <div class="flex gap-1">
+                <div class="button">
+                    <button class="btn btn-sm btn-primary" wire:click="openModal">
+                        <i class="fa-solid fa-add"></i>
+                        New Payment
+                    </button>
+                </div>
+
+                <div class="button">
+                    <a class="btn btn-sm btn-outline" href="{{ route('payment.type.index') }}">
+                        <i class="fa-solid fa-add"></i>
+                        Payment Types
+                    </a>
+                </div>
             </div>
         </div>
     </header>
