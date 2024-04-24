@@ -12,6 +12,7 @@
     {{-- <script src="http://10.254.222.45:8081/rpk_backend/vendor/livewire/livewire/dist/livewire.js"></script> --}}
 </head>
 
+
 <body>
     @yield('navbar')
     <div class="flex">
