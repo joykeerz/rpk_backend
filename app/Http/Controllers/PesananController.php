@@ -153,11 +153,26 @@ class PesananController extends Controller
             ->where('gudang.id', '=', $id)
             ->first();
 
-        $stok2 = DB::table('stok')
+        /// query tanpa stok etalase
+        // $stok2 = DB::table('stok')
+        //     ->join('produk', 'produk.id', '=', 'stok.produk_id')
+        //     ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
+        //     ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
+        //     ->join('prices', 'prices.id', '=', 'stok.id')
+        //     ->select('prices.price_value', 'stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
+        //     ->where('prices.company_id', Auth::user()->company_id)
+        //     ->where('stok.gudang_id', '=', $id)
+        //     ->where('stok.jumlah_stok', '>', 0)
+        //     ->distinct('prices.produk_id') // ini datanya jadi lebih sedikit. kalo ga dipake bakal ada kode produk duplikat, tapi memang dari import erp banyak data duplikat
+        //     ->get();
+
+        /// query stok etalase
+        $stokEtalase = DB::table('stok_etalase')
+            ->join('stok', 'stok.id', 'stok_etalase.stok_id')
+            ->join('prices', 'prices.id', '=', 'stok.id')
             ->join('produk', 'produk.id', '=', 'stok.produk_id')
             ->join('satuan_unit', 'satuan_unit.id', '=', 'produk.satuan_unit_id')
             ->join('pajak', 'pajak.id', '=', 'produk.pajak_id')
-            ->join('prices', 'prices.id', '=', 'stok.id')
             ->select('prices.price_value', 'stok.*', 'produk.*', 'pajak.jenis_pajak', 'pajak.persentase_pajak', 'satuan_unit.satuan_unit_produk', 'satuan_unit.id as suid', 'stok.id as sid', 'produk.id as pid')
             ->where('prices.company_id', Auth::user()->company_id)
             ->where('stok.gudang_id', '=', $id)
@@ -165,9 +180,7 @@ class PesananController extends Controller
             ->distinct('prices.produk_id') // ini datanya jadi lebih sedikit. kalo ga dipake bakal ada kode produk duplikat, tapi memang dari import erp banyak data duplikat
             ->get();
 
-        // dd($stok2);
-
-        return view('pesanan.newOrderEx', ['product' => $stok2, 'users' => $biodata, 'kurir' => $kurir, 'gudang_id' => $id, 'kodeCompany' => $kodeCompany->kode_company, 'paymentOptions' => $paymentOptions]);
+        return view('pesanan.newOrderEx', ['product' => $stokEtalase, 'users' => $biodata, 'kurir' => $kurir, 'gudang_id' => $id, 'kodeCompany' => $kodeCompany->kode_company, 'paymentOptions' => $paymentOptions]);
     }
 
     public function storeOrder(Request $request)
@@ -230,7 +243,7 @@ class PesananController extends Controller
                 ], 200);
             }
 
-            $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
+            // $currentStok->decrement('jumlah_stok', $request->data['orderDetails'][$key]['tb_jumlah_produk']);
             $currentStok->save();
 
             $total_qty += $request->data['orderDetails'][$key]['tb_jumlah_produk'];

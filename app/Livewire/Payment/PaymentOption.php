@@ -4,6 +4,7 @@ namespace App\Livewire\Payment;
 
 use App\Models\PaymentOption as ModelsPaymentOption;
 use App\Models\PaymentTerm;
+use App\Models\PaymentType;
 use App\Models\RekeningTujuan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -61,12 +62,14 @@ class PaymentOption extends Component
         $paymentOptions = DB::table('payment_options')
             ->join('rekening_tujuan', 'rekening_tujuan.id', 'payment_options.rekening_tujuan_id')
             ->join('payment_terms', 'payment_terms.id', 'payment_options.payment_term_id')
+            ->join('payment_types', 'payment_types.id', 'payment_options.payment_type')
             ->select(
                 'payment_options.id',
                 'rekening_tujuan.name as rekening_name',
                 'rekening_tujuan.bank_acc_number',
                 'payment_terms.name as term_name',
-                'payment_options.payment_type'
+                'payment_options.payment_type',
+                'payment_types.display_name'
             )
             ->where('payment_options.company_id', $this->companyId)
             ->where('rekening_tujuan.bank_acc_number', 'ilike', "%{$this->search}%")
@@ -77,10 +80,13 @@ class PaymentOption extends Component
 
         $paymentTerms = PaymentTerm::all();
 
+        $paymentTypes = PaymentType::all();
+
         return view('livewire.payment.payment-option', [
             'paymentOptions' => $paymentOptions,
             'paymentTerms' => $paymentTerms,
             'rekeningTujuanList' => $rekeningTujuanList,
+            'paymentTypes' => $paymentTypes
         ]);
     }
 

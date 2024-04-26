@@ -57,8 +57,11 @@
                         </div>
                         <select wire:model.defer="paymentType" class="select select-bordered">
                             <option disrebled selected>Pilih satu</option>
-                            <option value="transfer">Transfer</option>
-                            <option value="tunai">COD (Tunai)</option>
+                            @forelse ($paymentTypes as $paymentType)
+                                <option value="{{ $paymentType->id }}">{{ $paymentType->display_name }}</option>
+                            @empty
+                                <option disrebled selected>No Data</option>
+                            @endforelse
                         </select>
                         @error('paymentType')
                             <div class="label">
