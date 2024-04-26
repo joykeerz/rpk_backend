@@ -62,7 +62,7 @@ class PaymentOption extends Component
         $paymentOptions = DB::table('payment_options')
             ->join('rekening_tujuan', 'rekening_tujuan.id', 'payment_options.rekening_tujuan_id')
             ->join('payment_terms', 'payment_terms.id', 'payment_options.payment_term_id')
-            ->join('payment_types', 'payment_types.id', 'payment_options.payment_type')
+            ->join('payment_types', 'payment_types.id', 'payment_options.payment_type_id')
             ->select(
                 'payment_options.id',
                 'rekening_tujuan.name as rekening_name',

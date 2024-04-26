@@ -4,13 +4,7 @@
         <td class="px-6 py-4 whitespace-nowrap">{{ $paymentOption->rekening_name }}</td>
         <td class="px-6 py-4 whitespace-nowrap">{{ $paymentOption->bank_acc_number }}</td>
         <td class="px-6 py-4 whitespace-nowrap">{{ $paymentOption->term_name }}</td>
-        <td class="px-6 py-4 whitespace-nowrap">
-            @if ($paymentOption->payment_type == "tunai")
-                COD
-            @else
-                Transfer
-            @endif
-        </td>
+        <td class="px-6 py-4 whitespace-nowrap">{{ $paymentOption->display_name }}</td>
         <td class="px-6 py-4 whitespace-nowrap flex justify-center items-center gap-1">
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn m-1"><i class="fa-solid fa-ellipsis-vertical"></i></div>
