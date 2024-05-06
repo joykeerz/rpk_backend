@@ -1,4 +1,5 @@
 <?php
+/* Etalase Page */
 
 namespace App\Livewire;
 

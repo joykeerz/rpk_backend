@@ -65,20 +65,24 @@ class DetailPesanan extends Component
         $paymentOptionInfo = DB::table('payment_options')
             ->join('rekening_tujuan', 'rekening_tujuan.id', 'payment_options.rekening_tujuan_id')
             ->join('payment_terms', 'payment_terms.id', 'payment_options.payment_term_id')
+            ->join('payment_types', 'payment_types.id', 'payment_options.payment_type_id')
             ->where('payment_options.id', $transaksi->payment_option_id)
             ->select(
                 'payment_options.id as payment_options_id',
                 'payment_options.payment_type',
                 'rekening_tujuan.display_name',
                 'rekening_tujuan.bank_acc_number',
-                'payment_terms.name'
+                'payment_terms.name',
+                'payment_types.display_name as payment_type_display'
             )
             ->first();
 
         $salesOrders = SalesOrder::where('transaksi_id', $this->transactionId)->get();
+
         foreach ($salesOrders as $salesOrder) {
-            $salesOrder->load('orderLines');
+            $salesOrder->load('orderLines.produk');
         }
+
         $statusPemesananOpt = ['menunggu verifikasi', 'diproses', 'dikirim', 'selesai', 'batal'];
 
         $kurirOpt = Kurir::all();

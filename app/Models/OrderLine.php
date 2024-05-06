@@ -14,4 +14,9 @@ class OrderLine extends Model
     {
         return $this->belongsTo(SalesOrder::class, 'sales_order_id');
     }
+
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
+    }
 }

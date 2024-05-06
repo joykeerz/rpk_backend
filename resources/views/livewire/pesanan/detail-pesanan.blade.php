@@ -287,7 +287,8 @@
 
                         <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                             <dt class="font-medium text-gray-900">Tipe Payment</dt>
-                            <dd class="text-gray-700 sm:col-span-2">{{ $paymentOptionInfo->payment_type }}</dd>
+                            <dd class="text-gray-700 sm:col-span-2">{{ $paymentOptionInfo->payment_type_display }}
+                            </dd>
                         </div>
 
                         <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
@@ -330,7 +331,7 @@
                         <tbody>
                             @forelse ($salesOrder->orderLines as $orderLine)
                                 <tr class="hover">
-                                    <td>{{ $orderLine->produk_id }}</td>
+                                    <td>{{ $orderLine->produk->nama_produk }}</td>
                                     <td>{{ $orderLine->qty_done }}</td>
                                     <td>{{ $orderLine->uom }}</td>
                                 </tr>

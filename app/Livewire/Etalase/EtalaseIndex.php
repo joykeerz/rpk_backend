@@ -74,6 +74,7 @@ class EtalaseIndex extends Component
 
         if ($checkStock) {
             session()->flash('error', 'stok sudah ada');
+            return;
         } else {
             $addEtalase = StokEtalase::create([
                 'stok_id' => $this->stok_id,

@@ -253,7 +253,12 @@ class PesananController extends Controller
 
         $transaksi = new Transaksi;
         $transaksi->pesanan_id = $pesanan->id;
-        $transaksi->tipe_pembayaran = 'transfer';
+        $tipe_pembayaran = DB::table('payment_options')
+            ->where('payment_options.id', $request->data['userData'][13])
+            ->join('payment_types', 'payment_types.id', 'payment_options.payment_type_id')
+            ->pluck('type_name')
+            ->first();
+        $transaksi->tipe_pembayaran = $tipe_pembayaran;
         $transaksi->status_pembayaran = 'belum dibayar';
         $transaksi->subtotal_produk = $subtotal_produk;
         $transaksi->subtotal_pengiriman = $subtotal_pengiriman;
