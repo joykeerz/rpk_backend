@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Odoo;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\CompanyBranchImportJob;
+use App\Jobs\DaerahSyncJob;
 use App\Jobs\GudangImportJob;
 use App\Jobs\ImportStockJob;
 use App\Jobs\LocationImportJob;
@@ -60,20 +61,10 @@ class SynchronizeController extends Controller
 
     public function syncDebug(Odoo $odoo)
     {
-        $data = $odoo->model('sale.order')->fields(['pricelist_id'])->where('id', '=', '998103')->first();
-        dd($data);
-        /*
-        // $data = $odoo->model('product.product')->fields(['name', 'display_name', 'categ_id', 'uom_id', 'default_code'])->limit(5)->get();
-        $data = $odoo->model('stock.quant')
-            // ->fields(['id', 'product_id', 'warehouse_id', 'quantity'])
-            ->where('location_id', '!=', 5)
-            // ->where('warehouse_id', '!=', false)
-            ->where('quantity', '>', 0)
-            ->where('product_id.type', '=', 'product')
-            ->where('location_id.usage', '=', 'internal')
-            ->limit(1)
-            ->get();
-        dd($data);
-        */
+        $soFromErp = $odoo->model('sale.order')->where('id', '=', 998151)->first();
+        $orderLineDetail = $odoo->model('sale.order.line')->where('id', '=', 1153666)->first();
+        $stockPicking = $odoo->model('stock.picking')->where('sale_id', '=', 998151)->first();
+        $jenisPartner = $odoo->model('jenis.partner')->get();
+        dd($soFromErp, $orderLineDetail, $stockPicking, $jenisPartner);
     }
 }

@@ -11,7 +11,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Obuchmann\OdooJsonRpc\Odoo;
 
 class CustomerController extends Controller
 {
@@ -39,7 +41,7 @@ class CustomerController extends Controller
                         ->orWhere('nama_rpk', 'ilike', '%' . $search . '%')
                         ->orWhere('email', 'ilike', '%' . $search . '%');
                 })
-                ->orderby('biodata.created_at', 'desc')
+                ->orderby('biodata.created_at', 'asc')
                 ->paginate(15);
         } elseif (Auth::user()->role_id == 4) {
             $currentEntity = DB::table('companies')
@@ -68,11 +70,12 @@ class CustomerController extends Controller
                             ->orWhere('nama_rpk', 'ilike', '%' . $search . '%')
                             ->orWhere('email', 'ilike', '%' . $search . '%');
                     })
-                    ->orderby('biodata.created_at', 'desc')
+                    ->orderby('biodata.created_at', 'asc')
                     ->paginate(15);
 
                 return view('customer.index', ['customer' => $customer, 'currentEntity' => $currentEntity, 'isProvinsi' => $isProvinsi, 'provinsi' => $request->provinsi]);
             } else {
+
                 $customer = DB::table('biodata')
                     ->join('users', 'users.id', '=', 'biodata.user_id')
                     ->join('alamat', 'alamat.id', '=', 'biodata.alamat_id')
@@ -163,10 +166,11 @@ class CustomerController extends Controller
         $user = new User;
         $user->id = DB::table('users')->max('id') + 1;
         $user->role_id = 5;
+        $user->company_id = DB::table('companies')->where('kode_company', $request->cb_kode_company)->value('id');
         $user->name = $request->tb_nama_user;
         $user->email = $request->tb_email_user;
-        $user->password = Hash::make($request->tb_password_user);
         $user->no_hp = $request->tb_hp_user;
+        $user->password = Hash::make($request->tb_password_user);
         $user->save();
 
         $alamat = new Alamat;
@@ -184,22 +188,22 @@ class CustomerController extends Controller
         $alamat->save();
 
         $customer = new Biodata;
-        $customer->id = DB::table('biodata')->max('id') + 1;
         $customer->user_id = $user->id;
         $customer->alamat_id = $alamat->id;
         $customer->kode_customer = $request->tb_kode_customer;
-        $customer->branch_id = $request->cb_branch_id;
         $customer->nama_rpk = $request->tb_nama_rpk;
         $customer->no_ktp = $request->tb_ktp_rpk;
-        if ($request->has('cb_kode_company')) {
-            $customer->kode_company = $request->cb_kode_company;
-        }
-
         if ($request->hasFile('tb_img_ktp')) {
             $filePath = $request->file('tb_img_ktp')->store('images/ktp', 'public');
             $validatedData['tb_img_ktp'] = $filePath;
             $customer->ktp_img = $filePath;
         }
+
+        if ($request->has('cb_kode_company')) {
+            $customer->kode_company = $request->cb_kode_company;
+        }
+        $customer->branch_id = $request->cb_branch_id;
+
         $customer->save();
 
         $daftarAlamat = DaftarAlamat::create([
@@ -311,16 +315,20 @@ class CustomerController extends Controller
         $alamat->delete();
         $user->delete();
 
-
         return redirect()->route('customer.index')->with('success', 'Data customer berhasil dihapus');
     }
 
-    public function verify($id)
+    public function verify($id, Odoo $odoo)
     {
         $userData = User::find($id);
         $userData->isVerified = 1;
         $userData->save();
-        return redirect()->back()->with('success', "Akun {$userData->name} berhasil diverifikasi");
+
+        $biodata = Biodata::where('user_id', $id)->first();
+
+        $alamat = Alamat::find($biodata->alamat_id);
+
+        $this->addToErp($userData, $biodata, $alamat, $odoo);
     }
 
     public function reject($id)
@@ -329,5 +337,49 @@ class CustomerController extends Controller
         $userData->isVerified = 2;
         $userData->save();
         return redirect()->back()->with('success', "Akun {$userData->name} berhasil diverifikasi");
+    }
+
+    public function addToErp($user, $biodata, $alamat, Odoo $odoo)
+    {
+        Log::info("adding to erp");
+
+        $resPartner = $odoo->create('res.partner', [
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->no_hp,
+            'mobile' => $user->no_hp,
+            'login_user' => $user->no_hp,
+            'nama_id_rpk' => $biodata->nama_rpk,
+            'ktp' => $biodata->no_ktp,
+            'cabang_terdaftar' => $biodata->branch_id,
+            'jenis_partner' => 2,
+            'street' => $alamat->jalan,
+            'street2' => $alamat->jalan_ext,
+            'blok' => $alamat->blok,
+            'rt' => $alamat->rt,
+            'rw' => $alamat->rw,
+            'zip' => $alamat->kode_pos,
+            'country_id' => 100,
+            // 'is_rpk_partner' => true,
+            'default_warehouse_id' => 1804,
+            'warehouse_company_id' => 115,
+        ]);
+
+        if (!$resPartner) {
+            return redirect()->route('customer.index')->with('error', 'Data customer gagal dimasukan ke erp');
+        }
+        Log::info("done adding to erp");
+        Log::info("updating current user id with erp");
+
+        // $user = User::find($user->id);
+        // $user->external_user_id = $resPartner;
+        // $user->save();
+
+        $biodata = Biodata::where('user_id', $user->id)->first();
+        $biodata->kode_customer = $resPartner . '-' . $biodata->nama_rpk;
+        $biodata->save();
+
+        Log::info("updating done");
+        return redirect()->back()->with('success', "Akun $user->name dengan id $user->id berhasil diverifikasi");
     }
 }

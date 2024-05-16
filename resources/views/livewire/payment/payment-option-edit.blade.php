@@ -59,10 +59,13 @@
                             <span class="label-text">Tipe Payment*</span>
                         </div>
                         <select wire:model.defer="paymentTypeEdit" class="select select-bordered">
-                            <option selected value="{{ $paymentTypeEdit }}">{{ $paymentTypeEdit }}
-                            </option>
-                            <option value="transfer">Transfer</option>
-                            <option value="tunai">COD (Tunai)</option>
+                            @forelse ($paymentTypes as $paytype)
+                                <option value="{{ $paytype->id }}"
+                                    {{ $paymentTypeEdit == $paytype ? 'selected' : '' }}>{{ $paytype->display_name }}
+                                </option>
+                            @empty
+                                <option disabled selected>No Data</option>
+                            @endforelse
                         </select>
                         @error('paymentTypeEdit')
                             <div class="label">

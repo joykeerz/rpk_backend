@@ -78,9 +78,9 @@
                     </button>
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    wire:click="setSortBy('payment_options.payment_type')">
+                    wire:click="setSortBy('payment_options.display_name')">
                     <button class="flex items-center">
-                        @if ($sortBy !== 'payment_options.payment_type')
+                        @if ($sortBy !== 'payment_options.display_name')
                             <i class="fa-solid fa-sort mr-1"></i>
                         @elseif ($sortDir === 'ASC')
                             <i class="fa-solid fa-sort-up mr-1"></i>

@@ -83,7 +83,7 @@ class DetailPesanan extends Component
             $salesOrder->load('orderLines.produk');
         }
 
-        $statusPemesananOpt = ['menunggu verifikasi', 'diproses', 'dikirim', 'selesai', 'batal'];
+        $statusPemesananOpt = ['menunggu verifikasi', 'terverifikasi', 'diproses', 'dikirim', 'selesai', 'batal', 'diterima'];
 
         $kurirOpt = Kurir::all();
 
@@ -133,10 +133,22 @@ class DetailPesanan extends Component
                 if ($currentStok->jumlah_stok == 0 || $currentStok->jumlah_stok < $detailPesanan->qty) {
                     session()->flash('error', 'Pesanan gagal ditambahkan, stok tidak mencukupi');
                 } else {
-                    $currentStok->decrement('jumlah_stok', $detailPesanan->qty);
-                    $currentStok->save();
+                    // $currentStok->decrement('jumlah_stok', $detailPesanan->qty);
+                    // $currentStok->save();
                 }
             }
+        }
+
+        if ($pesanan->status_pemesanan == 'dikirim') {
+            // code
+        }
+
+        if ($pesanan->status_pemesanan == 'selesai') {
+            // code
+        }
+
+        if ($pesanan->status_pemesanan == 'batal') {
+            // code
         }
 
         $this->clearInput();
@@ -166,11 +178,14 @@ class DetailPesanan extends Component
         $paymentOptionData = DB::table('payment_options')
             ->join('rekening_tujuan', 'rekening_tujuan.id', 'payment_options.rekening_tujuan_id')
             ->join('payment_terms', 'payment_terms.id', 'payment_options.payment_term_id')
+            ->join('payment_types', 'payment_types.id', 'payment_options.payment_type_id')
             ->where('payment_options.id', $transaksi->payment_option_id)
             ->select(
                 'payment_options.id as payment_options_id',
                 'rekening_tujuan.id as rekening_tujuan_id',
-                'payment_terms.id as payment_terms_id'
+                'payment_terms.id as payment_terms_id',
+                'payment_types.id as payment_type_id',
+                'payment_types.display_name',
             )
             ->first();
 
@@ -202,7 +217,7 @@ class DetailPesanan extends Component
             'team_id' => 11, // sub saluran penjualan
             'origin' => "mobile rpk",
             'payment_term_id' => $paymentOptionData->payment_terms_id,
-            'cara_pembayaran' => $transaksi->tipe_pembayaran,
+            'cara_pembayaran' => $paymentOptionData->display_name,
             'sale_type' => 'komersial',
             'pso_type' => 30,
             'order_line' => $detailPesananToPush,
@@ -236,6 +251,10 @@ class DetailPesanan extends Component
             $salesOrder->sale_order_status = $soFromErp->state;
             $salesOrder->save();
         }
+
+        $pesanan = Pesanan::where('id', $transaksi->pesanan_id)->first();
+        $pesanan->status_pemesanan = 'diproses';
+        $pesanan->save();
 
         $this->isDocumentOut = true;
     }

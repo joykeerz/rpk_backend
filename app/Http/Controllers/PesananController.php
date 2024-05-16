@@ -55,7 +55,7 @@ class PesananController extends Controller
         $detailPesanan = DB::table('detail_pesanan')
             ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
             ->join('pesanan', 'pesanan.id', '=', 'detail_pesanan.pesanan_id')
-            ->where('pesanan.id', '=', $transaksi->pesanan_id)
+            ->where('pesanan.id', '=', $transaksi->pid)
             ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
             ->get();
 
@@ -422,7 +422,7 @@ class PesananController extends Controller
     public function verify($id)
     {
         $pesanan = Pesanan::find($id);
-        $pesanan->status_pemesanan = 'diproses';
+        $pesanan->status_pemesanan = 'terverifikasi';
         $pesanan->save();
         return redirect()->route('pesanan.index', ['id' => $pesanan->gudang_id])->with('message', 'Transaksi berhasil diproses');
     }

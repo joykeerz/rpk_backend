@@ -15,7 +15,7 @@
                             <span class="label-text">Rekening Tujuan*</span>
                         </div>
                         <select wire:model.defer="rekeningTujuanId" class="select select-bordered">
-                            <option disrebled selected>Pilih satu</option>
+                            <option disabled selected>Pilih satu</option>
                             @forelse ($rekeningTujuanList as $key => $rekening)
                                 <option value="{{ $rekening->id }}">{{ $rekening->display_name }} -
                                     {{ $rekening->bank_acc_number }}
@@ -36,7 +36,7 @@
                             <span class="label-text">Payment Terms*</span>
                         </div>
                         <select wire:model.defer="paymentTermId" class="select select-bordered">
-                            <option disrebled selected>Pilih satu</option>
+                            <option disabled selected>Pilih satu</option>
                             @forelse ($paymentTerms as $key => $term)
                                 <option value="{{ $term->id }}">{{ $term->name }} - {{ $term->tipe_penjualan }}
                                 </option>
@@ -55,15 +55,15 @@
                         <div class="label">
                             <span class="label-text">Tipe Payment*</span>
                         </div>
-                        <select wire:model.defer="paymentType" class="select select-bordered">
-                            <option disrebled selected>Pilih satu</option>
-                            @forelse ($paymentTypes as $paymentType)
-                                <option value="{{ $paymentType->id }}">{{ $paymentType->display_name }}</option>
+                        <select wire:model.defer="paymentTypeId" class="select select-bordered">
+                            <option disabled selected>Pilih satu</option>
+                            @forelse ($paymentTypes as $paytype)
+                                <option value="{{ $paytype->id }}">{{ $paytype->display_name }}</option>
                             @empty
-                                <option disrebled selected>No Data</option>
+                                <option disabled selected>No Data</option>
                             @endforelse
                         </select>
-                        @error('paymentType')
+                        @error('paymentTypeId')
                             <div class="label">
                                 <span class="label-text-alt text-red-700">{{ $message }}</span>
                             </div>

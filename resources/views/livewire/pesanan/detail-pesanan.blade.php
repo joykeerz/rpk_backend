@@ -121,12 +121,16 @@
                             </div>
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                                @if ($isDocumentOut)
-                                    <li><a wire:loading.class="hidden" wire:click.prevent="generateSalesOrder">Generate
-                                            SO</a></li>
-                                    {{-- <li><a>Sync from ERP</a></li> --}}
+                                @if ($transaksi->status_pemesanan === 'menunggu verifikasi')
+                                    <li><a>Transaction not verified</a></li>
                                 @else
-                                    <li><a>So Already Generated!</a></li>
+                                    @if ($isDocumentOut)
+                                        <li><a wire:loading.class="hidden"
+                                                wire:click.prevent="generateSalesOrder">Generate
+                                                SO</a></li>
+                                    @else
+                                        <li><a>So Already Generated!</a></li>
+                                    @endif
                                 @endif
                             </ul>
 

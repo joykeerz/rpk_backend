@@ -41,7 +41,7 @@ class PaymentOption extends Component
     /// Input Variables
     public $rekeningTujuanId;
     public $paymentTermId;
-    public $paymentType;
+    public $paymentTypeId;
 
     /// Editing Variable
     public $paymentOptionIdEdit;
@@ -95,21 +95,21 @@ class PaymentOption extends Component
         $this->validate([
             'rekeningTujuanId' => 'required',
             'paymentTermId' => 'required',
-            'paymentType' => 'required'
+            'paymentTypeId' => 'required'
         ], [
             'rekeningTujuanId.required' => 'rekening tujuan tidak boleh kosong',
             'paymentTermId.required' => 'payment term tidak boleh kosong',
-            'paymentType.required' => 'tipe payment tidak boleh kosong',
+            'paymentTypeId.required' => 'tipe payment tidak boleh kosong',
         ]);
 
         $paymentOptions = ModelsPaymentOption::create([
             'company_id' => $this->companyId,
             'rekening_tujuan_id' => $this->rekeningTujuanId,
             'payment_term_id' => $this->paymentTermId,
-            'payment_type' => $this->paymentType
+            'payment_type_id' => $this->paymentTypeId
         ]);
 
-        $this->reset(['rekeningTujuanId', 'paymentTermId', 'paymentType']);
+        $this->reset(['rekeningTujuanId', 'paymentTermId', 'paymentTypeId']);
 
         session()->flash('message', 'payment option berhasil dibuat');
 
@@ -169,7 +169,7 @@ class PaymentOption extends Component
         $paymentOption = ModelsPaymentOption::find($this->paymentOptionIdEdit);
         $paymentOption->rekening_tujuan_id = $this->rekeningTujuanIdEdit;
         $paymentOption->payment_term_id = $this->paymentTermIdEdit;
-        $paymentOption->payment_type = $this->paymentTypeEdit;
+        $paymentOption->payment_type_id = $this->paymentTypeEdit;
         $paymentOption->save();
         $this->reset(['paymentOptionIdEdit', 'rekeningTujuanIdEdit', 'paymentTermIdEdit', 'paymentTypeEdit']);
         $this->closeEdit();
