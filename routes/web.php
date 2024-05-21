@@ -34,6 +34,7 @@ use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\SatuanUnitController;
 use App\Livewire\DatasTable;
 use App\Livewire\Etalase\EtalaseIndex;
+use App\Livewire\Kurir\KurirIndex;
 use App\Livewire\Payment\PaymentOption;
 use App\Livewire\Payment\PaymentType;
 use App\Livewire\Pesanan\DetailPesanan;
@@ -296,5 +297,9 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('payment')->middleware('restrictRole:4')->group(function () {
         Route::get('/', PaymentOption::class)->name('payment.option.index');
         Route::get('/type', PaymentType::class)->name('payment.type.index');
+    });
+
+    Route::prefix('kurir')->middleware('restrictRole:2,4')->group(function () {
+        Route::get('/', KurirIndex::class)->name('kurir-index.index');
     });
 });

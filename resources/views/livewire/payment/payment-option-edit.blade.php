@@ -15,7 +15,7 @@
                             <span class="label-text">Rekening Tujuan*</span>
                         </div>
                         <select wire:model.defer="rekeningTujuanIdEdit" class="select select-bordered">
-                            <option disrebled selected>Pilih satu</option>
+                            <option disabled selected>Pilih satu</option>
                             @forelse ($rekeningTujuanList as $key => $rekening)
                                 <option {{ $rekening->rekening_tujuan_id == $rekeningTujuanIdEdit ? 'selected' : '' }}
                                     value="{{ $rekening->id }}">
@@ -38,7 +38,7 @@
                             <span class="label-text">Payment Terms*</span>
                         </div>
                         <select wire:model.defer="paymentTermIdEdit" class="select select-bordered">
-                            <option disrebled selected>Pilih satu</option>
+                            <option disabled selected>Pilih satu</option>
                             @forelse ($paymentTerms as $key => $term)
                                 <option {{ $rekening->payment_term_id == $paymentTermIdEdit ? 'selected' : '' }}
                                     value="{{ $term->id }}">{{ $term->name }} - {{ $term->tipe_penjualan }}
