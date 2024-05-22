@@ -423,6 +423,7 @@ class PesananController extends Controller
     {
         $pesanan = Pesanan::find($id);
         $pesanan->status_pemesanan = 'terverifikasi';
+        $pesanan->is_confirmed = true;
         $pesanan->save();
         return redirect()->route('pesanan.index', ['id' => $pesanan->gudang_id])->with('message', 'Transaksi berhasil diproses');
     }
