@@ -52,18 +52,32 @@ class KurirIndex extends Component
 
     /// Database Variables
     public $companyId;
+    public $userRole;
     public $deliveryTypeEnum = ['fixed', 'base_on_rule', 'rajaongkir'];
+
     public function mount()
     {
         $this->companyId = Auth::user()->company_id;
+        $this->userRole = Auth::user()->role_id;
     }
 
     public function render()
     {
-        $kurir = Kurir::where('kurir.company_id', $this->companyId)
-            ->where('kurir.nama_kurir', 'ilike', "%{$this->search}%")
-            ->orderBy($this->sortBy, $this->sortDir)
-            ->paginate($this->perPage);
+        $kurir = '';
+        if ($this->userRole == 4) {
+            $kurir = Kurir::where('kurir.nama_kurir', 'ilike', "%{$this->search}%")
+                ->orderBy($this->sortBy, $this->sortDir)
+                ->paginate($this->perPage);
+        }
+
+        if ($this->userRole == 2) {
+            $kurir = Kurir::where('kurir.company_id', $this->companyId)
+                ->where('kurir.nama_kurir', 'ilike', "%{$this->search}%")
+                ->orderBy($this->sortBy, $this->sortDir)
+                ->paginate($this->perPage);
+        }
+
+
         return view('livewire.kurir.kurir-index', [
             'couriers' => $kurir,
         ]);
