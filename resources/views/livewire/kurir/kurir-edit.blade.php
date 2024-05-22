@@ -8,7 +8,7 @@
                 </button>
             </div>
 
-            <form wire:submit="saveEdit">
+            <form wire:submit="saveEdit" enctype="multipart/form-data">
                 <div class="flex mt-2 gap-1">
                     <label class="form-control w-full max-w-xs">
                         <div class="label">

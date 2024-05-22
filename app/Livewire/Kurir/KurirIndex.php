@@ -60,8 +60,7 @@ class KurirIndex extends Component
 
     public function render()
     {
-        $kurir = DB::table('kurir')
-            ->where('kurir.company_id', $this->companyId)
+        $kurir = Kurir::where('kurir.company_id', $this->companyId)
             ->where('kurir.nama_kurir', 'ilike', "%{$this->search}%")
             ->orderBy($this->sortBy, $this->sortDir)
             ->paginate($this->perPage);
@@ -139,7 +138,7 @@ class KurirIndex extends Component
 
     public function openEdit($id)
     {
-        $kurir = Kurir::find($id);
+        $kurir = Kurir::where('id', $id)->first();
         $this->kurirIdEdit = $id;
         $this->namaKurirEdit = $kurir->nama_kurir;
         $this->deliveryTypeEdit = $kurir->delivery_type;
@@ -165,7 +164,7 @@ class KurirIndex extends Component
             'fixedPriceEdit.required' => 'fixed price tidak boleh kosong',
             'descriptionEdit.required' => 'deskripsi tidak boleh kosong',
             'marginPercentageEdit.required' => 'persentase margin tidak boleh kosong',
-            'imageKurirEdit' => 'gambar belum sesuai kriteria',
+            'imageKurirEdit.image' => 'file harus berupa gambar',
         ]);
 
         $kurir = Kurir::find($this->kurirIdEdit);
