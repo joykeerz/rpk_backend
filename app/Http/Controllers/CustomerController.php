@@ -329,6 +329,8 @@ class CustomerController extends Controller
         $alamat = Alamat::find($biodata->alamat_id);
 
         $this->addToErp($userData, $biodata, $alamat, $odoo);
+
+        return redirect()->route('customer.index')->with('success', 'Customer berhasil diverifikasi');
     }
 
     public function reject($id)
