@@ -7,14 +7,16 @@ return [
     | Must start with http:// or https:// and include port
     |--------------------------------------------------------------------------
     */
-    'host' => env('ODOO_HOST','http://10.254.222.80:8069'),
+    'host' => env('ODOO_HOST','http://10.254.223.80:8069'), // test
+    // 'host' => env('ODOO_HOST', 'http://10.254.222.80:8069'), // dev
 
     /*
     |--------------------------------------------------------------------------
     | Database name
     |--------------------------------------------------------------------------
     */
-    'database' => env('ODOO_DATABASE','beras_erp_dev'),
+    'database' => env('ODOO_DATABASE','beras_erp_06122023'), // test
+    // 'database' => env('ODOO_DATABASE', 'beras_erp_dev'), // dev
 
     /*
     |--------------------------------------------------------------------------

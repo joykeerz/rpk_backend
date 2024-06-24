@@ -15,6 +15,11 @@ class OrderLine extends Model
         return $this->belongsTo(SalesOrder::class, 'sales_order_id');
     }
 
+    public function outDocument()
+    {
+        return $this->belongsTo(OutDocument::class, 'out_document_id');
+    }
+
     public function produk()
     {
         return $this->belongsTo(Produk::class);

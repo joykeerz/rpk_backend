@@ -55,7 +55,7 @@
             </div>
 
             <div class="flex justify-center my-3"> <!-- Flex container to center the button -->
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+                <button type="submit" class="bg-yellowlog text-neutral py-2 px-4 rounded-md hover:bg-blue-600">
                     <i class="fa-solid fa-floppy-disk"></i>
                     Create
                 </button>

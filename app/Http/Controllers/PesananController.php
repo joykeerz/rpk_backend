@@ -24,6 +24,9 @@ class PesananController extends Controller
     public function index(Request $request, $id)
     {
         $search = $request->search;
+        $statusPemesanan = $request->status_pemesanan;
+        $statusPembayaran = $request->status_pembayaran;
+
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
             ->join('users', 'users.id', '=', 'pesanan.user_id')
@@ -31,14 +34,29 @@ class PesananController extends Controller
             ->select('transaksi.*', 'pesanan.*', 'users.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid')
             ->where('pesanan.gudang_id', '=', $id)
             ->when($search, function ($query, $search) {
-                $query->where('kode_transaksi', 'ilike', '%' . $search . '%')
-                    ->orWhere('name', 'ilike', '%' . $search . '%')
-                    ->orWhere('status_pembayaran', 'ilike', '%' . $search . '%');
+                $query->where(function ($q) use ($search) {
+                    $q->where('kode_transaksi', 'like', '%' . $search . '%')
+                        ->orWhere('users.name', 'like', '%' . $search . '%');
+                });
             })
+            ->when($statusPemesanan, function ($query, $statusPemesanan) {
+                $query->where('pesanan.status_pemesanan', '=', $statusPemesanan);
+            })
+            ->when($statusPembayaran, function ($query, $statusPembayaran) {
+                $query->where('transaksi.status_pembayaran', '=', $statusPembayaran);
+            })
+            ->orderByDesc('transaksi.created_at')
             ->paginate(15);
 
-        return view('pesanan.index', ['transaksi' => $transaksi, 'gudangId' => $id]);
+        return view('pesanan.index', [
+            'transaksi' => $transaksi,
+            'gudangId' => $id,
+            'search' => $search,
+            'statusPemesanan' => $statusPemesanan,
+            'statusPembayaran' => $statusPembayaran
+        ]);
     }
+
 
     public function show($id)
     { ///ini tampilin detail transaksi pesanan
@@ -423,8 +441,7 @@ class PesananController extends Controller
     {
         $pesanan = Pesanan::find($id);
         $pesanan->status_pemesanan = 'terverifikasi';
-        $pesanan->is_confirmed = true;
         $pesanan->save();
-        return redirect()->route('pesanan.index', ['id' => $pesanan->gudang_id])->with('message', 'Transaksi berhasil diproses');
+        return redirect()->route('pesanan.index', ['id' => $pesanan->gudang_id])->with('message', 'Transaksi berhasil diverifikasi');
     }
 }

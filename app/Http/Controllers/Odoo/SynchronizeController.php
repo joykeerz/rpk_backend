@@ -61,10 +61,20 @@ class SynchronizeController extends Controller
 
     public function syncDebug(Odoo $odoo)
     {
-        $soFromErp = $odoo->model('sale.order')->where('id', '=', 998151)->first();
-        $orderLineDetail = $odoo->model('sale.order.line')->where('id', '=', 1153666)->first();
-        $stockPicking = $odoo->model('stock.picking')->where('sale_id', '=', 998151)->first();
-        $jenisPartner = $odoo->model('jenis.partner')->get();
-        dd($soFromErp, $orderLineDetail, $stockPicking, $jenisPartner);
+        // $soFromErp = $odoo->model('sale.order')->where('id', '=', 998151)->first();
+        // $orderLineDetail = $odoo->model('sale.order.line')->where('id', '=', 1153666)->first();
+        // $stockPicking = $odoo->model('stock.picking')->where('sale_id', '=', 998151)->first();
+        // $jenisPartner = $odoo->model('jenis.partner')->get();
+        // dd($soFromErp, $orderLineDetail, $stockPicking, $jenisPartner);
+        // dispatch(new DaerahSyncJob($odoo));
+        // Log::info('Daerah Job Dispatched Successfully');
+        // return redirect()->route('home')->with('Message', 'Synchronize All Data Successfuly running in background');
+
+        // $kecamatan  = $odoo->model('res.kecamatan')->limit(20)->get();
+        // dd($kecamatan);
+
+        // $kecamatan  = $odoo->model('sale.order')->where('id','=','1389700')->first();
+        // $picking  = $odoo->model('stock.picking')->where('id','=','2235289')->first();
+        // dd($kecamatan,$picking);
     }
 }

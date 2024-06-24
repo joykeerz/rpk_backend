@@ -55,7 +55,6 @@ class ManageUserController extends Controller
         return redirect()->route('manage.user.index')->with('message', "Akun {$userData->name} berhasil diverifikasi");
     }
 
-
     public function reject($id)
     {
         $userData = User::find($id);

@@ -125,4 +125,26 @@ class MobileHandlerController extends Controller
         $filename = pathinfo($filepath, PATHINFO_FILENAME);
         return response()->json(['message' => 'Image uploaded successfully', 'path' => $filepath]);
     }
+
+    public function uploadNpwpImage(Request $request)
+    {
+        $request->validate([
+            'npwp_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:10000',
+        ]);
+        $image = $request->file('npwp_img');
+        $fileName = 'npwp_img_' . time() . '.' . $image->getClientOriginalExtension();
+        $path = $image->storeAs('images/npwp', $fileName, 'public');
+        return response()->json(['message' => 'Image uploaded successfully', 'path' => $path]);
+    }
+
+    public function uploadNibImage(Request $request)
+    {
+        $request->validate([
+            'nib_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:10000',
+        ]);
+        $image = $request->file('nib_img');
+        $fileName = 'nib_img_' . time() . '.' . $image->getClientOriginalExtension();
+        $path = $image->storeAs('images/nib', $fileName, 'public');
+        return response()->json(['message' => 'Image uploaded successfully', 'path' => $path]);
+    }
 }

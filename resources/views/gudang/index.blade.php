@@ -47,8 +47,12 @@
         </div>
     </header>
 
-    @include('layouts.alert')
-    @include('layouts.searchbar', ['routeName' => 'gudang.index'])
+    @include('layouts.alert-popup')
+
+    @include('layouts.searchbar', [
+        'routeName' => 'gudang.index',
+        'placeholder' => 'Masukkan nama gudang, contoh: Siron',
+    ])
     <div class="overflow-y-auto m-3">
         <table id="myTable" class="table table-sm table-zebra">
             <thead class="border text-center">
@@ -64,7 +68,7 @@
             <tbody class="text-center">
                 @forelse ($gudangData as $gudang)
                     <tr class="hover">
-                        <td class="p-3">{{ $loop->iteration }}</td>
+                        <td class="p-3">{{ $gudangData->firstItem() + $loop->index }}</td>
                         <td class="p-3">{{ $gudang->nama_gudang_erp }}</td>
                         {{-- <td class="p-3">
                             Provinsi: {{ $gudang->provinsi }}
@@ -74,14 +78,29 @@
                         <td class="p-3">{{ $gudang->nama_company }}</td>
                         <td class="p-3">{{ $gudang->last_synced_at }}</td>
                         <td class="p-3 flex justify-center">
-                            <a href="{{ route('gudang.show', ['id' => $gudang->gid]) }}"
-                                class="btn btn-sm btn-primary mr-2">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <a href="{{ route('gudang.delete', ['id' => $gudang->gid]) }}"
-                                onclick="return confirmDelete();" class="btn btn-sm btn-error text-white">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
+
+                            <div class="flex items-center">
+                                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </div>
+                                    <ul tabindex="0"
+                                        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li><a href="{{ route('gudang.show', ['id' => $gudang->gid]) }}">
+                                                {{-- <svg class="showIcon"> </svg> --}}
+                                                <i class="fa-solid fa-bars"></i>
+                                                Lihat detail
+                                            </a></li>
+                                        <li><a href="{{ route('gudang.delete', ['id' => $gudang->gid]) }}"
+                                                onclick="return confirmDelete();" class="text-red-600">
+                                                {{-- <svg class="deleteIcon"></svg> --}}
+                                                <i class="fa-solid fa-trash"></i>
+                                                Hapus produk
+
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </div>
 
                         </td>
                     </tr>

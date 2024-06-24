@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('mobile')->group(function () {
     Route::post('/receive-ktp-image', [MobileHandlerController::class, 'uploadKtpImage']);
+    Route::post('/receive-npwp-image', [MobileHandlerController::class, 'uploadNpwpImage']);
+    Route::post('/receive-nib-image', [MobileHandlerController::class, 'uploadNibImage']);
     Route::post('/receive-product-image', [MobileHandlerController::class, 'uploadProductImage']);
     Route::post('/receive-pembukuan-image', [MobileHandlerController::class, 'uploadAccountancyImage']);
     Route::post('/receive-payment-method-image', [MobileHandlerController::class, 'uploadPaymentMethodImage']);

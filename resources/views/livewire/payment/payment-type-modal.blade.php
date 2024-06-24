@@ -1,6 +1,6 @@
 @if ($isInsert)
-    <div class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex justify-center items-center">
-        <div class="bg-white rounded-lg p-8 transform transition-all duration-300 ease-out">
+    <div class="fixed inset-0 z-50 overflow-auto bg-neutral-950 bg-opacity-75 flex justify-center items-center">
+        <div class="bg-neutral-50 rounded-lg p-8 transform transition-all duration-300 ease-out">
             <div class="flex justify-between items-center">
                 <h2 class="text-lg font-bold mb-4">New Payment Type</h2>
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" wire:click="closeInsert">
@@ -14,8 +14,14 @@
                         <div class="label">
                             <span class="label-text">Nama Tipe*</span>
                         </div>
-                        <input wire:model="paymentType" type="text" placeholder="Cth. Tunai"
-                            class="input input-bordered w-full max-w-xs" />
+                        <select wire:model.defer="paymentType" class="select select-bordered">
+                            <option disabled selected>Pilih satu</option>
+                            @forelse ($caraPembayaranEnum as $caraPembayaran)
+                                <option value="{{ $caraPembayaran }}">{{ $caraPembayaran }}</option>
+                            @empty
+                                <option disabled selected>No Data</option>
+                            @endforelse
+                        </select>
                         @error('paymentType')
                             <div class="label">
                                 <span class="label-text-alt text-red-700">{{ $message }}</span>

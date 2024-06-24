@@ -20,15 +20,19 @@
                 @if ($isEdit)
                     <i class="fa-solid fa-pencil"></i>
                     Selesai
+                    <span wire:loading wire:target="toggleEdit" class="loading loading-spinner loading-xs"></span>
                 @else
                     <i class="fa-solid fa-pencil"></i>
                     Edit
+                    <span wire:loading wire:target="toggleEdit" class="loading loading-spinner loading-xs"></span>
                 @endif
             </button>
         </div>
     </header>
 
     <div class="container columns-2 m-2">
+        @include('livewire.pesanan.detail-pesanan-alert')
+
         {{-- Column 1 --}}
         <div class="p-3 bg-white border rounded-md overflow-x-scroll shadow-md">
             <table class="table table-xs table-zebra">
@@ -122,14 +126,19 @@
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                 @if ($transaksi->status_pemesanan === 'menunggu verifikasi')
-                                    <li><a>Transaction not verified</a></li>
+                                    <li><a>Transaksi belum diverivikasi</a></li>
                                 @else
                                     @if ($isDocumentOut)
-                                        <li><a wire:loading.class="hidden"
+                                        <li>
+                                            <a wire:loading.class="hidden"
                                                 wire:click.prevent="generateSalesOrder">Generate
-                                                SO</a></li>
+                                                SO
+                                            </a>
+                                            <span wire:loading wire:target="generateSalesOrder"
+                                                class="loading loading-spinner loading-xs"></span>
+                                        </li>
                                     @else
-                                        <li><a>So Already Generated!</a></li>
+                                        <li><a>SO Sudah Dibuat!</a></li>
                                     @endif
                                 @endif
                             </ul>
@@ -143,6 +152,19 @@
 
                 <div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
                     <dl class="-my-3 divide-y divide-gray-100 text-sm">
+
+                        @if ($isDocumentOut)
+                            <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                                <dt class="font-medium text-gray-900">Kode SO</dt>
+                                <dd class="text-gray-700 sm:col-span-2">Generate So Terlebih dahulu</dd>
+                            </div>
+                        @else
+                            <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                                <dt class="font-medium text-gray-900">Kode SO</dt>
+                                <dd class="text-gray-700 sm:col-span-2">{{ $SoCode }}</dd>
+                            </div>
+                        @endif
+
                         <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                             <dt class="font-medium text-gray-900">Tgl. Transaksi</dt>
                             <dd class="text-gray-700 sm:col-span-2">{{ $transaksi->cat }}</dd>
@@ -190,7 +212,8 @@
                             <dt class="font-medium text-gray-900">Status pemesanan</dt>
                             <dd class="text-gray-700 sm:col-span-2">
                                 @if ($isEdit)
-                                    <select wire:model="statusPemesanan" class="select select-bordered w-full max-w-xs">
+                                    <select wire:model="statusPemesanan"
+                                        class="select select-bordered w-full max-w-xs">
                                         @foreach ($statusPemesananOpt as $option)
                                             <option {{ $transaksi->status_pemesanan == $option ? 'selected' : '' }}>
                                                 {{ $option }}
@@ -313,29 +336,34 @@
             </div>
             <div class="collapse-content">
                 @forelse ($salesOrders as $salesOrder)
-                    <div class="flex items-center justify-between px-4 mb-2 mt-4">
-                        {{-- OUT(name | sale.order) --}}
-                        <span>
-                            <div class="badge badge-neutral">Code: {{ $salesOrder->sale_order_code }}</div> |
-                            ID{{ $salesOrder->erp_sale_order_id }}
-                        </span>
-                        {{-- STATUS(state | stock.picking) --}}
-                        <span>Status: {{ $salesOrder->sale_order_status }}</span>
-                    </div>
-
+                    @forelse ($salesOrder->outDocuments as $outDocument)
+                        <div class="flex items-center justify-between px-4 mb-2 mt-4">
+                            {{-- OUT(name | sale.order) --}}
+                            <span>
+                                <div class="badge badge-neutral">Code: {{ $outDocument->out_document_code }}</div>
+                            </span>
+                            {{-- STATUS(state | stock.picking) --}}
+                            <span>
+                                <div class="badge badge-neutral">
+                                    Status: {{ $outDocument->out_document_status }}
+                                </div>
+                            </span>
+                        </div>
+                    @empty
+                        no data, please sync to erp first
+                    @endforelse
                     <table class="table table-sm table-zebra border bg-white">
                         <thead>
-                            {{-- (product.id | product.product) --}}
                             <th>Produk</th>
-                            {{-- (quantity_done | stock.picking) --}}
+                            <th>Ordered</th>
                             <th>Done</th>
-                            {{-- (product_uom | product.uom) --}}
                             <th>UOM</th>
                         </thead>
                         <tbody>
                             @forelse ($salesOrder->orderLines as $orderLine)
                                 <tr class="hover">
                                     <td>{{ $orderLine->produk->nama_produk }}</td>
+                                    <td>{{ $orderLine->ordered_quantity }}</td>
                                     <td>{{ $orderLine->qty_done }}</td>
                                     <td>{{ $orderLine->uom }}</td>
                                 </tr>
@@ -346,11 +374,13 @@
                             @endforelse
                         </tbody>
                     </table>
+
                 @empty
                     no data, please sync to erp first
                 @endforelse
             </div>
         </div>
+
     </div>
 </div>
 

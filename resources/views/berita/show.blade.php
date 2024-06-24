@@ -79,7 +79,8 @@
                         <div id="imageBerita" class="mb-3">
                             <label for="imageBerita" class="block text-sm font-medium text-gray-700">Gambar
                                 Banner</label>
-                            <img src="{{ asset('storage/' . $berita->gambar_berita) }}" id="preview_img" class="h-fit w-full object-cover">
+                            <img src="{{ asset('storage/' . $berita->gambar_berita) }}" id="preview_img"
+                                class="h-fit w-full object-cover">
                             <input onchange="loadFile(event)" value="0" type="file" name="gambar_berita"
                                 id="gambar_berita"
                                 class="mt-1 block w-full
@@ -105,7 +106,7 @@
 
                         <div class="buttonContainer flex justify-center">
                             <button type="submit"
-                                class="px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200">
+                                class="bg-yellowlog text-neutral px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200">
                                 Submit
                             </button>
                         </div>

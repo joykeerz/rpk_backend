@@ -78,7 +78,10 @@
             </div>
         </div>
 
-        @include('layouts.searchbar', ['routeName' => 'gudang.index'])
+        @include('layouts.searchbar', [
+            'routeName' => 'gudang.index',
+            'placeholder' => 'Masukkan nama lokasi',
+        ])
 
         <table id="myTable" class="min-w-full table-auto border">
             <thead class="border text-center">

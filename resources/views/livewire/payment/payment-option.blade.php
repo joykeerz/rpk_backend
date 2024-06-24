@@ -21,6 +21,7 @@
                     <button class="btn btn-sm btn-primary" wire:click="openModal">
                         <i class="fa-solid fa-add"></i>
                         New Payment
+                        <span wire:loading wire:target="openModal" class="loading loading-spinner loading-xs"></span>
                     </button>
                 </div>
 
@@ -35,6 +36,8 @@
     </header>
 
     <div class="container">
+        @include('livewire.payment.payment-option-alert')
+
         <table id="myTable" class="table table-sm table-zebra min-w-full">
             <thead>
                 <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>

@@ -23,6 +23,11 @@ class Alamat extends Model
         'negara',
         'kode_pos',
         'external_alamat_id',
+        'provinsi_id',
+        'kabupaten_id',
+        'kecamatan_id',
+        'kelurahan_id',
+        'kota_id',
     ];
     // protected $guarded = ['id'];
 

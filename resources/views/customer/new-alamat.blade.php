@@ -146,7 +146,7 @@
 
                                         </div>
                                         <button type="submit"
-                                            class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Save
+                                            class="bg-yellowlog text-neutral  py-2 px-4 rounded-md hover:bg-blue-600">Save
                                         </button>
 
                                     </div>
@@ -162,96 +162,96 @@
 @endsection
 
 @section('script')
-<script>
-    var loadFile = function(event) {
+    <script>
+        var loadFile = function(event) {
 
-        var input = event.target;
-        var file = input.files[0];
-        var type = file.type;
+            var input = event.target;
+            var file = input.files[0];
+            var type = file.type;
 
-        var output = document.getElementById('preview_img');
+            var output = document.getElementById('preview_img');
 
 
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function() {
-            URL.revokeObjectURL(output.src) // free memory
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    $.each(result, function(key, value) {
+                        $('#tb_prov').append('<option data-id="' + value.id + '">' + value
+                            .name + '</option>');
+                    });
+                }
+            });
+        });
+
+        var loadKota = function(event) {
+            var id_prov = $('#tb_prov').find(':selected').data('id');
+            $.ajax({
+                url: "https://www.emsifa.com/api-wilayah-indonesia/api/regencies/" + id_prov +
+                    ".json",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    $('#tb_kota').empty();
+                    $('#tb_kecamatan').empty();
+                    $('#tb_kelurahan').empty();
+                    $('#tb_kota').append('<option disabled selected>Pilih Kota/Kabupaten</option>');
+                    $('#tb_kecamatan').append('<option disabled selected>Pilih Kecamatan</option>');
+                    $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
+                    $.each(result, function(key, value) {
+                        $('#tb_kota').append('<option data-id="' + value.id + '">' + value
+                            .name + '</option>');
+                    });
+                }
+            });
+        };
+
+        var loadKecamatan = function(event) {
+            var id_kota = $('#tb_kota').find(':selected').data('id');
+            $.ajax({
+                url: "https://www.emsifa.com/api-wilayah-indonesia/api/districts/" + id_kota +
+                    ".json",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    $('#tb_kecamatan').empty();
+                    $('#tb_kecamatan').append('<option disabled selected>Pilih Kecamatan</option>');
+                    $('#tb_kelurahan').empty();
+                    $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
+                    $.each(result, function(key, value) {
+                        $('#tb_kecamatan').append('<option data-id="' + value.id + '">' + value
+                            .name + '</option>');
+                    });
+                }
+            });
         }
-    };
-</script>
 
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json",
-            type: "GET",
-            dataType: "json",
-            success: function(result) {
-                $.each(result, function(key, value) {
-                    $('#tb_prov').append('<option data-id="' + value.id + '">' + value
-                        .name + '</option>');
-                });
-            }
-        });
-    });
-
-    var loadKota = function(event) {
-        var id_prov = $('#tb_prov').find(':selected').data('id');
-        $.ajax({
-            url: "https://www.emsifa.com/api-wilayah-indonesia/api/regencies/" + id_prov +
-                ".json",
-            type: "GET",
-            dataType: "json",
-            success: function(result) {
-                $('#tb_kota').empty();
-                $('#tb_kecamatan').empty();
-                $('#tb_kelurahan').empty();
-                $('#tb_kota').append('<option disabled selected>Pilih Kota/Kabupaten</option>');
-                $('#tb_kecamatan').append('<option disabled selected>Pilih Kecamatan</option>');
-                $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
-                $.each(result, function(key, value) {
-                    $('#tb_kota').append('<option data-id="' + value.id + '">' + value
-                        .name + '</option>');
-                });
-            }
-        });
-    };
-
-    var loadKecamatan = function(event) {
-        var id_kota = $('#tb_kota').find(':selected').data('id');
-        $.ajax({
-            url: "https://www.emsifa.com/api-wilayah-indonesia/api/districts/" + id_kota +
-                ".json",
-            type: "GET",
-            dataType: "json",
-            success: function(result) {
-                $('#tb_kecamatan').empty();
-                $('#tb_kecamatan').append('<option disabled selected>Pilih Kecamatan</option>');
-                $('#tb_kelurahan').empty();
-                $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
-                $.each(result, function(key, value) {
-                    $('#tb_kecamatan').append('<option data-id="' + value.id + '">' + value
-                        .name + '</option>');
-                });
-            }
-        });
-    }
-
-    var loadKelurahan = function(event) {
-        var id_kecamatan = $('#tb_kecamatan').find(':selected').data('id');
-        $.ajax({
-            url: "https://www.emsifa.com/api-wilayah-indonesia/api/villages/" + id_kecamatan +
-                ".json",
-            type: "GET",
-            dataType: "json",
-            success: function(result) {
-                $('#tb_kelurahan').empty();
-                $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
-                $.each(result, function(key, value) {
-                    $('#tb_kelurahan').append('<option data-id="' + value.id + '">' + value
-                        .name + '</option>');
-                });
-            }
-        });
-    }
-</script>
+        var loadKelurahan = function(event) {
+            var id_kecamatan = $('#tb_kecamatan').find(':selected').data('id');
+            $.ajax({
+                url: "https://www.emsifa.com/api-wilayah-indonesia/api/villages/" + id_kecamatan +
+                    ".json",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    $('#tb_kelurahan').empty();
+                    $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
+                    $.each(result, function(key, value) {
+                        $('#tb_kelurahan').append('<option data-id="' + value.id + '">' + value
+                            .name + '</option>');
+                    });
+                }
+            });
+        }
+    </script>
 @endsection

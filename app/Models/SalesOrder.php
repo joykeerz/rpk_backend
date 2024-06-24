@@ -14,4 +14,9 @@ class SalesOrder extends Model
     {
         return $this->hasMany(OrderLine::class, 'sales_order_id');
     }
+
+    public function outDocuments()
+    {
+        return $this->hasMany(OutDocument::class, 'sales_order_id');
+    }
 }

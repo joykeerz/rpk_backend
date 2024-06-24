@@ -296,12 +296,14 @@ class DatabaseSeeder extends Seeder
         //kurir seeder
         DB::table('kurir')->insert([
             'nama_kurir' => 'none',
+            'company_id' => 115,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('kurir')->insert([
             'nama_kurir' => 'JNE',
+            'company_id' => 115,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

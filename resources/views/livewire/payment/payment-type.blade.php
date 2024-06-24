@@ -27,6 +27,8 @@
     </header>
 
     <div class="container">
+        @include('livewire.payment.payment-option-alert')
+
         <table id="myTable" class="table table-sm table-zebra min-w-full">
             <thead>
                 <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>

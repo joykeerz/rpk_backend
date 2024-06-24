@@ -21,10 +21,10 @@
         <!-- Right Pane -->
         <div class="w-full bg-gray-100 lg:w-1/2 flex items-center justify-center">
             <div class="max-w-md w-full p-6">
-                <img src="{{asset('images/dashboard/logo_1.png')}}" class="w-1/2 ml-16 my-8" alt="">
+                <img src="{{ asset('images/dashboard/Logo_BULOG.png') }}" class="p-14" alt="">
                 {{-- <h1 class="text-3xl font-semibold mb-6 text-black text-center">Sign in</h1> --}}
-                <h1 class="text-sm font-semibold mb-6 text-gray-500 text-center">Selamat Datang Di Dashboard RPK BULOG,
-                    Silhakan Sign in</h1>
+                <h1 class="text-sm font-semibold mb-6 text-gray-500 text-center">Selamat Datang Di Dashboard RPK BULOG.
+                    Masuk menggunakan email dan password yang telah terdaftar.</h1>
                 <form action="{{ route('login') }}" method="POST" class="space-y-4">
                     @csrf
 
@@ -32,7 +32,7 @@
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                         <input type="text" id="email" name="email" value="{{ old('email') }}"
-                            class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 @error('email') text-red-800 @enderror">
+                            class="mt-1 p-2 w-full shadow rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 @error('email') text-red-800 @enderror">
                         @error('email')
                             <span class="text-red-800" role="alert">
                                 <small>{{ $message }}</small>
@@ -42,7 +42,7 @@
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <input type="password" id="password" name="password" value="{{ old('password') }}"
-                            class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 @error('email') text-red-800 @enderror">
+                            class="mt-1 p-2 w-full shadow rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 @error('email') text-red-800 @enderror">
                         @error('password')
                             <span class="text-red-800" role="alert">
                                 <small>{{ $message }}</small>
@@ -51,14 +51,13 @@
                     </div>
                     <div>
                         <button type="submit"
-                            class="w-full bg-black text-white p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Sign
-                            In</button>
+                            class="w-full shadow bg-yellowlog text-neutral p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Masuk</button>
                     </div>
                 </form>
                 <div class="mt-4 text-sm text-gray-600 text-center">
                     @if (Route::has('password.request'))
                         <a class="text-gray-400 hover:text-gray-900" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
+                            Lupa kata sandi? {{ __('Klik di sini') }}
                         </a>
                     @endif
                     <p class="mt-10">Mengalami kendala atau bug? <a href="#"

@@ -68,7 +68,6 @@ class PaymentOption extends Component
                 'rekening_tujuan.name as rekening_name',
                 'rekening_tujuan.bank_acc_number',
                 'payment_terms.name as term_name',
-                'payment_options.payment_type',
                 'payment_types.display_name'
             )
             ->where('payment_options.company_id', $this->companyId)
@@ -86,7 +85,8 @@ class PaymentOption extends Component
             'paymentOptions' => $paymentOptions,
             'paymentTerms' => $paymentTerms,
             'rekeningTujuanList' => $rekeningTujuanList,
-            'paymentTypes' => $paymentTypes
+            'paymentTypes' => $paymentTypes,
+
         ]);
     }
 
@@ -121,6 +121,8 @@ class PaymentOption extends Component
     public function delete($id)
     {
         DB::table('payment_options')->where('id', $id)->delete();
+        session()->flash('message', 'payment option berhasil dihapus');
+
     }
 
     public function openModal()
@@ -150,7 +152,7 @@ class PaymentOption extends Component
         $this->paymentOptionIdEdit = $id;
         $this->rekeningTujuanIdEdit = $paymentOption->rekening_tujuan_id;
         $this->paymentTermIdEdit = $paymentOption->payment_term_id;
-        $this->paymentTypeEdit = $paymentOption->payment_type;
+        $this->paymentTypeEdit = $paymentOption->payment_type_id;
         $this->isEdit = true;
     }
 
@@ -171,13 +173,20 @@ class PaymentOption extends Component
         $paymentOption->payment_term_id = $this->paymentTermIdEdit;
         $paymentOption->payment_type_id = $this->paymentTypeEdit;
         $paymentOption->save();
+        session()->flash('message', 'payment option berhasil diupdate');
         $this->reset(['paymentOptionIdEdit', 'rekeningTujuanIdEdit', 'paymentTermIdEdit', 'paymentTypeEdit']);
         $this->closeEdit();
+
     }
 
     public function closeEdit()
     {
         $this->reset(['rekeningTujuanIdEdit', 'paymentTermIdEdit', 'paymentTypeEdit']);
         $this->isEdit = false;
+    }
+
+    public function closeAlert()
+    {
+        session()->forget('message');
     }
 }

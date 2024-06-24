@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="business">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPK BULOG DASHBOARD</title>
-    <link rel="shortcut icon" href="{{ asset('images/dashboard/logo_1.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('images/dashboard/Logo_BULOG_notext.png') }}" type="image/x-icon">
     @vite('resources/css/app.css')
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
     <script src="https://kit.fontawesome.com/545d382107.js" crossorigin="anonymous"></script>
     @yield('plugins')
     <style>
+        #switchTheme {
+            width: 64px;
+            height: 32px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .hide {
+            visibility: hidden;
+        }
+
         .active {
             background-color: #4a5568;
             /* Change this color to match your design */
@@ -51,8 +63,8 @@
             @yield('sidebar')
         </div>
 
-        <div class="w-full h-screen overflow-y-auto">
-            <div class="my-14">
+        <div class="w-full h-screen overflow-y-auto dark:bg-neutral-900">
+            <div class="mt-24">
                 {{-- <a class="btn btn-sm btn-ghost m-1" href="{{ URL::previous() }}">
                     <i class="fa-solid fa-arrow-left"></i>Back
                 </a> --}}
@@ -91,6 +103,40 @@
                 document.getElementById('loader').style.display = 'none';
             }
         }
+
+        function toggleTheme() {
+            $('#switchTheme>.lightMode').toggleClass('hide')
+            $('#switchTheme>.darkMode').toggleClass('hide')
+            if ($('html').attr('data-theme') == 'corporate') {
+
+                $('#switchTheme').css({
+                    'background-color': 'white'
+                })
+            } else if ($('html').attr('data-theme') == 'business') {
+                $('#switchTheme').css({
+                    'background-color': 'black'
+                })
+            }
+        }
+
+        $(document).ready(function() {
+            if ($('html').attr('data-theme') == 'corporate') {
+                $('#switchTheme>.darkMode').toggleClass('hide')
+
+                $('#switchTheme').css({
+                    'background-color': 'white'
+                })
+            } else if ($('html').attr('data-theme') == 'business') {
+                $('#switchTheme>.lightMode').toggleClass('hide')
+                $('#switchTheme').css({
+                    'background-color': 'black'
+                })
+            }
+            $('#switchTheme').click(function() {
+                toggleTheme();
+
+            });
+        });
     </script>
 </body>
 

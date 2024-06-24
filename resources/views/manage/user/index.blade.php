@@ -43,8 +43,12 @@
         </div>
     </header>
 
-    @include('layouts.alert')
-    @include('layouts.searchbar', ['routeName' => 'manage.user.index'])
+    @include('layouts.alert-popup')
+
+    @include('layouts.searchbar', [
+        'routeName' => 'manage.user.index',
+        'placeholder' => 'Masukkan nama user',
+    ])
 
     <div class="table-responsive mx-3">
         <table id="myTable" class="table table-zebra hover">

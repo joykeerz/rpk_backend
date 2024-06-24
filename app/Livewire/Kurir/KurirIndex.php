@@ -64,20 +64,16 @@ class KurirIndex extends Component
     public function render()
     {
         $kurir = '';
-        if ($this->userRole == 4) {
+        if ($this->userRole == 2) {
             $kurir = Kurir::where('kurir.nama_kurir', 'ilike', "%{$this->search}%")
                 ->orderBy($this->sortBy, $this->sortDir)
                 ->paginate($this->perPage);
-        }
-
-        if ($this->userRole == 2) {
+        } else {
             $kurir = Kurir::where('kurir.company_id', $this->companyId)
                 ->where('kurir.nama_kurir', 'ilike', "%{$this->search}%")
                 ->orderBy($this->sortBy, $this->sortDir)
                 ->paginate($this->perPage);
         }
-
-
         return view('livewire.kurir.kurir-index', [
             'couriers' => $kurir,
         ]);
@@ -91,14 +87,14 @@ class KurirIndex extends Component
             'fixedPrice' => 'required',
             'description' => 'required',
             'marginPercentage' => 'required',
-            'imageKurir' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'imageKurir' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
             'namaKurir.required' => 'nama kurir tidak boleh kosong',
             'deliveryType.required' => 'tipe Delivery tidak boleh kosong',
             'fixedPrice.required' => 'fixed price tidak boleh kosong',
             'description.required' => 'deskripsi tidak boleh kosong',
             'marginPercentage.required' => 'persentase margin tidak boleh kosong',
-            'imageKurir' => 'gambar belum sesuai kriteria',
+            'imageKurir.image' => 'gambar belum sesuai kriteria',
         ]);
 
         $kurir = new Kurir;
@@ -171,14 +167,14 @@ class KurirIndex extends Component
             'fixedPriceEdit' => 'required',
             'descriptionEdit' => 'required',
             'marginPercentageEdit' => 'required',
-            'imageKurirEdit' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            // 'imageKurirEdit' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
             'namaKurirEdit.required' => 'nama kurir tidak boleh kosong',
             'deliveryTypeEdit.required' => 'tipe Delivery tidak boleh kosong',
             'fixedPriceEdit.required' => 'fixed price tidak boleh kosong',
             'descriptionEdit.required' => 'deskripsi tidak boleh kosong',
             'marginPercentageEdit.required' => 'persentase margin tidak boleh kosong',
-            'imageKurirEdit.image' => 'file harus berupa gambar',
+            // 'imageKurirEdit.image' => 'file harus berupa gambar',
         ]);
 
         $kurir = Kurir::find($this->kurirIdEdit);
@@ -187,7 +183,7 @@ class KurirIndex extends Component
         $kurir->fixed_price = $this->fixedPriceEdit;
         $kurir->description = $this->descriptionEdit;
         $kurir->margin_percentage = $this->marginPercentageEdit;
-        if ($this->imageKurirEdit) {
+        if ($this->imageKurirEdit && $this->imageKurirEdit != 1) {
             $filePath = $this->imageKurirEdit->store('images/kurir', 'public');
             $kurir->image_filepath = $filePath;
         }
@@ -204,5 +200,10 @@ class KurirIndex extends Component
     {
         $this->reset(['kurirIdEdit', 'namaKurirEdit', 'deliveryTypeEdit', 'fixedPriceEdit', 'descriptionEdit', 'marginPercentageEdit', 'imageKurirEdit']);
         $this->isEdit = false;
+    }
+
+    public function closeAlert()
+    {
+        session()->forget('message');
     }
 }

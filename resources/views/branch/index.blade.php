@@ -43,8 +43,12 @@
         </div>
     </header>
 
-    @include('layouts.alert')
-    @include('layouts.searchbar', ['routeName' => 'branch.index'])
+    @include('layouts.alert-popup')
+
+    @include('layouts.searchbar', [
+        'routeName' => 'branch.index',
+        'placeholder' => 'Masukkan nama branch, contoh: DKI Jakarta',
+    ])
 
     <script>
         function confirmDelete() {
@@ -66,19 +70,34 @@
             <tbody class="text-center">
                 @forelse ($branch as $item)
                     <tr class="hover">
-                        <td class=" px-4 py-2">{{ $loop->iteration }}</td>
+                        <td class=" px-4 py-2">{{ $branch->firstItem() + $loop->index }}</td>
                         <td class=" px-4 py-2">{{ $item->nama_branch }}</td>
                         <td class=" px-4 py-2">{{ $item->nama_company }}</td>
                         <td class=" px-4 py-2">{{ $item->no_telp_branch }}</td>
                         <td class=" px-4 py-2">{{ $item->alamat_branch }}</td>
                         <td class=" px-4 py-2 flex justify-center">
-                            <a href="{{ route('branch.show', ['id' => $item->bid]) }}" class="btn btn-sm btn-primary mr-1">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <a href="{{ route('branch.delete', ['id' => $item->bid]) }}" onclick="return confirmDelete();"
-                                class="btn btn-sm btn-error text-white">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
+                            <div class="flex items-center">
+                                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </div>
+                                    <ul tabindex="0"
+                                        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li><a href="{{ route('branch.show', ['id' => $item->bid]) }}">
+                                                {{-- <svg class="showIcon"> </svg> --}}
+                                                <i class="fa-solid fa-bars"></i>
+                                                Lihat detail
+                                            </a></li>
+                                        <li><a href="{{ route('branch.delete', ['id' => $item->bid]) }}"
+                                                onclick="return confirmDelete();" class="text-red-600">
+                                                {{-- <svg class="deleteIcon"></svg> --}}
+                                                <i class="fa-solid fa-trash"></i>
+                                                Hapus produk
+
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty

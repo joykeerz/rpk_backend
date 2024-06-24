@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('desk_produk');
             $table->float('diskon_produk')->default(0);
             $table->unsignedBigInteger('external_produk_id')->nullable();
-            $table->string('produk_file_path')->nullable();
+            $table->string('produk_file_path')->nullable()->default('images/product/default.png');
             $table->timestamps();
             // $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
         });

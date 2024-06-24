@@ -44,7 +44,25 @@
                                 @enderror
                             </div>
 
-                            <div id="externalId" class="mb-3">
+                            <div id="beritaId" class="mb-3">
+                                <label for="berita_id" class="block text-sm font-medium text-gray-700">Berita</label>
+                                <select name="berita_id"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border p-1">
+                                    @forelse ($beritas as $berita)
+                                        <option value="{{ $berita->id }}"
+                                            {{ $berita->id == $banner->berita_id ? 'selected' : '' }}>
+                                            {{ $berita->judul_berita }}
+                                        </option>
+                                    @empty
+                                        <option value="">Tidak ada berita</option>
+                                    @endforelse
+                                </select>
+                                @error('berita_id')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- <div id="externalId" class="mb-3">
                                 <label for="ExternalId" class="block text-sm font-medium text-gray-700">ID
                                     Eksternal</label>
                                 <input value="{{ $banner->external_banner_id }}" type="text" name="external_id"
@@ -55,7 +73,7 @@
                                     <div class="text-red-500">{{ $message }}</div>
                                 @enderror
                                 <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
-                            </div>
+                            </div> --}}
                         </div>
                         <div id="imageBanner" class="mb-3">
                             <label for="imageBanner" class="block text-sm font-medium text-gray-700">Gambar
@@ -77,7 +95,7 @@
 
                         <div class="buttonContainer flex justify-center">
                             <button type="submit"
-                                class="px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200">
+                                class="bg-yellowlog text-neutral px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200">
                                 Submit
                             </button>
                         </div>

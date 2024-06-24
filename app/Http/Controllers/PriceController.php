@@ -73,16 +73,15 @@ class PriceController extends Controller
 
     public function ajaxEdit(Request $request, $id)
     {
-        $price = Price::find($id);
+        $request->validate([
+            'price_value' => 'required|numeric',
+        ]);
+
+        $price = Price::where('id', $id)->first();
 
         if (!$price) {
             return response()->json(['error' => 'Price not found'], 404);
         }
-
-        // Validate and update the fields as needed
-        $request->validate([
-            'price_value' => 'required|numeric',
-        ]);
 
         $price->price_value = $request->price_value;
         $price->save();

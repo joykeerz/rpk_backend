@@ -31,8 +31,8 @@
                         <div class="p-4 grid grid-cols-2 gap-1">
                             <div id="judulBanner" class="mb-3">
                                 <label for="" class="block text-sm font-medium text-gray-700">Judul Banner*</label>
-                                <input value="{{old('judul_banner')}}" type="text"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
+                                <input value="{{ old('judul_banner') }}" type="text"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border p-1"
                                     name="judul_banner" id="judul_banner" placeholder="">
                                 @error('judul_banner')
                                     <div class="text-red-500">{{ $message }}</div>
@@ -41,10 +41,27 @@
                             <div id="deksripsiBanner" class="mb-3">
                                 <label for="deskripsi_banner" class="block text-sm font-medium text-gray-700">Deskripsi
                                     Banner*</label>
-                                <input value="{{old('deskripsi_banner')}}" type="text"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
+                                <input value="{{ old('deskripsi_banner') }}" type="text"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border p-1"
                                     name="deskripsi_banner" id="deskripsi_banner" placeholder="">
                                 @error('deskripsi_banner')
+                                    <div class="text-red-500">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div id="beritaId" class="mb-3">
+                                <label for="berita_id" class="block text-sm font-medium text-gray-700">Berita</label>
+                                <select name="berita_id"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border p-1">
+                                    @forelse ($beritas as $berita)
+                                        <option value="{{ $berita->id }}">
+                                            {{ $berita->judul_berita }}
+                                        </option>
+                                    @empty
+                                        <option value="">Tidak ada berita</option>
+                                    @endforelse
+                                </select>
+                                @error('berita_id')
                                     <div class="text-red-500">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -52,7 +69,7 @@
                             <div id="externalId" class="mb-3">
                                 <label for="ExternalId" class="block text-sm font-medium text-gray-700">ID
                                     Eksternal</label>
-                                <input value="{{old('external_id')}}" type="text" name="external_id" id="external_id"
+                                <input value="{{ old('external_id') }}" type="text" name="external_id" id="external_id"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border p-1"
                                     name="external_id" id="external_id">
                                 @error('external_id')
@@ -60,12 +77,13 @@
                                 @enderror
                                 <small id="helpId" class="text-gray-500 text-xs">boleh dikosongkan</small>
                             </div>
+
                             <div id="imageBanner" class="mb-3">
                                 <label for="imageBanner" class="block text-sm font-medium text-gray-700">Gambar
                                     Banner*</label>
                                 <img id="preview_img" class="h-fit w-full object-cover">
-                                <input value="{{old('gambar_banner')}}" onchange="loadFile(event)" value="0" type="file" name="gambar_banner"
-                                    id="gambar_banner"
+                                <input value="{{ old('gambar_banner') }}" onchange="loadFile(event)" value="0"
+                                    type="file" name="gambar_banner" id="gambar_banner"
                                     class="mt-1 block w-full
                                     rounded-md shadow-sm focus:border-indigo-300 focus:ring
                                     focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-300 p-1"
@@ -79,7 +97,7 @@
 
                         <div class="buttonContainer flex justify-center">
                             <button type="submit"
-                                class="px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto hover:bg-green-600 hover:text-white duration-200">
+                                class="bg-yellowlog text-neutral px-3 py-1 border border-black rounded mt-4 w-1/10 text-center mx-auto duration-200">
                                 Submit
                             </button>
                         </div>

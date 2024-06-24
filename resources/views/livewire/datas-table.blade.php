@@ -21,6 +21,7 @@
                     <a class="btn btn-sm btn-primary" href="#" wire:click="openModal">
                         <i class="fa-solid fa-add"></i>
                         Tambah Stok
+                        <span wire:loading wire:target="openModal" class="loading loading-spinner loading-xs"></span>
                     </a>
                 </div>
             </div>
@@ -114,6 +115,18 @@
                                         Status
                                     </button>
                                 </th>
+                                <th scope="col" class="px-4 py-3" wire:click="setSortBy('stok_etalase.is_unggulan')">
+                                    <button class="flex items-center">
+                                        @if ($sortBy !== 'stok_etalase.is_unggulan')
+                                            <i class="fa-solid fa-sort mr-1"></i>
+                                        @elseif ($sortDir === 'ASC')
+                                            <i class="fa-solid fa-sort-up mr-1"></i>
+                                        @else
+                                            <i class="fa-solid fa-sort-down mr-1"></i>
+                                        @endif
+                                        Unggulan
+                                    </button>
+                                </th>
                                 <th scope="col" class="px-4 py-3" wire:click="setSortBy('stok_etalase.updated_at')">
                                     <button class="flex items-center">
                                         @if ($sortBy !== 'stok_etalase.updated_at')
@@ -142,7 +155,7 @@
                                         {{ $stok->nama_produk }}</td>
                                     <td class="px-4 py-3">
                                         @if ($editingStockId == $stok->id)
-                                            <div class="flex gap-1 mt-1">
+                                            <div class="flex flex-col gap-1 mt-1">
                                                 <input wire:model="editingJumlahStock" type="text"
                                                     placeholder="Ex. 100"
                                                     class="input input-sm input-bordered w-full max-w-xs" />
@@ -176,6 +189,25 @@
                                             </div>
                                         @endif
                                     </td>
+                                    <td class="px-4 py-3 text-green-500">
+                                        @if ($stok->is_unggulan)
+                                            <div class="form-control">
+                                                <label class="label cursor-pointer">
+                                                    <span class="label-text mr-2">Active</span>
+                                                    <input wire:click="toggleUnggulan({{ $stok->id }})"
+                                                        type="checkbox" class="toggle" checked />
+                                                </label>
+                                            </div>
+                                        @else
+                                            <div class="form-control">
+                                                <label class="label cursor-pointer">
+                                                    <span class="label-text">Inactive</span>
+                                                    <input wire:click="toggleUnggulan({{ $stok->id }})"
+                                                        type="checkbox" class="toggle" />
+                                                </label>
+                                            </div>
+                                        @endif
+                                    </td>
                                     <td class="px-4 py-3">{{ $stok->updated_at }}</td>
                                     <td class="px-4 py-3 flex items-center justify-end">
                                         {{-- <button wire:click="delete({{ $stok->id }})"
@@ -198,11 +230,13 @@
                                                         <button wire:click="cancelChange"
                                                             class="btn btn-sm btn-outline mt-1">
                                                             <i class="fa-solid fa-xmark"></i>Cancel
+                                                            <span wire:loading wire:target="cancelChange" class="loading loading-spinner loading-xs"></span>
                                                         </button>
                                                     @else
                                                         <button wire:click="changeStock({{ $stok->id }})"
                                                             class="btn btn-sm btn-outline mt-1">
                                                             <i class="fa-solid fa-pencil"></i>Edit
+                                                            <span wire:loading wire:target="changeStock" class="loading loading-spinner loading-xs"></span>
                                                         </button>
                                                     @endif
                                                 </li>
@@ -241,8 +275,8 @@
 
     {{-- Modal --}}
     @if ($isOpen)
-        <div class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex justify-center items-center">
-            <div class="bg-white rounded-lg p-8 transform transition-all duration-300 ease-out">
+        <div class="fixed inset-0 z-50 overflow-auto bg-neutral-950 bg-opacity-75 flex justify-center items-center">
+            <div class="bg-neutral-50 rounded-lg p-8 transform transition-all duration-300 ease-out">
                 <div class="flex justify-between items-center">
                     <h2 class="text-lg font-bold mb-4">Tambah Stok Etalase</h2>
                     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" wire:click="closeModal">

@@ -179,6 +179,30 @@
                                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                                 @enderror
                                             </div>
+                                            <div class="mb-4">
+                                                <label for="tb_img_npwp"
+                                                    class="leading-7 block text-sm font-medium text-gray-700">NPWP
+                                                    Image*</label>
+                                                <img id="preview_img_npwp" class="h-56 w-full object-cover">
+                                                <input value="{{ old('tb_img_npwp') }}" onchange="loadFileNpwp(event)"
+                                                    type="file" id="tb_img_npwp" name="tb_img_npwp"
+                                                    class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
+                                                @error('tb_img_npwp')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="tb_img_nib"
+                                                    class="leading-7 block text-sm font-medium text-gray-700">NIB
+                                                    Image*</label>
+                                                <img id="preview_img_nib" class="h-56 w-full object-cover">
+                                                <input value="{{ old('tb_img_nib') }}" onchange="loadFileNib(event)"
+                                                    type="file" id="tb_img_nib" name="tb_img_nib"
+                                                    class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-scolors duration-200 ease-in-out">
+                                                @error('tb_img_nib')
+                                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                                @enderror
+                                            </div>
                                         </div>
 
                                     </div>
@@ -215,6 +239,16 @@
                                             <input value="{{ old('tb_blok') }}" type="text"
                                                 class="border rounded-md py-2 px-3 w-full" name="tb_blok" placeholder="">
                                             @error('tb_blok')
+                                                <p class="text-red-500 text-sm">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="tb_nomor"
+                                                class="block text-sm font-medium text-gray-700">Nomor</label>
+                                            <input value="{{ old('tb_nomor') }}" type="text"
+                                                class="border rounded-md py-2 px-3 w-full" name="tb_nomor"
+                                                placeholder="">
+                                            @error('tb_nomor')
                                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                                             @enderror
                                         </div>
@@ -301,7 +335,7 @@
                                             @enderror
                                         </div>
                                         <button type="submit"
-                                            class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Create
+                                            class="bg-yellowlog text-neutral  py-2 px-4 rounded-md hover:bg-blue-600">Create
                                         </button>
 
                                     </div>
@@ -332,18 +366,47 @@
                 URL.revokeObjectURL(output.src) // free memory
             }
         };
+        var loadFileNpwp = function(event) {
+
+            var input = event.target;
+            var file = input.files[0];
+            var type = file.type;
+
+            var output = document.getElementById('preview_img_npwp');
+
+
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+        var loadFileNib = function(event) {
+
+            var input = event.target;
+            var file = input.files[0];
+            var type = file.type;
+
+            var output = document.getElementById('preview_img_nib');
+
+
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
     </script>
 
     <script>
         $(document).ready(function() {
             $.ajax({
-                url: "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json",
+                url: "{{ env('API_MOBILE_URL') }}/daerah/provinsi/all",
                 type: "GET",
                 dataType: "json",
                 success: function(result) {
                     $.each(result, function(key, value) {
-                        $('#tb_prov').append('<option data-id="' + value.id + '">' + value
-                            .name + '</option>');
+                        $('#tb_prov').append('<option value="' + value.id + '" data-id="' +
+                            value.id + '">' + value
+                            .display_name + '</option>');
                     });
                 }
             });
@@ -352,8 +415,7 @@
         var loadKota = function(event) {
             var id_prov = $('#tb_prov').find(':selected').data('id');
             $.ajax({
-                url: "https://www.emsifa.com/api-wilayah-indonesia/api/regencies/" + id_prov +
-                    ".json",
+                url: "{{ env('API_MOBILE_URL') }}/daerah/kabupaten/id/" + id_prov,
                 type: "GET",
                 dataType: "json",
                 success: function(result) {
@@ -364,8 +426,9 @@
                     $('#tb_kecamatan').append('<option disabled selected>Pilih Kecamatan</option>');
                     $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
                     $.each(result, function(key, value) {
-                        $('#tb_kota').append('<option data-id="' + value.id + '">' + value
-                            .name + '</option>');
+                        $('#tb_kota').append('<option value="' + value.id + '" data-id="' + value
+                            .id + '">' + value
+                            .display_name + '</option>');
                     });
                 }
             });
@@ -374,8 +437,7 @@
         var loadKecamatan = function(event) {
             var id_kota = $('#tb_kota').find(':selected').data('id');
             $.ajax({
-                url: "https://www.emsifa.com/api-wilayah-indonesia/api/districts/" + id_kota +
-                    ".json",
+                url: "{{ env('API_MOBILE_URL') }}/daerah/kecamatan/id/" + id_kota,
                 type: "GET",
                 dataType: "json",
                 success: function(result) {
@@ -384,8 +446,9 @@
                     $('#tb_kelurahan').empty();
                     $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
                     $.each(result, function(key, value) {
-                        $('#tb_kecamatan').append('<option data-id="' + value.id + '">' + value
-                            .name + '</option>');
+                        $('#tb_kecamatan').append('<option value="' + value.id + '" data-id="' +
+                            value.id + '">' + value
+                            .display_name + '</option>');
                     });
                 }
             });
@@ -394,16 +457,16 @@
         var loadKelurahan = function(event) {
             var id_kecamatan = $('#tb_kecamatan').find(':selected').data('id');
             $.ajax({
-                url: "https://www.emsifa.com/api-wilayah-indonesia/api/villages/" + id_kecamatan +
-                    ".json",
+                url: "{{ env('API_MOBILE_URL') }}/daerah/kelurahan/id/" + id_kecamatan,
                 type: "GET",
                 dataType: "json",
                 success: function(result) {
                     $('#tb_kelurahan').empty();
                     $('#tb_kelurahan').append('<option disabled selected>Pilih Kelurahan</option>');
                     $.each(result, function(key, value) {
-                        $('#tb_kelurahan').append('<option data-id="' + value.id + '">' + value
-                            .name + '</option>');
+                        $('#tb_kelurahan').append('<option value="' + value.id + '" data-id="' +
+                            value.id + '">' + value
+                            .display_name + '</option>');
                     });
                 }
             });

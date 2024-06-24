@@ -37,7 +37,8 @@
                 </div>
                 <div class="tb_nama_gudang_erp flex flex-col">
                     <label for="tb_nama_gudang_erp">Nama Gudang (Erp)*</label>
-                    <input value="{{ old('tb_nama_gudang_erp') }}" type="text" name="tb_nama_gudang_erp" id="tb_nama_gudang_erp">
+                    <input value="{{ old('tb_nama_gudang_erp') }}" type="text" name="tb_nama_gudang_erp"
+                        id="tb_nama_gudang_erp">
                     @error('tb_nama_gudang_erp')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
@@ -59,7 +60,8 @@
                     <label for="cb_branch_id">Bussines Unit (Branch)*</label>
                     <select name="cb_branch_id" id="cb_branch_id">
                         @foreach ($branchData as $branch)
-                            <option value="{{ $branch->id }}" {{ old('cb_branch_id') == $branch->id ? 'selected' : '' }}>
+                            <option value="{{ $branch->id }}"
+                                {{ old('cb_branch_id') == $branch->id ? 'selected' : '' }}>
                                 {{ $branch->nama_branch }}
                             </option>
                         @endforeach
@@ -172,7 +174,7 @@
                 </div>
             </div>
             <div class="flex justify-center my-3"> <!-- Flex container to center the button -->
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+                <button type="submit" class="bg-yellowlog text-neutral  py-2 px-4 rounded-md hover:bg-blue-600">
                     Create
                 </button>
             </div>

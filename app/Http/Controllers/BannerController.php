@@ -26,7 +26,8 @@ class BannerController extends Controller
 
     public function create()
     {
-        return view('banner.create');
+        $beritas = DB::table('berita')->get();
+        return view('banner.create', compact('beritas'));
     }
 
     public function store(Request $request)
@@ -35,7 +36,7 @@ class BannerController extends Controller
             'judul_banner' => 'required',
             'deskripsi_banner' => 'required',
             'gambar_banner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ],[
+        ], [
             'judul_banner.required' => 'Judul banner harus diisi',
             'deskripsi_banner.required' => 'Deskripsi banner harus diisi',
             'gambar_banner.required' => 'Gambar banner harus diisi',
@@ -52,6 +53,7 @@ class BannerController extends Controller
             $validatedData['gambar_banner'] = $filePath;
             $banner->gambar_banner = $filePath;
         }
+        $banner->berita_id = $request->berita_id;
         $banner->save();
 
         return redirect()->route('banner.index')->with('message', 'Banner berhasil ditambahkan');
@@ -60,7 +62,8 @@ class BannerController extends Controller
     public function show($id)
     {
         $banner = Banner::find($id);
-        return view('banner.show', compact('banner'));
+        $beritas = DB::table('berita')->get();
+        return view('banner.show', compact('banner', 'beritas'));
     }
 
     public function update(Request $request, $id)
@@ -69,7 +72,7 @@ class BannerController extends Controller
             'judul_banner' => 'required',
             'deskripsi_banner' => 'required',
             'gambar_banner' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ],[
+        ], [
             'judul_banner.required' => 'Judul banner harus diisi',
             'deskripsi_banner.required' => 'Deskripsi banner harus diisi',
             'gambar_banner.image' => 'Gambar banner harus berupa gambar',
@@ -87,12 +90,14 @@ class BannerController extends Controller
             }
             $banner->gambar_banner = $filePath;
         }
+        $banner->berita_id = $request->berita_id;
         $banner->save();
 
         return redirect()->route('banner.index')->with('message', 'Banner berhasil diubah');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $banner = Banner::find($id);
         if (!empty($banner->gambar_banner)) {
             Storage::disk('public')->delete($banner->gambar_banner);

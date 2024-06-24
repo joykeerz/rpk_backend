@@ -29,8 +29,12 @@
         </div>
     </header>
 
-    @include('layouts.alert')
-    @include('layouts.searchbar', ['routeName' => 'satuan-unit.index'])
+    @include('layouts.alert-popup')
+
+    @include('layouts.searchbar', [
+        'routeName' => 'satuan-unit.index',
+        'placeholder' => 'Masukkan nama satuan unit',
+    ])
 
     <script>
         function confirmDelete() {
@@ -51,18 +55,33 @@
             <tbody class="text-center">
                 @forelse ($satuanUnit as $st)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }} ">
-                        <td class="px-4 py-2">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-2">{{ $satuanUnit->firstItem() + $loop->index }}</td>
                         <td class="px-4 py-2">{{ $st->nama_satuan }}</td>
                         <td class="px-4 py-2">{{ $st->satuan_unit_produk }}</td>
                         <td class="px-4 py-2">{{ $st->keterangan }}</td>
                         <td class="px-4 py-2 flex justify-center gap-1">
-                            <a href="{{ route('satuan-unit.show', ['id' => $st->id]) }}" class="btn btn-sm btn-primary">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <a href="{{ route('satuan-unit.delete', ['id' => $st->id]) }}"
-                                onclick="return confirmDelete();" class="btn btn-sm btn-error">
-                                <i class="fa-solid fa-trash text-white"></i>
-                            </a>
+                            <div class="flex items-center">
+                                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </div>
+                                    <ul tabindex="0"
+                                        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li><a href="{{ route('satuan-unit.show', ['id' => $st->id]) }}">
+                                                {{-- <svg class="showIcon"> </svg> --}}
+                                                <i class="fa-solid fa-bars"></i>
+                                                Lihat detail
+                                            </a></li>
+                                        <li><a href="{{ route('satuan-unit.delete', ['id' => $st->id]) }}"
+                                                onclick="return confirmDelete();" class="text-red-600">
+                                                {{-- <svg class="deleteIcon"></svg> --}}
+                                                <i class="fa-solid fa-trash"></i>
+                                                Hapus produk
+
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty

@@ -46,11 +46,14 @@
         </div>
     </header>
 
-    @include('layouts.alert')
+    @include('layouts.alert-popup')
 
-    @include('layouts.searchbar', ['routeName' => 'product.manage'])
+    @include('layouts.searchbar', [
+        'routeName' => 'product.manage',
+        'placeholder' => 'Masukkan nama produk, contoh: Beras Alhambra',
+    ])
     <div class="overflow-auto m-3">
-        <table id="myTable" class="min-w-full bg-white text-center">
+        <table id="myTable" class="table table-sm table-zebra">
             <thead>
                 <tr class="text-center">
                     <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
@@ -60,30 +63,42 @@
                     </th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori
                     </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions
+                    <th scope="col">
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($products as $pd)
-                    <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }}">
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
+                    <tr class="hover">
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $products->firstItem() + $loop->index }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <img src="{{ asset('storage/' . $pd->produk_file_path) }}" alt="gambar" class="w-20 h-20">
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $pd->nama_produk }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $pd->nama_kategori }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap flex justify-center">
-                            <a href="{{ route('product.show', ['id' => $pd->pid]) }}" class="btn btn-sm btn-primary mr-1">
-                                {{-- <svg class="showIcon"> </svg> --}}
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <a href="{{ route('product.delete', ['id' => $pd->pid]) }}" onclick="return confirmDelete();"
-                                class="btn btn-sm btn-error">
-                                {{-- <svg class="deleteIcon"></svg> --}}
-                                <i class="fa-solid fa-trash text-white"></i>
+                        <td class="px-6 py-4 whitespace-nowrap w-full">
+                            <div class="flex items-center">
+                                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </div>
+                                    <ul tabindex="0"
+                                        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li><a href="{{ route('product.show', ['id' => $pd->pid]) }}">
+                                                {{-- <svg class="showIcon"> </svg> --}}
+                                                <i class="fa-solid fa-bars"></i>
+                                                Lihat detail
+                                            </a></li>
+                                        <li><a href="{{ route('product.delete', ['id' => $pd->pid]) }}"
+                                                onclick="return confirmDelete();" class="text-red-600">
+                                                {{-- <svg class="deleteIcon"></svg> --}}
+                                                <i class="fa-solid fa-trash"></i>
+                                                Hapus produk
 
-                            </a>
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty

@@ -32,7 +32,6 @@
 
     @include('layouts.alert')
 
-
     <div class="overflow-auto m-3">
         <form action="{{ route('prices.store') }}" method="POST">
             @csrf
@@ -75,7 +74,10 @@
                 <h1 class="font-medium">Prices In {{ $currentEntity->nama_company }}</h1>
             </div>
         @endif
-        @include('layouts.searchbar', ['routeName' => 'prices.index'])
+        @include('layouts.searchbar', [
+            'routeName' => 'prices.index',
+            'placeholder' => 'Masukkan nama harga',
+        ])
         <table id="myTable" class="table table-sm table-zebra hover">
             <thead class="border border-b-1">
                 <tr class="text-center">
@@ -143,6 +145,7 @@
             $('.edit-price').on('click', function() {
                 var priceId = $(this).data('id');
                 var currentPrice = $(this).closest('tr').find('.price-value').text();
+                console.log('price ID: ' + priceId);
 
                 // Set the current price value in the modal input
                 $('#newPriceValue').val(currentPrice);
@@ -180,16 +183,18 @@
                         price_value: newPriceValue,
                     },
                     success: function(response) {
-                        console.log(response); // Add this line for debugging
+                        console.log(response);
+                        console.log('updated id on : ' + priceId);
                         alert(response.message);
                         // Update the displayed value on success
                         $(`[data-id=${priceId}]`).closest('tr').find('.price-value').text(
-                        newPriceValue);
+                            newPriceValue);
                         // Hide the custom modal
                         $('#editPriceModal').addClass('hidden');
                     },
                     error: function(error) {
                         alert(error.responseJSON.error);
+                        console.log(error);
                     },
                 });
             }

@@ -69,7 +69,7 @@
         <!-- Right Pane -->
         <div class="w-full bg-gray-100 lg:w-1/2 flex items-center justify-center">
             <div class="max-w-md w-full p-6">
-                {{-- <img src="{{asset('images/dashboard/logo_1.png')}}" class="w-1/2 ml-16 my-8" alt=""> --}}
+                {{-- <img src="{{asset('images/dashboard/Logo_BULOG.png')}}" class="w-1/2 ml-16 my-8" alt=""> --}}
                 <h1 class="text-3xl font-semibold mb-6 text-black text-center">{{ __('Reset Password') }}</h1>
                 <h1 class="text-sm font-semibold mb-6 text-gray-500 text-center">Link untuk mereset password akan
                     dikirim melalui Email.</h1>

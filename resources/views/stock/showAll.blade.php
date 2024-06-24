@@ -43,7 +43,10 @@
     <div class="overflow-auto m-3">
         <div class="overflow-x-auto">
 
-            @include('layouts.searchbar', ['routeName' => 'stok.showAll'])
+            @include('layouts.searchbar', [
+                'routeName' => 'stok.showAll',
+                'placeholder' => 'Masukkan nama stok',
+            ])
 
             <table class="table table-zebra">
                 <thead>
@@ -75,7 +78,7 @@
                 <tbody>
                     @forelse ($stocks as $stock)
                         <tr class="hover">
-                            <td class="whitespace-nowrap">{{ $loop->iteration }}</td>
+                            <td class="whitespace-nowrap">{{ $stocks->firstItem() + $loop->index }}</td>
                             <td class="whitespace-nowrap">{{ $stock->kode_produk }}</td>
                             <td class="whitespace-nowrap">{{ $stock->nama_produk }}</td>
                             <td class="whitespace-nowrap">{{ $stock->nama_kategori }}</td>

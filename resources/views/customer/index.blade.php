@@ -12,6 +12,30 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link href="{{ asset('plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
     <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
+    {{-- /* efek loading */ --}}
+    <style>
+        .spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+        }
+
+        {{-- /* efek loading */ --}}
+    </style>
 @endsection
 
 @section('content')
@@ -20,6 +44,11 @@
             return confirm("Are you sure you want to delete this customer?");
         }
     </script>
+
+    {{-- /* efek loading */ --}}
+    <div class="overlay" id="loadingOverlay"></div>
+    <div class="loading loading-spinner loading-lg text-accent spinner" id="loadingSpinner"></div>
+    {{-- /* efek loading */ --}}
 
     <link rel="stylesheet" href="{{ asset('svg.css') }}">
     <header class="bg-gray-200 p-4">
@@ -49,7 +78,7 @@
                         <li><a>Sync All</a></li>
                     </ul>
                 </div>
-                <div class="button">
+                <div class="button mr-1">
                     <a class="btn btn-sm btn-primary" href="{{ route('customer.create') }}">
                         <i class="fa-solid fa-add"></i>
                         New Customer
@@ -59,8 +88,9 @@
         </div>
     </header>
 
-    @include('layouts.alert')
-    @include('layouts.searchbar', ['routeName' => 'customer.index'])
+    @include('customer.alert-popup')
+
+    @include('customer.searchbar')
 
     <div class="table-responsive m-3">
         @if (!empty($currentEntity))
@@ -95,7 +125,7 @@
             <tbody>
                 @forelse ($customer as $item=>$ud)
                     <tr class="hover:bg-gray-50">
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $customer->firstItem() + $loop->index }}</td>
                         <td>{{ $ud->name }}</td>
                         <td>
                             <span class="truncate">
@@ -131,7 +161,8 @@
                                     <ul tabindex="0"
                                         class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                         @if ($ud->isVerified == 0)
-                                            <li><a href="{{ route('customer.verify', ['id' => $ud->uid]) }}">
+                                            <li><a href="{{ route('customer.verify', ['id' => $ud->uid]) }}"
+                                                    class="verify-btn">
                                                     <i class="fa-solid fa-check"></i>Verify
                                                 </a>
                                             </li>
@@ -174,9 +205,23 @@
                 $('#myTable').DataTable({
                     responsive: true,
                     searching: false,
-                    ordering: true,
+                    ordering: false,
                     paging: false,
                     info: false,
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const verifyButtons = document.querySelectorAll('a.verify-btn');
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                const loadingSpinner = document.getElementById('loadingSpinner');
+
+                verifyButtons.forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        loadingOverlay.style.display = 'block';
+                        loadingSpinner.style.display = 'block';
+                    });
                 });
             });
         </script>

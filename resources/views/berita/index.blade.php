@@ -33,8 +33,12 @@
         </div>
     </header>
 
-    @include('layouts.alert')
-    @include('layouts.searchbar', ['routeName' => 'berita.index'])
+    @include('layouts.alert-popup')
+
+    @include('layouts.searchbar', [
+        'routeName' => 'berita.index',
+        'placeholder' => 'Masukkan judul berita, contoh: Promo 6.6',
+    ])
 
     <div class="overflow-auto m-3">
         <table id="myTable" class="min-w-full bg-white text-center">
@@ -71,13 +75,28 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $brt->kategori_berita }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $brt->penulis_berita }}</td>
                         <td class="px-6 py-4 whitespace-nowrap flex justify-center gap-1">
-                            <a href="{{ route('berita.show', ['id' => $brt->id]) }}" class="btn btn-sm btn-primary">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <a href="{{ route('berita.delete', ['id' => $brt->id]) }}" onclick="return confirmDelete();"
-                                class="btn btn-sm btn-error">
-                                <i class="fa-solid fa-trash text-white"></i>
-                            </a>
+                            <div class="flex items-center">
+                                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </div>
+                                    <ul tabindex="0"
+                                        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li><a href="{{ route('berita.show', ['id' => $brt->id]) }}">
+                                                {{-- <svg class="showIcon"> </svg> --}}
+                                                <i class="fa-solid fa-bars"></i>
+                                                Lihat detail
+                                            </a></li>
+                                        <li><a href="{{ route('berita.delete', ['id' => $brt->id]) }}"
+                                                onclick="return confirmDelete();" class="text-red-600">
+                                                {{-- <svg class="deleteIcon"></svg> --}}
+                                                <i class="fa-solid fa-trash"></i>
+                                                Hapus produk
+
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty

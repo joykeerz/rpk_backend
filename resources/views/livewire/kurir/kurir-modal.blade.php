@@ -1,6 +1,6 @@
 @if ($isOpen)
-    <div class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex justify-center items-center">
-        <div class="bg-white rounded-lg p-8 transform transition-all duration-300 ease-out">
+    <div class="fixed inset-0 z-50 overflow-auto bg-neutral-950 bg-opacity-75 flex justify-center items-center">
+        <div class="bg-neutral-50 rounded-lg p-8 transform transition-all duration-300 ease-out">
             <div class="flex justify-between items-center">
                 <h2 class="text-lg font-bold mb-4">New Kurir</h2>
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" wire:click="closeModal">

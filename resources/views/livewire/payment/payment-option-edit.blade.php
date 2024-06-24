@@ -1,6 +1,6 @@
 @if ($isEdit)
-    <div class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex justify-center items-center">
-        <div class="bg-white rounded-lg p-8 transform transition-all duration-300 ease-out">
+    <div class="fixed inset-0 z-50 overflow-auto bg-neutral-950 bg-opacity-75 flex justify-center items-center">
+        <div class="bg-neutral-50 rounded-lg p-8 transform transition-all duration-300 ease-out">
             <div class="flex justify-between items-center">
                 <h2 class="text-lg font-bold mb-4">Edit Payment Option</h2>
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" wire:click="closeEdit">
@@ -61,7 +61,7 @@
                         <select wire:model.defer="paymentTypeEdit" class="select select-bordered">
                             @forelse ($paymentTypes as $paytype)
                                 <option value="{{ $paytype->id }}"
-                                    {{ $paymentTypeEdit == $paytype ? 'selected' : '' }}>{{ $paytype->display_name }}
+                                    {{ $paymentTypeEdit == $paytype->id ? 'selected' : '' }}>{{ $paytype->display_name }}
                                 </option>
                             @empty
                                 <option disabled selected>No Data</option>

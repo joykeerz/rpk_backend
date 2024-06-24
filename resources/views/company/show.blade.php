@@ -188,8 +188,7 @@
 
             </div>
             <div class="buttonContainer flex justify-center p-4">
-                <button type="submit"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                <button type="submit" class="bg-yellowlog text-neutral  font-bold py-2 px-4 rounded">Submit</button>
             </div>
         </form>
     </div>

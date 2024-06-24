@@ -12,12 +12,14 @@
                     <li>
                         <button wire:click="openEdit({{ $kurir->id }})" class="btn btn-sm btn-outline">
                             <i class="fa-solid fa-pencil"></i>Edit
+                            <span wire:loading wire:target="openEdit" class="loading loading-spinner loading-xs"></span>
                         </button>
                     </li>
                     <li>
                         <button wire:click="delete({{ $kurir->id }})" onclick="return confirmDelete();"
                             class="btn btn-sm btn-outline">
                             <i class="fa-solid fa-trash"></i>Delete
+                            <span wire:loading wire:target="delete" class="loading loading-spinner loading-xs"></span>
                         </button>
                     </li>
                 </ul>

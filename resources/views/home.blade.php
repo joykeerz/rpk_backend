@@ -8,23 +8,27 @@
     @include('layouts.sidebar')
 @endsection
 
+@section('plugins')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@endsection
+
 @section('content')
     <script>
         function confirmSync() {
             return confirm("Are you sure you want to sync all data? (This may take a while)");
         }
     </script>
-    <header class="bg-gray-200 p-4">
-        <h2>
+    <header class="p-4">
+        <h1>
             Homepage
-        </h2>
+        </h1>
     </header>
 
     @include('layouts.alert')
 
     <div class="container mx-auto my-5 rounded">
         <div class="flex justify-center">
-            <div class="bg-white shadow-md rounded-lg">
+            <div class="bg-neutral-100 dark:bg-neutral-500 shadow-md rounded-lg">
                 <div class="bg-white dark:bg-gray-800 text-white py-2 px-4 rounded">{{ __('Selamat Datang,') }}
                     {{ Auth::user()->name }}</div>
 

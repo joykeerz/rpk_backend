@@ -8,11 +8,16 @@ export default {
     ],
     theme: {
         extend: {},
+        colors: {
+            bluelog: '#22548b',
+            yellowlog: '#FFAE00'
+        },
     },
     plugins: [
         require("daisyui"),
     ],
     daisyui: {
-        themes: ['light']
+        themes: ["corporate", "business"]
     },
+    darkMode: ['class', '[data-theme="business"]']
 }

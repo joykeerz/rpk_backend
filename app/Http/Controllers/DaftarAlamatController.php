@@ -17,7 +17,19 @@ class DaftarAlamatController extends Controller
         // $alamatList = DaftarAlamat::where('user_id', $userID)->simplePaginate(5);
         $alamatList = DB::table('daftar_alamat')
             ->join('alamat', 'alamat.id', 'daftar_alamat.alamat_id')
-            ->simplePaginate(5);
+            ->where('daftar_alamat.user_id', $userID)
+            ->select(
+                'daftar_alamat.id',
+                'daftar_alamat.user_id',
+                'daftar_alamat.alamat_id',
+                'daftar_alamat.isActive',
+                'alamat.jalan',
+                'alamat.jalan_ext',
+                'alamat.blok',
+                'alamat.provinsi',
+                'alamat.kota_kabupaten',
+            )
+            ->paginate(5);
         return view('customer.daftar-alamat', ['alamatList' => $alamatList, 'userID' => $userID]);
     }
 

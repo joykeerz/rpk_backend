@@ -74,7 +74,7 @@ class ProductController extends Controller
                     ->orWhere('kode_produk', 'ilike', '%' . $search . '%')
                     ->orWhere('nama_kategori', 'ilike', '%' . $search . '%');
             })
-            ->orderBy('cat', 'desc')
+            ->orderBy('produk.updated_at')
             ->paginate(15);
 
         // $products = DB::table('produk')
@@ -112,6 +112,7 @@ class ProductController extends Controller
         ]);
 
         $product = new Produk;
+        $product->id = DB::table('produk')->max('id') + 1;
         $product->kategori_id = $request->cb_kategori;
         $product->pajak_id = $request->tb_pajak;
         $product->satuan_unit_id = $request->tb_satuan;
@@ -121,6 +122,7 @@ class ProductController extends Controller
         $product->diskon_produk = $request->tb_diskon_produk;
         $product->external_produk_id = $request->tb_external_id;
         if ($request->hasFile('file_image_produk')) {
+            /*  alternate query */
             // $file = $request->file('file_image_produk');
             // $file->move(public_path().'/images/', $fileName);
             // $fileName = time().'_'.$file->getClientOriginalName();
@@ -164,7 +166,6 @@ class ProductController extends Controller
         ]);
 
         $product = Produk::findOrFail($id);
-        // $product = Produk::where('id', '=', $id)->firstOrFail(); // FYI: ini adalah alternate query
         $product->kategori_id = $request->cb_kategori;
         $product->pajak_id = $request->tb_pajak;
         $product->satuan_unit_id = $request->tb_satuan;
@@ -178,7 +179,7 @@ class ProductController extends Controller
         if ($request->hasFile('file_image_produk')) {
             $filePath = $request->file('file_image_produk')->store('images/product', 'public');
             $validatedData['file_image_produk'] = $filePath;
-            if (!empty($product->produk_file_path)) {
+            if (!empty($product->produk_file_path) && $product->produk_file_path != 'images/product/default.png') {
                 Storage::disk('public')->delete($product->produk_file_path);
             }
             $productFiles = ProductFile::find($product->product_file_id);
@@ -197,16 +198,26 @@ class ProductController extends Controller
         return redirect()->route('product.manage')->with('message', 'Produk berhasil diupdate');
     }
 
-    function delete($id)
+    public function delete($id)
     {
         $product = Produk::findOrFail($id);
-        Storage::disk('public')->delete($product->produk_file_path);
-        $productFiles = ProductFile::findOrFail($product->product_file_id);
-        if ($productFiles->file_name != null) {
-            $productFiles->delete();
+
+        // Check if the file path exists before attempting deletion
+        if (!empty($product->produk_file_path) && Storage::disk('public')->exists($product->produk_file_path) && $product->produk_file_path != 'images/product/default.png') {
+            // Delete the file
+            Storage::disk('public')->delete($product->produk_file_path);
         }
 
-        $stock = Stok::where('produk_id', '=', $id)->delete();
+        // Delete related ProductFile
+        if ($product->product_file_id) {
+            $productFile = ProductFile::findOrFail($product->product_file_id);
+            $productFile->delete();
+        }
+
+        // Delete related stock records
+        Stok::where('produk_id', $id)->delete();
+
+        // Delete the product
         $product->delete();
 
         return redirect()->route('product.manage')->with('message', 'Produk berhasil dihapus');

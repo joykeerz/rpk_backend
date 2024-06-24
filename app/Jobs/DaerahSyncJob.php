@@ -56,7 +56,7 @@ class DaerahSyncJob implements ShouldQueue
             }
 
             $offset += $pageSize;
-        } while (!empty($rekenings));
+        } while (!empty($provincies));
 
         Log::info('Provinsi Sync Job Finished');
     }
@@ -100,7 +100,7 @@ class DaerahSyncJob implements ShouldQueue
             }
 
             $offset += $pageSize;
-        } while (!empty($rekenings));
+        } while (!empty($kabupatens));
 
         Log::info('Kabupaten Sync Job Finished');
     }
@@ -114,7 +114,7 @@ class DaerahSyncJob implements ShouldQueue
     {
         Log::info('Kecamatan Sync Job Running');
 
-        $pageSize = 100; // Set the desired chunk size
+        $pageSize = 100;
         $offset = 0;
 
         do {
@@ -142,7 +142,7 @@ class DaerahSyncJob implements ShouldQueue
             }
 
             $offset += $pageSize;
-        } while (!empty($rekenings));
+        } while (!empty($kecamatans));
 
         Log::info('kecamatan sync job finished');
     }
@@ -184,7 +184,7 @@ class DaerahSyncJob implements ShouldQueue
             }
 
             $offset += $pageSize;
-        } while (!empty($rekenings));
+        } while (!empty($kelurahans));
 
         Log::info('Kelurahan sync job finished');
     }

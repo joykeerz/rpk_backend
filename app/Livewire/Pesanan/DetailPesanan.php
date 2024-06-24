@@ -5,6 +5,7 @@ namespace App\Livewire\Pesanan;
 use App\Models\Company;
 use App\Models\Kurir;
 use App\Models\OrderLine;
+use App\Models\OutDocument;
 use App\Models\Pesanan;
 use App\Models\RekeningTujuan;
 use App\Models\SalesOrder;
@@ -25,6 +26,7 @@ class DetailPesanan extends Component
     public $gudangId;
     public $isEdit = false;
     public $isDocumentOut = true;
+    public $SoCode;
 
     //input variables
     public $tipePembayaran;
@@ -37,9 +39,10 @@ class DetailPesanan extends Component
     public function mount($id)
     {
         $this->transactionId = $id;
-
-        if (SalesOrder::where('transaksi_id', $this->transactionId)->first()) {
+        $checkSo = SalesOrder::where('transaksi_id', $this->transactionId)->first();
+        if ($checkSo) {
             $this->isDocumentOut = false;
+            $this->SoCode = $checkSo->sale_order_code;
         }
     }
 
@@ -49,10 +52,26 @@ class DetailPesanan extends Component
         $transaksi = DB::table('transaksi')
             ->join('pesanan', 'pesanan.id', '=', 'transaksi.pesanan_id')
             ->join('users', 'users.id', '=', 'pesanan.user_id')
-            ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
             ->join('kurir', 'kurir.id', '=', 'pesanan.kurir_id')
+            ->join('alamat', 'alamat.id', '=', 'pesanan.alamat_id')
+            ->join('provinsi', 'provinsi.id', '=', 'alamat.provinsi_id')
+            ->join('kabupaten', 'kabupaten.id', '=', 'alamat.kabupaten_id')
+            ->join('kecamatan', 'kecamatan.id', '=', 'alamat.kecamatan_id')
+            ->join('kelurahan', 'kelurahan.id', '=', 'alamat.kelurahan_id')
             ->where('transaksi.id', '=', $this->transactionId)
-            ->select('transaksi.*', 'pesanan.*', 'users.*', 'alamat.*', 'kurir.*', 'transaksi.id as tid', 'pesanan.id as pid', 'users.id as uid', 'alamat.id as aid', 'kurir.id as kid', 'transaksi.created_at as cat')
+            ->select(
+                'transaksi.*',
+                'pesanan.*',
+                'users.*',
+                'alamat.*',
+                'kurir.*',
+                'transaksi.id as tid',
+                'pesanan.id as pid',
+                'users.id as uid',
+                'alamat.id as aid',
+                'kurir.id as kid',
+                'transaksi.created_at as cat'
+            )
             ->first();
 
         $detailPesanan = DB::table('detail_pesanan')
@@ -77,11 +96,33 @@ class DetailPesanan extends Component
             )
             ->first();
 
-        $salesOrders = SalesOrder::where('transaksi_id', $this->transactionId)->get();
+        /* Alternate Query*/
+        // $salesOrders = SalesOrder::where('transaksi_id', $this->transactionId)->get();
+        // foreach ($salesOrders as $salesOrder) {
+        //     $salesOrder->load('orderLines.produk');
+        //     $salesOrder->load('outDocuments');
+        // }
 
-        foreach ($salesOrders as $salesOrder) {
-            $salesOrder->load('orderLines.produk');
-        }
+        /* Alternate Query 2*/
+        // $salesOrders = SalesOrder::where('transaksi_id', $this->transactionId)
+        //     ->with(['orderLines.produk', 'outDocuments'])
+        //     ->get();
+
+        $salesOrders = SalesOrder::where('transaksi_id', $this->transactionId)
+            ->with([
+                'orderLines' => function ($query) {
+                    $query->with('produk');
+                },
+                'outDocuments' => function ($query) {
+                    $query->with([
+                        'orderLines' => function ($query) {
+                            $query->with('produk');
+                        }
+                    ]);
+                }
+            ])
+            ->get();
+            dd($salesOrders);
 
         $statusPemesananOpt = ['menunggu verifikasi', 'terverifikasi', 'diproses', 'dikirim', 'selesai', 'batal', 'diterima'];
 
@@ -140,7 +181,8 @@ class DetailPesanan extends Component
         }
 
         if ($pesanan->status_pemesanan == 'dikirim') {
-            // code
+            $pesanan->is_delivered = true;
+            $pesanan->save();
         }
 
         if ($pesanan->status_pemesanan == 'selesai') {
@@ -152,6 +194,7 @@ class DetailPesanan extends Component
         }
 
         $this->clearInput();
+        session()->flash('message', 'Detail pesanan berhasil diupdate');
     }
 
     public function clearInput()
@@ -161,6 +204,7 @@ class DetailPesanan extends Component
 
     public function generateSalesOrder(Odoo $odoo)
     {
+        /* Initiate data */
         $detailPesananToPush = [];
         $companyId = Auth::user()->company_id;
         $pricelistId = Company::find($companyId)->pluck('pricelist_id')->first();
@@ -186,11 +230,12 @@ class DetailPesanan extends Component
                 'payment_terms.id as payment_terms_id',
                 'payment_types.id as payment_type_id',
                 'payment_types.display_name',
+                'payment_types.type_name',
             )
             ->first();
 
-        $parts = explode('-', $transaksi->kode_customer);
-        $kodeCustomer = intval($parts[0]);
+        $kodeCustomerParts = explode('-', $transaksi->kode_customer);
+        $kodeCustomer = intval($kodeCustomerParts[0]);
 
         $detailPesanan = DB::table('detail_pesanan')
             ->join('produk', 'produk.id', '=', 'detail_pesanan.produk_id')
@@ -199,31 +244,37 @@ class DetailPesanan extends Component
             ->select('detail_pesanan.*', 'produk.*', 'detail_pesanan.id as did', 'produk.id as pid')
             ->get();
 
+        /* Prepare detail pesanan for sending to ERP */
         foreach ($detailPesanan as $key => $itemPesanan) {
             $detail = new stdClass();
             $detail->product_id = $itemPesanan->pid;
             $detail->product_uom_qty = intval($itemPesanan->qty);
             $detail->price_unit = intval($itemPesanan->harga);
+            $detail->warehouse_id = intval($this->gudangId);
             $detailPesananToPush[] = [0, 0, $detail];
         }
 
+        /* Create SO in ERP */
         $id = $odoo->create('sale.order', [
             'partner_id' => $kodeCustomer,
             'branch_id' => intval($transaksi->branch_id),
+            'company_id' => intval($companyId),
             'warehouse_id' => intval($this->gudangId),
             'penjualan_type_id' => 2,
+            'is_from_rpk_mobile' => 't', // ini value true
             'pricelist_id' => $pricelistId,
             'analytic_account_id' => 2582, //analytic account
             'team_id' => 11, // sub saluran penjualan
             'origin' => "mobile rpk",
             'payment_term_id' => $paymentOptionData->payment_terms_id,
-            'cara_pembayaran' => $paymentOptionData->display_name,
+            'cara_pembayaran' => $paymentOptionData->type_name,
             'sale_type' => 'komersial',
             'pso_type' => 30,
             'order_line' => $detailPesananToPush,
             'journal_id' => $paymentOptionData->rekening_tujuan_id, // ini nomor rekening
         ]);
 
+        /* Create SO in RPK Backend from ERP result */
         $soFromErp = $odoo->model('sale.order')->where('id', '=', $id)->first();
         $salesOrder = new SalesOrder;
         $salesOrder->transaksi_id = $this->transactionId;
@@ -232,38 +283,63 @@ class DetailPesanan extends Component
         $salesOrder->sale_order_status = $soFromErp->state;
         $salesOrder->save();
 
+        /* Create order lines in RPK Backend from ERP result */
         foreach ($soFromErp->order_line as $key => $orderLineId) {
             $orderLineDetail = $odoo->model('sale.order.line')->where('id', '=', $orderLineId)->first();
-
             $newOrderLine = new OrderLine;
             $newOrderLine->sales_order_id = $salesOrder->id;
             $newOrderLine->produk_id = $orderLineDetail->product_id[0];
+            $newOrderLine->ordered_quantity = $orderLineDetail->product_uom_qty;
             $newOrderLine->qty_done = 0;
             $newOrderLine->uom = $orderLineDetail->sh_sec_uom[1];
             $newOrderLine->save();
         }
 
+        /* Trigger confirm So in ERP */
         $isConfirmSo = $this->confirmSalesOrder($id);
 
+        /* If SO confirmation successful */
         if ($isConfirmSo) {
+            /* Update SO in backend with generated name and status from ERP result */
             $soFromErp = $odoo->model('sale.order')->where('id', '=', $id)->first();
             $salesOrder->sale_order_code = $soFromErp->name;
             $salesOrder->sale_order_status = $soFromErp->state;
             $salesOrder->save();
+
+            /* Create document out in backend from ERP result */
+            $outDocumentErp  = $odoo->model('stock.picking')->where('id', '=', $soFromErp->picking_ids[0])->first();
+            $outDocument = new OutDocument;
+            $outDocument->sales_order_id = $salesOrder->id;
+            $outDocument->out_document_code = $outDocumentErp->name;
+            $outDocument->out_document_status = $outDocumentErp->state;
+            $outDocument->scheduled_date = $outDocumentErp->scheduled_date;
+            $outDocument->plat_number = $outDocumentErp->plat_number ? $outDocumentErp->plat_number : 'none';
+            $outDocument->driver = $outDocumentErp->driver ? $outDocumentErp->driver : 'none';
+            $outDocument->save();
+
+            $allOrderLines = OrderLine::where('sales_order_id', $salesOrder->id)->update([
+                "out_document_id" => $outDocument->id,
+            ]);
         }
 
+        /* Update pesanan status in backend */
         $pesanan = Pesanan::where('id', $transaksi->pesanan_id)->first();
         $pesanan->status_pemesanan = 'diproses';
         $pesanan->save();
 
+        /* Set isDocumentOut state to true in livewire component */
         $this->isDocumentOut = true;
+        $this->SoCode = $soFromErp->name;
+        session()->flash('message', 'SO berhasil ditambahkan ke ERP. Code : ' . $soFromErp->name);
     }
 
     public function confirmSalesOrder($id)
     {
-        $odooUrl = 'http://10.254.222.80:8069/web/session/authenticate';
+        // $odooUrl = 'http://10.254.222.80:8069/web/session/authenticate'; /// dev
+        $odooUrl = 'http://10.254.223.80:8069/web/session/authenticate'; /// test
 
-        $database = 'beras_erp_dev';
+        // $database = 'beras_erp_dev'; /// dev
+        $database = 'beras_erp_06122023'; /// test
         $username = 'admin';
         $password = 'admin';
 
@@ -281,7 +357,8 @@ class DetailPesanan extends Component
         $loginResponse = Http::post($odooUrl, $loginPayload);
 
         if ($loginResponse->successful()) {
-            $odooUrl = 'http://10.254.222.80:8069/web/dataset/call_kw';
+            // $odooUrl = 'http://10.254.222.80:8069/web/dataset/call_kw'; /// dev
+            $odooUrl = 'http://10.254.223.80:8069/web/dataset/call_kw'; /// test
 
             $sessionId = $loginResponse->json()['result']['session_id'];
 
@@ -315,5 +392,10 @@ class DetailPesanan extends Component
             dump($id);
             dump($errorMessage);
         }
+    }
+
+    public function closeAlert()
+    {
+        session()->forget('message');
     }
 }

@@ -64,7 +64,7 @@ class DatasTable extends Component
             ->join('stok', 'stok.id', 'stok_etalase.stok_id')
             ->join('produk', 'produk.id', 'stok.produk_id')
             ->join('gudang', 'gudang.id', 'stok.gudang_id')
-            ->select('stok_etalase.id', 'stok_etalase.jumlah_stok', 'stok_etalase.updated_at', 'stok_etalase.is_active', 'stok.jumlah_stok as stok_gudang', 'produk.nama_produk', 'gudang.nama_gudang')
+            ->select('stok_etalase.id', 'stok_etalase.jumlah_stok', 'stok_etalase.updated_at', 'stok_etalase.is_active', 'stok_etalase.is_unggulan', 'stok.jumlah_stok as stok_gudang', 'produk.nama_produk', 'gudang.nama_gudang')
             ->where('gudang.id', $gudangId->id)
             ->when($this->statusFilter !== '', function ($query) {
                 $query->where('stok_etalase.is_active', $this->statusFilter);
@@ -99,6 +99,9 @@ class DatasTable extends Component
                     'stok_id' => $this->stok_id,
                     'jumlah_stok' => $this->jumlah_stok,
                     'is_active' => true,
+                    'produk_id' => $checkStockGudang->produk_id,
+                    'company_id' => Auth::user()->company_id,
+                    'gudang_id' => $checkStockGudang->gudang_id,
                 ]);
 
                 $this->reset(['stok_id', 'jumlah_stok']);
@@ -134,6 +137,13 @@ class DatasTable extends Component
     {
         $StokEtalase = StokEtalase::find($id);
         $StokEtalase->is_active = !$StokEtalase->is_active;
+        $StokEtalase->save();
+    }
+
+    public function toggleUnggulan($id)
+    {
+        $StokEtalase = StokEtalase::find($id);
+        $StokEtalase->is_unggulan = !$StokEtalase->is_unggulan;
         $StokEtalase->save();
     }
 

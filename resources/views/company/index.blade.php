@@ -23,7 +23,7 @@
     <header class="bg-gray-200 p-4">
         <div class="flex justify-between items-center">
             <h2 class="">
-                {{ __('Company (Entitas)') }}
+                {{ __('Company (Kanwil)') }}
             </h2>
             <div class="flex items-center">
                 <div class="dropdown dropdown-bottom dropdown-end mx-1">
@@ -47,8 +47,12 @@
         </div>
     </header>
 
-    @include('layouts.alert')
-    @include('layouts.searchbar', ['routeName' => 'company.index'])
+    @include('layouts.alert-popup')
+
+    @include('layouts.searchbar', [
+        'routeName' => 'company.index',
+        'placeholder' => 'Masukkan kode atau nama entitas, contoh: Kantor Cabang Takengon',
+    ])
 
     <div class="overflow-y-auto m-3">
         <table id="myTable" class="table table-sm table-zebra hover">
@@ -66,20 +70,35 @@
             <tbody class="text-center">
                 @forelse ($companies as $item)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }}  ">
-                        <td class=" px-4 py-2">{{ $loop->iteration }}</td>
+                        <td class=" px-4 py-2">{{ $companies->firstItem() + $loop->index }}</td>
                         <td class=" px-4 py-2">{{ $item->kode_company }}</td>
                         <td class=" px-4 py-2">{{ $item->nama_company }}</td>
                         <td class=" px-4 py-2">{{ $item->partner_company }}</td>
                         <td class=" px-4 py-2">{{ $item->tagline_company }}</td>
                         <td class=" px-4 py-2">{{ $item->provinsi }}</td>
                         <td class=" px-4 py-2 flex justify-center">
-                            <a href="{{ route('company.show', ['id' => $item->cid]) }}"
-                                class="btn btn-sm btn-primary mr-1">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <a href="{{ route('company.delete', ['id' => $item->cid]) }}" onclick="return confirmDelete()"
-                                class="btn btn-sm btn-error text-white">
-                                <i class="fa-solid fa-trash"></i>
+                            <div class="flex items-center">
+                                <div class="dropdown dropdown-bottom dropdown-end mx-1">
+                                    <div tabindex="0" role="button" class="btn btn-sm m-1">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </div>
+                                    <ul tabindex="0"
+                                        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li><a href="{{ route('company.show', ['id' => $item->cid]) }}">
+                                                {{-- <svg class="showIcon"> </svg> --}}
+                                                <i class="fa-solid fa-bars"></i>
+                                                Lihat detail
+                                            </a></li>
+                                        <li><a href="{{ route('company.delete', ['id' => $item->cid]) }}"
+                                                onclick="return confirmDelete();" class="text-red-600">
+                                                {{-- <svg class="deleteIcon"></svg> --}}
+                                                <i class="fa-solid fa-trash"></i>
+                                                Hapus produk
+
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty

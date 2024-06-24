@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Berita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+
 class BeritaController extends Controller
 {
     //
@@ -18,18 +20,19 @@ class BeritaController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $berita = DB::table('berita')->when($search,function($query,$search){
+        $berita = DB::table('berita')->when($search, function ($query, $search) {
             $query->where('judul_berita', 'ilike', '%' . $search . '%');
         })->paginate(15);
         return view('berita.index', compact('berita'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $berita = DB::table('berita')
             ->join('users', 'berita.user_id', '=', 'users.id')
             ->select('berita.*', 'users.name', 'users.id as uid')
             ->where('berita.id', $id)
-        ->first();
+            ->first();
 
         return view('berita.show', compact('berita'));
     }
@@ -39,14 +42,15 @@ class BeritaController extends Controller
         return view('berita.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
             'judul_berita' => 'required',
             'deskripsi_berita' => 'required',
             'gambar_berita' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'penulis_berita' => 'required',
             'kategori_berita' => 'required',
-        ],[
+        ], [
             'judul_berita' => 'Judul berita harus diisi',
             'deskripsi_berita' => 'Deskripsi berita harus diisi',
             'penulis_berita' => 'Penulis berita harus diisi',
@@ -72,17 +76,25 @@ class BeritaController extends Controller
         $berita->external_berita_id = $request->external_id;
         $berita->save();
 
+        $banner = new Banner();
+        $banner->judul_banner = $berita->judul_berita;
+        $banner->deskripsi_banner = $berita->judul_berita;
+        $banner->gambar_banner = $berita->gambar_berita;
+        $banner->berita_id = $berita->id;
+        $banner->save();
+
         return redirect()->route('berita.index')->with('message', 'Berita berhasil ditambahkan');
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $request->validate([
             'judul_berita' => 'required',
             'deskripsi_berita' => 'required',
             'gambar_berita' => 'image|mimes:jpeg,png,jpg|max:2048',
             'penulis_berita' => 'required',
             'kategori_berita' => 'required',
-        ],[
+        ], [
             'judul_berita' => 'Judul berita harus diisi',
             'deskripsi_berita' => 'Deskripsi berita harus diisi',
             'penulis_berita' => 'Penulis berita harus diisi',
@@ -112,7 +124,8 @@ class BeritaController extends Controller
         return redirect()->route('berita.index')->with('message', 'Berita berhasil diubah');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $berita = Berita::find($id);
         if (!empty($berita->gambar_berita)) {
             Storage::disk('public')->delete($berita->gambar_berita);

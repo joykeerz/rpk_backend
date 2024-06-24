@@ -154,7 +154,7 @@
 
                                         </div>
                                         <button type="submit"
-                                            class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Update
+                                            class="bg-yellowlog text-neutral  py-2 px-4 rounded-md hover:bg-blue-600">Update
                                         </button>
 
                                     </div>

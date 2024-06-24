@@ -38,6 +38,7 @@ use App\Livewire\Kurir\KurirIndex;
 use App\Livewire\Payment\PaymentOption;
 use App\Livewire\Payment\PaymentType;
 use App\Livewire\Pesanan\DetailPesanan;
+use App\Livewire\Price\Price;
 
 /*
 |--------------------------------------------------------------------------
@@ -282,11 +283,12 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('prices')->middleware('restrictRole:4')->group(function () {
-        Route::get('/', [ControllersPriceController::class, 'index'])->name('prices.index');
-        Route::post('/store', [ControllersPriceController::class, 'store'])->name('prices.store');
-        Route::get('/show/{id}', [ControllersPriceController::class, 'show'])->name('prices.show');
-        Route::post('/update/{id}', [ControllersPriceController::class, 'update'])->name('prices.update');
-        Route::get('/delete/{id}', [ControllersPriceController::class, 'destroy'])->name('prices.delete');
+        // Route::get('/', [ControllersPriceController::class, 'index'])->name('prices.index');
+        // Route::post('/store', [ControllersPriceController::class, 'store'])->name('prices.store');
+        // Route::get('/show/{id}', [ControllersPriceController::class, 'show'])->name('prices.show');
+        // Route::post('/update/{id}', [ControllersPriceController::class, 'update'])->name('prices.update');
+        // Route::get('/delete/{id}', [ControllersPriceController::class, 'destroy'])->name('prices.delete');
+        Route::get('/', Price::class)->name('prices.index');
     });
 
     Route::prefix('etalase')->middleware('restrictRole:4')->group(function () {

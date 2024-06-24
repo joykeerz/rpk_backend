@@ -27,7 +27,7 @@
         <div class="p-4 flex flex-col">
             <div class="p-4 grid grid-cols-2 gap-1 border rounded">
                 <div id="namaProduk" class="mb-3">
-                    <label class="block text-sm font-medium text-gray-700">Nama Produk</label>
+                    <label class="block text-sm font-medium text-gray-700">Nama Produk (Mobile)</label>
                     <input type="text"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
                         name="tb_nama_produk" id="tb_nama_produk" placeholder="" value="{{ $product->nama_produk }}">
@@ -36,7 +36,7 @@
                     @enderror
                 </div>
                 <div id="displayProduk" class="mb-3">
-                    <label class="block text-sm font-medium text-gray-700">Display Nama Produk</label>
+                    <label class="block text-sm font-medium text-gray-700">Display Nama Produk (ERP)</label>
                     <input type="text"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  border p-1"
                         name="tb_display_nama_produk" id="tb_display_nama_produk" placeholder=""

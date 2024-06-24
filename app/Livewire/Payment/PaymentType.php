@@ -16,6 +16,7 @@ class PaymentType extends Component
     /// UI Variables
     public $isInsert = false;
     public $isEdit = false;
+    public $caraPembayaranEnum = ['tunai', 'transfer'];
 
     /// Input Variables
     public $paymentType;
@@ -30,7 +31,8 @@ class PaymentType extends Component
     {
         $paymentTypes = ModelsPaymentType::all();
         return view('livewire.payment.payment-type', [
-            'paymentTypes' => $paymentTypes
+            'paymentTypes' => $paymentTypes,
+            'caraPembayaranEnum' => $this->caraPembayaranEnum
         ]);
     }
 
@@ -97,12 +99,18 @@ class PaymentType extends Component
         $paymentType->type_name = $this->paymentTypeEdit;
         $paymentType->display_name = $this->displayNameEdit;
         $paymentType->save();
-
+        session()->flash('message', 'tipe payment berhasil diupdate');
         $this->closeEdit();
     }
 
     public function deleteType($id)
     {
         DB::table('payment_types')->where('id', $id)->delete();
+        session()->flash('message', 'tipe payment berhasil dihapus');
+    }
+
+    public function closeAlert()
+    {
+        session()->forget('message');
     }
 }

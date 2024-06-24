@@ -28,7 +28,8 @@
                         <label for="cb_company_id">Nama Kantor Wilayah</label>
                         <select name="cb_company_id" id="cb_company_id">
                             @foreach ($companyData as $company)
-                                <option value="{{ $company->id }}" @if ($company->id == $branch->company_id) selected @endif>{{ $company->nama_company }}</option>
+                                <option value="{{ $company->id }}" @if ($company->id == $branch->company_id) selected @endif>
+                                    {{ $company->nama_company }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -44,14 +45,15 @@
                     </div>
                     <div class="tb_id_external flex flex-col">
                         <label for="tb_id_external">ID Eksternal</label>
-                        <input value="{{$branch->external_branch_id}}" type="text" name="tb_id_external" id="tb_id_external">
+                        <input value="{{ $branch->external_branch_id }}" type="text" name="tb_id_external"
+                            id="tb_id_external">
                     </div>
                 </div>
             </div>
 
 
             <div class="flex justify-center my-3"> <!-- Flex container to center the button -->
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+                <button type="submit" class="bg-yellowlog text-neutral  py-2 px-4 rounded-md hover:bg-blue-600">
                     Update
                 </button>
             </div>
